@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.mainview">
+    <left>
+        <VBox spacing="10">
+            <Button text="Profile" onAction="#showProfile" />
+            <Button text="Timesheet" onAction="#showTimesheet" />
+            <Button text="Leave Request" onAction="#showLeaveRequest" />
+            <Button text="Payslip" onAction="#showPayslip" />
+        </VBox>
+    </left>
+    <center>
+        <ScrollPane fitToWidth="true" fitToHeight="true">
+            <AnchorPane fx:id="anchorPane" prefWidth="600" prefHeight="400" />
+        </ScrollPane>
+    </center>
+</BorderPane>

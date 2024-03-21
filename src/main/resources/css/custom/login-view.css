@@ -1,0 +1,14 @@
+#forgotPasswordLabel:hover {
+    -fx-text-fill: gray;
+}
+
+.mfx-button-primary:hover {
+    -fx-background-color: gray;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Roboto BoldItalic";
+}
+
+
+
+
