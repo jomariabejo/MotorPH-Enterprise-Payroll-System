@@ -43,7 +43,7 @@ public class DeductionService {
                 : 0.00;
 
         // Ensure that the contribution does not exceed the maximum limit of 100
-        return (contribution >= 100) ? BigDecimal.valueOf(100).setScale(2) : BigDecimal.valueOf(contribution).setScale(2);
+        return (contribution >= 100) ? BigDecimal.valueOf(100).setScale(2, RoundingMode.HALF_UP) : BigDecimal.valueOf(contribution).setScale(2, RoundingMode.HALF_UP);
     }
 
 
