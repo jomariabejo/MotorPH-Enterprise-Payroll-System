@@ -1,0 +1,50 @@
+/* Define a style for regular buttons */
+.button {
+    -fx-background-color: #f0f0f0; /* Light gray */
+    -fx-text-fill: #333333; /* Dark gray text */
+    -fx-font-size: 16px;
+    -fx-padding: 8px 16px;
+    -fx-background-radius: 4px;
+    -fx-border-radius: 4px;
+    -fx-border-color: transparent;
+}
+
+/* Hover effect for regular buttons */
+.button:hover {
+    -fx-background-color: #d9d9d9; /* Slightly darker gray on hover */
+}
+
+/* Define a style for default buttons */
+.button.default-button {
+    -fx-background-color: #28a745; /* Green */
+}
+
+/* Hover effect for default buttons */
+.button.default-button:hover {
+    -fx-background-color: #218838; /* Darker green */
+}
+
+/* Define a style for cancel buttons */
+.button.cancel-button {
+    -fx-background-color: #dc3545; /* Red */
+}
+
+/* Hover effect for cancel buttons */
+.button.cancel-button:hover {
+    -fx-background-color: #c82333; /* Darker red */
+}
+
+/* Define a style for disabled buttons */
+.button:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* Define a style for default button text */
+.button.default-button .text {
+    -fx-fill: white;
+}
+
+/* Define a style for cancel button text */
+.button.cancel-button .text {
+    -fx-fill: white;
+}

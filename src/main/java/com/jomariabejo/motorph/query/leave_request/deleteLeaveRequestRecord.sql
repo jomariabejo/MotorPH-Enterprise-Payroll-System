@@ -1,0 +1,1 @@
+DELETE FROM leave_request WHERE leave_request_id = ?

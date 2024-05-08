@@ -1,47 +1,67 @@
 package com.jomariabejo.motorph.controller;
 
-import io.github.palexdev.materialfx.controls.MFXPasswordField;
-import io.github.palexdev.materialfx.controls.MFXTextField;
-import io.github.palexdev.materialfx.validation.Constraint;
-import io.github.palexdev.materialfx.validation.Severity;
-import javafx.beans.binding.Bindings;
-import javafx.css.PseudoClass;
+import com.jomariabejo.motorph.entity.User;
+import com.jomariabejo.motorph.repository.UserRepository;
+import com.jomariabejo.motorph.service.LoginManager;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.sql.SQLException;
+import java.util.Optional;
 
-import static io.github.palexdev.materialfx.utils.StringUtils.containsAny;
-
-public class LoginController implements Initializable {
+public class LoginController {
+    @FXML
+    private TextField usernameField;
+    @FXML
+    private PasswordField passwordField;
 
     @FXML
-    private MFXTextField textField;
-
+    private Button loginBtn;
     @FXML
-    private MFXPasswordField passwordField;
+    private Button registerBtn;
 
-    @FXML
-    private Label validationLabel;
+    private UserRepository userRepository = new UserRepository();
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    public void initialize() {
 
+    }
+
+    public void initManager(final LoginManager loginManager) {
+        loginBtn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override public void handle(ActionEvent event) {
+                Optional<User> verification = authorize();
+
+                if (verification.isPresent()) {
+                    User user = verification.get();
+                    int userId = user.getUserID();
+                    loginManager.authenticated(userId);
+                    System.out.println("The user login is = " + userId);
+                }
+                else {
+                    AlertUtility.showErrorAlert("Invalid Credentials", "Login Failed", "We couldn't find an account that matches what you entered. Please verify your credentials and try again.");
+                }
+            }
+        });
+    }
+
+    private Optional<User> authorize() {
+        try {
+            return userRepository.getUserByUsernameANDPassowrd(usernameField.getText(), passwordField.getText());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void handleLogin(ActionEvent event) {
-    }
-
-    public void openStepperStage(ActionEvent event) {
-        System.out.println("Open");
+        System.out.println("Login");
     }
 
     public void forgotPasswordClicked(MouseEvent mouseEvent) {
-        System.out.println("I'm Clicked...");
     }
 }

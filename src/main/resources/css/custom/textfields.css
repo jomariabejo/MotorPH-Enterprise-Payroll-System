@@ -1,0 +1,33 @@
+/* Define a style for text fields */
+.text-field {
+    -fx-font-size: 24px; /* Larger font size */
+    -fx-prompt-text-fill: #999999; /* Light gray prompt text */
+    -fx-background-color: #f0f0f0; /* Light gray background */
+    -fx-text-fill: #333333; /* Dark gray text */
+    -fx-padding: 8px; /* Padding around text */
+    -fx-background-radius: 4px; /* Rounded corners */
+}
+
+/* Hover effect for text fields */
+.text-field:hover {
+    -fx-background-color: #e0e0e0; /* Slightly darker gray on hover */
+}
+
+/* Focus effect for text fields */
+.text-field:focused {
+    -fx-border-color: #007bff; /* Blue border on focus */
+    -fx-border-width: 2px; /* Border width on focus */
+}
+
+/* Floating prompt animation */
+.text-field .prompt-text {
+    -fx-translate-y: -25%; /* Move prompt up */
+    -fx-font-size: 18px; /* Smaller font size for prompt */
+    -fx-text-fill: #666666; /* Lighter gray prompt text */
+}
+
+/* Value inside the text field */
+.text-field .text {
+    -fx-font-size: 24px; /* Larger font size */
+    -fx-fill: #333333; /* Dark gray text */
+}

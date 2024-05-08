@@ -16,57 +16,25 @@
  * along with MaterialFX.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-@import '../fonts/Fonts.css';
-@import 'Common.css';
-@import 'MFXColors.css';
+@import "fonts";
+
+@import "MFXColors.css";
 
 .mfx-button {
+	-fx-font-family: "Open Sans Regular";
 	-fx-text-fill: -mfx-text-he;
 }
 
-.mfx-button .mfx-ripple-generator {
-	-mfx-ripple-radius: 40;
-	-mfx-auto-clip: true;
+.mfx-button:armed,
+.mfx-button:hover,
+.mfx-button:focused,
+.mfx-button {
+	-fx-background-radius: 3px;
+	-fx-background-insets: 0px;
 }
 
-.mfx-button .text {
-	-fx-font-smoothing-type: gray;
-}
-
-#custom {
-	-fx-background-color: -mfx-purple;
-	-fx-text-fill: white
-}
-
-.outline-button {
-	-fx-background-color: transparent;
-	-fx-border-color: -mfx-purple;
-	-fx-border-radius: 3;
-
-	-fx-text-fill: -mfx-purple;
-}
-
-.outline-button:hover,
-.outline-button:focused {
-	-fx-background-color: -mfx-purple;
-	-fx-text-fill: white;
-}
-
-
-.link-button {
-	-fx-background-color: transparent;
-	-fx-border-radius: 3;
-	-fx-text-fill: #0096FF;
-	-fx-underline: true;
-	-fx-cursor: hand;
-}
-
-.link-button:armed,
-.link-button:focused {
-	-fx-border-color: #006BFF;
-	-fx-text-fill: #006BFF;
-}
-
-.link-button .mfx-ripple-generator {
-	-mfx-ripple-color: #D9E9FF;
+.mfx-button,
+.mfx-button:armed,
+.mfx-button:focused {
+	-fx-background-color: white;
 }

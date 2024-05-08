@@ -1,0 +1,1 @@
+SELECT employee_id FROM user WHERE user_id = ?;

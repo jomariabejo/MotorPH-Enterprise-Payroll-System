@@ -1,50 +1,42 @@
 package com.jomariabejo.motorph;
 
-import com.jomariabejo.motorph.view.ViewFactory;
+import com.jomariabejo.motorph.service.LoginManager;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
-import java.io.IOException;
-
 public class Main extends Application {
-    private Stage primaryStage;
-    private Stage loginStage;
+    /**
+     * Standard entry point for Java applications.
+     * It calls launch(args), which starts the JavaFX application.
+     * @param args
+     */
+    public static void main(String[] args) { launch(args); }
 
+    /**
+     * This method is overridden from the Application class.
+     * It's called when the JavaFX application starts.
+     * It receives a Stage parameter,
+     * which represents the primary stage (window) of the application.
+     * @param primaryStage
+     */
     @Override
-    public void start(Stage stage) throws IOException {
-        this.primaryStage = primaryStage;
-        openLoginStage();
-    }
+    public void start(Stage primaryStage) {
+        /** A Scene represents the content of the window.  */
+        Scene scene = new Scene(new StackPane());
 
-    private void openLoginStage() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
-            Scene scene = new Scene(fxmlLoader.load());
-            loginStage = new Stage();
-            loginStage.setScene(scene);
-            loginStage.setTitle("MotorPH Payroll System");
-            loginStage.show();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void mainLoginStage() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("main-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1280, 768);
-        ViewFactory mainController =fxmlLoader.getController();
-        mainController.setMainApp(this);
-        primaryStage.setResizable(true);
+        /**
+         * Initializes a LoginManager object, passing the Scene object as a parameter.
+         * It is a LoginManager that is responsible for managing the login screen.
+         */
+        LoginManager loginManager = new LoginManager(scene);
+        loginManager.showLoginScreen();
+        /**
+         * Set the title of the window, and then show the window to the user.
+         */
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("MotorPH Payroll System | V1");
         primaryStage.show();
-
-    }
-
-
-
-    public static void main(String[] args) {
-        launch();
     }
 }

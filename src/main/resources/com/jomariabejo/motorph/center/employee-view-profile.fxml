@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.palexdev.materialfx.controls.MFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="625.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.myprofile.EmployeeProfile">
+    <children>
+        <GridPane prefHeight="624.0" prefWidth="878.4" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            </rowConstraints>
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="373.0">
+                    <children>
+                        <VBox alignment="CENTER" spacing="12.0">
+                            <children>
+                                <Label alignment="CENTER" contentDisplay="CENTER" opacity="0.25" prefHeight="40.0" prefWidth="150.0" text="Profile" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Segoe UI Bold" size="24.0" />
+                                    </font>
+                                    <VBox.margin>
+                                        <Insets top="64.0" />
+                                    </VBox.margin>
+                                </Label>
+                                <ImageView fx:id="image_path" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@../../../../img/profilesample.jpg" />
+                                    </image>
+                                </ImageView>
+                                <HBox alignment="CENTER" spacing="8.0">
+                                    <children>
+                                        <MFXButton onAction="#editClicked" text="Edit" />
+                                        <MFXButton layoutX="15.0" layoutY="10.0" onAction="#moreinfoClicked" text="More Info" />
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+                <VBox spacing="4.8" GridPane.columnIndex="1">
+                    <children>
+                        <Label minWidth="500.0" prefHeight="47.0" prefWidth="350.0" text="Jomari Sarmiento Abejo">
+                            <font>
+                                <Font size="32.0" />
+                            </font>
+                            <padding>
+                                <Insets top="12.0" />
+                            </padding>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <children>
+                                <Label text="EMPLOYEE ID:">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_eid" text="HAHA">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="60.0" spacing="12.0">
+                            <children>
+                                <Label text="FIRST NAME: ">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_fname" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="77.0" spacing="12.0">
+                            <children>
+                                <Label text="LAST NAME:">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_lname" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="107.0" spacing="12.0">
+                            <children>
+                                <Label text="BIRTHDAY:">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_bday" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="124.0" spacing="12.0">
+                            <children>
+                                <Label text="ADDRESS">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_address" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="142.0" spacing="12.0">
+                            <children>
+                                <Label text="PHONE NUMBER">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_phoneNum" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="4.8" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" opacity="0.25" prefHeight="40.0" prefWidth="150.0" text="Job" textAlignment="CENTER">
+                            <font>
+                                <Font name="Segoe UI Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <Label />
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <children>
+                                <Label text="DEPARTMENT">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_dept" text="Executive">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                    <children>
+                                        <Label text="STATUS">
+                                            <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="lbl_status" text="Regular">
+                                            <font>
+                                                <Font name="Arial" size="12.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="12.0">
+                                    <children>
+                                        <Label text="POSITION">
+                                            <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="lbl_position" text="CEO">
+                                            <font>
+                                                <Font name="Arial" size="12.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="25.0" spacing="12.0">
+                                    <children>
+                                        <Label text="IMMEDIATE SUPERVISOR">
+                                            <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="lbl_supervisor" text="Probationary">
+                                            <font>
+                                                <Font name="Arial" size="12.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="10.0" layoutY="10.0" opacity="0.25" prefHeight="40.0" prefWidth="150.0" text="Allowance" textAlignment="CENTER">
+                            <font>
+                                <Font name="Segoe UI Bold" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="4.8" GridPane.columnIndex="2">
+                    <children>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <children>
+                                <Label text="SSS NO.">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_sssNum" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="12.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="107.0" spacing="12.0">
+                            <children>
+                                <Label text="PAGIBIG NO.">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_pagibigNum" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="115.0" spacing="12.0">
+                            <children>
+                                <Label text="PHILHEALTH NO.">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_philhealthNum" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="122.0" spacing="12.0">
+                            <children>
+                                <Label text="TIN NO.">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_tinNum" text="Label">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                    <GridPane.margin>
+                        <Insets bottom="20.0" />
+                    </GridPane.margin>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="4.8" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                    <children>
+                        <Label alignment="CENTER" contentDisplay="CENTER" opacity="0.25" prefHeight="40.0" prefWidth="150.0" text="Salary" textAlignment="CENTER">
+                            <font>
+                                <Font name="Segoe UI Bold" size="24.0" />
+                            </font>
+                            <VBox.margin>
+                                <Insets />
+                            </VBox.margin>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" spacing="12.0">
+                            <children>
+                                <Label text="BASIC SALARY">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_basicSalary" text="Executive">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                            <VBox.margin>
+                                <Insets top="12.0" />
+                            </VBox.margin>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="50.0" spacing="12.0">
+                            <children>
+                                <Label text="GROSS SEMI MONTHLY RATE">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_grossSemiMonthlyRate" text="Executive">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="65.0" spacing="12.0">
+                            <children>
+                                <Label text="HOURLY RATE">
+                                    <font>
+                                        <Font name="Arial Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="lbl_hourlyRate" text="Executive">
+                                    <font>
+                                        <Font name="Arial" size="12.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="200.0" prefWidth="100.0" spacing="4.8" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <children>
+                        <Label />
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="4.8">
+                            <children>
+                                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                    <children>
+                                        <Label text="Phone Allowance">
+                                            <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="lbl_phoneAllowance" text="Regular">
+                                            <font>
+                                                <Font name="Arial" size="12.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="12.0">
+                                    <children>
+                                        <Label text="Clothing Allowance">
+                                            <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="lbl_clothingAllowance" text="CEO">
+                                            <font>
+                                                <Font name="Arial" size="12.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                    <children>
+                                        <Label text="Rice Subsidy">
+                                            <font>
+                                                <Font name="Arial Bold" size="12.0" />
+                                            </font>
+                                        </Label>
+                                        <Label fx:id="lbl_riceSubsidy" text="Executive">
+                                            <font>
+                                                <Font name="Arial" size="12.0" />
+                                            </font>
+                                        </Label>
+                                    </children>
+                                </HBox>
+                            </children>
+                        </VBox>
+                    </children>
+                </VBox>
+                <PieChart GridPane.rowIndex="2" />
+            </children>
+        </GridPane>
+    </children>
+</AnchorPane>

@@ -1,0 +1,37 @@
+/* Define a style for combo box */
+.combo-box {
+    -fx-font-size: 24px; /* Larger font size */
+    -fx-background-color: #f0f0f0; /* Light gray */
+    -fx-text-fill: #333333; /* Dark gray text */
+    -fx-padding: 5px 10px;
+    -fx-border-radius: 4px;
+    -fx-border-color: transparent;
+    -fx-background-radius: 4px;
+}
+
+/* Define a style for combo box popup */
+.combo-box-popup {
+    -fx-font-size: 24px; /* Larger font size */
+}
+
+/* Define a style for combo box arrow button */
+.combo-box .arrow-button {
+    -fx-background-color: #f0f0f0; /* Light gray */
+    -fx-text-fill: #333333; /* Dark gray text */
+}
+
+/* Hover effect for combo box arrow button */
+.combo-box .arrow-button:hover {
+    -fx-background-color: #d9d9d9; /* Slightly darker gray on hover */
+}
+
+/* Define a style for combo box list cell */
+.combo-box-popup .list-cell {
+    -fx-font-size: 24px; /* Larger font size */
+    -fx-text-fill: #333333; /* Dark gray text */
+}
+
+/* Define a style for combo box list cell hover */
+.combo-box-popup .list-cell:hover {
+    -fx-background-color: #d9d9d9; /* Slightly darker gray on hover */
+}

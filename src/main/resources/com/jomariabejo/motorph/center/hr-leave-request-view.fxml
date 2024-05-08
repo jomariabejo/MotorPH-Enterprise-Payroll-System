@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.hr.HRLeaveRequestController">
+    <children>
+        <VBox layoutX="277.0" layoutY="130.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="24.0">
+                    <children>
+                        <Label prefHeight="35.0" prefWidth="168.0" stylesheets="@../../../../css/custom/label.css" text="Leave Requests">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                  <Label fx:id="lbl_tv_total_result1" layoutX="276.0" layoutY="41.0" prefHeight="35.0" prefWidth="116.0" stylesheets="@../../../../css/custom/label.css" text="No. Result:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl_tv_total_result" prefHeight="35.0" prefWidth="129.0" stylesheets="@../../../../css/custom/label.css" text="#####">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                        <ComboBox fx:id="cb_leave_req_status" onAction="#comboBoxChanged" prefHeight="50.0" prefWidth="212.0" stylesheets="@../../../../css/custom/combobox-small.css" value="Pending">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Pending" />
+                                    <String fx:value="Approved" />
+                                    <String fx:value="Disapproved" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                        <Label prefHeight="35.0" prefWidth="186.0" stylesheets="@../../../../css/custom/label.css" text="Search Employee">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="tf_search" onAction="#searchingEmployeeLeaveRequests" prefHeight="40.0" prefWidth="166.0" promptText="Enter employee id">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </TextField>
+                    </children>
+                </HBox>
+                <TableView fx:id="tv_leave_requests" prefHeight="487.0" prefWidth="1131.0" stylesheets="@../../../../css/custom/tableView.css">
+                    <columns>
+                        <TableColumn fx:id="tc_leaveRequestId" prefWidth="125.0" text="Leave Req Id">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="leaveRequestID" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_employeeId" prefWidth="125.0" text="Employee Id">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="employeeID" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_leaveRequestCategoryId" prefWidth="150.0" text="Date" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="date" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_startDate" prefWidth="125.0" text="Start Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="startDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_endDate" prefWidth="125.0" text="End Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="endDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_status" prefWidth="125.0" text="Status">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="status" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+                </TableView>
+                <Pagination fx:id="pagination" onDragDetected="#paginationChanged" prefHeight="81.0" prefWidth="1131.0" stylesheets="@../../../../css/custom/pagination.css" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

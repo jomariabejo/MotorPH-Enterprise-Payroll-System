@@ -1,0 +1,1 @@
+DELETE FROM tax WHERE tax_id = ?

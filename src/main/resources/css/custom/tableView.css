@@ -1,0 +1,32 @@
+/* Define a style for the table */
+.table-view {
+    -fx-background-color: #f0f0f0;
+}
+
+/* Define a style for the table header */
+.table-view .column-header-background {
+    -fx-background-color: #333333;
+}
+
+/* Define a style for the table header text */
+.table-view .column-header, .table-view .filler {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+}
+
+/* Define a style for the table cell */
+.table-cell {
+    -fx-alignment: center;
+    -fx-font-size: 18px;
+}
+
+/* Define alternating row colors */
+.table-row-cell:odd {
+    -fx-background-color: #e0e0e0;
+}
+
+/* Define style for selected row */
+.table-row-cell:selected {
+    -fx-background-color: #80b3ff; /* Light blue */
+    -fx-text-fill: white;
+}

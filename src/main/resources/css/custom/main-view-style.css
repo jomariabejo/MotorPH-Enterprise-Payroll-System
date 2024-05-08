@@ -1,0 +1,7 @@
+.rounded-button {
+    -fx-shape: "M 275,24 L 275,24 Q 275,0 250,0 L 25,0 Q 0,0 0,24 L 0,24 Q 0,48 25,48 L 250,48 Q 275,48 275,24 Z";
+    -fx-background-color: #2196F3; /* Background color of the button */
+    -fx-text-fill: white; /* Text color of the button */
+    -fx-background-radius: 24; /* Adjust this value to change the rounding */
+}
+

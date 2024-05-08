@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.myprofile.EmployeeSalaryDetails">
+    <children>
+        <TabPane layoutX="284.0" layoutY="133.0" prefHeight="636.0" prefWidth="1131.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <tabs>
+                <Tab text="Salary Structure">
+                    <content>
+                        <AnchorPane>
+                            <children>
+                                <ScrollPane hbarPolicy="NEVER" layoutY="-42.66666793823242" vbarPolicy="NEVER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="3.0">
+                                    <content>
+                                        <GridPane>
+                                            <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="561.3333129882812" minWidth="10.0" prefWidth="394.6667175292969" />
+                                                <ColumnConstraints hgrow="SOMETIMES" maxWidth="881.9999847412109" minWidth="10.0" prefWidth="737.3332824707031" />
+                                            </columnConstraints>
+                                            <rowConstraints>
+                                                <RowConstraints />
+                                                <RowConstraints />
+                                                <RowConstraints maxHeight="289.66661071777344" minHeight="10.0" prefHeight="280.3332977294922" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="289.66661071777344" minHeight="10.0" prefHeight="280.3332977294922" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="289.66661071777344" minHeight="10.0" prefHeight="280.3332977294922" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="289.66661071777344" minHeight="10.0" prefHeight="280.3332977294922" vgrow="SOMETIMES" />
+                                            </rowConstraints>
+                                            <children>
+                                                <PieChart fx:id="pieSalaryBreakup" prefWidth="406.0" stylesheets="@../../../../css/custom/employee-salary-details.css" title="Salary Breakup" GridPane.rowIndex="2" />
+                                                <VBox prefHeight="200.0" prefWidth="100.0" spacing="4.8" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                                    <children>
+                                                        <VBox>
+                                                            <children>
+                                                                <HBox alignment="CENTER_LEFT">
+                                                                    <children>
+                                                                        <Label text="Monthly CTC">
+                                                                            <font>
+                                                                                <Font name="System Bold" size="36.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Hyperlink onAction="#downloadClicked" text="Download">
+                                                                            <graphic>
+                                                                                <ImageView blendMode="MULTIPLY" fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                                                                    <image>
+                                                                                        <Image url="@../../../../img/download-icon.jpg" />
+                                                                                    </image>
+                                                                                </ImageView>
+                                                                            </graphic>
+                                                                            <font>
+                                                                                <Font size="14.0" />
+                                                                            </font>
+                                                                        </Hyperlink>
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox alignment="CENTER_LEFT" spacing="24.0">
+                                                                    <children>
+                                                                        <Label text="Yearly CTC: ">
+                                                                            <font>
+                                                                                <Font size="18.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                        <Label text="₱100,000.0000">
+                                                                            <font>
+                                                                                <Font size="18.0" />
+                                                                            </font>
+                                                                        </Label>
+                                                                    </children>
+                                                                </HBox>
+                                                            </children>
+                                                        </VBox>
+                                                        <HBox prefHeight="100.0" prefWidth="200.0" spacing="64.0">
+                                                            <children>
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Line endX="-100.0" endY="100.0" startX="-100.0" stroke="#93ff93" strokeWidth="4.8" />
+                                                                        <VBox>
+                                                                            <children>
+                                                                                <Label text="Earnings">
+                                                                                    <font>
+                                                                                        <Font size="24.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="resEarnings" text="₱100,000.00">
+                                                                                    <font>
+                                                                                        <Font size="24.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets left="12.0" />
+                                                                            </padding>
+                                                                        </VBox>
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Line endX="-100.0" endY="100.0" startX="-100.0" stroke="#94beff" strokeWidth="4.8" />
+                                                                        <VBox>
+                                                                            <children>
+                                                                                <Label text="Reimbursements">
+                                                                                    <font>
+                                                                                        <Font size="24.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="resReimbursements" text="₱0.00">
+                                                                                    <font>
+                                                                                        <Font size="24.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets left="12.0" />
+                                                                            </padding>
+                                                                        </VBox>
+                                                                    </children>
+                                                                </HBox>
+                                                                <HBox>
+                                                                    <children>
+                                                                        <Line endX="-100.0" endY="100.0" startX="-100.0" stroke="#ffd894" strokeWidth="4.8" />
+                                                                        <VBox>
+                                                                            <children>
+                                                                                <Label text="Deductions">
+                                                                                    <font>
+                                                                                        <Font size="24.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                                <Label fx:id="resDeduction" text="₱100,000.00">
+                                                                                    <font>
+                                                                                        <Font size="24.0" />
+                                                                                    </font>
+                                                                                </Label>
+                                                                            </children>
+                                                                            <padding>
+                                                                                <Insets left="12.0" />
+                                                                            </padding>
+                                                                        </VBox>
+                                                                    </children>
+                                                                </HBox>
+                                                            </children>
+                                                            <VBox.margin>
+                                                                <Insets top="48.0" />
+                                                            </VBox.margin>
+                                                        </HBox>
+                                                    </children>
+                                                    <padding>
+                                                        <Insets top="4.8" />
+                                                    </padding>
+                                                </VBox>
+                                                <PieChart fx:id="pieDeductions" stylesheets="@../../../../css/custom/employee-salary-details.css" title="Deductions" GridPane.rowIndex="5" />
+                                                <PieChart stylesheets="@../../../../css/custom/employee-salary-details.css" title="Benefits" GridPane.rowIndex="4" />
+                                                <PieChart fx:id="pieBenefits" stylesheets="@../../../../css/custom/employee-salary-details.css" title="Benefits" GridPane.rowIndex="4" />
+                                                <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="17.0" prefWidth="396.0" text="Earnings" GridPane.rowIndex="3">
+                                                    <font>
+                                                        <Font name="System Bold" size="24.0" />
+                                                    </font>
+                                                </Label>
+                                                <VBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                                    <children>
+                                                        <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                                            <children>
+                                                                <Label text="Monthly Rate">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="resMonthlyRate" text="₱100,000.0000">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" spacing="50.0">
+                                                            <children>
+                                                                <Label text="Daily Rate      ">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="resDailyRate" text="₱2,000.0000">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="37.0" spacing="50.0">
+                                                            <children>
+                                                                <Label text="Days Worked ">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="resDaysWorked" text="15">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="65.0" spacing="50.0">
+                                                            <children>
+                                                                <Label text="Overtime       ">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="resOvertime" text="0">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                        <HBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="178.0" spacing="50.0" style="-fx-background-color: green;">
+                                                            <children>
+                                                                <Label text="Gross Income" textFill="WHITE">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                                <Label fx:id="resGrossIncome" text="₱100,000.0000" textFill="WHITE">
+                                                                    <font>
+                                                                        <Font size="18.0" />
+                                                                    </font>
+                                                                </Label>
+                                                            </children>
+                                                        </HBox>
+                                                    </children>
+                                                </VBox>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                             <children>
+                                                <Label text="Rice Subsidy    ">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="resRiceSubsidy" text="₱100,000.0000">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                             <children>
+                                                <Label text="Phone Allowance">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="resPhoneAllowance" text="₱2,000.0000">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                             <children>
+                                                <Label text="Clothing Allowance">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="resClothingAllowance" text="15">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="50.0" style="-fx-background-color: green;">
+                                             <children>
+                                                <Label text="Total Benefits" textFill="WHITE">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="resTotalBenefits" text="₱100,000.0000" textFill="WHITE">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <VBox alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                             <children>
+                                                <Label text="SSS">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="resSSS" text="₱100,000.0000">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                             <children>
+                                                <Label text="Pagibig">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="resPagibig" text="₱2,000.0000">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="50.0">
+                                             <children>
+                                                <Label text="Philhealth">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="resPhilhealth" text="15">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="50.0" style="-fx-background-color: red;">
+                                             <children>
+                                                <Label text="Total Deduction" textFill="WHITE">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="resTotalBenefits1" text="₱1000.0000" textFill="WHITE">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                            </children>
+                                        </GridPane>
+                                    </content>
+                                </ScrollPane>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Payslips">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="CENTER_LEFT" layoutX="250.0" layoutY="204.0" prefHeight="607.2" prefWidth="1131.2" spacing="48.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox alignment="CENTER_LEFT">
+                                 <children>
+                                    <Label text="Fiscal Year : ">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                       <graphic>
+                                          <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../img/filter-icon.jpg" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Label>
+                                    <ComboBox fx:id="comboBoxYearOfPayslip" prefHeight="26.0" prefWidth="82.0" promptText="2023" />
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets left="24.0" top="24.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <TableView fx:id="tableViewPayslip" prefHeight="607.2" prefWidth="1131.2">
+                                 <columns>
+                                    <TableColumn prefWidth="75.0" text="Month" />
+                                    <TableColumn prefWidth="75.0" text="Gross Pay" />
+                                    <TableColumn prefWidth="75.0" text="Deductions" />
+                                    <TableColumn prefWidth="75.0" text="Take Home" />
+                                    <TableColumn prefWidth="75.0" text="Payslip" />
+                                    <TableColumn prefWidth="75.0" text="Payslip" />
+                                 </columns>
+                                 <VBox.margin>
+                                    <Insets bottom="96.0" left="48.0" right="48.0" />
+                                 </VBox.margin>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                           </children>
+                        </VBox>
+                     </children></AnchorPane>
+                    </content>
+                </Tab>
+                <Tab text="Annual Earnings">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="607.2" prefWidth="1131.2" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <HBox alignment="CENTER_RIGHT">
+                                 <children>
+                                    <Label text="Financial year : ">
+                                       <font>
+                                          <Font size="24.0" />
+                                       </font>
+                                    </Label>
+                                    <ComboBox prefWidth="150.0" />
+                                 </children>
+                              </HBox>
+                              <LineChart prefHeight="263.0" prefWidth="1131.0" title="Yearly Earnings">
+                                <xAxis>
+                                  <CategoryAxis side="BOTTOM" />
+                                </xAxis>
+                                <yAxis>
+                                  <NumberAxis side="LEFT" />
+                                </yAxis>
+                              </LineChart>
+                              <GridPane hgap="48.0" prefHeight="200.0" prefWidth="1035.0">
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="511.5999755859375" minWidth="10.0" prefWidth="383.00001220703126" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="695.5999755859375" minWidth="10.0" prefWidth="651.7999877929688" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <VBox spacing="8.0">
+                                       <children>
+                                          <HBox alignment="CENTER_RIGHT">
+                                             <children>
+                                                <Label disable="true" focusTraversable="false" text="Earnings">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label disable="true" focusTraversable="false" text="YTD Total">
+                                                   <padding>
+                                                      <Insets left="128.0" />
+                                                   </padding>
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0">
+                                             <children>
+                                                <Label disable="true" focusTraversable="false" text="Montly Rate">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField disable="true" focusTraversable="false">
+                                                   <HBox.margin>
+                                                      <Insets left="32.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="28.0">
+                                             <children>
+                                                <Label disable="true" focusTraversable="false" text="Daily Rate">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField disable="true" focusTraversable="false">
+                                                   <HBox.margin>
+                                                      <Insets left="32.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="53.0">
+                                             <children>
+                                                <Label disable="true" focusTraversable="false" text="Days Worked">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField disable="true" focusTraversable="false">
+                                                   <HBox.margin>
+                                                      <Insets left="32.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="79.0">
+                                             <children>
+                                                <Label disable="true" focusTraversable="false" text="Overtime">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField disable="true" focusTraversable="false">
+                                                   <HBox.margin>
+                                                      <Insets left="32.0" />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                          <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="104.0">
+                                             <children>
+                                                <Label disable="true" focusTraversable="false" prefHeight="26.0" prefWidth="145.0" text="Ann. Gross Income">
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField disable="true" focusTraversable="false">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                   <font>
+                                                      <Font size="16.0" />
+                                                   </font>
+                                                </TextField>
+                                             </children>
+                                          </HBox>
+                                       </children>
+                                    </VBox>
+                                    <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER" GridPane.columnIndex="1">
+                                      <content>
+                                        <AnchorPane>
+                                             <children>
+                                                <TableView prefHeight="400.0" prefWidth="1700.0">
+                                                  <columns>
+                                                    <TableColumn prefWidth="125.0" text="Jan" />
+                                                    <TableColumn prefWidth="125.0" text="Feb" />
+                                                      <TableColumn prefWidth="125.0" text="Mar" />
+                                                      <TableColumn prefWidth="125.0" text="Apr" />
+                                                      <TableColumn prefWidth="125.0" text="May" />
+                                                      <TableColumn prefWidth="125.0" text="Jun" />
+                                                      <TableColumn prefWidth="125.0" text="July" />
+                                                      <TableColumn prefWidth="125.0" text="Aug" />
+                                                      <TableColumn prefWidth="125.0" text="Sept" />
+                                                      <TableColumn prefWidth="125.0" text="Oct" />
+                                                      <TableColumn prefWidth="125.0" text="Nov" />
+                                                      <TableColumn prefWidth="125.0" text="Dec" />
+                                                  </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                      </content>
+                                    </ScrollPane>
+                                 </children>
+                                 <VBox.margin>
+                                    <Insets top="24.0" />
+                                 </VBox.margin>
+                              </GridPane>
+                           </children>
+                        </VBox>
+                     </children>
+                     <padding>
+                        <Insets left="48.0" right="48.0" top="48.0" />
+                     </padding></AnchorPane>
+                    </content>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </children>
+</AnchorPane>

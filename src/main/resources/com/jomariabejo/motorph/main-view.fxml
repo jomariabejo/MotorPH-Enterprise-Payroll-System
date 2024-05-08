@@ -1,20 +1,224 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.mainview">
+<BorderPane fx:id="mainPane" minHeight="720.0" minWidth="1440.0" stylesheets="@../../../css/custom/main-view-style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.MainViewController">
     <left>
-        <VBox spacing="10">
-            <Button text="Profile" onAction="#showProfile" />
-            <Button text="Timesheet" onAction="#showTimesheet" />
-            <Button text="Leave Request" onAction="#showLeaveRequest" />
-            <Button text="Payslip" onAction="#showPayslip" />
-        </VBox>
+      <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER">
+         <content>
+              <VBox alignment="TOP_CENTER" prefHeight="500.0" prefWidth="309.0" spacing="10">
+               <Label fx:id="employee_id" opacity="0.0" text="Employee ID" visible="false" />
+               <Label fx:id="user_id" text="user_id" visible="false" />
+               <ImageView fx:id="userProfileImage" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <image>
+                     <Image url="@../../../img/profile.jpg" />
+                  </image>
+               </ImageView>
+               <Label alignment="CENTER" contentDisplay="CENTER" onMouseClicked="#viewMyProfileClicked" opacity="0.25" prefHeight="35.0" prefWidth="211.0" stylesheets="@../../../css/custom/label.css" text="View My Profile" textAlignment="CENTER">
+                  <font>
+                     <Font name="Segoe UI Bold" size="14.0" />
+                  </font>
+               </Label>
+               <Line endX="100.0" opacity="0.25" startX="-100.0" />
+               <Button fx:id="employeeHomeBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#profileClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Home">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/hr-dashboard-icon.jpg" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Button fx:id="employeeSalaryDetailsBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#salaryDetailsClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Salary Details">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/mytimesheets.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Button fx:id="employeeLeaveRequestBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#myLeaveRequestClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Leave Request">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/myleave.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Label fx:id="lblHR" alignment="CENTER" contentDisplay="CENTER" opacity="0.25" prefHeight="30.0" prefWidth="237.0" text="Human Resource" textAlignment="CENTER">
+                  <font>
+                     <Font name="Segoe UI Bold" size="24.0" />
+                  </font>
+               </Label>
+               <Line fx:id="lineHR" endX="100.0" opacity="0.25" startX="-100.0" />
+               <Button fx:id="hrEmployeesBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#hrEmployeesClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Employees">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/hr-icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Button fx:id="hrTimesheetsBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#hrTimesheetsClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Timesheets">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/hr-timesheets-icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Button fx:id="hrLeaveRequestsBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#hrLeaveRequestClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text=" Leave Requests">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/hr-leave-icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Label fx:id="lblPayroll" alignment="CENTER" contentDisplay="CENTER" opacity="0.25" prefHeight="40.0" prefWidth="195.0" text="Payroll" textAlignment="CENTER">
+                  <font>
+                     <Font name="Segoe UI Bold" size="24.0" />
+                  </font>
+               </Label>
+               <Line fx:id="linePayroll" endX="100.0" opacity="0.25" startX="-100.0" />
+               <Button fx:id="payrollDashboardBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#payrollDashboardClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Dashboard">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="44.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/payroll-icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Button fx:id="payrollGeneratePayslip" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#generatePayslipClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Generate Payslip">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/process-icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Button fx:id="payrollReportBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#payrollReportClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Payroll Report">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/report-icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Label fx:id="lblIT" alignment="CENTER" contentDisplay="CENTER" opacity="0.25" prefHeight="40.0" prefWidth="301.0" text="Information Technology" textAlignment="CENTER">
+                  <font>
+                     <Font name="Segoe UI Bold" size="24.0" />
+                  </font>
+               </Label>
+               <Line fx:id="lineIT" endX="100.0" opacity="0.25" startX="-100.0" />
+               <Button fx:id="itUsers" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#usersClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Users">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/system-users-icon.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Button fx:id="itDataBackupBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#dataBackupClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Data Backup">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/backup-icon.jpg" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Label alignment="CENTER" contentDisplay="CENTER" opacity="0.25" prefHeight="40.0" prefWidth="150.0" text="© Jomari Abejo 2024" textAlignment="CENTER">
+                  <font>
+                     <Font name="Segoe UI Bold" size="12.0" />
+                  </font>
+               </Label>
+              </VBox>
+         </content>
+      </ScrollPane>
     </left>
-    <center>
-        <ScrollPane fitToWidth="true" fitToHeight="true">
-            <AnchorPane fx:id="anchorPane" prefWidth="600" prefHeight="400" />
-        </ScrollPane>
-    </center>
+    <top>
+        <AnchorPane BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1080.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <ImageView fitHeight="98.0" fitWidth="152.0" pickOnBounds="true" preserveRatio="true">
+                            <HBox.margin>
+                                <Insets left="16.0" />
+                            </HBox.margin>
+                            <image>
+                                <Image url="@../../../../../../../../Downloads/payroII_system/src/main/resources/img/motorcycle_icon.png" />
+                            </image>
+                        </ImageView>
+                        <Region prefHeight="100.0" prefWidth="1034.0" />
+                        <ComboBox fx:id="comboBoxSettings" onAction="#dropDownClicked" prefHeight="56.0" prefWidth="188.0" promptText="Settings" style="-fx-font-size: 20;" styleClass="-fx-font-size: 48px;" stylesheets="@../../../css/custom/combobox.css">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Settings" />
+                                    <String fx:value="Logout" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                    </children>
+                </HBox>
+            </children>
+        </AnchorPane>
+    </top>
 </BorderPane>

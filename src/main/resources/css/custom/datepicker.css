@@ -1,0 +1,31 @@
+.date-picker > .arrow-button {
+    -fx-background-color: #FAFAFA;
+    -fx-background-insets: 2, 3; /* Adjusted border size */
+    -fx-min-width: 36;
+    -fx-min-height: 40; /* Adjusted height to 32px */
+}
+
+.date-picker > .arrow-button:hover {
+    -fx-background-color: lightgray;
+}
+
+.date-picker > .arrow-button:pressed {
+    -fx-background-color: darkgray;
+}
+
+.date-picker > .date-label {
+    -fx-background-color: #FAFAFA;
+    -fx-background-insets: 0, 1;
+    -fx-min-width: 30;
+    -fx-min-height: 30;
+    -fx-font-size: 24px;
+}
+
+.date-picker > .date-label:hover {
+    -fx-background-color: lightgray;
+}
+
+.date-picker > .date-label:selected {
+    -fx-background-color: #58379A;
+    -fx-text-fill: white;
+}
