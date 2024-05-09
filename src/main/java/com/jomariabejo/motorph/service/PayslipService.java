@@ -18,6 +18,6 @@ public class PayslipService {
     }
 
     public void saveGeneratedPayslip(ArrayList<EmployeePayrollSummaryReport> employeePayrollSummaryReports) {
-        payslipRepository.savePayslip(employeePayrollSummaryReports);
+        payslipRepository.saveMultiplePayslip(employeePayrollSummaryReports);
     }
 }

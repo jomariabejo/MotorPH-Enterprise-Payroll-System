@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TaxCategoryService {
-    public int fetchTaxCategoryIdByMonthlyRate(BigDecimal monthlyRate) throws SQLException {
+    public int fetchTaxCategoryIdByMonthlyRate(BigDecimal monthlyRate) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\tax_category\\get_tax_category_id_by_monthly_rate.sql");
 
         try (Connection  connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {

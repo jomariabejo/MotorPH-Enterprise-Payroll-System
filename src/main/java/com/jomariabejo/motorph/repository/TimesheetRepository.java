@@ -58,11 +58,6 @@ public class TimesheetRepository {
     }
 
 
-    /**
-     * TODO IMPLEMENT TIMESHEETS PLEASE
-     *
-     * @return
-     */
     public ArrayList<Timesheet> getTimesheets() throws SQLException {
         String query = "SELECT * FROM payroll_sys.timesheet";
         ArrayList<Timesheet> timesheets = new ArrayList<>();

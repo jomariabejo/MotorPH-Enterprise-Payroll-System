@@ -7,7 +7,8 @@ public class Payslip {
     private int employeeID;
     private int allowanceID;
     private int taxID;
-    private int totalHoursWorked;
+    private int deductionID;
+    private BigDecimal totalHoursWorked;
     private BigDecimal grossIncome;
     private BigDecimal netIncome;
     private Date payPeriodStart;
@@ -17,7 +18,7 @@ public class Payslip {
     public Payslip() {
     }
 
-    public Payslip(int employeeID, int allowanceID, int taxID, int totalHoursWorked, BigDecimal grossIncome, BigDecimal netIncome, Date payPeriodStart, Date payPeriodEnd, Date dateCreated) {
+    public Payslip(int employeeID, int allowanceID, int taxID, BigDecimal totalHoursWorked, BigDecimal grossIncome, BigDecimal netIncome, Date payPeriodStart, Date payPeriodEnd, Date dateCreated) {
         this.employeeID = employeeID;
         this.allowanceID = allowanceID;
         this.taxID = taxID;
@@ -29,7 +30,7 @@ public class Payslip {
         this.dateCreated = dateCreated;
     }
 
-    public Payslip(int payslipID, int employeeID, int allowanceID, int taxID, int totalHoursWorked, BigDecimal grossIncome, BigDecimal netIncome, Date payPeriodStart, Date payPeriodEnd, Date dateCreated) {
+    public Payslip(int payslipID, int employeeID, int allowanceID, int taxID, BigDecimal totalHoursWorked, BigDecimal grossIncome, BigDecimal netIncome, Date payPeriodStart, Date payPeriodEnd, Date dateCreated) {
         this.payslipID = payslipID;
         this.employeeID = employeeID;
         this.allowanceID = allowanceID;
@@ -74,11 +75,11 @@ public class Payslip {
         this.taxID = taxID;
     }
 
-    public int getTotalHoursWorked() {
+    public BigDecimal getTotalHoursWorked() {
         return totalHoursWorked;
     }
 
-    public void setTotalHoursWorked(int totalHoursWorked) {
+    public void setTotalHoursWorked(BigDecimal totalHoursWorked) {
         this.totalHoursWorked = totalHoursWorked;
     }
 
@@ -120,5 +121,13 @@ public class Payslip {
 
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
+    }
+
+    public int getDeductionID() {
+        return deductionID;
+    }
+
+    public void setDeductionID(int deductionID) {
+        this.deductionID = deductionID;
     }
 }

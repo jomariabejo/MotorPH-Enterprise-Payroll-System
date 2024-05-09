@@ -13,12 +13,13 @@ public class DeductionRepository {
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, deduction.getEmployeeID());
-            preparedStatement.setBigDecimal(2, deduction.getSss());
-            preparedStatement.setBigDecimal(3, deduction.getPhilhealth());
-            preparedStatement.setBigDecimal(4, deduction.getPagibig());
-            preparedStatement.setBigDecimal(5, deduction.totalContributions());
-            preparedStatement.setDate(6, deduction.getDateCreated());
+            preparedStatement.setInt(1, deduction.getDeductionID());
+            preparedStatement.setInt(2, deduction.getEmployeeID());
+            preparedStatement.setBigDecimal(3, deduction.getSss());
+            preparedStatement.setBigDecimal(4, deduction.getPhilhealth());
+            preparedStatement.setBigDecimal(5, deduction.getPagibig());
+            preparedStatement.setBigDecimal(6, deduction.totalContributions());
+            preparedStatement.setDate(7, deduction.getDateCreated());
 
             int rowsAffected = preparedStatement.executeUpdate();
 

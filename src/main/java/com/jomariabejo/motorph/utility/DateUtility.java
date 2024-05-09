@@ -32,11 +32,11 @@ public class DateUtility {
 
     public static Date getDate() {
         try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT CURDATE() AS current_date");
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT CURDATE()");
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             if (resultSet.next()) {
-                return resultSet.getDate("current_date");
+                return resultSet.getDate(1);
             } else {
                 throw new SQLException("Failed to retrieve current date from the database.");
             }

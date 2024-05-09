@@ -17,6 +17,7 @@ import javafx.scene.control.TableView;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GeneratePayslipController {
@@ -26,6 +27,7 @@ public class GeneratePayslipController {
     private DeductionService deductionService;
     private TaxService taxService;
     private PayslipService payslipService;
+
 
     public GeneratePayslipController() {
         timesheetService = new TimesheetService();
@@ -52,7 +54,7 @@ public class GeneratePayslipController {
     private Pagination pagination;
 
     @FXML
-    void executeClicked(ActionEvent event) {
+    void executeClicked(ActionEvent event) throws SQLException {
         if (executeButton.getText().equals("Execute")) {
 
             ArrayList<EmployeePayrollSummaryReport> employeePayrollSummaryReports = new ArrayList<>();
@@ -145,9 +147,11 @@ public class GeneratePayslipController {
                 employeePayrollSummaryReport.setSocialSecurityContribution(deduction.getSss());
                 employeePayrollSummaryReport.setPhilhealthContribution(deduction.getPhilhealth());
                 employeePayrollSummaryReport.setPagIbigContribution(deduction.getPagibig());
+                employeePayrollSummaryReport.setTaxableIncome(tax.getTaxableIncome());
                 employeePayrollSummaryReport.setWithholdingTax(tax.getWithheldTax());
                 employeePayrollSummaryReport.setTotalDeductions(tax.getWithheldTax().add(deduction.totalContributions()));
                 employeePayrollSummaryReport.setNetPay(netPay);
+                employeePayrollSummaryReport.setAllowanceId(allowanceService.getAllowanceIdByEmployeeId(GROSS_INCOMES.get(i).employeeId()));
 
                 employeePayrollSummaryReports.add(employeePayrollSummaryReport);
 

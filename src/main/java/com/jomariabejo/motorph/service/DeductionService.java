@@ -1,9 +1,23 @@
 package com.jomariabejo.motorph.service;
 
+import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
+import com.jomariabejo.motorph.entity.Deduction;
+import com.jomariabejo.motorph.repository.DeductionRepository;
+import com.jomariabejo.motorph.utility.TextReader;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 public class DeductionService {
+
+    private DeductionRepository deductionRepository;
+
+    public DeductionService() {
+        this.deductionRepository = new DeductionRepository();
+    }
 
     /**
      * Computes the PhilHealth deduction for an employee based on their basic salary.
@@ -88,5 +102,23 @@ public class DeductionService {
             return BigDecimal.ZERO.setScale(2);
         }
         return contribution.setScale(2);
+    }
+
+    public void saveDeduction(Deduction deduction) {
+        String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\deduction\\create_deduction.sql");
+
+        try(Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, deduction.getDeductionID());
+            preparedStatement.setInt(2, deduction.getEmployeeID());
+            preparedStatement.setBigDecimal(3, deduction.getSss());
+            preparedStatement.setBigDecimal(4, deduction.getPhilhealth());
+            preparedStatement.setBigDecimal(5, deduction.getPagibig());
+            preparedStatement.setBigDecimal(6, deduction.totalContributions());
+            preparedStatement.setDate(7, deduction.getDateCreated());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

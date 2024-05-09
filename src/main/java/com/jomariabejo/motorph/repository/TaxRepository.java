@@ -7,7 +7,7 @@ import com.jomariabejo.motorph.utility.TextReader;
 import java.sql.*;
 
 public class TaxRepository {
-    private void saveTax(Tax tax) throws SQLException {
+    public void saveTax(Tax tax) throws SQLException {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\tax\\create_tax.sql");
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();

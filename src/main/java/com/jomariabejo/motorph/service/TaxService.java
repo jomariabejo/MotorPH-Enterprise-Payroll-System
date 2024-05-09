@@ -1,23 +1,27 @@
 package com.jomariabejo.motorph.service;
 
 import com.jomariabejo.motorph.entity.Deduction;
+import com.jomariabejo.motorph.entity.Tax;
+import com.jomariabejo.motorph.repository.TaxRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 
 public class TaxService {
     private DeductionService deductionService;
+    private TaxRepository taxRepository;
 
     public TaxService() {
         deductionService = new DeductionService();
+        taxRepository = new TaxRepository();
     }
 
 
     public BigDecimal computeTax(BigDecimal basicSalary, BigDecimal grossSalary, Deduction deduction) {
 
         BigDecimal totalContribution = deduction.totalContributions();
-        System.out.println(deduction.toString());
-        BigDecimal taxableIncome = basicSalary.subtract(totalContribution);
+        BigDecimal taxableIncome = grossSalary.subtract(totalContribution);
 
         BigDecimal withholdingTax = BigDecimal.ZERO;
 
@@ -41,4 +45,11 @@ public class TaxService {
     }
 
 
+    public void saveTax(Tax tax) {
+        try {
+            taxRepository.saveTax(tax);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

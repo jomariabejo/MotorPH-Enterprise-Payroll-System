@@ -44,7 +44,7 @@ public class AllowanceRepository {
         String query = "SELECT * FROM allowance WHERE employee_id = ?";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
-        PreparedStatement ps = connection.prepareStatement(query)){
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, employeeId);
 
             ResultSet resultSet = ps.executeQuery();
@@ -60,8 +60,7 @@ public class AllowanceRepository {
                         resultSet.getDate("dateCreated"),
                         resultSet.getTimestamp("dateModified")
                 );
-            }
-            else return null;
+            } else return null;
         }
     }
 
@@ -72,5 +71,21 @@ public class AllowanceRepository {
             ps.executeUpdate();
             System.out.println("Record Removed");
         }
+    }
+
+    public int getAllowanceIdByEmployeeId(int employeeId) throws SQLException {
+        String query = "SELECT alw_id FROM allowance WHERE employee_id = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, employeeId);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt("alw_id"); // allowance id
+            }
+        }
+        return 0;
     }
 }

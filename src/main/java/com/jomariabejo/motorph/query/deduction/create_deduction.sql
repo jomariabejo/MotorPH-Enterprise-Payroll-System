@@ -17,10 +17,11 @@ Version: 1.0
 --   - 'date_created': Timestamp for when the deduction record was created.
 
 INSERT INTO DEDUCTION (
-    employee_id, sss, philhealth, pagibig,
+    deduction_id, employee_id, sss, philhealth, pagibig,
     total_deduction, date_created
 )
 VALUES (
+           ?, -- deduction_id
            ?, -- employee_id
            ?, -- sss
            ?, -- philhealth

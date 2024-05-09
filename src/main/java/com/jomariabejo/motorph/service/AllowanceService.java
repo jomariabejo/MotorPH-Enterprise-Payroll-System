@@ -16,6 +16,10 @@ public class AllowanceService {
         return allowanceRepository.getAllowanceByEmployeeId(employeeId);
     }
 
+    public int getAllowanceIdByEmployeeId(int employeeId) throws SQLException {
+        return allowanceRepository.getAllowanceIdByEmployeeId(employeeId);
+    }
+
     public void updateAllowance(Allowance allowance) throws SQLException {
         allowanceRepository.updateAllowance(allowance);
     }

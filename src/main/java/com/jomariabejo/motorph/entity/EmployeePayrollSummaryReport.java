@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class EmployeePayrollSummaryReport {
-    private int employeeNumber;
+    private int employeeNumber, allowanceId;
     private Date startPayDate, endPayDate;
     private String employeeFullName, position, department, socialSecurityNumber, philhealthNumber, pagIbigNumber, tinNumber;
-    private BigDecimal monthlyRate, hourlyRate, totalRegularHoursWorked, totalOvertimeHoursWorked, riceSubsidy, phoneAllowance, clothingAllowance, totalAllowance, grossIncome, socialSecurityContribution, philhealthContribution, pagIbigContribution, withholdingTax, totalDeductions, netPay;
+    private BigDecimal monthlyRate, hourlyRate, taxableIncome, totalRegularHoursWorked, totalOvertimeHoursWorked, riceSubsidy, phoneAllowance, clothingAllowance, totalAllowance, grossIncome, socialSecurityContribution, philhealthContribution, pagIbigContribution, withholdingTax, totalDeductions, netPay;
 
     public EmployeePayrollSummaryReport() {
     }
@@ -266,5 +266,21 @@ public class EmployeePayrollSummaryReport {
 
     public BigDecimal computeTotalDeductions() {
         return this.getSocialSecurityContribution().add(this.getPhilhealthContribution()).add(this.getPagIbigContribution().add(this.withholdingTax));
+    }
+
+    public int getAllowanceId() {
+        return allowanceId;
+    }
+
+    public void setAllowanceId(int allowanceId) {
+        this.allowanceId = allowanceId;
+    }
+
+    public BigDecimal getTaxableIncome() {
+        return taxableIncome;
+    }
+
+    public void setTaxableIncome(BigDecimal taxableIncome) {
+        this.taxableIncome = taxableIncome;
     }
 }
