@@ -23,6 +23,7 @@ public class LoginController {
 
     @FXML
     private Button loginBtn;
+
     @FXML
     private Button registerBtn;
 

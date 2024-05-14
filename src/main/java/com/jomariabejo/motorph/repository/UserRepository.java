@@ -37,12 +37,18 @@ public class UserRepository {
         }
     }
 
-    public void deleteUser(int userID) throws SQLException {
-        String query = "DELETE FROM user WHERE user_id = ?";
+    public void deleteUser(String username) throws SQLException {
+        String query = "DELETE FROM user WHERE username = ?";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, userID);
-            ps.executeUpdate();
-            System.out.println("User ID:" + userID + " record deleted...");
+            ps.setString(1, username);
+            int isDelete = ps.executeUpdate();
+
+            if (isDelete == 0) {
+                System.out.println("Nothing to delete");
+            }
+            else {
+                System.out.println("Delete username: " + username + " success :)");
+            }
         }
     }
 
