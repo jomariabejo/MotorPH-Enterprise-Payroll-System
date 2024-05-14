@@ -100,6 +100,7 @@ public class MainViewController {
     @FXML
     private Line linePayroll;
 
+
     @FXML
     private void initialize() throws IOException, SQLException {
         hideButtons();
@@ -476,5 +477,12 @@ public class MainViewController {
         payrollReportBtn.setManaged(true);
         lblPayroll.setManaged(true);
         linePayroll.setManaged(true);
+    }
+
+    public void mytimesheetclicked(ActionEvent event) throws IOException {
+        System.out.println("Timesheets clicked");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(BORDERPANE_CENTER_BASE_PATH + "/employee-timesheet-view.fxml"));
+        AnchorPane myTimesheetsView = fxmlLoader.load();
+        mainPane.setCenter(myTimesheetsView);
     }
 }

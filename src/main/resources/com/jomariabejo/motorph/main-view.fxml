@@ -47,11 +47,23 @@
                      <Font name="Comfortaa SemiBold" size="24.0" />
                   </font>
                </Button>
-               <Button fx:id="employeeSalaryDetailsBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#salaryDetailsClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Salary Details">
+               <Button alignment="BASELINE_LEFT" layoutX="28.0" layoutY="284.0" minHeight="48.0" mnemonicParsing="false" onAction="#mytimesheetclicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Timesheet">
                   <graphic>
                      <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
                         <image>
                            <Image url="@../../../img/mytimesheets.png" />
+                        </image>
+                     </ImageView>
+                  </graphic>
+                  <font>
+                     <Font name="Comfortaa SemiBold" size="24.0" />
+                  </font>
+               </Button>
+               <Button fx:id="employeeSalaryDetailsBtn" alignment="BASELINE_LEFT" minHeight="48.0" mnemonicParsing="false" onAction="#salaryDetailsClicked" prefHeight="48.0" prefWidth="275.0" stylesheets="@../../../css/custom/button.css" text="Salary Details">
+                  <graphic>
+                     <ImageView blendMode="MULTIPLY" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true" preserveRatio="true">
+                        <image>
+                           <Image url="@../../../img/salary-icon.png" />
                         </image>
                      </ImageView>
                   </graphic>
@@ -204,7 +216,7 @@
                                 <Insets left="16.0" />
                             </HBox.margin>
                             <image>
-                                <Image url="@../../../../../../../../Downloads/payroII_system/src/main/resources/img/motorcycle_icon.png" />
+                                <Image url="@../../../img/logo.jpeg" />
                             </image>
                         </ImageView>
                         <Region prefHeight="100.0" prefWidth="1034.0" />
