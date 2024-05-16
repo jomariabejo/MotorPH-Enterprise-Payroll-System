@@ -19,8 +19,20 @@ public class EmployeeRepository {
     public final String QUERY_BASE_PATH = "src/main/java/com/jomariabejo/motorph/query/employee";
 
     public void createNewEmployeeRecord(Employee employee) {
-        String query = TextReader.readTextFile(QUERY_BASE_PATH + "/create_employee.sql");
-        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
+        String query = "INSERT INTO EMPLOYEE (\n" +
+                "    first_name, last_name, birthday, address,\n" +
+                "    contact_number, status, date_hired,\n" +
+                "    position_id, supervisor, dept_id,\n" +
+                "    sss, philhealth, pagibig, tin, basic_salary,\n" +
+                "    gross_semi_monthly_rate, hourly_rate\n" +
+                ")\n" +
+                "VALUES\n" +
+                "    (\n" +
+                "        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,\n" +
+                "        ?\n" +
+                "    );";
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             preparedStatementSetter(employee, ps);
 
             ps.executeUpdate();

@@ -13,12 +13,12 @@ Version: 1.0
 --   - 'sss': Represents the Social Security System (SSS) deduction for the employee.
 --   - 'philhealth': Represents the PhilHealth deduction for the employee.
 --   - 'pagibig': Represents the Pag-IBIG Fund deduction for the employee.
---   - 'total_deduction': Represents the total deduction amount for the employee.
+--   - 'total_contribution': Represents the total contribution amount for the employee.
 --   - 'date_created': Timestamp for when the deduction record was created.
 
 INSERT INTO DEDUCTION (
     deduction_id, employee_id, sss, philhealth, pagibig,
-    total_deduction, date_created
+    total_contribution, date_created
 )
 VALUES (
            ?, -- deduction_id
@@ -26,6 +26,6 @@ VALUES (
            ?, -- sss
            ?, -- philhealth
            ?, -- pagibig
-           ?, -- total_deduction
+           ?, -- total_contribution
            ?  -- date_created
        );

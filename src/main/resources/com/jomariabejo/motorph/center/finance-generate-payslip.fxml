@@ -40,7 +40,7 @@
                 </HBox>
                 <ScrollPane stylesheets="@../../../../css/custom/scrollpane.css">
                     <content>
-                        <TableView fx:id="MONTHLY_PAYROLL_SUMMARY_REPORT" prefHeight="491.0" prefWidth="4374.0"
+                        <TableView fx:id="tv_generated_payroll" prefHeight="491.0" prefWidth="4374.0"
                                    stylesheets="@../../../../css/custom/tableView.css">
                             <columns>
                                 <TableColumn minWidth="175.0" prefWidth="155.19998931884766" text="Employee Id">

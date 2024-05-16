@@ -13,10 +13,10 @@ public class TaxRepository {
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, tax.getEmployeeId());
-            preparedStatement.setBigDecimal(2, tax.getTaxableIncome()   );
-            preparedStatement.setInt(3, tax.getTaxCategoryId());
-            preparedStatement.setBigDecimal(4, tax.getWithheldTax());
+            preparedStatement.setBigDecimal(1, tax.getTaxableIncome()   );
+            preparedStatement.setInt(2, tax.getTaxCategoryId());
+            preparedStatement.setBigDecimal(3, tax.getWithheldTax());
+            preparedStatement.setInt(4, tax.getEmployeeId());
             preparedStatement.setDate(5, tax.getDateCreated());
 
             int rowsAffected = preparedStatement.executeUpdate();

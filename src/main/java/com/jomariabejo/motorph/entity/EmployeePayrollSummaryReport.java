@@ -244,6 +244,9 @@ public class EmployeePayrollSummaryReport {
     public String toString() {
         return "EmployeePayrollSummaryReport{" +
                 "employeeNumber=" + employeeNumber +
+                ", allowanceId=" + allowanceId +
+                ", startPayDate=" + startPayDate +
+                ", endPayDate=" + endPayDate +
                 ", employeeFullName='" + employeeFullName + '\'' +
                 ", position='" + position + '\'' +
                 ", department='" + department + '\'' +
@@ -251,11 +254,21 @@ public class EmployeePayrollSummaryReport {
                 ", philhealthNumber='" + philhealthNumber + '\'' +
                 ", pagIbigNumber='" + pagIbigNumber + '\'' +
                 ", tinNumber='" + tinNumber + '\'' +
+                ", monthlyRate=" + monthlyRate +
+                ", hourlyRate=" + hourlyRate +
+                ", taxableIncome=" + taxableIncome +
+                ", totalRegularHoursWorked=" + totalRegularHoursWorked +
+                ", totalOvertimeHoursWorked=" + totalOvertimeHoursWorked +
+                ", riceSubsidy=" + riceSubsidy +
+                ", phoneAllowance=" + phoneAllowance +
+                ", clothingAllowance=" + clothingAllowance +
+                ", totalAllowance=" + totalAllowance +
                 ", grossIncome=" + grossIncome +
                 ", socialSecurityContribution=" + socialSecurityContribution +
                 ", philhealthContribution=" + philhealthContribution +
                 ", pagIbigContribution=" + pagIbigContribution +
                 ", withholdingTax=" + withholdingTax +
+                ", totalDeductions=" + totalDeductions +
                 ", netPay=" + netPay +
                 '}';
     }

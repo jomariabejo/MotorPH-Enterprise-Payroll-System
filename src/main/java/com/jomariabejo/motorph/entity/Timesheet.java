@@ -1,20 +1,20 @@
 package com.jomariabejo.motorph.entity;
 
 import java.sql.Date;
-import java.sql.Timestamp;
+import java.sql.Time;
 
 public class Timesheet {
 
     private int timesheetId;
     private Date date;
-    private Timestamp timeIn;
-    private Timestamp timeOut;
+    private Time timeIn;
+    private Time timeOut;
     private int employeeId;
 
     // Constructors
     public Timesheet() {}
 
-    public Timesheet(int timesheetId, Date date, Timestamp timeIn, Timestamp timeOut, int employeeId) {
+    public Timesheet(int timesheetId, Date date, Time timeIn, Time timeOut, int employeeId) {
         this.timesheetId = timesheetId;
         this.date = date;
         this.timeIn = timeIn;
@@ -22,7 +22,7 @@ public class Timesheet {
         this.employeeId = employeeId;
     }
 
-    public Timesheet(Date date, Timestamp timeIn, Timestamp timeOut, Integer employeeId) {
+    public Timesheet(Date date, Time timeIn, Time timeOut, Integer employeeId) {
         this.date = date;
         this.timeIn = timeIn;
         this.timeOut = timeOut;
@@ -47,19 +47,19 @@ public class Timesheet {
         this.date = date;
     }
 
-    public Timestamp getTimeIn() {
+    public Time getTimeIn() {
         return timeIn;
     }
 
-    public void setTimeIn(Timestamp timeIn) {
+    public void Time(Time timeIn) {
         this.timeIn = timeIn;
     }
 
-    public Timestamp getTimeOut() {
+    public Time getTimeOut() {
         return timeOut;
     }
 
-    public void setTimeOut(Timestamp timeOut) {
+    public void setTimeOut(Time timeOut) {
         this.timeOut = timeOut;
     }
 

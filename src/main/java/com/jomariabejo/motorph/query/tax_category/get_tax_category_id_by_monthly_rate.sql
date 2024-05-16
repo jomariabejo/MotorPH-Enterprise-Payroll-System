@@ -1,1 +1,1 @@
-SELECT tax_cat_id from tax_category WHERE 34000 >= minimum_monthly_rate AND 34000 <= maximum_monthly_rate
+SELECT tax_cat_id from tax_category WHERE ? >= minimum_monthly_rate AND ? <= maximum_monthly_rate

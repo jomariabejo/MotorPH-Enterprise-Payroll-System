@@ -39,7 +39,7 @@ public class GeneratePayslipController {
     }
 
     @FXML
-    private TableView<EmployeePayrollSummaryReport> MONTHLY_PAYROLL_SUMMARY_REPORT;
+    private TableView<EmployeePayrollSummaryReport> tv_generated_payroll;
 
     @FXML
     private DatePicker dp_endPayDate;
@@ -60,8 +60,6 @@ public class GeneratePayslipController {
             ArrayList<EmployeePayrollSummaryReport> employeePayrollSummaryReports = new ArrayList<>();
 
             ArrayList<GrossIncome> GROSS_INCOMES = timesheetService.fetchGrossIncome(Date.valueOf(dp_startPayDate.getValue()), Date.valueOf(dp_endPayDate.getValue()));
-            ArrayList<Deduction> DEDUCTIONS = new ArrayList<>();
-            ArrayList<Tax> TAXES = new ArrayList<>();
 
             /**
              * Compute deductions based on gross income
@@ -74,55 +72,21 @@ public class GeneratePayslipController {
                 deduction.setPagibig(deductionService.deductPagIbig(GROSS_INCOMES.get(i).computeGrossIncome()));
 
                 Tax tax = new Tax();
-                System.out.println("BASIC        SALARY = " + GROSS_INCOMES.get(i).basicSalary());
-                System.out.println("GROSS INCOME SALARY = " + GROSS_INCOMES.get(i).computeGrossIncome());
 
                 tax.setWithheldTax(
                         taxService.computeTax(
                             GROSS_INCOMES.get(i).basicSalary(),
                             GROSS_INCOMES.get(i).computeGrossIncome(),
                             deduction));
-                TAXES.add(tax);
 
-                System.out.println("SSS       DEDUCTION = " + deduction.getSss());
-                System.out.println("PHILHEALTHDEDUCTION = " + deduction.getPhilhealth());
-                System.out.println("PAGIBIG   DEDUCTION = " + deduction.getPagibig());
-                System.out.println("THE TAX IS = " + tax.getWithheldTax());
-                System.out.println("THE TOTAL DEDUCTION = " + deduction.totalContributions().add(tax.getWithheldTax()));
-                System.out.println("Check tax string");
-                tax.toString();
-                DEDUCTIONS.add(deduction);
-
+                tax.setTaxableIncome(taxService.computeTax(
+                        GROSS_INCOMES.get(i).basicSalary(),
+                        GROSS_INCOMES.get(i).computeGrossIncome(),
+                        deduction
+                ));
                 AccountNumber accountNumber = employeeService.fetchEmployeeAccountNumber(GROSS_INCOMES.get(i).employeeId());
-                BigDecimal netPay = GROSS_INCOMES.get(i).computeGrossIncome().subtract(deduction.totalContributions()).subtract(tax.getWithheldTax());
-
-                /**
-                 employeeNumber;✅
-                 startPayDate;✅
-                 endPayDate;✅
-                 employeeFullName;✅
-                 position;✅
-                 department;✅
-                 socialSecurityNumber;✅
-                 philhealthNumber;✅
-                 pagIbigNumber;✅
-                 tinNumber;✅
-                 monthlyRate;✅
-                 hourlyRate;✅
-                 totalRegularHoursWorked;✅
-                 totalOvertimeHoursWorked;✅✅
-                 riceSubsidy;✅
-                 phoneAllowance;✅
-                 clothingAllowance;✅
-                 totalAllowance;✅
-                 grossIncome;✅
-                 socialSecurityContribution;✅
-                 philhealthContribution;✅
-                 pagIbigContribution;✅
-                 withholdingTax;
-                 totalDeductions;
-                 netPay;
-                 */
+                BigDecimal totalDeduction = deduction.totalContributions().add(tax.getWithheldTax());
+                BigDecimal netPay = GROSS_INCOMES.get(i).computeGrossIncome().subtract(totalDeduction).add(new BigDecimal(GROSS_INCOMES.get(i).total_allowance()));
                 EmployeePayrollSummaryReport employeePayrollSummaryReport = new EmployeePayrollSummaryReport();
                 employeePayrollSummaryReport.setEmployeeNumber(GROSS_INCOMES.get(i).employeeId());
                 employeePayrollSummaryReport.setStartPayDate(Date.valueOf(dp_startPayDate.getValue()));
@@ -131,6 +95,7 @@ public class GeneratePayslipController {
                 employeePayrollSummaryReport.setPosition(GROSS_INCOMES.get(i).position());
                 employeePayrollSummaryReport.setDepartment(GROSS_INCOMES.get(i).department());
                 employeePayrollSummaryReport.setEmployeeFullName(accountNumber.sss());
+                employeePayrollSummaryReport.setSocialSecurityNumber(accountNumber.sss());
                 employeePayrollSummaryReport.setPhilhealthNumber(accountNumber.philhealth());
                 employeePayrollSummaryReport.setPagIbigNumber(accountNumber.pagibig());
                 employeePayrollSummaryReport.setTinNumber(accountNumber.tin());
@@ -155,8 +120,6 @@ public class GeneratePayslipController {
 
                 employeePayrollSummaryReports.add(employeePayrollSummaryReport);
 
-                // TODO: ONCACTION VIEW FOR EACH PAYSLIP
-                // TODO: CREATE SAVE PAYSLIP
                 executeButton.setText("Save");
             }
             injectEmployeePayrollSummaryReportToTableView(employeePayrollSummaryReports);
@@ -164,16 +127,16 @@ public class GeneratePayslipController {
         // handle save generated payslips
         else {
             if (executeButton.getText().equals("Save")) {
-                boolean isSave = AlertUtility.showConfirmation("Generated Payslip Confirmation", "Save Payslips", "Are you you sure you want to save the generated payslips?");
+                boolean isSaveButtonConfirmed = AlertUtility.showConfirmation("Generated Payslip Confirmation", "Save Payslips", "Are you you sure you want to save the generated payslips?");
 
-                    if (isSave) {
-//                        payslipService.saveGeneratedPayslip(MONTHLY_PAYROLL_SUMMARY_REPORT);
+                    if (isSaveButtonConfirmed) {
+                        payslipService.saveGeneratedPayslip(tv_generated_payroll.getItems());
                     }
             }
         }
     }
 
     public void injectEmployeePayrollSummaryReportToTableView(ArrayList<EmployeePayrollSummaryReport> employeePayrollSummaryReports) {
-        MONTHLY_PAYROLL_SUMMARY_REPORT.setItems(FXCollections.observableList(employeePayrollSummaryReports));
+        tv_generated_payroll.setItems(FXCollections.observableList(employeePayrollSummaryReports));
     }
 }

@@ -19,8 +19,8 @@ public class TimesheetRepository {
 
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setDate(1, timesheet.getDate());
-            ps.setTimestamp(2, timesheet.getTimeIn());
-            ps.setTimestamp(3, timesheet.getTimeOut());
+            ps.setTime(2, timesheet.getTimeIn());
+            ps.setTime(3, timesheet.getTimeOut());
             ps.setInt(3, timesheet.getEmployeeId());
         }
     }
@@ -67,8 +67,8 @@ public class TimesheetRepository {
                     timesheets.add(new Timesheet(
                             rs.getInt("timesheet_id"),
                             rs.getDate("date"),
-                            rs.getTimestamp("time_in"),
-                            rs.getTimestamp("time_out"),
+                            rs.getTime("time_in"),
+                            rs.getTime("time_out"),
                             rs.getInt("employee_id")
                     ));
                 }
@@ -89,8 +89,8 @@ public class TimesheetRepository {
                     timesheet = Optional.of(new Timesheet(
                             rs.getInt("timesheet_id"),
                             rs.getDate("date"),
-                            rs.getTimestamp("time_in"),
-                            rs.getTimestamp("time_out"),
+                            rs.getTime("time_in"),
+                            rs.getTime("time_out"),
                             rs.getInt("employee_id")
                     ));
                 }
@@ -119,8 +119,8 @@ public class TimesheetRepository {
                         new Timesheet(
                                 rs.getInt("timesheet_id"),
                                 rs.getDate("date"),
-                                rs.getTimestamp("time_in"),
-                                rs.getTimestamp("time_out"),
+                                rs.getTime("time_in"),
+                                rs.getTime("time_out"),
                                 rs.getInt("employee_id")
                         )
                 );
@@ -146,8 +146,8 @@ public class TimesheetRepository {
                         new Timesheet(
                                 rs.getInt("timesheet_id"),
                                 rs.getDate("date"),
-                                rs.getTimestamp("time_in"),
-                                rs.getTimestamp("time_out"),
+                                rs.getTime("time_in"),
+                                rs.getTime("time_out"),
                                 rs.getInt("employee_id")
                         )
                 );
@@ -169,8 +169,8 @@ public class TimesheetRepository {
                         new Timesheet(
                                 rs.getInt("timesheet_id"),
                                 rs.getDate("date"),
-                                rs.getTimestamp("time_in"),
-                                rs.getTimestamp("time_out"),
+                                rs.getTime("time_in"),
+                                rs.getTime("time_out"),
                                 rs.getInt("employee_id")
                         )
                 );
@@ -190,12 +190,11 @@ public class TimesheetRepository {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                // Assuming Timesheet constructor takes appropriate arguments
                 Timesheet timesheet = new Timesheet(
                         rs.getInt("timesheet_id"),
                         rs.getDate("date"),
-                        rs.getTimestamp("time_in"),
-                        rs.getTimestamp("time_out"),
+                        rs.getTime("time_in"),
+                        rs.getTime("time_out"),
                         rs.getInt("employee_id")
                 );
                 timesheets.add(timesheet);
@@ -212,8 +211,8 @@ public class TimesheetRepository {
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
 
             ps.setDate(1, timesheet.getDate());
-            ps.setTimestamp(2, timesheet.getTimeIn());
-            ps.setTimestamp(3, timesheet.getTimeOut());
+            ps.setTime(2, timesheet.getTimeIn());
+            ps.setTime(3, timesheet.getTimeOut());
             ps.setInt(4, timesheet.getEmployeeId());
             ps.setInt(5, timesheet.getTimesheetId());
 
@@ -244,8 +243,8 @@ public class TimesheetRepository {
                     timesheets.add(new Timesheet(
                             rs.getInt("timesheet_id"),
                             rs.getDate("date"),
-                            rs.getTimestamp("time_in"),
-                            rs.getTimestamp("time_out"),
+                            rs.getTime("time_in"),
+                            rs.getTime("time_out"),
                             rs.getInt("employee_id")
                     ));
                 }
@@ -272,8 +271,8 @@ public class TimesheetRepository {
                     timesheets.add(new Timesheet(
                             rs.getInt("timesheet_id"),
                             rs.getDate("date"),
-                            rs.getTimestamp("time_in"),
-                            rs.getTimestamp("time_out"),
+                            rs.getTime("time_in"),
+                            rs.getTime("time_out"),
                             rs.getInt("employee_id")
                     ));
                 }

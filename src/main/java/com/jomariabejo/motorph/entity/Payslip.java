@@ -130,4 +130,21 @@ public class Payslip {
     public void setDeductionID(int deductionID) {
         this.deductionID = deductionID;
     }
+
+    @Override
+    public String toString() {
+        return "Payslip{" +
+                "payslipID=" + payslipID +
+                ", employeeID=" + employeeID +
+                ", allowanceID=" + allowanceID +
+                ", taxID=" + taxID +
+                ", deductionID=" + deductionID +
+                ", totalHoursWorked=" + totalHoursWorked +
+                ", grossIncome=" + grossIncome +
+                ", netIncome=" + netIncome +
+                ", payPeriodStart=" + payPeriodStart +
+                ", payPeriodEnd=" + payPeriodEnd +
+                ", dateCreated=" + dateCreated +
+                '}';
+    }
 }

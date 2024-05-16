@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `deduction` (
   `sss` decimal(20,2) NOT NULL,
   `philhealth` decimal(20,2) NOT NULL,
   `pagibig` decimal(20,2) DEFAULT NULL,
-  `total_deduction` decimal(20,2) NOT NULL,
+  `total_contribution` decimal(20,2) NOT NULL,
   `date_created` date NOT NULL,
   PRIMARY KEY (`deduction_id`),
   KEY `FK__employee` (`employee_id`),
