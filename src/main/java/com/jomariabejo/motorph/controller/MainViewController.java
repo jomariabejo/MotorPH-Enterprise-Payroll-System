@@ -107,8 +107,6 @@ public class MainViewController {
     }
 
     public void initSessionID(final LoginManager loginManager, int user_id, int employee_id, String role) throws SQLException, IOException {
-        this.user_id.setText(String.valueOf(user_id));
-        this.employee_id.setText(String.valueOf(employee_id));
 
         switch (role) {
             case "HR Administrator":
@@ -329,7 +327,7 @@ public class MainViewController {
      *
      * @param event
      */
-    public void dataBackupClicked(ActionEvent event) {}
+    public void edataBackupClicked(ActionEvent event) {}
 
     /**
      * Hides all buttons and related UI elements.
