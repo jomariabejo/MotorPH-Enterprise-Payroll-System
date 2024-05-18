@@ -6,6 +6,7 @@ import com.jomariabejo.motorph.repository.TimesheetRepository;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 
 public class TimesheetService {
@@ -42,5 +43,17 @@ public class TimesheetService {
 
     public ArrayList<GrossIncome> fetchGrossIncome(Date startDate, Date endDate) {
         return timesheetRepository.fetchGrossIncome(startDate, endDate);
+    }
+
+    public ArrayList<Timesheet> getMyTimesheets(int employeeId) {
+        return timesheetRepository.fetchMyTimesheetRecords(employeeId);
+    }
+
+    public boolean setTimeIn(Timesheet timesheet) throws SQLException {
+        return timesheetRepository.createTimesheet(timesheet);
+    }
+
+    public boolean setTimeOut(int employeeId, Date date, Time timeOut) throws SQLException {
+        return timesheetRepository.updateTimesheet(employeeId,date,timeOut);
     }
 }
