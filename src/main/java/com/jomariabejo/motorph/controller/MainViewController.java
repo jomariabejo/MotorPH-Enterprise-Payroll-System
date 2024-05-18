@@ -197,7 +197,7 @@ public class MainViewController {
      * @throws IOException
      */
     public void timesheetClicked(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(BORDERPANE_CENTER_BASE_PATH + "/employee-timesheet-view.fxml"));
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(BORDERPANE_CENTER_BASE_PATH + "/my-timesheet.fxml"));
         mainPane.setCenter(anchorPane);
     }
 
@@ -207,7 +207,7 @@ public class MainViewController {
      * @throws IOException
      */
     public void leaveRequestClicked(ActionEvent event) throws IOException {
-        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(BORDERPANE_CENTER_BASE_PATH + "/employee-timesheet-view.fxml"));
+        AnchorPane anchorPane = FXMLLoader.load(getClass().getResource(BORDERPANE_CENTER_BASE_PATH + "/my-timesheet.fxml"));
         mainPane.setCenter(anchorPane);
     }
 
@@ -479,7 +479,7 @@ public class MainViewController {
 
     public void mytimesheetclicked(ActionEvent event) throws IOException {
         System.out.println("Timesheets clicked");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(BORDERPANE_CENTER_BASE_PATH + "/employee-timesheet-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(BORDERPANE_CENTER_BASE_PATH + "/my-timesheet.fxml"));
         AnchorPane myTimesheetsView = fxmlLoader.load();
         mainPane.setCenter(myTimesheetsView);
     }

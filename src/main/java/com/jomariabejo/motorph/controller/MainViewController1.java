@@ -1,12 +1,14 @@
 package com.jomariabejo.motorph.controller;
 
+import com.jomariabejo.motorph.controller.personalinformation.MyProfileController;
+import com.jomariabejo.motorph.controller.personalinformation.MyTimesheetController;
 import com.jomariabejo.motorph.service.LoginManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -70,6 +72,10 @@ public class MainViewController1 {
     private Label lbl_user_clicked_path;
 
     @FXML
+    private Label lbl_employee_id;
+
+
+    @FXML
     void dropDownClicked(ActionEvent event) {
 
     }
@@ -112,12 +118,35 @@ public class MainViewController1 {
     @FXML
     void personalInformationProfileClicked(ActionEvent event) {
         this.lbl_user_clicked_path.setText("/ Personal Information / My Profile");
+        try {
+            displayHomeClicked();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @FXML
-    void personalInformationTimesheetClicked(ActionEvent event) {
+    void personalInformationTimesheetClicked(ActionEvent event) throws IOException {
         this.lbl_user_clicked_path.setText("/ Personal Information / My Timesheets");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-timesheet.fxml"));
+        AnchorPane loader = fxmlLoader.load();
+
+        // Get the controller instance from the FXMLLoader
+        MyTimesheetController myTimesheetController = fxmlLoader.getController();
+
+        // Set the necessary data or reference to the controller
+        myTimesheetController.initData(Integer.parseInt(this.lbl_employee_id.getText()));
+
+        // Set the controller for the loaded FXML
+        fxmlLoader.setController(myTimesheetController);
+
+        // Set the loaded content as the center of the main pane
+        mainPane.setCenter(loader);
     }
+
 
     @FXML
     void systemUsersClicked(ActionEvent event) {
@@ -129,6 +158,7 @@ public class MainViewController1 {
         hideButtons();
     }
     public void initSessionId(final LoginManager loginManager, int user_id, int employee_id, String role) throws SQLException, IOException {
+        this.lbl_employee_id.setText(String.valueOf(employee_id));
 
         switch (role) {
             case "HR Administrator":
@@ -150,25 +180,15 @@ public class MainViewController1 {
     }
 
     public void displayHomeClicked() throws IOException, SQLException {
-//        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("employee-profile.fxml"));
-//        if (fxmlLoader != null) {
-//            AnchorPane loader = fxmlLoader.load(); // Load the FXML file
-//            mainPane.setCenter(loader); // Set the loaded content as the center of the main pane
-//
-//            // Lookup for the username label in the loaded content
-//            Label lblUserName = (Label) loader.lookup("#username");
-//
-//            // Create an instance of the EmployeeService to fetch employee name
-//            EmployeeService employeeService = new EmployeeService();
-//
-//            // Fetch employee name and handle optional presence
-//            Optional<String> employeeNameOptional = employeeService.fetchEmployeeName(Integer.parseInt(this.employee_id.getText()));
-//            String name = employeeNameOptional.orElse("No Name"); // If value is present, return it; otherwise return "No Name"
-//            System.out.println("Employee Name: " + name); // Print the employee name
-//            lblUserName.setText(String.valueOf(name)); // Set the employee name in the username label
-//        } else {
-//            System.err.println("FXML file not found!"); // Print an error message if the FXML file is not found
-//        }
+        this.lbl_user_clicked_path.setText("/ Personal Information / My Profile");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-profile.fxml"));
+        if (fxmlLoader != null) {
+            AnchorPane loader = fxmlLoader.load(); // Load the FXML file
+            mainPane.setCenter(loader); // Set the loaded content as the center of the main pane
+
+            MyProfileController myProfileController = fxmlLoader.getController();
+            myProfileController.initialize(Integer.parseInt(this.lbl_employee_id.getText()));
+        }
     }
 
     private void showExecutiveButtons() {
@@ -213,7 +233,6 @@ public class MainViewController1 {
         combobox_human_resource.setVisible(false);
         lbl_finance.setVisible(false);
         lbl_human_resource.setVisible(false);
-        lbl_personal_information.setVisible(false);
         lbl_system.setVisible(false);
 
         btn_finance_generate_payslip.setManaged(false);
@@ -224,23 +243,14 @@ public class MainViewController1 {
         combobox_human_resource.setManaged(false);
         lbl_finance.setManaged(false);
         lbl_human_resource.setManaged(false);
-        lbl_personal_information.setManaged(false);
         lbl_system.setManaged(false);
     }
 
-    public void btn_personal_information_profile_on_mouse_moved(MouseEvent mouseEvent) {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Profile");
+    public Label getLbl_employee_id() {
+        return lbl_employee_id;
     }
 
-    public void btn_personal_information_timesheet_on_mouse_moved(MouseEvent mouseEvent) {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Timesheets");
-    }
-
-    public void btn_personal_information_leave_request_on_mouse_moved(MouseEvent mouseEvent) {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Leave Request");
-    }
-
-    public void btn_personal_information_payslip_on_mouse_moved(MouseEvent mouseEvent) {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Payslips");
+    public void setLbl_employee_id(Label lbl_employee_id) {
+        this.lbl_employee_id = lbl_employee_id;
     }
 }

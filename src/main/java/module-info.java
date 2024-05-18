@@ -29,4 +29,7 @@ module com.jomariabejo.motorph {
     exports com.jomariabejo.motorph.query;
     opens com.jomariabejo.motorph.controller.finance to javafx.fxml;
     exports com.jomariabejo.motorph.controller.finance;
+    opens com.jomariabejo.motorph.controller.personalinformation to javafx.fxml;
+    exports com.jomariabejo.motorph.controller.personalinformation;
+
 }

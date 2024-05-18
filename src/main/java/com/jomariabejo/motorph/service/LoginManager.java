@@ -1,7 +1,7 @@
 package com.jomariabejo.motorph.service;
 
 import com.jomariabejo.motorph.controller.LoginController;
-import com.jomariabejo.motorph.controller.MainViewController;
+import com.jomariabejo.motorph.controller.MainViewController1;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -56,12 +56,13 @@ public class LoginManager {
 
             scene.setRoot((Parent) loader.load());
 
-            MainViewController controller = loader.<MainViewController>getController();
+            MainViewController1 controller = loader.<MainViewController1>getController();
 
             String roleString = userService.fetchEmployeeRoleName(userID);
 
             int employeeId = userService.fetchEmployeeIdByUserId(userID);
-            controller.initSessionID(this, userID, employeeId, roleString);
+            System.out.printf("My employee id : " + employeeId);
+            controller.initSessionId(this, userID, employeeId, roleString);
         } catch (IOException | SQLException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
         }

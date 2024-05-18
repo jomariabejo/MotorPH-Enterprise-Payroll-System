@@ -24,7 +24,6 @@
         private BigDecimal basicSalary;
         private BigDecimal grossSemiMonthlyRate;
         private BigDecimal hourlyRate;
-
         // Constructor
         public Employee() {}
 

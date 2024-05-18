@@ -11,6 +11,9 @@ public class Timesheet {
     private Time timeOut;
     private int employeeId;
 
+    private Time regularHoursWorked;
+    private Time overtimeHoursWorked;
+
     // Constructors
     public Timesheet() {}
 
@@ -63,11 +66,35 @@ public class Timesheet {
         this.timeOut = timeOut;
     }
 
+    public void setTimeIn(Time timeIn) {
+        this.timeIn = timeIn;
+    }
+
+    public void setEmployeeId(int employeeId) {
+        this.employeeId = employeeId;
+    }
+
+    public void setRegularHoursWorked(Time regularHoursWorked) {
+        this.regularHoursWorked = regularHoursWorked;
+    }
+
+    public void setOvertimeHoursWorked(Time overtimeHoursWorked) {
+        this.overtimeHoursWorked = overtimeHoursWorked;
+    }
+
     public Integer getEmployeeId() {
         return employeeId;
     }
 
     public void setEmployeeId(Integer employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public Time getRegularHoursWorked() {
+        return regularHoursWorked;
+    }
+
+    public Time getOvertimeHoursWorked() {
+        return overtimeHoursWorked;
     }
 }
