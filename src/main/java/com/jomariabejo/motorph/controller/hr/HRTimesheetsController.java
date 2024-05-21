@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 public class HRTimesheetsController implements Initializable {
 
-    private TimesheetService timesheetService = new TimesheetService();
+    private final TimesheetService timesheetService = new TimesheetService();
 
     private final int ROWS_PER_PAGE = 100;
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.personalinformation.MyLeaveRequestController">
+    <children>
+        <VBox layoutX="277.0" layoutY="130.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="24.0">
+                    <children>
+                  <Label fx:id="lbl_tv_total_result1" layoutX="276.0" layoutY="41.0" prefHeight="35.0" prefWidth="116.0" stylesheets="@../../../../css/custom/label.css" text="No. Result:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lbl_tv_total_result" prefHeight="35.0" prefWidth="78.0" stylesheets="@../../../../css/custom/label.css" text="#####">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Region prefHeight="89.0" prefWidth="164.0" />
+                        <ComboBox fx:id="cb_leave_req_status" onAction="#comboBoxChanged" prefHeight="50.0" prefWidth="144.0" stylesheets="@../../../../css/custom/combobox-small.css" value="Pending">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Pending" />
+                                    <String fx:value="Approved" />
+                                    <String fx:value="Disapproved" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                  <Button mnemonicParsing="false" onAction="#buttonCheckLeaveCreditsEvent" stylesheets="@../../../../css/custom/button.css" text="Check Leave Credits" />
+                  <Button layoutX="822.0" layoutY="28.0" mnemonicParsing="false" onAction="#buttonFileLeaveRequestEvent" stylesheets="@../../../../css/custom/button.css" text="File Leave Request" />
+                    </children>
+                </HBox>
+                <TableView fx:id="tv_leave_requests" prefHeight="487.0" prefWidth="1131.0" stylesheets="@../../../../css/custom/tableView.css">
+                    <columns>
+                        <TableColumn fx:id="tc_leaveRequestId" prefWidth="125.0" text="Leave Req Id">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="leaveRequestID" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_leaveRequestCategoryId" prefWidth="150.0" text="Date" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="date" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_startDate" prefWidth="125.0" text="Start Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="startDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_endDate" prefWidth="125.0" text="End Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="endDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn fx:id="tc_status" prefWidth="125.0" text="Status">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="status" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+                </TableView>
+                <Pagination fx:id="pagination" onDragDetected="#paginationChanged" prefHeight="81.0" prefWidth="1131.0" stylesheets="@../../../../css/custom/pagination.css" />
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

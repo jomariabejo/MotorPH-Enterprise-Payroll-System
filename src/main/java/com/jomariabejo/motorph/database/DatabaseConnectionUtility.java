@@ -1,6 +1,8 @@
 package com.jomariabejo.motorph.database;
 
 
+import com.jomariabejo.motorph.utility.AlertUtility;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,7 +21,8 @@ public class DatabaseConnectionUtility {
             connection = DriverManager.getConnection(JDBC_URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             // Handle exceptions
-            e.printStackTrace();
+            AlertUtility.showErrorAlert(e.getMessage(), e.getSQLState(), String.valueOf(e.getCause()));
+
         }
         return connection;
     }

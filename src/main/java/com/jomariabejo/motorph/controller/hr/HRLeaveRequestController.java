@@ -28,8 +28,8 @@ import java.util.ArrayList;
 
 public class HRLeaveRequestController {
     private final int ROWS_PER_PAGE = 100;
-    private LeaveRequestService leaveRequestService = new LeaveRequestService(new LeaveRequestRepository());
-
+    private LeaveRequestService leaveRequestService;
+    
     @FXML
     private ComboBox<String> cb_leave_req_status;
 
@@ -90,15 +90,11 @@ public class HRLeaveRequestController {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            ;
         } catch (NumberFormatException numberFormatException) {
             if (tf_search.getText().isEmpty()) {
-
                 ObservableList<LeaveRequest> leaveRequests = FXCollections.observableArrayList(getLeaveRequestBasedOnSelectedComboBox());
-
                 tv_leave_requests.setItems(leaveRequests);
                 modifyLeaveRequestPagination();
-
             }
             AlertUtility.showErrorAlert("Employee not found", "Invalid employee number : " + tf_search.getText(), null);
         }
@@ -113,6 +109,11 @@ public class HRLeaveRequestController {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+
+    public HRLeaveRequestController() {
+        this.leaveRequestService = new LeaveRequestService();
     }
 
     private void setUpTableView() throws SQLException {
@@ -140,7 +141,7 @@ public class HRLeaveRequestController {
 
                     Parent root = null;
                     try {
-                        root = (Parent) fxmlLoader.load();
+                        root = fxmlLoader.load();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -169,7 +170,7 @@ public class HRLeaveRequestController {
 
                     Parent root = null;
                     try {
-                        root = (Parent) fxmlLoader.load();
+                        root = fxmlLoader.load();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -296,7 +297,7 @@ public class HRLeaveRequestController {
     }
 
     private ArrayList<LeaveRequest> getLeaveRequestBasedOnSelectedComboBox() throws SQLException {
-        switch (cb_leave_req_status.getSelectionModel().getSelectedItem().toString()) {
+        switch (cb_leave_req_status.getSelectionModel().getSelectedItem()) {
             case "Pending":
                 return leaveRequestService.fetchLeaveRequestForPage(pagination.getCurrentPageIndex(), ROWS_PER_PAGE, "Pending");
             case "Approved":
@@ -308,7 +309,7 @@ public class HRLeaveRequestController {
     }
 
     private void modifyLeaveRequestPagination() throws SQLException {
-        switch (cb_leave_req_status.getSelectionModel().getSelectedItem().toString()) {
+        switch (cb_leave_req_status.getSelectionModel().getSelectedItem()) {
             case "Pending":
                 pagination.setPageCount(leaveRequestService.countLeaveRequestPage("Pending"));
                 break;
@@ -318,6 +319,14 @@ public class HRLeaveRequestController {
             case "Disapproved":
                 pagination.setPageCount(leaveRequestService.countLeaveRequestPage("Disapproved"));
                 break;
+        }
+    }
+
+    public void btnSearchEvent(ActionEvent event) {
+        try {
+            searchingEmployeeLeaveRequests(event);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

@@ -3,7 +3,7 @@ package com.jomariabejo.motorph.query;
 import com.jomariabejo.motorph.utility.TextReader;
 
 public class QueryPath {
-    private static String QUERY_BASE_PATH = "src\\main\\java\\com\\jomariabejo\\motorph\\query\\";
+    private static final String QUERY_BASE_PATH = "src\\main\\java\\com\\jomariabejo\\motorph\\query\\";
     public enum TABLE {
         ALLOWANCE,
         DEDUCTION,

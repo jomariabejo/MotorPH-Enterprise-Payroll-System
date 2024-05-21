@@ -59,4 +59,29 @@ public class AESUtil {
                 .decode(cipherText));
         return new String(plainText);
     }
+
+    public static void main(String[] args) {
+        try {
+            // Generate a random secret key
+            SecretKey secretKey = AESUtil.generateKey(256);
+
+            // Generate a random initialization vector (IV)
+            IvParameterSpec iv = AESUtil.generateIv();
+
+            // Encrypt a sample message
+            String originalMessage = "Hello, world!";
+            String encryptedMessage = AESUtil.encrypt("AES/CBC/PKCS5Padding", originalMessage, secretKey, iv);
+            System.out.println("Encrypted message: " + encryptedMessage);
+
+            // Decrypt the encrypted message
+            String decryptedMessage = AESUtil.decrypt("AES/CBC/PKCS5Padding", encryptedMessage, secretKey, iv);
+            System.out.println("Decrypted message: " + decryptedMessage);
+            System.out.printf("IS encrypted == decrpted? " + originalMessage.equals(decryptedMessage));
+
+        } catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException |
+                 InvalidAlgorithmParameterException | IllegalBlockSizeException |
+                 BadPaddingException e) {
+            e.printStackTrace();
+        }
+    }
 }

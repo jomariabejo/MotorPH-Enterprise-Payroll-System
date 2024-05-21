@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -27,7 +28,14 @@ public class LoginController {
     @FXML
     private Button registerBtn;
 
-    private UserRepository userRepository = new UserRepository();
+    private final UserRepository userRepository;
+    {
+        try {
+            userRepository = new UserRepository();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public void initialize() {
 
@@ -53,7 +61,7 @@ public class LoginController {
 
     private Optional<User> authorize() {
         try {
-            return userRepository.getUserByUsernameANDPassowrd(usernameField.getText(), passwordField.getText());
+            return userRepository.getUserByUsernameANDPassword(usernameField.getText(), passwordField.getText());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

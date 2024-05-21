@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 public class EmployeeService {
-    private EmployeeRepository employeeRepository = new EmployeeRepository();
+    private final EmployeeRepository employeeRepository = new EmployeeRepository();
     public void saveEmployee(Employee employee) throws SQLException {
         employeeRepository.createNewEmployeeRecord(employee);
     }

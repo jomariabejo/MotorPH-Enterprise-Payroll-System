@@ -6,7 +6,7 @@ import com.jomariabejo.motorph.utility.AutoIncrementUtility;
 import javafx.collections.ObservableList;
 
 public class PayslipService {
-    private PayslipRepository payslipRepository;
+    private final PayslipRepository payslipRepository;
 
     public PayslipService() {
         this.payslipRepository = new PayslipRepository();

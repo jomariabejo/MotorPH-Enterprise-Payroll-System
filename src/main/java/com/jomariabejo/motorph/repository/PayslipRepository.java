@@ -17,9 +17,9 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PayslipRepository {
-    private TaxService taxService;
-    private TaxCategoryService taxCategoryService;
-    private DeductionService deductionService;
+    private final TaxService taxService;
+    private final TaxCategoryService taxCategoryService;
+    private final DeductionService deductionService;
     private int counter;
 
     public PayslipRepository() {

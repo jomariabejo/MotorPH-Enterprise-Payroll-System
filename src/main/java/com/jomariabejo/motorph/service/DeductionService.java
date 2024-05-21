@@ -13,7 +13,7 @@ import java.sql.SQLException;
 
 public class DeductionService {
 
-    private DeductionRepository deductionRepository;
+    private final DeductionRepository deductionRepository;
 
     public DeductionService() {
         this.deductionRepository = new DeductionRepository();
@@ -115,8 +115,14 @@ public class DeductionService {
             preparedStatement.setBigDecimal(5, deduction.getPagibig());
             preparedStatement.setBigDecimal(6, deduction.totalContributions());
             preparedStatement.setDate(7, deduction.getDateCreated());
+            int rowAffected = preparedStatement.executeUpdate();
 
-            preparedStatement.executeUpdate();
+            if (rowAffected > 0) {
+                System.out.println("Insert deduction success.");
+            }
+            else {
+                System.out.println("Insert deduction failed.");
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -9,8 +9,8 @@ import java.math.RoundingMode;
 import java.sql.SQLException;
 
 public class TaxService {
-    private DeductionService deductionService;
-    private TaxRepository taxRepository;
+    private final DeductionService deductionService;
+    private final TaxRepository taxRepository;
 
     public TaxService() {
         deductionService = new DeductionService();

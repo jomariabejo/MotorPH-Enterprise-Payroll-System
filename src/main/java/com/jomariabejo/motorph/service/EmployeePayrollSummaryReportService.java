@@ -9,13 +9,13 @@ public class EmployeePayrollSummaryReportService {
     /**
      * Class needed to generate the report
      */
-    private EmployeeService employeeService = new EmployeeService();
-    private DeductionService deductionService = new DeductionService();
-    private DepartmentService departmentService = new DepartmentService();
-    private PositionService positionService = new PositionService();
-    private TaxService taxService = new TaxService();
-    private TimesheetService timesheetService = new TimesheetService();
-    private PayslipService payslipService = new PayslipService();
+    private final EmployeeService employeeService = new EmployeeService();
+    private final DeductionService deductionService = new DeductionService();
+    private final DepartmentService departmentService = new DepartmentService();
+    private final PositionService positionService = new PositionService();
+    private final TaxService taxService = new TaxService();
+    private final TimesheetService timesheetService = new TimesheetService();
+    private final PayslipService payslipService = new PayslipService();
 
 
     public EmployeePayrollSummaryReportService() throws SQLException {

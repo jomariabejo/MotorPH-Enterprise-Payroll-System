@@ -1,12 +1,12 @@
 package com.jomariabejo.motorph.service;
 
 import com.jomariabejo.motorph.controller.LoginController;
-import com.jomariabejo.motorph.controller.MainViewController1;
+import com.jomariabejo.motorph.controller.MainViewController;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,8 +16,16 @@ import java.util.logging.Logger;
  */
 public class LoginManager {
     private final String FXML_BASE_PATH = "/com/jomariabejo/motorph";
-    private Scene scene;
-    private UserService userService = new UserService();
+    private final Scene scene;
+    private final UserService userService;
+
+    {
+        try {
+            userService = new UserService();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public LoginManager(Scene scene) {
         this.scene = scene;
@@ -42,8 +50,8 @@ public class LoginManager {
     public void showLoginScreen() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_BASE_PATH + "/login-view.fxml"));
-            scene.setRoot((Parent) loader.load());
-            LoginController controller = loader.<LoginController>getController();
+            scene.setRoot(loader.load());
+            LoginController controller = loader.getController();
             controller.initManager(this);
         } catch (IOException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
@@ -54,9 +62,9 @@ public class LoginManager {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_BASE_PATH + "/main-view.fxml"));
 
-            scene.setRoot((Parent) loader.load());
+            scene.setRoot(loader.load());
 
-            MainViewController1 controller = loader.<MainViewController1>getController();
+            MainViewController controller = loader.getController();
 
             String roleString = userService.fetchEmployeeRoleName(userID);
 

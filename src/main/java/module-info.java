@@ -21,8 +21,6 @@ module com.jomariabejo.motorph {
     exports com.jomariabejo.motorph.controller;
     exports com.jomariabejo.motorph.service;
     opens com.jomariabejo.motorph.service to javafx.fxml;
-    opens com.jomariabejo.motorph.controller.myprofile to javafx.fxml;
-    exports com.jomariabejo.motorph.controller.myprofile;
     opens com.jomariabejo.motorph.controller.hr to javafx.fxml;
     exports com.jomariabejo.motorph.controller.hr;
     opens com.jomariabejo.motorph.query;

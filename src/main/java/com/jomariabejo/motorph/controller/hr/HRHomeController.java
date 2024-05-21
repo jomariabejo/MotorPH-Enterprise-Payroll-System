@@ -1,6 +1,5 @@
 package com.jomariabejo.motorph.controller.hr;
 
-import com.jomariabejo.motorph.controller.myprofile.EmployeeProfile;
 import com.jomariabejo.motorph.entity.Employee;
 import com.jomariabejo.motorph.service.EmployeeService;
 import com.jomariabejo.motorph.utility.AlertUtility;
@@ -12,7 +11,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
@@ -34,12 +38,6 @@ public class HRHomeController {
     private Button btn_search;
 
     @FXML
-    private Label res_lbl_activeEmployees;
-
-    @FXML
-    private Label res_lbl_totalNumberOfEmployees;
-
-    @FXML
     private TableColumn<Integer, Employee> tc_employeeNo;
 
     @FXML
@@ -54,42 +52,18 @@ public class HRHomeController {
     @FXML
     private TextField tf_searchField;
 
-    private EmployeeService employeeService = new EmployeeService();
+    private final EmployeeService employeeService = new EmployeeService();
 
     @FXML
-    private void initialize() throws SQLException {
-        setEmployeeSummaryDashboard();
+    private void initialize() {
+        try {
+            setUpEmployeesTableView();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    /**
-     * Sets up the employee summary dashboard.
-     * This method updates the total number of employees and active employees count,
-     * and sets up the employees table.
-     *
-     * @throws SQLException if there's an issue accessing the database.
-     */
-    private void setEmployeeSummaryDashboard() throws SQLException {
-        /**
-         * Set total number of employees
-         */
-        int resultEmployeesCount = employeeService.countEmployees();
-        res_lbl_totalNumberOfEmployees.setText(String.valueOf(resultEmployeesCount));
 
-        /**
-         * Set toal number of inactive employees
-         */
-        int resultActiveEmployeesCount = employeeService.countActiveEmployees();
-        res_lbl_activeEmployees.setText(String.valueOf(resultActiveEmployeesCount));
-
-        /**
-         * Set employees table
-         */
-        setEmployeesTable();
-
-        /**
-         * TODO: Add search functionality
-         */
-    }
 
     /**
      * Clear employee table
@@ -111,20 +85,19 @@ public class HRHomeController {
 
     }
 
-    private void setEmployeesTable() throws SQLException {
+    private void setUpEmployeesTableView() throws SQLException {
         tv_employee.setItems(null); // clear data employee table view
-        ArrayList<Employee> employeeArrayList = new ArrayList<>();
+        ObservableList<Employee> employees = FXCollections.observableArrayList();
 
         switch (cb_employment_status.getSelectionModel().getSelectedItem().toString()) {
             case "Active":
-                employeeArrayList = employeeService.fetchActiveEmployees();
+                employees.addAll(employeeService.fetchActiveEmployees());
                 break;
             case "Inactive":
-                employeeArrayList = employeeService.fetchInactiveEmployees();
+                employees.addAll(employeeService.fetchInactiveEmployees());
                 break;
         }
 
-        ObservableList<Employee> employees = FXCollections.observableArrayList(employeeArrayList);
 
         // Define the custom cell for the actions column
         TableColumn<Employee, Void> actionsColumn = new TableColumn<>("Actions");
@@ -146,7 +119,7 @@ public class HRHomeController {
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/employee-profile.fxml"));
 
-                        Parent root = (Parent) fxmlLoader.load();
+                        Parent root = fxmlLoader.load();
                         Stage stage = new Stage();
                         stage.initModality(Modality.APPLICATION_MODAL);
                         stage.initStyle(StageStyle.DECORATED);
@@ -154,16 +127,13 @@ public class HRHomeController {
                         stage.setScene(new Scene(root));
                         stage.show();
 
-                        EmployeeProfile employeeProfile = fxmlLoader.getController();
+                        HRViewEmployeeProfile employeeProfile = fxmlLoader.getController();
                         employeeProfile.initData(employee.getEmployeeId());
                         employeeProfile.buttonVisible();
 
-                    } catch (IOException e) {
+                    } catch (IOException | SQLException e) {
                         throw new RuntimeException(e);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
-                    }
-                    finally {
+                    } finally {
                         refreshTable();
                     }
 
@@ -175,7 +145,7 @@ public class HRHomeController {
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/employee-profile.fxml"));
 
-                        Parent root = (Parent) fxmlLoader.load();
+                        Parent root = fxmlLoader.load();
                         Stage stage = new Stage();
                         stage.initModality(Modality.APPLICATION_MODAL);
                         stage.initStyle(StageStyle.DECORATED);
@@ -183,7 +153,7 @@ public class HRHomeController {
                         stage.setScene(new Scene(root));
                         stage.show();
 
-                        EmployeeProfile employeeProfile = fxmlLoader.getController();
+                        HRViewEmployeeProfile employeeProfile = fxmlLoader.getController();
                         employeeProfile.initData(employee.getEmployeeId());
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -318,7 +288,7 @@ public class HRHomeController {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/employee-profile.fxml"));
 
-            Parent root = (Parent) fxmlLoader.load();
+            Parent root = fxmlLoader.load();
             Stage stage = new Stage();
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.initStyle(StageStyle.DECORATED);
@@ -326,7 +296,7 @@ public class HRHomeController {
             stage.setScene(new Scene(root));
             stage.show();
 
-            EmployeeProfile employeeProfile = fxmlLoader.getController();
+            HRViewEmployeeProfile employeeProfile = fxmlLoader.getController();
             employeeProfile.buttonVisible();
             employeeProfile.generateEmployeeIdNumber();
             employeeProfile.setComboBox();

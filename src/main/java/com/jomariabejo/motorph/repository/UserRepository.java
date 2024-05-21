@@ -4,6 +4,7 @@ import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.utility.TextReader;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,6 +14,9 @@ import java.util.Optional;
 
 public class UserRepository {
     public final String QUERY_BASE_PATH = "src/main/java/com/jomariabejo/motorph/query/user";
+
+    public UserRepository() throws NoSuchAlgorithmException {
+    }
 
     public void createUser(User user) throws SQLException {
         String query = TextReader.readTextFile(QUERY_BASE_PATH + "/create_user.sql");
@@ -52,9 +56,13 @@ public class UserRepository {
         }
     }
 
-    public Optional<User> getUserByUsernameANDPassowrd(String username, String password) throws SQLException {
+    public Optional<User> getUserByUsernameANDPassword(String username, String password) throws SQLException {
         String query = "SELECT * FROM user WHERE username=? AND password=?";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement prepStatement = connection.prepareStatement(query)) {
+            System.out.println("===================");
+            System.out.println(username);
+            System.out.println(password);
+            System.out.println("===================");
             prepStatement.setString(1, username);
             prepStatement.setString(2, password);
             try (ResultSet resultSet = prepStatement.executeQuery()) {
@@ -72,6 +80,7 @@ public class UserRepository {
         }
         return Optional.empty();
     }
+
 
     public ArrayList<User> getUsers() throws SQLException {
         ArrayList<User> userList = new ArrayList<User>();

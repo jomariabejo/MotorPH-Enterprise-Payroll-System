@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" minHeight="720.0" minWidth="1440.0" stylesheets="@../../../css/custom/main-view-style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.MainViewController1">
+<BorderPane fx:id="mainPane" minHeight="720.0" minWidth="1440.0" stylesheets="@../../../css/custom/main-view-style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.MainViewController">
     <left>
       <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER">
          <content>
@@ -31,7 +31,7 @@
                         <Button fx:id="btn_personal_information_leave_request" layoutX="58.0" layoutY="63.0" mnemonicParsing="false" onAction="#personalInformationLeaveRequestClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Leave Request" />
                         <Button fx:id="btn_personal_information_payslip" layoutX="58.0" layoutY="116.0" mnemonicParsing="false" onAction="#personalInformationPayslipClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payslip" />
                         <Label fx:id="lbl_human_resource" layoutX="24.0" layoutY="10.0" prefWidth="225.0" stylesheets="@../../../css/custom/label.css" text="Human Resource" />
-                        <ComboBox fx:id="combobox_human_resource" onAction="#humanResourceComboBoxEmployeeClicked" prefHeight="50.0" prefWidth="235.0" stylesheets="@../../../css/custom/combobox-small.css" />
+                        <Button fx:id="btn_human_resource_employees" layoutX="36.0" layoutY="394.0" mnemonicParsing="false" onAction="#humanResourceEmployeesClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Employees" />
                         <Button fx:id="btn_human_resource_timesheets" layoutX="36.0" layoutY="364.0" mnemonicParsing="false" onAction="#humanResourceTimesheetsClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Timesheets" />
                         <Button fx:id="btn_human_resource_leave_request" layoutX="36.0" layoutY="429.0" mnemonicParsing="false" onAction="#humanResourceLeaveRequestClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Leave Request" />
                         <Label fx:id="lbl_finance" layoutX="23.0" layoutY="317.0" prefWidth="225.0" stylesheets="@../../../css/custom/label.css" text="Finance" />

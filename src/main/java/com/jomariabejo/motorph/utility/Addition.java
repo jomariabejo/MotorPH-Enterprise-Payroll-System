@@ -1,8 +1,8 @@
 package com.jomariabejo.motorph.utility;
 
 public class Addition {
-    private int primaryNumber;
-    private int secondaryNumber;
+    private final int primaryNumber;
+    private final int secondaryNumber;
 
 
     public Addition(int primaryNumber, int secondaryNumber) {

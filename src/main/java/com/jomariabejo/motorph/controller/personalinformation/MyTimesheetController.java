@@ -14,7 +14,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class MyTimesheetController {
-    private TimesheetService timesheetService;
+    private final TimesheetService timesheetService;
 
     @FXML
     private TableColumn<Date,Timesheet> date;

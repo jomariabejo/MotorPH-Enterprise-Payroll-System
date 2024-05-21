@@ -10,7 +10,7 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 public class TimesheetService {
-    private TimesheetRepository timesheetRepository = new TimesheetRepository();
+    private final TimesheetRepository timesheetRepository = new TimesheetRepository();
 
     public int getTimesheetPageCount() {
         return timesheetRepository.getTimesheetPageCount();

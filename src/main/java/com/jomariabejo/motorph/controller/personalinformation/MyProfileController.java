@@ -2,6 +2,8 @@ package com.jomariabejo.motorph.controller.personalinformation;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.enums.EmployeeStatus;
+import com.jomariabejo.motorph.record.Salary;
+import com.jomariabejo.motorph.service.SalaryDetailService;
 import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -61,6 +63,12 @@ public class MyProfileController {
     @FXML
     private TextField tf_supervisor;
 
+    private SalaryDetailService salaryDetailService;
+
+    public MyProfileController() {
+        this.salaryDetailService = new SalaryDetailService();
+    }
+
     @FXML
     public void initialize(int employeeId) {
         this.tf_employee_id.setText(String.valueOf(employeeId));
@@ -70,22 +78,13 @@ public class MyProfileController {
     }
 
     private void setupMySalaryDetails() {
-        String query = "SELECT employee.basic_salary, employee.gross_semi_monthly_rate, employee.hourly_rate FROM payroll_sys.employee where employee.employee_id = ?";
-        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            int employeeId = Integer.parseInt(this.tf_employee_id.getText());
-            preparedStatement.setInt(1, employeeId);
+        int employeeId = Integer.parseInt(this.tf_employee_id.getText());
+        Salary salaryDetails = salaryDetailService.fetchSalaryDetails(employeeId);
 
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                tf_basic_salary.setText(String.valueOf(resultSet.getBigDecimal("basic_salary")));
-                tf_semi_monthly_rate.setText(String.valueOf(resultSet.getBigDecimal("gross_semi_monthly_rate")));
-                tf_hourly_rate.setText(String.valueOf(resultSet.getBigDecimal("hourly_rate")));
-                resultSet.getBigDecimal("hourly_rate");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        // Display the salary details in textfields
+        tf_basic_salary.setText(String.valueOf(salaryDetails.basicSalary()));
+        tf_semi_monthly_rate.setText(String.valueOf(salaryDetails.grossSemiMonthlyRate()));
+        tf_hourly_rate.setText(String.valueOf(salaryDetails.hourlyrate()));
     }
 
 

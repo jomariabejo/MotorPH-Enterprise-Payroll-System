@@ -8,10 +8,10 @@ import java.util.ArrayList;
 
 public class LeaveRequestService {
 
-    private LeaveRequestRepository leaveRequestRepository;
+    private final LeaveRequestRepository leaveRequestRepository;
 
-    public LeaveRequestService(LeaveRequestRepository leaveRequestRepository) {
-        this.leaveRequestRepository = leaveRequestRepository;
+    public LeaveRequestService() {
+        this.leaveRequestRepository = new LeaveRequestRepository();
     }
 
     public void createLeaveRequest(LeaveRequest leaveRequest) {

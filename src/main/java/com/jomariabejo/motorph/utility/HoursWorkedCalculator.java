@@ -1,6 +1,7 @@
 package com.jomariabejo.motorph.utility;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Time;
 import java.time.LocalTime;
 
@@ -16,7 +17,7 @@ public class HoursWorkedCalculator {
         if (timeOut.isAfter(cutoffTime)) {
             // Subtract the cutoff time from the actual time out
             long seconds = cutoffTime.until(timeOut, java.time.temporal.ChronoUnit.SECONDS);
-            BigDecimal overtimeHours = BigDecimal.valueOf(seconds).divide(BigDecimal.valueOf(3600), 2, BigDecimal.ROUND_HALF_UP);
+            BigDecimal overtimeHours = BigDecimal.valueOf(seconds).divide(BigDecimal.valueOf(3600), 2, RoundingMode.HALF_UP);
             return overtimeHours;
         } else {
             // Return 0 if time out is before or equal to 17:00:00

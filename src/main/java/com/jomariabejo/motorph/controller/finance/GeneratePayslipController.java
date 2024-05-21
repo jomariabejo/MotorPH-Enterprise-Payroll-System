@@ -21,12 +21,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class GeneratePayslipController {
-    private TimesheetService timesheetService;
-    private EmployeeService employeeService;
-    private AllowanceService allowanceService;
-    private DeductionService deductionService;
-    private TaxService taxService;
-    private PayslipService payslipService;
+    private final TimesheetService timesheetService;
+    private final EmployeeService employeeService;
+    private final AllowanceService allowanceService;
+    private final DeductionService deductionService;
+    private final TaxService taxService;
+    private final PayslipService payslipService;
 
 
     public GeneratePayslipController() {
@@ -94,7 +94,6 @@ public class GeneratePayslipController {
                 employeePayrollSummaryReport.setEmployeeFullName(GROSS_INCOMES.get(i).employeeName());
                 employeePayrollSummaryReport.setPosition(GROSS_INCOMES.get(i).position());
                 employeePayrollSummaryReport.setDepartment(GROSS_INCOMES.get(i).department());
-                employeePayrollSummaryReport.setEmployeeFullName(accountNumber.sss());
                 employeePayrollSummaryReport.setSocialSecurityNumber(accountNumber.sss());
                 employeePayrollSummaryReport.setPhilhealthNumber(accountNumber.philhealth());
                 employeePayrollSummaryReport.setPagIbigNumber(accountNumber.pagibig());

@@ -1,8 +1,6 @@
 package com.jomariabejo.motorph.controller.hr;
 
 import com.jomariabejo.motorph.entity.LeaveRequest;
-import com.jomariabejo.motorph.repository.LeaveRequestCategoryRepository;
-import com.jomariabejo.motorph.repository.LeaveRequestRepository;
 import com.jomariabejo.motorph.service.EmployeeService;
 import com.jomariabejo.motorph.service.LeaveRequestCategoryService;
 import com.jomariabejo.motorph.service.LeaveRequestService;
@@ -54,9 +52,9 @@ public class HRLeaveRequestApproval {
 
     }
 
-    private LeaveRequestService leaveRequestService = new LeaveRequestService(new LeaveRequestRepository());
-    private LeaveRequestCategoryService leaveRequestCategoryService = new LeaveRequestCategoryService(new LeaveRequestCategoryRepository());
-    private EmployeeService employeeService = new EmployeeService();
+    private final LeaveRequestService leaveRequestService = new LeaveRequestService();
+    private final LeaveRequestCategoryService leaveRequestCategoryService = new LeaveRequestCategoryService();
+    private final EmployeeService employeeService = new EmployeeService();
 
     @FXML
     public void initDate(int leaveRequestId) throws SQLException {
@@ -81,7 +79,7 @@ public class HRLeaveRequestApproval {
     }
 
     public void saveButtonClicked(ActionEvent event) {
-        boolean isConfirmed = AlertUtility.showConfirmation("Leave Request Modification Confirmation", "Are you sure you want to set " + cb_status.getSelectionModel().getSelectedItem().toString() + " the leave request of " + employeeName.getText(), "Date Start Leave: " + this.startDate.getText() + "\n " + "End Date Leave " + this.endDate.getText());
+        boolean isConfirmed = AlertUtility.showConfirmation("Leave Request Modification Confirmation", "Are you sure you want to set " + cb_status.getSelectionModel().getSelectedItem() + " the leave request of " + employeeName.getText(), "Date Start Leave: " + this.startDate.getText() + "\n " + "End Date Leave " + this.endDate.getText());
 
         if (isConfirmed) {
             leaveRequestService.updateLeaveRequestStatus(Integer.valueOf(this.leaveRequestId.getText()), LeaveRequest.LeaveRequestStatus.valueOf(cb_status.getSelectionModel().getSelectedItem()));

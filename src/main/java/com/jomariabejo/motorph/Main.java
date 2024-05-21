@@ -12,7 +12,9 @@ public class Main extends Application {
      * It calls launch(args), which starts the JavaFX application.
      * @param args
      */
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        Application.launch(Main.class);
+    }
 
     /**
      * This method is overridden from the Application class.

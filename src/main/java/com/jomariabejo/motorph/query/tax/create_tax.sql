@@ -1,1 +1,1 @@
-INSERT INTO tax(taxable_income, tax_cat_id, withheld_tax, employee_id, date_created) VALUES (?, ?, ?, ?,?)
+INSERT INTO tax(tax_id,taxable_income, tax_cat_id, withheld_tax, employee_id, date_created) VALUES (?,?, ?, ?, ?,?)
