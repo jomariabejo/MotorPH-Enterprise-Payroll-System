@@ -45,9 +45,15 @@ public class MyLeaveRequestController {
     @FXML
     private TableView<?> tv_leave_requests;
 
+    /** TODO: Dapat makakapag submit ng leave request ang employee
+     * VACATION = 10,
+     * EMERGENCY = 5,
+     * SICK = 5
+     */
     @FXML
     void buttonFileLeaveRequestEvent(ActionEvent event) {
         System.out.println("File Leave Request Clciked...");
+
     }
 
     @FXML

@@ -54,7 +54,8 @@ public class MyTimesheetController {
     //          [1] Once the time in is clicked, the payroll_sys.timesheet should insert a new data including the
     @FXML
     void btnSetTimeIn(ActionEvent event) {
-
+        String query = "INSERT INTO timesheet (date,time_in,employee_id) VALUES(?,?,?)";
+        System.out.println("Should insert new time in of employee into database");
     }
     // TODO: Implement 'set time out' feature here.
     //       Expected Output
@@ -62,7 +63,7 @@ public class MyTimesheetController {
     //          [2] Update the Timesheet(Lagyan na natin ng time_out and timesheet na walang timeout.
     @FXML
     void btnSetTimeOut(ActionEvent event) {
-
+        System.out.println("Should insert ");
     }
 
     @FXML
