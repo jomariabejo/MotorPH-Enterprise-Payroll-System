@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class UserService {
     private final UserRepository userRepository = new UserRepository();
 
-    public UserService() throws NoSuchAlgorithmException {
+    public UserService()  {
     }
 
     public String fetchEmployeeRoleName(int userId) throws SQLException {

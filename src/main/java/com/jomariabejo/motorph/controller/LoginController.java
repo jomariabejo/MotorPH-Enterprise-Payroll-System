@@ -19,6 +19,7 @@ import java.util.Optional;
 public class LoginController {
     @FXML
     private TextField usernameField;
+
     @FXML
     private PasswordField passwordField;
 
@@ -28,14 +29,7 @@ public class LoginController {
     @FXML
     private Button registerBtn;
 
-    private final UserRepository userRepository;
-    {
-        try {
-            userRepository = new UserRepository();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private final UserRepository userRepository = new UserRepository();
 
     public void initialize() {
 

@@ -17,15 +17,7 @@ import java.util.logging.Logger;
 public class LoginManager {
     private final String FXML_BASE_PATH = "/com/jomariabejo/motorph";
     private final Scene scene;
-    private final UserService userService;
-
-    {
-        try {
-            userService = new UserService();
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    private final UserService userService = new UserService();
 
     public LoginManager(Scene scene) {
         this.scene = scene;

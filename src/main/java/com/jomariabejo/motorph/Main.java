@@ -23,7 +23,6 @@ public class Main extends Application {
      * which represents the primary stage (window) of the application.
      * @param primaryStage
      */
-    @Override
     public void start(Stage primaryStage) {
         /** A Scene represents the content of the window.  */
         Scene scene = new Scene(new StackPane());

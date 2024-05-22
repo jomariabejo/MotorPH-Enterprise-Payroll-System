@@ -15,7 +15,7 @@ import java.util.Optional;
 public class UserRepository {
     public final String QUERY_BASE_PATH = "src/main/java/com/jomariabejo/motorph/query/user";
 
-    public UserRepository() throws NoSuchAlgorithmException {
+    public UserRepository() {
     }
 
     public void createUser(User user) throws SQLException {
