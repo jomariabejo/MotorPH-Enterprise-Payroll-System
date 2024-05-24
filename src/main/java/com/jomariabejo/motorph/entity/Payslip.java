@@ -43,6 +43,15 @@ public class Payslip {
         this.dateCreated = dateCreated;
     }
 
+    public Payslip(int payslipID,BigDecimal totalHoursWorked, BigDecimal grossIncome, BigDecimal netIncome, Date payPeriodStart, Date payPeriodEnd) {
+        this.payslipID = payslipID;
+        this.totalHoursWorked = totalHoursWorked;
+        this.grossIncome = grossIncome;
+        this.netIncome = netIncome;
+        this.payPeriodStart = payPeriodStart;
+        this.payPeriodEnd = payPeriodEnd;
+    }
+
     public int getPayslipID() {
         return payslipID;
     }

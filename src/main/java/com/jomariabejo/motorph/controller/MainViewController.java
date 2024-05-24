@@ -1,5 +1,6 @@
 package com.jomariabejo.motorph.controller;
 
+import com.jomariabejo.motorph.controller.personalinformation.MyPayslipController;
 import com.jomariabejo.motorph.controller.personalinformation.MyProfileController;
 import com.jomariabejo.motorph.controller.personalinformation.MyTimesheetController;
 import com.jomariabejo.motorph.service.LoginManager;
@@ -130,8 +131,14 @@ public class MainViewController {
     }
 
     @FXML
-    void personalInformationPayslipClicked(ActionEvent event) {
+    void personalInformationPayslipClicked(ActionEvent event) throws IOException {
         this.lbl_user_clicked_path.setText("/ Personal Information / My Payslips");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-payslips-view.fxml"));
+        AnchorPane anchorPane = fxmlLoader.load();
+        mainPane.setCenter(anchorPane);
+
+        MyPayslipController myPayslipController = fxmlLoader.getController();
+        myPayslipController.initData(Integer.valueOf(this.lbl_employee_id.getText()));
     }
 
     @FXML
