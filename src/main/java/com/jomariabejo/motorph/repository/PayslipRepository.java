@@ -12,9 +12,13 @@ import com.jomariabejo.motorph.utility.AutoIncrementUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
 import javafx.collections.ObservableList;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class PayslipRepository {
     private final TaxService taxService;
@@ -108,5 +112,27 @@ public class PayslipRepository {
         }
     }
 
-//    public int monthlyRateTo
+    public ArrayList<Payslip> fetchPayslipByEmployeeId(int employeeId) throws SQLException {
+        String query = "SELECT payslip_id, total_hours_worked, gross_income, net_income, pay_period_start, pay_period_end FROM payslip WHERE employee_id = ?";
+        ArrayList<Payslip> myPayslips = new ArrayList<>();
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, employeeId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                myPayslips.add(
+                    new Payslip(
+                            resultSet.getInt(1),
+                            resultSet.getBigDecimal(2).setScale(4),
+                            resultSet.getBigDecimal(3).setScale(4),
+                            resultSet.getBigDecimal(4).setScale(4),
+                            resultSet.getDate(5),
+                            resultSet.getDate(6)
+                    )
+                );
+            }
+            return myPayslips;
+        }
+    }
 }
