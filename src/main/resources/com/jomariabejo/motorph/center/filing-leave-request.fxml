@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.jomariabejo.motorph.center.Filingleaverequest"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="450.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.center.Filingleaverequest">
+   <children>
+      <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="450.0" prefWidth="400.0" />
+      <Label layoutX="24.0" layoutY="24.0" prefHeight="21.0" prefWidth="184.0" styleClass="header-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/MainFormDesign.css" text="Hello, Lawrence Grefiel" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label alignment="TOP_CENTER" layoutX="125.0" layoutY="84.0" prefHeight="19.0" prefWidth="168.0" text="Choose Leave Request Type" textAlignment="CENTER">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="editDoctor_specialized" layoutX="70.0" layoutY="115.0" minHeight="30.0" prefWidth="250.0" promptText="Choose..." styleClass="textfield-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/PageDesign.css" />
+      <Label alignment="TOP_CENTER" layoutX="120.0" layoutY="160.0" prefHeight="19.0" prefWidth="168.0" text="Availble Leave Credits" textAlignment="CENTER">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER_RIGHT" layoutX="100.0" layoutY="190.0" spacing="12.0">
+         <children>
+            <TextField fx:id="tf_fname" disable="true" minHeight="30.0" minWidth="200.0" stylesheets="@../../../../css/custom/textfields-small.css" />
+         </children>
+      </HBox>
+      <Label alignment="TOP_CENTER" layoutX="120.0" layoutY="240.0" prefHeight="19.0" prefWidth="168.0" text="Choose Leave Duration" textAlignment="RIGHT">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </Label>
+      <DatePicker fx:id="checkout_checkout" layoutX="70.0" layoutY="265.0" minHeight="35.0" prefWidth="180.0" />
+      <Button fx:id="checkout_countBtn" layoutX="255.0" layoutY="265.0" minHeight="35.0" mnemonicParsing="false" onAction="#countBtn" prefWidth="62.0" styleClass="btn-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/PageDesign.css" text="Count" />
+      <Label layoutX="90.0" layoutY="310.0" text="Total Days:">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="editApp_updateBtn" layoutX="211.0" layoutY="373.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="94.0" styleClass="btn-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/PageDesign.css" text="Update" />
+      <Button fx:id="editApp_cancelBtn" layoutX="100.0" layoutY="373.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="94.0" styleClass="btn-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/PageDesign.css" text="Cancel" />
+   </children>
 </AnchorPane>
