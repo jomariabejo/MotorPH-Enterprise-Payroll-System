@@ -8,6 +8,7 @@ import com.jomariabejo.motorph.utility.TextReader;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -232,7 +233,7 @@ public class TimesheetRepository {
         }
     }
 
-    public boolean updateTimesheet( int employeeId, Date date, Time timeOut) throws SQLException {
+    public boolean updateTimesheet(int employeeId, Date date, Time timeOut) throws SQLException {
         String query = "UPDATE TIMESHEET SET time_out = ? WHERE employee_id = ? AND date = ?;";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
@@ -325,6 +326,30 @@ public class TimesheetRepository {
         return false;
     }
 
+    public boolean checkIfEmployeeHasTimesheetRecordsToday(int employeeId) {
+        String query = "SELECT COUNT(*) FROM payroll_sys.timesheet WHERE employee_id = ? AND date = ? AND time_in IS NOT NULL";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setInt(1, employeeId);
+            ps.setDate(2, Date.valueOf(LocalDate.now())); // Set the current date
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt(1);
+                    return count > 0;
+                }
+            }
+        } catch (SQLException e) {
+            // Handle any potential exceptions, log or rethrow if necessary
+            e.printStackTrace();
+        }
+
+        // Default return false if there's an exception or no records found
+        return false;
+    }
+
     public int countEmployeeTimesheets(int employeeId) {
         String query = "SELECT COUNT(*) AS NumberOfTimesheets FROM payroll_sys.timesheet WHERE employee_id = ?";
 
@@ -349,7 +374,7 @@ public class TimesheetRepository {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\timesheet\\calculate_employee_regular_hours_worked.sql");
 
         try
-            (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setDate(1, startDate);
             preparedStatement.setDate(2, endDate);
 
@@ -374,12 +399,12 @@ public class TimesheetRepository {
     }
 
     public ArrayList<GrossIncome> fetchGrossIncome(Date startDate, Date endDate) {
-        ArrayList<GrossIncome>  grossIncomes = new ArrayList<>();
+        ArrayList<GrossIncome> grossIncomes = new ArrayList<>();
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\timesheet\\calculate_employee_salary_based_on_total_hours_worked.sql");
 
         try
                 (Connection connection = DatabaseConnectionUtility.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+                 PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setDate(1, startDate);
             preparedStatement.setDate(2, endDate);
 
@@ -434,7 +459,7 @@ public class TimesheetRepository {
                 "    FROM timesheet t\n" +
                 "    WHERE t.employee_id = ?\n";
 
-        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)){
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, employeeId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -456,6 +481,53 @@ public class TimesheetRepository {
             return myTimesheetRecords;
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+
+    public ArrayList<Timesheet> fetchMyTimesheetAscending(int employeeId) {
+        String query = "SELECT \n" +
+                "        t.employee_id,\n" +
+                "        t.timesheet_id,\n" +
+                "        t.date,\n" +
+                "        t.time_in,\n" +
+                "        t.time_out,\n" +
+                "        TIMEDIFF(\n" +
+                "            CASE WHEN TIME(t.time_out) > '17:00:00' THEN '17:00:00' ELSE t.time_out END,\n" +
+                "            CASE WHEN TIME(t.time_in) < '08:00:00' THEN '08:00:00' ELSE t.time_in END\n" +
+                "        ) AS regular_hours_worked,\n" +
+                "        CASE WHEN TIME(t.time_out) > '17:00:00' THEN \n" +
+                "            TIMEDIFF(TIME(t.time_out), '17:00:00')\n" +
+                "        ELSE '00:00:00' END AS overtime_hours_worked\n" +
+                "    FROM timesheet t\n" +
+                "    WHERE t.employee_id = ?\n" +
+                "    ORDER BY t.date ASC, t.timesheet_id ASC"; // Order by date and timesheet_id
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, employeeId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            ArrayList<Timesheet> myTimesheetRecords = new ArrayList<>();
+
+            while (resultSet.next()) {
+                Timesheet timesheet = new Timesheet();
+                timesheet.setTimesheetId(resultSet.getInt("timesheet_id"));
+                timesheet.setEmployeeId(resultSet.getInt("employee_id"));
+                timesheet.setDate(resultSet.getDate("date"));
+                timesheet.setTimeIn(resultSet.getTime("time_in"));
+                timesheet.setTimeOut(resultSet.getTime("time_out"));
+                timesheet.setRegularHoursWorked(resultSet.getTime("regular_hours_worked"));
+                timesheet.setOvertimeHoursWorked(resultSet.getTime("overtime_hours_worked"));
+
+                myTimesheetRecords.add(timesheet);
+            }
+            return myTimesheetRecords;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
-}
+
+
