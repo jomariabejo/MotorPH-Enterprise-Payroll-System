@@ -6,7 +6,6 @@ import com.jomariabejo.motorph.repository.PayslipRepository;
 import com.jomariabejo.motorph.utility.AutoIncrementUtility;
 import javafx.collections.ObservableList;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class PayslipService {
@@ -20,15 +19,15 @@ public class PayslipService {
         return AutoIncrementUtility.getNextAutoIncrementValueForPayslip();
     }
 
-    public void saveGeneratedPayslip(ObservableList<EmployeePayrollSummaryReport> employeePayrollSummaryReports) {
+    public void saveGeneratedPayslip(ObservableList < EmployeePayrollSummaryReport > employeePayrollSummaryReports) {
         payslipRepository.saveMultiplePayslip(employeePayrollSummaryReports);
     }
 
-    public ArrayList<Payslip> fetchPayslipByEmployeeId(int employeeId) {
-        try {
-            return payslipRepository.fetchPayslipByEmployeeId(employeeId);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    public ArrayList < Payslip > fetchPayslipByEmployeeId(int employeeId) {
+        return payslipRepository.fetchPayslipByPayslipId(employeeId);
+    }
+
+    public Payslip.PayslipViewer fetchPayslip(int payslipId) {
+        return payslipRepository.fetchPayslipBreakdown(payslipId);
     }
 }

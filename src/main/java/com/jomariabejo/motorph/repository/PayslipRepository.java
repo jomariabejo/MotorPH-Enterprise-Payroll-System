@@ -12,13 +12,11 @@ import com.jomariabejo.motorph.utility.AutoIncrementUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
 import javafx.collections.ObservableList;
 
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Optional;
 
 public class PayslipRepository {
     private final TaxService taxService;
@@ -112,7 +110,7 @@ public class PayslipRepository {
         }
     }
 
-    public ArrayList<Payslip> fetchPayslipByEmployeeId(int employeeId) throws SQLException {
+    public ArrayList<Payslip> fetchPayslipByPayslipId(int employeeId) {
         String query = "SELECT payslip_id, total_hours_worked, gross_income, net_income, pay_period_start, pay_period_end FROM payslip WHERE employee_id = ?";
         ArrayList<Payslip> myPayslips = new ArrayList<>();
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -133,6 +131,111 @@ public class PayslipRepository {
                 );
             }
             return myPayslips;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
+
+    // 1st process get the payslip
+    // 2nd process get the regular hours worked and overtime hours worked.
+    public Payslip.PayslipViewer fetchPayslipBreakdown(int payslipId) {
+
+
+        String query = "SELECT\n" +
+                "    p.employee_id,\n" +
+                "    CONCAT(e.first_name, ' ', e.last_name) AS EMPLOYEE_NAME,\n" +
+                "    p.pay_period_start,\n" +
+                "    p.pay_period_end,\n" +
+                "    pstn.name,\n" +
+                "    e.basic_salary as MONTHLY_RATE,\n" +
+                "    e.hourly_rate as HOURLY_RATE,\n" +
+                "    p.gross_income,\n" +
+                "    d.sss,\n" +
+                "    d.philhealth,\n" +
+                "    d.pagibig,\n" +
+                "    t.withheld_tax,\n" +
+                "    ((d.total_contribution) + (t.withheld_tax)) AS TOTAL_DEDUCTION,\n" +
+                "    a.rice,\n" +
+                "    a.phone,\n" +
+                "    a.clothing,\n" +
+                "    (a.total_amount) AS TOTAL_BENEFITS,\n" +
+                "    p.net_income AS TAKE_HOME_PAY,\n" +
+                "    ts.total_regular_hours_worked,\n" +
+                "    ts.total_overtime_hours_worked,\n" +
+                "    p.total_hours_worked\n" +
+                "FROM\n" +
+                "    payslip p\n" +
+                "    INNER JOIN employee e ON p.employee_id = e.employee_id\n" +
+                "    INNER JOIN position pstn ON e.position_id = pstn.position_id\n" +
+                "    INNER JOIN allowance a ON p.alw_id = a.alw_id\n" +
+                "    INNER JOIN deduction d ON p.deduction_id = d.deduction_id\n" +
+                "    INNER JOIN tax t ON p.tax_id = t.tax_id\n" +
+                "    INNER JOIN (\n" +
+                "        SELECT\n" +
+                "            t.employee_id,\n" +
+                "            SUM(\n" +
+                "                CASE WHEN TIME(t.time_in) < '08:00:00' THEN (\n" +
+                "                    TIME_TO_SEC(TIMEDIFF('08:00:00', t.time_in)) / 3600.0\n" +
+                "                ) WHEN TIME(t.time_out) > '17:00:00' THEN (\n" +
+                "                    TIME_TO_SEC(TIMEDIFF('17:00:00', t.time_in)) / 3600.0\n" +
+                "                ) ELSE (\n" +
+                "                    TIME_TO_SEC(TIMEDIFF(t.time_out, t.time_in)) / 3600.0\n" +
+                "                ) END\n" +
+                "            ) AS total_regular_hours_worked,\n" +
+                "            SUM(\n" +
+                "                CASE WHEN t.time_out <= '17:00:00' THEN 0 ELSE (\n" +
+                "                    TIME_TO_SEC(TIMEDIFF(t.time_out, '17:00:00')) / 3600.0\n" +
+                "                ) END\n" +
+                "            ) AS total_overtime_hours_worked\n" +
+                "        FROM\n" +
+                "            timesheet t\n" +
+                "            JOIN employee e ON t.employee_id = e.employee_id\n" +
+                "            JOIN department d ON e.dept_id = d.dept_id\n" +
+                "            JOIN payslip p ON e.employee_id = p.employee_id\n" +
+                "        WHERE\n" +
+                "            e.isActive = 1\n" +
+                "            AND t.date BETWEEN p.pay_period_start AND p.pay_period_end\n" +
+                "            AND t.employee_id = p.employee_id\n" +
+                "        GROUP BY\n" +
+                "            t.employee_id\n" +
+                "    ) AS ts ON p.employee_id = ts.employee_id\n" +
+                "WHERE\n" +
+                "    p.payslip_id = ?;\n";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)){
+            preparedStatement.setInt(1, payslipId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return new Payslip.PayslipViewer(
+                        resultSet.getInt("employee_id"),
+                        resultSet.getString("EMPLOYEE_NAME"),
+                        resultSet.getDate("pay_period_start"),
+                        resultSet.getDate("pay_period_end"),
+                        resultSet.getString("name"),
+                        resultSet.getDouble("MONTHLY_RATE"),
+                        resultSet.getDouble("HOURLY_RATE"),
+                        resultSet.getDouble("gross_income"),
+                        resultSet.getDouble("sss"),
+                        resultSet.getDouble("philhealth"),
+                        resultSet.getDouble("pagibig"),
+                        resultSet.getDouble("withheld_tax"),
+                        resultSet.getDouble("TOTAL_DEDUCTION"),
+                        resultSet.getDouble("rice"),
+                        resultSet.getDouble("phone"),
+                        resultSet.getDouble("clothing"),
+                        resultSet.getDouble("TOTAL_BENEFITS"),
+                        resultSet.getDouble("TAKE_HOME_PAY"),
+                        resultSet.getDouble("total_regular_hours_worked"),
+                        resultSet.getDouble("total_overtime_hours_worked"),
+                        resultSet.getDouble("total_hours_worked")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

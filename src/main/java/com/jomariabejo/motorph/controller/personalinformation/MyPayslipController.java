@@ -58,19 +58,21 @@ public class MyPayslipController {
                     Payslip payslip = getTableView().getItems().get(getIndex());
 
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/employee-profile.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/payslip-view.fxml"));
 
                         Parent root = fxmlLoader.load();
                         Stage stage = new Stage();
                         stage.initModality(Modality.APPLICATION_MODAL);
-                        stage.initStyle(StageStyle.DECORATED);
-                        stage.setTitle("Viewing " + payslip.getPayslipID() + " record");
+                        stage.initStyle(StageStyle.UNDECORATED);
                         stage.setScene(new Scene(root));
                         stage.show();
 
-//                        HRViewEmployeeProfile employeeProfile = fxmlLoader.getController();
-//                        employeeProfile.initData(employee.getEmployeeId());
+                        ViewMyPayslipController viewMyPayslipController = fxmlLoader.getController();
+                        viewMyPayslipController.initPayslipId(payslip.getPayslipID());
+
                     } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                 });

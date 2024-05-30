@@ -35,8 +35,6 @@ public class MyTimesheetController {
     @FXML
     private Label lbl_tv_total_result;
 
-    @FXML
-    private Label lbl_tv_total_result1;
 
     @FXML
     private TableColumn<BigDecimal,Timesheet> overtimeHoursWorked;
@@ -58,13 +56,6 @@ public class MyTimesheetController {
     @FXML
     private TableView<Timesheet> tv_timesheets;
 
-    // TODO: Implement 'set time in' feature here.
-    //      Guide:
-    //          [1] Check mo muna ang database if may timesheet na si employee sa current day
-    //          [2] Insert new 'timesheet' including 'date','time_in','time_out' // You can use this method to implement(com.jomariabejo.motorph.service.TimesheetService.setTimeIn)
-    //          [3] Display to user kung anong oras siya nakapag time in using this method. (com.jomariabejo.motorph.utility.AlertUtility)
-    //      Expected output:
-    //          [1] Once the time in is clicked, the payroll_sys.timesheet should insert a new data including the
     @FXML
     void btnSetTimeIn(ActionEvent event) {
         try {
@@ -92,6 +83,10 @@ public class MyTimesheetController {
 
                     // Show success message to the user
                     AlertUtility.showInformation("Time In Success", "Time In Recorded", "You have successfully timed in at " + formattedTime + " on " + currentDate.toString() + ".");
+                    // Increment The no. result label
+                    int currentResultNumberValue = Integer.parseInt(this.lbl_tv_total_result.getText());
+                    int incrementResultNumberValue = currentResultNumberValue++;
+                    this.lbl_tv_total_result.setText(String.valueOf(incrementResultNumberValue));
                 } else {
                     AlertUtility.showErrorAlert("Database Error", "Error Occurred", "Failed to insert time in record.");
                 }
@@ -101,10 +96,6 @@ public class MyTimesheetController {
         }
     }
 
-    // TODO: Implement 'set time out' feature here.
-    //       Expected Output
-    //          [1] Display confirmation for set time out
-    //          [2] Update the Timesheet(Lagyan na natin ng time_out and timesheet na walang timeout.
     @FXML
     void btnSetTimeOut(ActionEvent event) {
         try {
