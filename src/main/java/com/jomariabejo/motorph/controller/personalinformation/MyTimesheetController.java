@@ -4,6 +4,7 @@ import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.Timesheet;
 import com.jomariabejo.motorph.service.TimesheetService;
 import com.jomariabejo.motorph.utility.AlertUtility;
+import com.jomariabejo.motorph.utility.CurrentTimestampUtility;
 import com.jomariabejo.motorph.utility.DateConverter;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -22,12 +23,9 @@ import java.util.List;
 public class MyTimesheetController {
     private final TimesheetService timesheetService;
     private int employeeId;
-    private boolean confirmedTimeout = false;
-    java.util.Date utilCurrentDate = DateConverter.today();
-    Date currentDate = new Date(utilCurrentDate.getTime());
-    LocalTime currentTime = LocalTime.now().withSecond(0).withNano(0);
-    DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:00");
-    String formattedTime = currentTime.format(timeFormatter);
+    Date currentDate = DateConverter.today();
+    Time currentTime = CurrentTimestampUtility.getCurrentTime();
+    String formattedTime = CurrentTimestampUtility.getCurrentTimeFormatted();
 
     @FXML
     private TableColumn<Date,Timesheet> date;
@@ -69,29 +67,22 @@ public class MyTimesheetController {
     void btnSetTimeIn(ActionEvent event) {
         try {
             System.out.println("Checking time in for employee id: " + this.employeeId);
-            // Check if there's already a timesheet for the current day
-            if (timesheetService.checkIfEmployeeIdExistToday(employeeId)) {
+
+            if (timesheetService.checkIfEmployeeIdTimeinExistToday(employeeId)) {
                 AlertUtility.showErrorAlert("Time In Error", "Time In Already Recorded", "You have already timed in for today.");
             } else {
-                // Create a new Timesheet object with the current date, time in, and employee ID
                 Timesheet timesheet = new Timesheet();
                 timesheet.setDate(currentDate);
-                timesheet.setTimeIn(Time.valueOf(formattedTime));
+                timesheet.setTimeIn(currentTime);
                 timesheet.setEmployeeId(employeeId);
 
-                System.out.println("Timesheet Date: " + timesheet.getDate());
-                System.out.println("Timesheet Time In: " + timesheet.getTimeIn());
-                System.out.println("Timesheet Employee ID: " + timesheet.getEmployeeId());
 
-                // Call the setTimeIn method from the TimesheetService to insert the new timesheet record
                 if (timesheetService.setTimeIn(timesheet)) {
-
-                    // Fetch the updated list of timesheets and update the TableView
                     List<Timesheet> updatedTimesheets = timesheetService.getMyTimesheetsAscending(employeeId);
                     tv_timesheets.setItems(FXCollections.observableList(updatedTimesheets));
 
-                    // Show success message to the user
-                    AlertUtility.showInformation("Time In Success", "Time In Recorded", "You have successfully timed in at " + formattedTime + " on " + currentDate.toString() + ".");
+
+                    AlertUtility.showInformation("Time In Success", "Time In Recorded", "You have successfully timed in at " + formattedTime + " on " + currentDate + ".");
                 } else {
                     AlertUtility.showErrorAlert("Database Error", "Error Occurred", "Failed to insert time in record.");
                 }
@@ -101,6 +92,7 @@ public class MyTimesheetController {
         }
     }
 
+
     // TODO: Implement 'set time out' feature here.
     //       Expected Output
     //          [1] Display confirmation for set time out
@@ -108,34 +100,36 @@ public class MyTimesheetController {
     @FXML
     void btnSetTimeOut(ActionEvent event) {
         try {
-            // Check if there's already a timesheet for the current day and employee
-            if (!timesheetService.checkIfEmployeeIdExistToday(employeeId)) {
+            System.out.println("Checking time out for employee id: " + this.employeeId);
+
+
+            if (!timesheetService.checkIfEmployeeIdTimeinExistToday(employeeId)) {
                 AlertUtility.showErrorAlert("Time Out Error", "No Time In Recorded", "You haven't timed in for today.");
-                return; // Exit the method if there's no time in record
+                return;
             }
-            // Confirm with the user before proceeding with the timeout action, only if not already confirmed
-            if (!confirmedTimeout) {
-                boolean confirmed = AlertUtility.showConfirmation("Confirm Time Out", "Confirm Timeout Action", "Are you sure you want to time out?");
-                if (!confirmed) {
-                    return; // Exit the method if the user cancels the confirmation
-                }
-                confirmedTimeout = true; // Set confirmedTimeout to true after confirming once
+
+            if (timesheetService.checkIfEmployeeIDAlreadyTimedOutToday(employeeId)) {
+                AlertUtility.showErrorAlert("Time Out Error", "Time Out Already Recorded", "You have already timed out for today.");
+                return;
             }
-            // Create a new Timesheet object for updating the time out record
+
+            boolean confirmed = AlertUtility.showConfirmation("Confirm Time Out", "Confirm Timeout Action", "Are you sure you want to time out?");
+            if (!confirmed) {
+                return;
+            }
+
             Timesheet timesheet = new Timesheet();
             timesheet.setEmployeeId(employeeId);
             timesheet.setDate(currentDate);
-            timesheet.setTimeOut(Time.valueOf(formattedTime));
+            timesheet.setTimeOut(currentTime);
 
-            // Call the setTimeOut method from the TimesheetService to update the time out record
-            if (timesheetService.setTimeOut(employeeId, currentDate, Time.valueOf(formattedTime))) {
 
-                // Fetch the updated list of timesheets and update the TableView
+            if (timesheetService.setTimeOut(employeeId, currentDate, currentTime)) {
                 List<Timesheet> updatedTimesheets = timesheetService.getMyTimesheetsAscending(employeeId);
                 tv_timesheets.setItems(FXCollections.observableList(updatedTimesheets));
 
-                // Show success message to the user
-                AlertUtility.showInformation("Time Out Success", "Time Out Recorded", "You have successfully timed out at " + formattedTime + " on " + currentDate.toString() + ".");
+
+                AlertUtility.showInformation("Time Out Success", "Time Out Recorded", "You have successfully timed out at " + formattedTime + " on " + currentDate + ".");
             } else {
                 AlertUtility.showErrorAlert("Database Error", "Error Occurred", "Failed to update time out record.");
             }
@@ -143,6 +137,7 @@ public class MyTimesheetController {
             AlertUtility.showErrorAlert("Database Error", "Error Occurred", "Failed to connect to the database.");
         }
     }
+
     @FXML
     void viewEmployeePerformanceButtonClicked(ActionEvent event) {
 
@@ -153,7 +148,7 @@ public class MyTimesheetController {
     }
 
     public void initData(int employeeId) {
-        tv_timesheets.setItems(FXCollections.observableList(timesheetService.getMyTimesheets(employeeId)));
+        tv_timesheets.setItems(FXCollections.observableList(timesheetService.getMyTimesheetsAscending(employeeId)));
         displayTableViewSize();
         this.employeeId = employeeId;
     }

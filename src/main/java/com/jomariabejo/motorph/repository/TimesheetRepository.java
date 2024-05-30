@@ -528,6 +528,46 @@ public class TimesheetRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean checkIfEmployeeIDAlreadyTimedOutToday(int employeeId) {
+        String query = "SELECT COUNT(*) FROM timesheet WHERE employee_id = ? AND date = CURDATE() AND time_out IS NOT NULL";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, employeeId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
+
+    public boolean checkIfEmployeeIdTimeinExistToday(int employeeId) {
+        String query = "SELECT COUNT(*) FROM timesheet WHERE employee_id = ? AND date = CURDATE() AND time_in IS NOT NULL";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, employeeId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
+    }
 }
+
+
+
+
 
 
