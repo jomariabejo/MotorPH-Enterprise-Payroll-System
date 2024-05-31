@@ -46,10 +46,6 @@ public class TaxService {
 
 
     public void saveTax(Tax tax) {
-        try {
             taxRepository.saveTax(tax);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
