@@ -44,6 +44,7 @@ public class TimesheetService {
         return timesheetRepository.checkIfEmployeeHasTimesheetRecordsToday(employeeId);
     }
 
+
     public ArrayList<GrossIncome> fetchGrossIncome(Date startDate, Date endDate) {
         return timesheetRepository.fetchGrossIncome(startDate, endDate);
     }
@@ -62,13 +63,5 @@ public class TimesheetService {
 
     public boolean setTimeOut(int employeeId, Date date, Time timeOut) throws SQLException {
         return timesheetRepository.updateTimesheet(employeeId, date, timeOut);
-    }
-
-    public boolean checkIfEmployeeIdTimeinExistToday(int employeeId) {
-        return timesheetRepository.checkIfEmployeeIdTimeinExistToday(employeeId);
-    }
-
-    public boolean checkIfEmployeeIDAlreadyTimedOutToday(int employeeId) {
-        return timesheetRepository.checkIfEmployeeIDAlreadyTimedOutToday(employeeId);
     }
 }

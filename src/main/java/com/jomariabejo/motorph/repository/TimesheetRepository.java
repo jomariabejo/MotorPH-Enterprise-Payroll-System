@@ -8,6 +8,7 @@ import com.jomariabejo.motorph.utility.TextReader;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -458,6 +459,7 @@ public class TimesheetRepository {
                 "        ELSE '00:00:00' END AS overtime_hours_worked\n" +
                 "    FROM timesheet t\n" +
                 "    WHERE t.employee_id = ?\n";
+        Timesheet timesheet = new Timesheet();
 
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, employeeId);
@@ -465,9 +467,7 @@ public class TimesheetRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             ArrayList<Timesheet> myTimesheetRecords = new ArrayList<>();
-
             while (resultSet.next()) {
-                Timesheet timesheet = new Timesheet();
                 timesheet.setTimesheetId(resultSet.getInt("timesheet_id"));
                 timesheet.setEmployeeId(resultSet.getInt("employee_id"));
                 timesheet.setDate(resultSet.getDate("date"));
@@ -480,6 +480,14 @@ public class TimesheetRepository {
             }
             return myTimesheetRecords;
         } catch (SQLException e) {
+            if (e.getCause().toString().contains("is an invalid TIME value")) {
+                timesheet.setRegularHoursWorked(new Time(0,0,0));
+                long timeInMs = timesheet.getTimeIn().getTime();
+                long timeOutMs = timesheet.getTimeOut().getTime();
+                long differenceMs = timeOutMs - timeInMs;
+                Time overtime = new Time(differenceMs);
+                timesheet.setOvertimeHoursWorked(overtime);
+            }
             throw new RuntimeException(e);
         }
     }
@@ -528,46 +536,6 @@ public class TimesheetRepository {
             throw new RuntimeException(e);
         }
     }
-
-    public boolean checkIfEmployeeIDAlreadyTimedOutToday(int employeeId) {
-        String query = "SELECT COUNT(*) FROM timesheet WHERE employee_id = ? AND date = CURDATE() AND time_out IS NOT NULL";
-
-        try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, employeeId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return resultSet.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return false;
-    }
-
-    public boolean checkIfEmployeeIdTimeinExistToday(int employeeId) {
-        String query = "SELECT COUNT(*) FROM timesheet WHERE employee_id = ? AND date = CURDATE() AND time_in IS NOT NULL";
-
-        try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, employeeId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            if (resultSet.next()) {
-                return resultSet.getInt(1) > 0;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return false;
-    }
 }
-
-
-
-
 
 
