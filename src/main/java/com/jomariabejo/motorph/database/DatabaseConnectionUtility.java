@@ -11,7 +11,7 @@ public class DatabaseConnectionUtility {
     // JDBC URL, username, and password
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/payroll_sys";
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "1234";
 
     // Method to establish a database connection
     public static Connection getConnection() throws SQLException {
