@@ -42,7 +42,7 @@
                             </items>
                         </ComboBox>
                   <Button mnemonicParsing="false" onAction="#buttonCheckLeaveCreditsEvent" stylesheets="@../../../../css/custom/button.css" text="Check Leave Credits" />
-                  <Button layoutX="822.0" layoutY="28.0" mnemonicParsing="false" onAction="#buttonFileLeaveRequestEvent" stylesheets="@../../../../css/custom/button.css" text="File Leave Request" />
+                        <Button layoutX="822.0" layoutY="28.0" mnemonicParsing="false" onAction="#buttonFileLeaveRequestEvent" stylesheets="@../../../../css/custom/button.css" text="File Leave Request" />
                     </children>
                 </HBox>
                 <TableView fx:id="tv_leave_requests" prefHeight="487.0" prefWidth="1131.0" stylesheets="@../../../../css/custom/tableView.css">
