@@ -1,5 +1,7 @@
 package com.jomariabejo.motorph.controller.personalinformation;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,7 +24,7 @@ public class MyLeaveRequestSubmissionController {
     private Label leave_request_owner;
 
     @FXML
-    private ComboBox<?> leaverequest_type;
+    private ComboBox<String> leaverequest_type;
 
     @FXML
     private TextField tf_available_leave_credits;
@@ -52,4 +54,11 @@ public class MyLeaveRequestSubmissionController {
         this.leave_request_owner.setText(String.valueOf(employeeId));
     }
 
+    /** TODO: 1. Gumawa ka muna ng fetcher ng mga leave request category names such as (SICK, EMERGENCY, VACATION)
+     *        2. After mo ma fetch yung mga leave types, then i inject mo yung data papunta sa combo box, supposedly tatlo yun.
+     */
+    public void setUpComboBox() {
+        ObservableList observableList = FXCollections.observableList(null); // replace this
+        this.leaverequest_type.setItems(observableList);
+    }
 }
