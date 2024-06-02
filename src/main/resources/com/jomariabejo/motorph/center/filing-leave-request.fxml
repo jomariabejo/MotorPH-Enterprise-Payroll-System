@@ -9,10 +9,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="554.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.center.Filingleaverequest">
+<AnchorPane prefHeight="554.0" prefWidth="379.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.personalinformation.MyLeaveRequestSubmissionController">
    <children>
       <AnchorPane layoutX="11.0" layoutY="14.0" prefHeight="550.0" prefWidth="400.0" />
-      <Label layoutX="24.0" layoutY="24.0" prefHeight="21.0" prefWidth="184.0" styleClass="header-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/MainFormDesign.css" text="Hello, Lawrence Grefiel" textAlignment="CENTER">
+      <Label fx:id="leave_request_owner" layoutX="24.0" layoutY="24.0" prefHeight="21.0" prefWidth="184.0" styleClass="header-1"  text="Hello, Lawrence Grefiel" textAlignment="CENTER">
          <font>
             <Font size="15.0" />
          </font>
@@ -22,7 +22,7 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <ComboBox fx:id="editDoctor_specialized" layoutX="70.0" layoutY="115.0" minHeight="30.0" prefWidth="250.0" promptText="Choose..." styleClass="textfield-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/PageDesign.css" />
+      <ComboBox fx:id="leaverequest_type" layoutX="70.0" layoutY="115.0" minHeight="30.0" prefWidth="250.0" promptText="Choose..." styleClass="textfield-1"  />
       <Label alignment="TOP_CENTER" layoutX="120.0" layoutY="160.0" prefHeight="19.0" prefWidth="168.0" text="Availble Leave Credits" textAlignment="CENTER">
          <font>
             <Font size="13.0" />
@@ -30,7 +30,7 @@
       </Label>
       <HBox alignment="CENTER_RIGHT" layoutX="100.0" layoutY="190.0" spacing="12.0">
          <children>
-            <TextField fx:id="tf_fname" disable="true" minHeight="30.0" minWidth="200.0" stylesheets="@../../../../css/custom/textfields-small.css" />
+            <TextField fx:id="tf_available_leave_credits" disable="true" minHeight="30.0" minWidth="200.0" stylesheets="@../../../../css/custom/textfields-small.css" />
          </children>
       </HBox>
       <Label alignment="TOP_CENTER" layoutX="120.0" layoutY="240.0" prefHeight="19.0" prefWidth="168.0" text="Choose Leave Duration" textAlignment="RIGHT">
@@ -38,9 +38,9 @@
             <Font size="13.0" />
          </font>
       </Label>
-      <DatePicker fx:id="checkout_checkout" layoutX="70.0" layoutY="265.0" minHeight="35.0" prefWidth="180.0" />
-      <DatePicker fx:id="checkout_checkout1" layoutX="70.0" layoutY="310.0" minHeight="35.0" prefWidth="180.0" />
-      <Button fx:id="checkout_countBtn" layoutX="255.0" layoutY="310.0" minHeight="35.0" mnemonicParsing="false" onAction="#countBtn" prefWidth="62.0" styleClass="btn-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/PageDesign.css" text="Count" />
+      <DatePicker fx:id="dp_leave_start_date" layoutX="70.0" layoutY="265.0" minHeight="35.0" prefWidth="180.0" />
+      <DatePicker fx:id="dp_leave_end_date" layoutX="70.0" layoutY="310.0" minHeight="35.0" prefWidth="180.0" />
+      <Button fx:id="btn_count" layoutX="255.0" layoutY="310.0" minHeight="35.0" mnemonicParsing="false" onAction="#countBtn" prefWidth="62.0" styleClass="btn-1"  text="Count" />
       <Label layoutX="90.0" layoutY="350.0" text="Total Days:">
          <font>
             <Font size="14.0" />
@@ -51,12 +51,12 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField layoutX="70.0" layoutY="400.0" minHeight="70.0" prefWidth="250.0" />
-      <Button fx:id="editApp_updateBtn" layoutX="211.0" layoutY="500.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="94.0" styleClass="btn-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/PageDesign.css" text="Proceed" />
-      <Button fx:id="editApp_cancelBtn" layoutX="100.0" layoutY="500.0" mnemonicParsing="false" prefHeight="36.0" prefWidth="94.0" styleClass="btn-1" stylesheets="@../../../../../../../../../../Downloads/Compressed/HospitalManagementSystem-main/HospitalManagementSystem/src/design/PageDesign.css" text="Cancel" />
+      <TextField fx:id="tf_reason" layoutX="70.0" layoutY="400.0" minHeight="70.0" prefWidth="250.0" />
+      <Button layoutX="211.0" layoutY="500.0" mnemonicParsing="false" onAction="#submitBtnEvent" prefHeight="36.0" prefWidth="94.0" styleClass="btn-1"  text="Submit" />
+      <Button layoutX="100.0" layoutY="500.0" mnemonicParsing="false" onAction="#cancelBtnEvent" prefHeight="36.0" prefWidth="94.0" styleClass="btn-1"  text="Cancel" />
       <HBox layoutX="165.0" layoutY="350.0" prefHeight="20.0" prefWidth="100.0">
          <children>
-            <TextField fx:id="tf_fname1" disable="true" minHeight="30.0" minWidth="144.0" prefHeight="30.0" prefWidth="144.0" stylesheets="@../../../../css/custom/textfields-small.css" />
+            <TextField fx:id="tf_total_days_left" disable="true" minHeight="30.0" minWidth="144.0" prefHeight="30.0" prefWidth="144.0" stylesheets="@../../../../css/custom/textfields-small.css" />
          </children>
       </HBox>
    </children>
