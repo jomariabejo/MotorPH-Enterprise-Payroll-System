@@ -235,7 +235,7 @@ public class TimesheetRepository {
     }
 
     public boolean updateTimesheet(int employeeId, Date date, Time timeOut) throws SQLException {
-        String query = "UPDATE TIMESHEET SET time_out = ? WHERE employee_id = ? AND date = ?;";
+        String query = "UPDATE TIMESHEET SET time_out = ? WHERE employee_id = ? AND date = ? AND time_out = NULL OR time_out = '';";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
 

@@ -128,7 +128,9 @@ public class MyTimesheetController {
                 // Show success message to the user
                 AlertUtility.showInformation("Time Out Success", "Time Out Recorded", "You have successfully timed out at " + formattedTime + " on " + currentDate.toString() + ".");
             } else {
-                AlertUtility.showErrorAlert("Database Error", "Error Occurred", "Failed to update time out record.");
+                AlertUtility.showErrorAlert("Timeout Error", "Oops!",
+                        "You've already Timed Out");
+                ;
             }
         } catch (SQLException e) {
             AlertUtility.showErrorAlert("Database Error", "Error Occurred", "Failed to connect to the database.");
