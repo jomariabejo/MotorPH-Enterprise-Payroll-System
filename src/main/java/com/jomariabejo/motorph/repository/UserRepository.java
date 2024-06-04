@@ -49,8 +49,7 @@ public class UserRepository {
 
             if (isDelete == 0) {
                 System.out.println("Nothing to delete");
-            }
-            else {
+            } else {
                 System.out.println("Delete username: " + username + " success :)");
             }
         }
@@ -66,16 +65,14 @@ public class UserRepository {
             prepStatement.setString(1, username);
             prepStatement.setString(2, password);
             try (ResultSet resultSet = prepStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    return Optional.of(
-                            new User(
-                                    resultSet.getInt("user_id"),
-                                    resultSet.getInt("employee_id"),
-                                    resultSet.getInt("role_id"),
-                                    resultSet.getString("username"),
-                                    resultSet.getString("password")
-                            ));
-                }
+                if (resultSet.next()) return Optional.of(
+                        new User(
+                                resultSet.getInt("user_id"),
+                                resultSet.getInt("employee_id"),
+                                resultSet.getInt("role_id"),
+                                resultSet.getString("username"),
+                                resultSet.getString("password")
+                        ));
             }
         }
         return Optional.empty();
@@ -128,15 +125,14 @@ public class UserRepository {
     public int getUserEmployeeId(int userID) throws SQLException {
         String query = TextReader.readTextFile(QUERY_BASE_PATH + "/get_user_employee_id.sql");
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection();
-        PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1,userID);
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, userID);
             ResultSet result = ps.executeQuery();
 
             if (result.next()) {
                 return result.getInt("employee_id");
-            }
-            else return 0;
+            } else return 0;
         }
     }
 }
