@@ -29,5 +29,7 @@ module com.jomariabejo.motorph {
     exports com.jomariabejo.motorph.controller.finance;
     opens com.jomariabejo.motorph.controller.personalinformation to javafx.fxml;
     exports com.jomariabejo.motorph.controller.personalinformation;
+    opens com.jomariabejo.motorph.controller.systemadmin to javafx.fxml;
+    exports com.jomariabejo.motorph.controller.systemadmin;
 
 }
