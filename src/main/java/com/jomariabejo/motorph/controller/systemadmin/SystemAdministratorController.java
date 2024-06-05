@@ -1,8 +1,6 @@
 package com.jomariabejo.motorph.controller.systemadmin;
 
-import com.jomariabejo.motorph.controller.hr.HRViewEmployeeProfile;
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
-import com.jomariabejo.motorph.entity.Employee;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.event.ActionEvent;
@@ -11,7 +9,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,16 +38,16 @@ public class SystemAdministratorController {
         private TableColumn<Integer, User> userId;
 
         @FXML
-        void addNewUserClicked(ActionEvent event) {
-            Stage addNewEmployeeStage = new Stage(StageStyle.UNDECORATED);
-            // Load the FXML file for the first scene
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/create/add-new-user.fxml"));
-            // Set the scene for the primary stage
-            try {
-                addNewEmployeeStage.setScene(new Scene(loader.load()));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        void addNewUserClicked(ActionEvent event) throws IOException {
+
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/create/add-new-user.fxml"));
+
+            Parent root = fxmlLoader.load();
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.setScene(new Scene(root));
+            stage.show();
         }
 
         @FXML
@@ -118,7 +115,7 @@ public class SystemAdministratorController {
                     User user = getTableView().getItems().get(getIndex());
 
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/employee-profile.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/create/add-new-user.fxml"));
 
                         Parent root = fxmlLoader.load();
                         Stage stage = new Stage();
@@ -128,11 +125,10 @@ public class SystemAdministratorController {
                         stage.setScene(new Scene(root));
                         stage.show();
 
-                        HRViewEmployeeProfile employeeProfile = fxmlLoader.getController();
-                        employeeProfile.initData(user.getUserID());
+                        AddNewUserController addNewUserController = fxmlLoader.getController();
+                        addNewUserController.initData(user.getUserID());
+
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    } catch (SQLException e) {
                         throw new RuntimeException(e);
                     }
                 });
@@ -156,10 +152,10 @@ public class SystemAdministratorController {
                     User user = getTableView().getItems().get(getIndex());
                     // Handle delete action here
                     String customHeader = "Confirm Deletion";
-                    // Ask for confirmation before deleting an employee
-                    String customContent = "Are you sure you want to delete employee " + user.getUsername() + " ?";
+                    // Ask for confirmation before deleting an user
+                    String customContent = "Are you sure you want to delete user " + user.getUsername() + " ?";
                     boolean isDeletionConfirmed = AlertUtility.showConfirmation(
-                            customContent, // Message asking if the user wants to delete the employee
+                            customContent, // Message asking if the 'system admin' or 'executives' wants to delete the user
                             customHeader, // Title of the confirmation dialog
                             "Once confirmed, the employee will be removed from the database."
                     );
@@ -167,7 +163,7 @@ public class SystemAdministratorController {
                     if (isDeletionConfirmed) {
                         String title = user.getUsername() + " deleted successfully";
                         String header = "Deletion Confirmation";
-                        String content = "The employee has been successfully deleted from the database.";
+                        String content = "The user has been successfully deleted from the database.";
                         AlertUtility.showInformation(title, header, content);
                     }
                 });
@@ -197,7 +193,7 @@ public class SystemAdministratorController {
         this.tv_users.getColumns().add(actionsColumn);
     }
 
-    public void addNewEmployeeClicked(ActionEvent event) {
+    public void addNewUser(ActionEvent event) {
     }
 
     public void searching(ActionEvent event) {

@@ -151,4 +151,27 @@ public class UserRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public User fetchUser(int userID) {
+        String query = "SELECT u.employee_id, u.role_id, u.username, u.password FROM user u WHERE u.user_id = ?;";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, userID);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getInt(1),
+                        resultSet.getInt(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
 }

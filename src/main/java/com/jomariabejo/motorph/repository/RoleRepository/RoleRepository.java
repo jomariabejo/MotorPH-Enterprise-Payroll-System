@@ -10,12 +10,12 @@ import java.sql.SQLException;
 
 public class RoleRepository {
 
-    public int fetchRoleId(Role role) {
+    public int fetchRoleId(String roleName) {
         String query = "SELECT role_id FROM role WHERE role.name = ?";
 
         try(Connection connection = DatabaseConnectionUtility.getConnection();
             PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setString(1, role.getName());
+            pstmt.setString(1, roleName);
 
             ResultSet resultSet = pstmt.executeQuery();
 
@@ -26,5 +26,23 @@ public class RoleRepository {
             throw new RuntimeException(e);
         }
         return -1; // role name not found
+    }
+
+    public String fetchRoleName(int roleID) {
+        String query = "SELECT role.name FROM role WHERE role.role_id = ?";
+
+        try(Connection connection = DatabaseConnectionUtility.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, roleID);
+
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
     }
 }

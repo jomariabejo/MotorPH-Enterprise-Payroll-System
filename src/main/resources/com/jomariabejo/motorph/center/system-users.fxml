@@ -20,7 +20,7 @@
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button fx:id="btn_search1" layoutX="745.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewEmployeeClicked" prefHeight="46.0" prefWidth="200.0" stylesheets="@../../../../css/custom/button-small.css" text="Add New User">
+                        <Button fx:id="btn_search1" layoutX="745.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewUserClicked" prefHeight="46.0" prefWidth="200.0" stylesheets="@../../../../css/custom/button-small.css" text="Add New User">
                            <font>
                               <Font size="16.0" />
                            </font>

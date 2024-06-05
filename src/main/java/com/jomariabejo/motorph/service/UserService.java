@@ -23,4 +23,8 @@ public class UserService {
     public boolean saveUser(User user) {
         return userRepository.insertUser(user);
     }
+
+    public User fetchUser(int userID) {
+        return userRepository.fetchUser(userID);
+    }
 }
