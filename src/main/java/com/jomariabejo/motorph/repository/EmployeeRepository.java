@@ -6,6 +6,7 @@ import com.jomariabejo.motorph.enums.EmployeeStatus;
 import com.jomariabejo.motorph.query.QueryPath;
 import com.jomariabejo.motorph.record.AccountNumber;
 import com.jomariabejo.motorph.utility.TextReader;
+import javafx.scene.chart.PieChart;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -394,4 +395,19 @@ public class EmployeeRepository {
         }
         return null;
     }
+
+    public boolean checkIfEmployeeExist(int employeeId) {
+        String query = "SELECT employee_id FROM EMPLOYEE WHERE employee_id = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, employeeId);
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

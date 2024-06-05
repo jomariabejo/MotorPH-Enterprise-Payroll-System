@@ -42,7 +42,15 @@ public class SystemAdministratorController {
 
         @FXML
         void addNewUserClicked(ActionEvent event) {
-
+            Stage addNewEmployeeStage = new Stage(StageStyle.UNDECORATED);
+            // Load the FXML file for the first scene
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/create/add-new-user.fxml"));
+            // Set the scene for the primary stage
+            try {
+                addNewEmployeeStage.setScene(new Scene(loader.load()));
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         @FXML

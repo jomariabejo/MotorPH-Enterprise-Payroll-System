@@ -135,4 +135,20 @@ public class UserRepository {
             } else return 0;
         }
     }
+
+    public boolean insertUser(User user) {
+        String query = "INSERT INTO USER(username, password, employee_id, role_id) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setInt(3, user.getEmployeeID());
+            ps.setInt(4, user.getRoleID());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.jomariabejo.motorph.service;
 
+import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.repository.UserRepository;
 
 import java.security.NoSuchAlgorithmException;
@@ -17,5 +18,9 @@ public class UserService {
 
     public int fetchEmployeeIdByUserId(int userId) throws SQLException {
         return userRepository.getUserEmployeeId(userId);
+    }
+
+    public boolean saveUser(User user) {
+        return userRepository.insertUser(user);
     }
 }

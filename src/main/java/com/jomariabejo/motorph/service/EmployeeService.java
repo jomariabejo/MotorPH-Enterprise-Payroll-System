@@ -93,4 +93,8 @@ public class EmployeeService {
     public AccountNumber fetchEmployeeAccountNumber(int employeeId) {
         return employeeRepository.fetchEmployeeAccountNumber(employeeId);
     }
+
+    public boolean checkIfEmployeeExist(int employeeId) {
+        return employeeRepository.checkIfEmployeeExist(employeeId);
+    }
 }
