@@ -115,8 +115,9 @@ public class GeneratePayslipController {
 
                 employeePayrollSummaryReports.add(employeePayrollSummaryReport);
 
-                executeButton.setText("Save");
+                System.out.println(employeePayrollSummaryReport.toString());
             }
+            executeButton.setText("Save");
             injectEmployeePayrollSummaryReportToTableView(employeePayrollSummaryReports);
         }
         // handle save generated payslips
