@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.systemadmin.AddNewUserController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.systemadmin.UserController">
    <children>
       <VBox alignment="CENTER_LEFT" layoutX="108.0" layoutY="-17.0" prefHeight="800.0" prefWidth="400.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -24,7 +24,7 @@
                         <Image url="@../../../../img/add-new-user-icon.png" />
                      </image>
                   </ImageView>
-                  <Label text="Add new user">
+                  <Label fx:id="lbl_text" text="Add new user">
                      <font>
                         <Font name="Verdana" size="36.0" />
                      </font>
@@ -79,7 +79,7 @@
                   <Insets top="48.0" />
                </VBox.margin>
             </VBox>
-            <Button fx:id="saveBtn" onMouseClicked="#saveClicked" prefHeight="50.0" prefWidth="400.0" style="-fx-font-size: 24;" stylesheets="@../../../../css/custom/button.css" text="Save">
+            <Button fx:id="saveBtn" onMouseClicked="#rightButtonClicked" prefHeight="50.0" prefWidth="400.0" style="-fx-font-size: 24;" stylesheets="@../../../../css/custom/button.css" text="Save">
                <VBox.margin>
                   <Insets left="24.0" right="24.0" top="12.0" />
                </VBox.margin>

@@ -2,6 +2,7 @@ package com.jomariabejo.motorph.controller.systemadmin;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.User;
+import com.jomariabejo.motorph.enums.AccessType;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -110,6 +111,27 @@ public class SystemAdministratorController {
 
                 editButton.setOnAction(event -> {
                             // Handle edit action here ⚠️
+                    {
+                        User user = getTableView().getItems().get(getIndex());
+
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/create/add-new-user.fxml"));
+
+                            Parent root = fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.initStyle(StageStyle.DECORATED);
+                            stage.setTitle("Viewing " + user.getUserID() + " record");
+                            stage.setScene(new Scene(root));
+                            stage.show();
+
+                            UserController userController = fxmlLoader.getController();
+                            userController.initData(user.getUserID(), AccessType.UPDATE);
+
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
                     });
                 viewButton.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
@@ -125,8 +147,8 @@ public class SystemAdministratorController {
                         stage.setScene(new Scene(root));
                         stage.show();
 
-                        AddNewUserController addNewUserController = fxmlLoader.getController();
-                        addNewUserController.initData(user.getUserID());
+                        UserController addNewUserController = fxmlLoader.getController();
+                        addNewUserController.initData(user.getUserID(),AccessType.VIEW);
 
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -149,22 +171,29 @@ public class SystemAdministratorController {
 
                 // Set the icon images as graphics for the edit and view buttons
                 deleteButton.setOnAction(event -> {
-                    User user = getTableView().getItems().get(getIndex());
-                    // Handle delete action here
-                    String customHeader = "Confirm Deletion";
-                    // Ask for confirmation before deleting an user
-                    String customContent = "Are you sure you want to delete user " + user.getUsername() + " ?";
-                    boolean isDeletionConfirmed = AlertUtility.showConfirmation(
-                            customContent, // Message asking if the 'system admin' or 'executives' wants to delete the user
-                            customHeader, // Title of the confirmation dialog
-                            "Once confirmed, the employee will be removed from the database."
-                    );
+//                    User user = getTableView().getItems().get(getIndex());
+//                    // Handle delete action here
+//                    String customHeader = "Confirm Deletion";
+//                    // Ask for confirmation before deleting an user
+//                    String customContent = "Are you sure you want to delete user " + user.getUsername() + " ?";
 
-                    if (isDeletionConfirmed) {
-                        String title = user.getUsername() + " deleted successfully";
-                        String header = "Deletion Confirmation";
-                        String content = "The user has been successfully deleted from the database.";
-                        AlertUtility.showInformation(title, header, content);
+                    User user = getTableView().getItems().get(getIndex());
+
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/create/add-new-user.fxml"));
+
+                        Parent root = fxmlLoader.load();
+                        Stage stage = new Stage();
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.initStyle(StageStyle.DECORATED);
+                        stage.setTitle("Delete " + user.getUserID() + " record");
+                        stage.setScene(new Scene(root));
+                        stage.show();
+
+                        UserController userController = fxmlLoader.getController();
+                        userController.initData(user.getUserID(),AccessType.DELETE);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 });
 

@@ -27,4 +27,8 @@ public class UserService {
     public User fetchUser(int userID) {
         return userRepository.fetchUser(userID);
     }
+
+    public boolean deleteUser(int userId) {
+        return userRepository.deleteUser(userId);
+    }
 }

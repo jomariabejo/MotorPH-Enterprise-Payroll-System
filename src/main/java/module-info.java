@@ -13,6 +13,8 @@ module com.jomariabejo.motorph {
     requires java.sql;
     requires com.opencsv;
 
+    opens com.jomariabejo.motorph.enums to javafx.fxml;
+    exports com.jomariabejo.motorph.enums to javafx.fxml;
     opens com.jomariabejo.motorph.entity;
     exports com.jomariabejo.motorph.entity to javafx.fxml;
     opens com.jomariabejo.motorph to javafx.fxml;

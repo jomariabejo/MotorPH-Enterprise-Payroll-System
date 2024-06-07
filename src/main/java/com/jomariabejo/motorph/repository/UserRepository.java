@@ -55,13 +55,20 @@ public class UserRepository {
         }
     }
 
+    public boolean deleteUser(int userId) {
+        String query = "DELETE FROM user WHERE user.employee_id = ?";
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, userId);
+            int isDelete = ps.executeUpdate();
+            return isDelete == 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Optional<User> getUserByUsernameANDPassword(String username, String password) throws SQLException {
         String query = "SELECT * FROM user WHERE username=? AND password=?";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement prepStatement = connection.prepareStatement(query)) {
-            System.out.println("===================");
-            System.out.println(username);
-            System.out.println(password);
-            System.out.println("===================");
             prepStatement.setString(1, username);
             prepStatement.setString(2, password);
             try (ResultSet resultSet = prepStatement.executeQuery()) {
