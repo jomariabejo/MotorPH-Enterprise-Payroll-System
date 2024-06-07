@@ -1,16 +1,26 @@
 package com.jomariabejo.motorph.controller.personalinformation;
 
+import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.util.Callback;
 
-public class MyLeaveRequestSubmissionController {
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class MyLeaveRequestSubmissionController implements Initializable {
     @FXML
     private Button btn_count;
 
@@ -37,28 +47,133 @@ public class MyLeaveRequestSubmissionController {
 
     @FXML
     void cancelBtnEvent(ActionEvent event) {
-
+        // Handle cancel button event
     }
 
     @FXML
     void countBtn(ActionEvent event) {
-
+        // Handle count button event
+        calculateTotalDays();
     }
 
     @FXML
     void submitBtnEvent(ActionEvent event) {
-
+        // Handle submit button event
     }
 
     public void initData(int employeeId) {
         this.leave_request_owner.setText(String.valueOf(employeeId));
     }
 
-    /** TODO: 1. Gumawa ka muna ng fetcher ng mga leave request category names such as (SICK, EMERGENCY, VACATION)
-     *        2. After mo ma fetch yung mga leave types, then i inject mo yung data papunta sa combo box, supposedly tatlo yun.
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        setUpComboBox();
+        setUpDatePicker();
+    }
+
+    /**
+     * Fetch leave request categories from the database and populate the ComboBox.
      */
     public void setUpComboBox() {
-        ObservableList observableList = FXCollections.observableList(null); // replace this
+        ObservableList<String> observableList = FXCollections.observableArrayList(fetchLeaveCategories());
         this.leaverequest_type.setItems(observableList);
+
+        // Add a listener to the ComboBox to handle selection changes
+        this.leaverequest_type.setOnAction(event -> {
+            String selectedCategory = this.leaverequest_type.getSelectionModel().getSelectedItem();
+            if (selectedCategory != null) {
+                int maxCredits = fetchMaxCredits(selectedCategory);
+                this.tf_available_leave_credits.setText(String.valueOf(maxCredits));
+            }
+        });
+    }
+
+    /**
+     * Sets up the DatePicker to disable past dates.
+     */
+    public void setUpDatePicker() {
+        Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            @Override
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        // Disable all dates before today
+                        if (item.isBefore(LocalDate.now())) {
+                            setDisable(false);
+                        }
+                    }
+                };
+            }
+        };
+
+        dp_leave_start_date.setDayCellFactory(dayCellFactory);
+        dp_leave_start_date.setValue(LocalDate.now()); // Default to today's date
+
+        dp_leave_end_date.setDayCellFactory(dayCellFactory);
+        dp_leave_end_date.setValue(LocalDate.now()); // Default to today's date
+    }
+
+    /**
+     * Fetches leave request categories from the database.
+     *
+     * @return a list of leave request categories.
+     */
+    private List<String> fetchLeaveCategories() {
+        List<String> categories = new ArrayList<>();
+        String query = "SELECT categoryName FROM payroll_sys.leave_request_category";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                categories.add(resultSet.getString("categoryName"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categories;
+    }
+
+    /**
+     * Fetches the max credits for the given category from the database.
+     *
+     * @param categoryName the name of the leave request category.
+     * @return the max credits for the category.
+     */
+    private int fetchMaxCredits(String categoryName) {
+        int maxCredits = 0;
+        String query = "SELECT maxCredits FROM payroll_sys.leave_request_category WHERE categoryName = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, categoryName);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    maxCredits = resultSet.getInt("maxCredits");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return maxCredits;
+    }
+
+    /**
+     * Calculate total days between start and end dates and display the result in tf_total_days_left.
+     */
+    private void calculateTotalDays() {
+        LocalDate startDate = dp_leave_start_date.getValue();
+        LocalDate endDate = dp_leave_end_date.getValue();
+
+        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+
+        tf_total_days_left.setText(String.valueOf(daysBetween));
     }
 }
