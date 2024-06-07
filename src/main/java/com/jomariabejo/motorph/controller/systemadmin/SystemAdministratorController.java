@@ -39,19 +39,6 @@ public class SystemAdministratorController {
         private TableColumn<Integer, User> userId;
 
         @FXML
-        void addNewUserClicked(ActionEvent event) throws IOException {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/create/add-new-user.fxml"));
-
-            Parent root = fxmlLoader.load();
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.initStyle(StageStyle.DECORATED);
-            stage.setScene(new Scene(root));
-            stage.show();
-        }
-
-        @FXML
         void searchBtnClicked(ActionEvent event) {
 
         }
@@ -121,7 +108,7 @@ public class SystemAdministratorController {
                             Stage stage = new Stage();
                             stage.initModality(Modality.APPLICATION_MODAL);
                             stage.initStyle(StageStyle.DECORATED);
-                            stage.setTitle("Viewing " + user.getUserID() + " record");
+                            stage.setTitle("Editing " + user.getUsername() + " record");
                             stage.setScene(new Scene(root));
                             stage.show();
 
@@ -143,7 +130,7 @@ public class SystemAdministratorController {
                         Stage stage = new Stage();
                         stage.initModality(Modality.APPLICATION_MODAL);
                         stage.initStyle(StageStyle.DECORATED);
-                        stage.setTitle("Viewing " + user.getUserID() + " record");
+                        stage.setTitle("Viewing " + user.getUsername() + " record");
                         stage.setScene(new Scene(root));
                         stage.show();
 
@@ -186,7 +173,7 @@ public class SystemAdministratorController {
                         Stage stage = new Stage();
                         stage.initModality(Modality.APPLICATION_MODAL);
                         stage.initStyle(StageStyle.DECORATED);
-                        stage.setTitle("Delete " + user.getUserID() + " record");
+                        stage.setTitle("Delete " + user.getUsername() + " record");
                         stage.setScene(new Scene(root));
                         stage.show();
 
@@ -222,7 +209,17 @@ public class SystemAdministratorController {
         this.tv_users.getColumns().add(actionsColumn);
     }
 
-    public void addNewUser(ActionEvent event) {
+    @FXML
+    public void addNewUserClicked(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/create/add-new-user.fxml"));
+
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setTitle("Adding new user");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 
     public void searching(ActionEvent event) {

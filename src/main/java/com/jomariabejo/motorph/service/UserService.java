@@ -3,20 +3,18 @@ package com.jomariabejo.motorph.service;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.repository.UserRepository;
 
-import java.security.NoSuchAlgorithmException;
-import java.sql.SQLException;
-
 public class UserService {
-    private final UserRepository userRepository = new UserRepository();
+    private final UserRepository userRepository;
 
     public UserService()  {
+        this.userRepository = new UserRepository();
     }
 
-    public String fetchEmployeeRoleName(int userId) throws SQLException {
+    public String fetchEmployeeRoleName(int userId) {
         return userRepository.getRoleOfTheUser(userId);
     }
 
-    public int fetchEmployeeIdByUserId(int userId) throws SQLException {
+    public int fetchEmployeeIdByUserId(int userId) {
         return userRepository.getUserEmployeeId(userId);
     }
 
@@ -28,7 +26,11 @@ public class UserService {
         return userRepository.fetchUser(userID);
     }
 
-    public boolean deleteUser(int userId) {
-        return userRepository.deleteUser(userId);
+    public boolean deleteUser(int employeeId) {
+        return userRepository.deleteUserByEmployeeId(employeeId);
+    }
+
+    public boolean modifyUser(User user) {
+        return userRepository.modifyUser(user);
     }
 }

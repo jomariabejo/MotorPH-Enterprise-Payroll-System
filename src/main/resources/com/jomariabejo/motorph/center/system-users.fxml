@@ -20,7 +20,7 @@
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button fx:id="btn_search1" layoutX="745.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewUserClicked" prefHeight="46.0" prefWidth="200.0" stylesheets="@../../../../css/custom/button-small.css" text="Add New User">
+                        <Button layoutX="745.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewUserClicked" prefHeight="46.0" prefWidth="200.0" stylesheets="@../../../../css/custom/button-small.css" text="Add New User">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -46,7 +46,7 @@
                   </HBox>
                   <TableView fx:id="tv_users" prefHeight="500.0" stylesheets="@../../../../css/custom/tableView.css" tableMenuButtonVisible="true">
                      <columns>
-                        <TableColumn minWidth="175.0" prefWidth="155.19998931884766" text="User Id" visible="false">
+                        <TableColumn minWidth="175.0" prefWidth="155.19998931884766" text="User Id">
                            <cellValueFactory>
                               <PropertyValueFactory property="userID" />
                            </cellValueFactory>

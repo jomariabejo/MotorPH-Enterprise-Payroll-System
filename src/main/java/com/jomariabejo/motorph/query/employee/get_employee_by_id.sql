@@ -10,4 +10,4 @@ Version: 1.0
 -- Retrieve employee information from the EMPLOYEE table by employee ID.
 SELECT *
 FROM EMPLOYEE
-WHERE employee_id = ?;
+WHERE employee_id = 52;
