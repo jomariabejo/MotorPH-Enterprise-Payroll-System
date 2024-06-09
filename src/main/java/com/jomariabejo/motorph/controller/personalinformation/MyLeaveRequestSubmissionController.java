@@ -58,7 +58,7 @@ public class MyLeaveRequestSubmissionController implements Initializable {
 
     @FXML
     void submitBtnEvent(ActionEvent event) {
-        // Handle submit button event
+        saveLeaveRequest();
     }
 
     public void initData(int employeeId) {
@@ -102,7 +102,7 @@ public class MyLeaveRequestSubmissionController implements Initializable {
 
                         // Disable all dates before today
                         if (item.isBefore(LocalDate.now())) {
-                            setDisable(false);
+                            setDisable(true);
                         }
                     }
                 };
@@ -175,5 +175,88 @@ public class MyLeaveRequestSubmissionController implements Initializable {
         long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
 
         tf_total_days_left.setText(String.valueOf(daysBetween));
+    }
+
+    /**
+     * Save the leave request to the database.
+     */
+    private void saveLeaveRequest() {
+        String selectedCategory = leaverequest_type.getSelectionModel().getSelectedItem();
+        if (selectedCategory == null) {
+            showAlert("Error", "Please select a leave request type.");
+            return;
+        }
+
+        int leaveReqCatId = fetchLeaveRequestCategoryId(selectedCategory);
+        if (leaveReqCatId == -1) {
+            showAlert("Error", "Invalid leave request type.");
+            return;
+        }
+
+        LocalDate startDate = dp_leave_start_date.getValue();
+        LocalDate endDate = dp_leave_end_date.getValue();
+        String reason = tf_reason.getText();
+        int employeeId = Integer.parseInt(leave_request_owner.getText());
+
+        String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.setInt(2, leaveReqCatId);
+            preparedStatement.setDate(3, java.sql.Date.valueOf(startDate));
+            preparedStatement.setDate(4, java.sql.Date.valueOf(endDate));
+            preparedStatement.setString(5, reason);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                showAlert("Success", "Leave request submitted successfully.");
+            } else {
+                showAlert("Error", "Failed to submit leave request.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            showAlert("Error", "An error occurred while submitting the leave request.");
+        }
+    }
+
+    /**
+     * Fetches the leave request category ID for the given category name from the database.
+     *
+     * @param categoryName the name of the leave request category.
+     * @return the ID of the leave request category, or -1 if not found.
+     */
+    private int fetchLeaveRequestCategoryId(String categoryName) {
+        int categoryId = -1;
+        String query = "SELECT leave_req_cat_id FROM payroll_sys.leave_request_category WHERE categoryName = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setString(1, categoryName);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    categoryId = resultSet.getInt("leave_req_cat_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return categoryId;
+    }
+
+    /**
+     * Show an alert with the specified title and content.
+     *
+     * @param title the title of the alert.
+     * @param content the content of the alert.
+     */
+    private void showAlert(String title, String content) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle(title);
+        alert.setContentText(content);
+        alert.showAndWait();
     }
 }
