@@ -1,7 +1,6 @@
-package com.jomariabejo.motorph.repository.RoleRepository;
+package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
-import com.jomariabejo.motorph.entity.Role;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

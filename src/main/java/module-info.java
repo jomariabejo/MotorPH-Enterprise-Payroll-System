@@ -12,6 +12,7 @@ module com.jomariabejo.motorph {
     requires java.logging;
     requires java.sql;
     requires com.opencsv;
+    requires org.apache.pdfbox;
 
     opens com.jomariabejo.motorph.enums to javafx.fxml;
     exports com.jomariabejo.motorph.enums to javafx.fxml;

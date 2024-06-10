@@ -56,7 +56,7 @@
                               <PropertyValueFactory property="username" />
                            </cellValueFactory>
                         </TableColumn>
-                        <TableColumn minWidth="175.0" prefWidth="141.5999755859375" text="Password">
+                        <TableColumn visible="false" minWidth="175.0" prefWidth="141.5999755859375" text="Password">
                            <cellValueFactory>
                               <PropertyValueFactory property="password" />
                            </cellValueFactory>

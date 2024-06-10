@@ -29,7 +29,7 @@ public class EmployeeService {
         return employeeRepository.getEmployeeById(employeeId);
     }
 
-    public Optional<String> fetchEmployeeName(int employeeId) throws SQLException {
+    public Optional<String> fetchEmployeeName(int employeeId) {
         return employeeRepository.getEmployeeNameById(employeeId);
     }
 

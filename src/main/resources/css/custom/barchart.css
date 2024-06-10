@@ -1,0 +1,23 @@
+.chart-bar {
+    -fx-bar-fill: #4CAF50; /* Change the color of the bars */
+}
+
+.chart-bar:hover {
+    -fx-bar-fill: #388E3C; /* Change the color of the bars on hover */
+}
+
+.chart-plot-background {
+    -fx-background-color: #EEEEEE; /* Change the background color of the plot area */
+}
+
+.axis {
+    -fx-tick-label-font-size: 10px; /* Change the font size of the axis tick labels */
+}
+
+.axis-label {
+    -fx-label-padding: 5px; /* Add padding to the axis labels */
+}
+
+.chart-legend {
+    -fx-font-size: 12px; /* Change the font size of the legend */
+}
