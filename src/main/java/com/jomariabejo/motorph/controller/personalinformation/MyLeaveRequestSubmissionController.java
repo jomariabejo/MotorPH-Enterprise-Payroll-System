@@ -1,6 +1,7 @@
 package com.jomariabejo.motorph.controller.personalinformation;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
+import com.jomariabejo.motorph.utility.DateUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +21,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class MyLeaveRequestSubmissionController implements Initializable {
+public class
+MyLeaveRequestSubmissionController implements Initializable {
     @FXML
     private Button btn_count;
 
@@ -198,7 +200,7 @@ public class MyLeaveRequestSubmissionController implements Initializable {
         String reason = tf_reason.getText();
         int employeeId = Integer.parseInt(leave_request_owner.getText());
 
-        String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason) VALUES (?, ?, ?, ?, ?)";
+        String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason,date_created) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -208,6 +210,7 @@ public class MyLeaveRequestSubmissionController implements Initializable {
             preparedStatement.setDate(3, java.sql.Date.valueOf(startDate));
             preparedStatement.setDate(4, java.sql.Date.valueOf(endDate));
             preparedStatement.setString(5, reason);
+            preparedStatement.setDate(6, DateUtility.getDate());
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
