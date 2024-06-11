@@ -2,9 +2,9 @@ package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.User;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.TextReader;
 
-import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,18 +30,8 @@ public class UserRepository {
         }
     }
 
-    public void updateUser(User user) throws SQLException {
-        String query = TextReader.readTextFile(QUERY_BASE_PATH + "/update_user.sql");
-        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, user.getUsername());
-            ps.setString(2, user.getPassword());
-            ps.setInt(3, user.getEmployeeID());
-            ps.setInt(4, user.getRoleID());
-            ps.setInt(5, user.getUserID());
-        }
-    }
 
-    public void deleteUser(String username) throws SQLException {
+    public void deleteUserByEmployeeId(String username) throws SQLException {
         String query = "DELETE FROM user WHERE username = ?";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, username);
@@ -55,13 +45,20 @@ public class UserRepository {
         }
     }
 
+    public boolean deleteUserByEmployeeId(int employeeId) {
+        String query = "DELETE FROM user WHERE user.employee_id = ?";
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, employeeId);
+            int isDelete = ps.executeUpdate();
+            return isDelete == 1; // One means user deleted successfully
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Optional<User> getUserByUsernameANDPassword(String username, String password) throws SQLException {
         String query = "SELECT * FROM user WHERE username=? AND password=?";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement prepStatement = connection.prepareStatement(query)) {
-            System.out.println("===================");
-            System.out.println(username);
-            System.out.println(password);
-            System.out.println("===================");
             prepStatement.setString(1, username);
             prepStatement.setString(2, password);
             try (ResultSet resultSet = prepStatement.executeQuery()) {
@@ -100,7 +97,7 @@ public class UserRepository {
         return userList;
     }
 
-    public String getRoleOfTheUser(int userId) throws SQLException {
+    public String getRoleOfTheUser(int userId) {
         // Read the SQL query from file
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\user\\get_user_full_info.sql");
 
@@ -117,12 +114,14 @@ public class UserRepository {
                 // Return the role of the user
                 return rs.getString("name");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         // If the user ID is not found or there's an error, return null
         return null;
     }
 
-    public int getUserEmployeeId(int userID) throws SQLException {
+    public int getUserEmployeeId(int userID) {
         String query = TextReader.readTextFile(QUERY_BASE_PATH + "/get_user_employee_id.sql");
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
@@ -133,6 +132,90 @@ public class UserRepository {
             if (result.next()) {
                 return result.getInt("employee_id");
             } else return 0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
+
+    public boolean insertUser(User user) {
+        String query = "INSERT INTO USER(username, password, employee_id, role_id) VALUES (?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
+            ps.setInt(3, user.getEmployeeID());
+            ps.setInt(4, user.getRoleID());
+
+            return ps.executeUpdate() > 0;
+        } catch (SQLException e) {
+            if (e.getMessage().contains("Duplicate entry")) {
+                AlertUtility.showErrorAlert("Duplicate Entry", "Employee has active user account","Employee have already user account ");
+            }
+            else {
+                throw new RuntimeException(e);
+            }
+        }
+        return false;
+    }
+
+    public User fetchUser(int userID) {
+        String query = "SELECT u.employee_id, u.role_id, u.username, u.password, u.user_id FROM user u WHERE u.user_id = ?;";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, userID);
+
+            ResultSet resultSet = ps.executeQuery();
+
+            if (resultSet.next()) {
+                return new User(
+                        resultSet.getInt(5), // user id
+                        resultSet.getInt(1), // employee id
+                        resultSet.getInt(2), // role id
+                        resultSet.getString(3), // username
+                        resultSet.getString(4)); // password
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    public boolean modifyUser(User user) {
+        String query = "UPDATE user SET username = ?, PASSWORD = ?, employee_id = ?, role_id = ? WHERE user_id = ?";
+
+        try(Connection connection = DatabaseConnectionUtility.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            pstmt.setString(1,user.getUsername());
+            pstmt.setString(2,user.getPassword());
+            pstmt.setInt(3,user.getEmployeeID());
+            pstmt.setInt(4,user.getRoleID());
+            pstmt.setInt(5, user.getUserID());
+
+            return pstmt.executeUpdate() == 1; // 1 means updated successfully
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

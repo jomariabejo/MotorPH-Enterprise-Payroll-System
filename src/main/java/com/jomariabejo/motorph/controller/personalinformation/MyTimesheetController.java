@@ -6,6 +6,7 @@ import com.jomariabejo.motorph.service.TimesheetService;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.DateConverter;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -14,10 +15,12 @@ import javafx.scene.control.TableView;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.TimeZone;
 
 public class MyTimesheetController {
     private final TimesheetService timesheetService;
@@ -69,17 +72,16 @@ public class MyTimesheetController {
                 timesheet.setDate(currentDate);
                 timesheet.setTimeIn(Time.valueOf(formattedTime));
                 timesheet.setEmployeeId(employeeId);
-
+                timesheet.setRegularHoursWorked(Time.valueOf("00:00:00"));
+                timesheet.setOvertimeHoursWorked(Time.valueOf("00:00:00"));
+                this.tv_timesheets.getItems().add(0,timesheet); // Insert the new timesheet at index 0 of the table view
+                this.lbl_tv_total_result.setText(String.valueOf(tv_timesheets.getItems().size())); // Increment the number of results
                 System.out.println("Timesheet Date: " + timesheet.getDate());
                 System.out.println("Timesheet Time In: " + timesheet.getTimeIn());
                 System.out.println("Timesheet Employee ID: " + timesheet.getEmployeeId());
 
                 // Call the setTimeIn method from the TimesheetService to insert the new timesheet record
                 if (timesheetService.setTimeIn(timesheet)) {
-
-                    // Fetch the updated list of timesheets and update the TableView
-                    List<Timesheet> updatedTimesheets = timesheetService.getMyTimesheetsAscending(employeeId);
-                    tv_timesheets.setItems(FXCollections.observableList(updatedTimesheets));
 
                     // Show success message to the user
                     AlertUtility.showInformation("Time In Success", "Time In Recorded", "You have successfully timed in at " + formattedTime + " on " + currentDate.toString() + ".");
@@ -120,10 +122,7 @@ public class MyTimesheetController {
 
             // Call the setTimeOut method from the TimesheetService to update the time out record
             if (timesheetService.setTimeOut(employeeId, currentDate, Time.valueOf(formattedTime))) {
-
-                // Fetch the updated list of timesheets and update the TableView
-                List<Timesheet> updatedTimesheets = timesheetService.getMyTimesheetsAscending(employeeId);
-                tv_timesheets.setItems(FXCollections.observableList(updatedTimesheets));
+                tv_timesheets.setItems(FXCollections.observableList(timesheetService.getMyTimesheetsDescending(employeeId)));
 
                 // Show success message to the user
                 AlertUtility.showInformation("Time Out Success", "Time Out Recorded", "You have successfully timed out at " + formattedTime + " on " + currentDate.toString() + ".");

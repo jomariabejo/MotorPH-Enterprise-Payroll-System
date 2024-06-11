@@ -19,9 +19,6 @@ import java.sql.SQLException;
 public class MainViewController {
 
     @FXML
-    private AnchorPane NAV_ANCHORPANE;
-
-    @FXML
     private Button btn_finance_generate_payslip;
 
     @FXML
@@ -92,9 +89,11 @@ public class MainViewController {
     }
 
     @FXML
-    void financePayrollClicked(ActionEvent event) {
-        this.lbl_user_clicked_path.setText("/ Finance / Payroll");
-
+    void financePayrollClicked(ActionEvent event) throws IOException {
+        this.lbl_user_clicked_path.setText("/ Finance / Dashboard");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/payroll-dashboard.fxml"));
+        AnchorPane anchorPane = fxmlLoader.load();
+        mainPane.setCenter(anchorPane);
     }
 
     @FXML
@@ -189,7 +188,6 @@ public class MainViewController {
     }
     public void initSessionId(final LoginManager loginManager, int user_id, int employee_id, String role) throws SQLException, IOException {
         this.lbl_employee_id.setText(String.valueOf(employee_id));
-        System.out.printf("My role is " + role);
         switch (role) {
             case "HR Administrator":
                 showHRAccessButtons();

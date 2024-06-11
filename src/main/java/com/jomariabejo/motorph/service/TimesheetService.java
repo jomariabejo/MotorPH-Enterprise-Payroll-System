@@ -8,6 +8,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.util.ArrayList;
+import java.util.List;
 
 public class TimesheetService {
     private final TimesheetRepository timesheetRepository = new TimesheetRepository();
@@ -63,5 +64,9 @@ public class TimesheetService {
 
     public boolean setTimeOut(int employeeId, Date date, Time timeOut) throws SQLException {
         return timesheetRepository.updateTimesheet(employeeId, date, timeOut);
+    }
+
+    public ArrayList<Timesheet> getMyTimesheetsDescending(int employeeId) {
+        return timesheetRepository.fetchMyTimesheetDescending(employeeId);
     }
 }

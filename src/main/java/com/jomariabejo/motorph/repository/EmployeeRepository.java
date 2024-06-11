@@ -6,6 +6,7 @@ import com.jomariabejo.motorph.enums.EmployeeStatus;
 import com.jomariabejo.motorph.query.QueryPath;
 import com.jomariabejo.motorph.record.AccountNumber;
 import com.jomariabejo.motorph.utility.TextReader;
+import javafx.scene.chart.PieChart;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -97,7 +98,7 @@ public class EmployeeRepository {
     }
 
     public Employee getEmployeeById(int employeeId) throws SQLException {
-        String query = TextReader.readTextFile(QUERY_BASE_PATH + "/get_employee_by_id.sql");
+        String query = "SELECT * FROM EMPLOYEE WHERE employee_id = ?;";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement prepStatement = connection.prepareStatement(query)) {
             prepStatement.setInt(1, employeeId);
             try (ResultSet resultSet = prepStatement.executeQuery()) {
@@ -192,7 +193,7 @@ public class EmployeeRepository {
         return null;
     }
 
-    public Optional<String> getEmployeeNameById(int employeeId) throws SQLException {
+    public Optional<String> getEmployeeNameById(int employeeId) {
         String query = "SELECT first_name, last_name FROM EMPLOYEE WHERE employee_id = ?";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement prepStatement = connection.prepareStatement(query)) {
             prepStatement.setInt(1, employeeId);
@@ -205,6 +206,8 @@ public class EmployeeRepository {
                                     (resultSet.getString("last_name")));
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return Optional.empty();
     }
@@ -394,4 +397,19 @@ public class EmployeeRepository {
         }
         return null;
     }
+
+    public boolean checkIfEmployeeExist(int employeeId) {
+        String query = "SELECT employee_id FROM EMPLOYEE WHERE employee_id = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, employeeId);
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                return resultSet.next();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

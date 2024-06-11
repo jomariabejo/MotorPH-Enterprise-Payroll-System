@@ -7,10 +7,10 @@ import com.jomariabejo.motorph.utility.TextReader;
 import java.sql.*;
 
 public class AllowanceRepository {
-    public void createAllowanceRecord(Allowance allowance) throws SQLException {
-
-        String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\allowance\\create_allowance.sql");
-        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
+    public void createAllowanceRecord(Allowance allowance) {
+        String query = "INSERT INTO ALLOWANCE( clothing, rice, phone, total_amount, dateCreated, dateModified, employee_id) VALUES ( ?, ?, ?, ?, ?, ?, ? );";
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, allowance.getClothingAllowance());
             ps.setInt(2, allowance.getRiceAllowance());
             ps.setInt(3, allowance.getPhoneAllowance());
@@ -19,11 +19,12 @@ public class AllowanceRepository {
             ps.setTimestamp(6, allowance.getDateModified());
             ps.setInt(7, allowance.getEmployeeID());
             ps.executeUpdate();
-            System.out.println("Record Created");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void updateAllowance(Allowance allowance) throws SQLException {
+    public void updateAllowance(Allowance allowance) {
         String query = "UPDATE allowance SET clothing=?, rice=?, phone=?, total_amount=?, dateModified=? WHERE alw_id=?";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
@@ -37,10 +38,12 @@ public class AllowanceRepository {
             ps.setInt(6, allowance.getAllowanceID());
 
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public Allowance getAllowanceByEmployeeId(int employeeId) throws SQLException {
+    public Allowance getAllowanceByEmployeeId(int employeeId) {
         String query = "SELECT * FROM allowance WHERE employee_id = ?";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
@@ -61,19 +64,12 @@ public class AllowanceRepository {
                         resultSet.getTimestamp("dateModified")
                 );
             } else return null;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    public void deleteAllowanceByAllowanceID(int allowance_id) throws SQLException {
-        String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\allowance\\delete_department.sql");
-        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, allowance_id);
-            ps.executeUpdate();
-            System.out.println("Record Removed");
-        }
-    }
-
-    public int getAllowanceIdByEmployeeId(int employeeId) throws SQLException {
+    public int getAllowanceIdByEmployeeId(int employeeId) {
         String query = "SELECT alw_id FROM allowance WHERE employee_id = ?";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
@@ -85,6 +81,8 @@ public class AllowanceRepository {
             if (resultSet.next()) {
                 return resultSet.getInt("alw_id"); // allowance id
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return 0;
     }

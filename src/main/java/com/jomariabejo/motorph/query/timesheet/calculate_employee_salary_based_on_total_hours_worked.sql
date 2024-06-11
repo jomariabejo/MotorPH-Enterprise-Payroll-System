@@ -64,9 +64,9 @@ SELECT
             JOIN employee e ON t.employee_id = e.employee_id
             JOIN department d ON e.dept_id = d.dept_id -- Joining the department table
             JOIN position p ON e.position_id = p.position_id
-            JOIN allowance a ON t.employee_id = a.alw_id
+            JOIN allowance a ON t.employee_id = a.employee_id
             WHERE
                 e.isActive = 1
               AND t.date BETWEEN ? AND ?
               GROUP BY
-                  t.employee_id;
+                  t.employee_id, a.rice, a.clothing, a.phone, a.total_amount;

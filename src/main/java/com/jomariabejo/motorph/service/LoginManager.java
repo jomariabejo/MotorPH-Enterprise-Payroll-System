@@ -53,15 +53,10 @@ public class LoginManager {
     private void showMainView(int userID) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML_BASE_PATH + "/main-view.fxml"));
-
             scene.setRoot(loader.load());
-
-            MainViewController controller = loader.getController();
-
             String roleString = userService.fetchEmployeeRoleName(userID);
-
             int employeeId = userService.fetchEmployeeIdByUserId(userID);
-            System.out.printf("My employee id : " + employeeId);
+            MainViewController controller = loader.getController();
             controller.initSessionId(this, userID, employeeId, roleString);
         } catch (IOException | SQLException ex) {
             Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
