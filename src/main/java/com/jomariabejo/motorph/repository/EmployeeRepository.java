@@ -98,7 +98,7 @@ public class EmployeeRepository {
     }
 
     public Employee getEmployeeById(int employeeId) throws SQLException {
-        String query = "SELECT * FROM EMPLOYEE WHERE employee_id = ?;imlawrencehere";
+        String query = "SELECT * FROM EMPLOYEE WHERE employee_id = ?;";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement prepStatement = connection.prepareStatement(query)) {
             prepStatement.setInt(1, employeeId);
             try (ResultSet resultSet = prepStatement.executeQuery()) {

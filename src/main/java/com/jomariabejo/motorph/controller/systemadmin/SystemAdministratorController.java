@@ -3,7 +3,6 @@ package com.jomariabejo.motorph.controller.systemadmin;
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.enums.AccessType;
-import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -113,7 +112,7 @@ public class SystemAdministratorController {
                             stage.show();
 
                             UserController userController = fxmlLoader.getController();
-                            userController.initData(user.getUserID(), AccessType.UPDATE);
+                            userController.initUserIdAndAccessType(user.getUserID(), AccessType.UPDATE);
 
                         } catch (IOException e) {
                             throw new RuntimeException(e);
@@ -135,7 +134,7 @@ public class SystemAdministratorController {
                         stage.show();
 
                         UserController addNewUserController = fxmlLoader.getController();
-                        addNewUserController.initData(user.getUserID(),AccessType.VIEW);
+                        addNewUserController.initUserIdAndAccessType(user.getUserID(),AccessType.VIEW);
 
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -178,7 +177,7 @@ public class SystemAdministratorController {
                         stage.show();
 
                         UserController userController = fxmlLoader.getController();
-                        userController.initData(user.getUserID(),AccessType.DELETE);
+                        userController.initUserIdAndAccessType(user.getUserID(),AccessType.DELETE);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

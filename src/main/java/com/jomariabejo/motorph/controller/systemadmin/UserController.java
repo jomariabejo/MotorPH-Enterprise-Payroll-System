@@ -189,7 +189,7 @@ public class UserController implements Initializable {
         setUpComboBox();
     }
 
-    public void initData(int userID, AccessType accessType) {
+    public void initUserIdAndAccessType(int userID, AccessType accessType) {
         this.accessType = accessType;
 
         mapUserData(userService.fetchUser(userID));
@@ -229,7 +229,7 @@ public class UserController implements Initializable {
 
     private void displayUpdateButtonAndComboBoxAndDisplayResetPasswordBtn() {
         this.actionBtn.setVisible(true);
-        this.cb_access_level.setDisable(true);
+        this.cb_access_level.setDisable(false);
         this.tf_password.setDisable(true);
         this.tf_username.setDisable(true);
         this.tf_employeeId.setDisable(true);
