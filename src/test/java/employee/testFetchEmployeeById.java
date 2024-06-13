@@ -1,23 +1,19 @@
 package employee;
 
 import com.jomariabejo.motorph.entity.Employee;
-import com.jomariabejo.motorph.enums.EmployeeStatus;
 import com.jomariabejo.motorph.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mock;
 
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Optional;
-
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.when;
 
 public class testFetchEmployeeById {
+
+    @Mock
     private EmployeeService employeeService;
+
 
     @BeforeEach
     void setUp() {

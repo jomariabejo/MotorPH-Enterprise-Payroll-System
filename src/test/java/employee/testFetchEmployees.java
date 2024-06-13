@@ -5,16 +5,11 @@ import com.jomariabejo.motorph.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-
 
 public class testFetchEmployees {
     private EmployeeService employeeService;

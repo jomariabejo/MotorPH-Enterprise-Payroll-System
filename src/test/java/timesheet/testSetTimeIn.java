@@ -14,7 +14,6 @@ public class testSetTimeIn {
     private TimesheetService timesheetService;
     private Timesheet timesheet;
 
-
     @BeforeEach
     void setUp() {
         timesheetService = new TimesheetService();
@@ -22,7 +21,6 @@ public class testSetTimeIn {
     }
     @Test
     void shouldSetTimeInSuccessfully() throws SQLException {
-        timesheetService = new TimesheetService();
         Date date = Date.valueOf("2024-06-07");
         Time timeIn = Time.valueOf("09:00:00");
         int employeeId = 12;
