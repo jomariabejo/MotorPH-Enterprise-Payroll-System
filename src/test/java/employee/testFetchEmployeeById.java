@@ -1,6 +1,7 @@
 package employee;
 
 import com.jomariabejo.motorph.entity.Employee;
+
 import com.jomariabejo.motorph.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,6 @@ public class testFetchEmployeeById {
 
     @Mock
     private EmployeeService employeeService;
-
 
     @BeforeEach
     void setUp() {
@@ -28,7 +28,6 @@ public class testFetchEmployeeById {
         assertEquals(employeeId, employee.getEmployeeId(), "The fetched employee ID should match the requested ID");
     }
 }
-
 
 
 
