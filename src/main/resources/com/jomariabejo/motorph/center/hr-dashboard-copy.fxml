@@ -39,7 +39,7 @@
                                     <HBox prefHeight="57.0" prefWidth="106.0" />
                                     <HBox prefHeight="67.0" prefWidth="178.0">
                                        <children>
-                                          <Label alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="170.0" text="50">
+                                          <Label fx:id="lbl_total_employees" alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="170.0" text="50">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -63,7 +63,7 @@
                                     <HBox prefHeight="57.0" prefWidth="106.0" />
                                     <HBox prefHeight="67.0" prefWidth="178.0">
                                        <children>
-                                          <Label alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="170.0" text="40">
+                                          <Label fx:id="lbl_active_employees" alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="170.0" text="40">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -95,7 +95,7 @@
                                     </HBox>
                                     <HBox prefHeight="67.0" prefWidth="178.0">
                                        <children>
-                                          <Label alignment="BOTTOM_CENTER" prefHeight="67.0" prefWidth="462.0" text="7">
+                                          <Label fx:id="total_pending_leave_request" alignment="BOTTOM_CENTER" prefHeight="67.0" prefWidth="462.0" text="7">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -129,7 +129,7 @@
                                     <HBox prefHeight="58.0" prefWidth="155.0" />
                                     <HBox prefHeight="70.0" prefWidth="155.0">
                                        <children>
-                                          <ComboBox fx:id="comboBoxMonth1" onAction="#comboBoxMonthChanged" prefHeight="70.0" prefWidth="152.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
+                                          <ComboBox fx:id="comboBoxMonth1" onAction="#comboBoxMonthChanged" prefHeight="70.0" prefWidth="158.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -152,7 +152,7 @@
                                  <children>
                                     <HBox layoutX="59.0" layoutY="62.0" prefHeight="362.0" prefWidth="988.0">
                                        <children>
-                                          <LineChart prefHeight="362.0" prefWidth="987.0">
+                                          <LineChart fx:id="line_chart_monthly_leave_request" prefHeight="362.0" prefWidth="987.0">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" />
                                             </xAxis>
@@ -178,7 +178,7 @@
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <BarChart layoutX="57.0" layoutY="461.0" prefHeight="309.0" prefWidth="990.0">
+                                    <BarChart fx:id="barchart_monthly_leave_request" layoutX="57.0" layoutY="461.0" prefHeight="309.0" prefWidth="990.0">
                                       <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                       </xAxis>
