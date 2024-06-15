@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.finance.PayrollDashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.hr.HRDashboardController">
    <children>
       <VBox layoutX="305.0" layoutY="20.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -95,7 +95,7 @@
                                     </HBox>
                                     <HBox prefHeight="67.0" prefWidth="178.0">
                                        <children>
-                                          <Label fx:id="total_pending_leave_request" alignment="BOTTOM_CENTER" prefHeight="67.0" prefWidth="462.0" text="7">
+                                          <Label fx:id="total_leave_request" alignment="BOTTOM_CENTER" prefHeight="67.0" prefWidth="462.0" text="7">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -129,7 +129,7 @@
                                     <HBox prefHeight="58.0" prefWidth="155.0" />
                                     <HBox prefHeight="70.0" prefWidth="155.0">
                                        <children>
-                                          <ComboBox fx:id="comboBoxMonth1" onAction="#comboBoxMonthChanged" prefHeight="70.0" prefWidth="158.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
+                                          <ComboBox fx:id="comboBoxYear" onAction="#comboBoxMonthChanged" prefHeight="70.0" prefWidth="158.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
                                        </children>
                                     </HBox>
                                  </children>
@@ -152,7 +152,7 @@
                                  <children>
                                     <HBox layoutX="59.0" layoutY="62.0" prefHeight="362.0" prefWidth="988.0">
                                        <children>
-                                          <LineChart fx:id="line_chart_monthly_leave_request" prefHeight="362.0" prefWidth="987.0">
+                                          <LineChart fx:id="line_chart_monthly_leave_request" animated="false" prefHeight="362.0" prefWidth="987.0">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" />
                                             </xAxis>
@@ -178,7 +178,7 @@
                                           <Font size="17.0" />
                                        </font>
                                     </Label>
-                                    <BarChart fx:id="barchart_monthly_leave_request" layoutX="57.0" layoutY="461.0" prefHeight="309.0" prefWidth="990.0">
+                                    <BarChart fx:id="barchart_monthly_leave_request" animated="false" layoutX="57.0" layoutY="461.0" prefHeight="309.0" prefWidth="990.0">
                                       <xAxis>
                                         <CategoryAxis side="BOTTOM" />
                                       </xAxis>
