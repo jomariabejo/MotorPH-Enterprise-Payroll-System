@@ -1,0 +1,10 @@
+.ImageHolder {
+    -fx-background-image:url("Motor.jpg");
+    -fx-background-position:center center;
+    -fx-background-repeat:stretch;
+    -fx-background-size: Cover;
+}
+
+.topHolder{
+    -fx-background-color:rgba(0,0,0,0.5);
+}
