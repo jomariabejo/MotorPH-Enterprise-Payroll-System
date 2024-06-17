@@ -1,118 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.gluonhq.charm.glisten.control.TextField?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720.0" minWidth="1440.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.LoginController">
-   <left>
-      <HBox prefHeight="720.0" prefWidth="916.0">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="601.0" prefWidth="755.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <HBox prefHeight="100.0" prefWidth="200.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="720.0" prefWidth="921.0" style="-fx-background-color: #c4c2c2;">
+            <Pane fx:id="leftimageholder" prefHeight="601.0" prefWidth="395.0" styleClass="ImageHolder" stylesheets="@../../../css/custom/Application.css" />
+            <VBox prefHeight="601.0" prefWidth="396.0">
                <children>
-                  <ImageView fitHeight="452.0" fitWidth="517.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../img/logo.jpeg" />
-                     </image>
+                  <HBox prefHeight="29.0" prefWidth="378.0">
+                     <children>
+                        <Pane prefHeight="29.0" prefWidth="311.0" />
+                        <JFXButton alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="32.0" prefWidth="55.0" style="-fx-background-color: no-color-button;">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="CLOSE" selectionEnd="0" size="15" text="" />
+                           </graphic>
+                        </JFXButton>
+                        <JFXButton alignment="CENTER" contentDisplay="GRAPHIC_ONLY" prefHeight="32.0" prefWidth="55.0" style="-fx-background-color: no-color-button;">
+                           <graphic>
+                              <FontAwesomeIconView glyphName="MINUS" selectionEnd="0" size="15" text="" />
+                           </graphic>
+                        </JFXButton>
+                     </children>
+                  </HBox>
+                  <ImageView fitHeight="80.0" fitWidth="199.0" pickOnBounds="true" preserveRatio="true">
                      <VBox.margin>
-                        <Insets left="24.0" right="24.0" />
+                        <Insets bottom="10.0" left="65.0" right="65.0" top="10.0" />
                      </VBox.margin>
+                     <image>
+                        <Image url="@../../../../../../../../../Desktop/logo.png" />
+                     </image>
                   </ImageView>
-                  <Label text="MotorPH">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Sign In" wrappingWidth="161.9830722808838">
                      <font>
-                        <Font name="Arial Black" size="64.0" />
+                        <Font name="System Bold" size="20.0" />
                      </font>
-                  </Label>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="65.0" right="65.0" top="30.0" />
+                     </VBox.margin>
+                  </Text>
+                  <TextField fx:id="usernameField" floatText="Username">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="65.0" right="65.0" top="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <PasswordField fx:id="passwordField" promptText="Password">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="65.0" right="65.0" top="10.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <Button fx:id="loginBtn" mnemonicParsing="false" prefHeight="39.0" prefWidth="474.0" style="-fx-background-color: #000;" text="Log-In" textFill="WHITE">
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="65.0" right="65.0" top="10.0" />
+                     </VBox.margin>
+                     <font>
+                        <Font size="35.0" />
+                     </font>
+                  </Button>
+                  <Hyperlink text="Register Now">
+                     <VBox.margin>
+                        <Insets left="65.0" />
+                     </VBox.margin>
+                  </Hyperlink>
                </children>
             </VBox>
          </children>
       </HBox>
-   </left>
-   <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Region prefHeight="145.0" prefWidth="331.0" />
-            <Label text="Login to your Account">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="48.0" />
-               </VBox.margin>
-            </Label>
-            <VBox alignment="CENTER" spacing="16.0">
-               <children>
-                  <TextField fx:id="usernameField" promptText="Username" stylesheets="@../../../css/custom/textfields.css">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="64.0" right="64.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <PasswordField fx:id="passwordField" promptText="Password" stylesheets="@../../../css/custom/textfields.css">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets left="64.0" right="64.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <Button fx:id="loginBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="394.0" stylesheets="@../../../css/custom/button.css" text="Login">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="registerBtn" layoutX="75.0" layoutY="144.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="394.0" stylesheets="@../../../css/custom/button.css" text="Register">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="400.0" stylesheets="@../../../css/custom/label.css" text="Forgot Password">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </VBox>
-            <Label />
-            <Region prefHeight="51.0" prefWidth="331.0" />
-            <HBox prefHeight="23.0" prefWidth="331.0">
-               <VBox.margin>
-                  <Insets left="24.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="409.0" prefHeight="23.0" prefWidth="331.0">
-               <VBox.margin>
-                  <Insets left="24.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="420.0" prefHeight="23.0" prefWidth="331.0">
-               <children>
-                  <BorderPane prefHeight="23.0" prefWidth="300.0" />
-               </children>
-               <VBox.margin>
-                  <Insets left="24.0" />
-               </VBox.margin>
-            </HBox>
-            <Label text="All Rights Reserved">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
-         </children>
-      </VBox>
-   </center>
-</BorderPane>
+   </children>
+</StackPane>
