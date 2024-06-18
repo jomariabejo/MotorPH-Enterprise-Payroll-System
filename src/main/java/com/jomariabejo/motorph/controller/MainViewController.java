@@ -46,6 +46,9 @@ public class MainViewController {
     private Button btn_human_resource_employees;
 
     @FXML
+    private Button btn_human_resource_dashboard;
+
+    @FXML
     private Label lbl_system;
 
     @FXML
@@ -92,6 +95,14 @@ public class MainViewController {
     void financePayrollClicked(ActionEvent event) throws IOException {
         this.lbl_user_clicked_path.setText("/ Finance / Dashboard");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/payroll-dashboard.fxml"));
+        AnchorPane anchorPane = fxmlLoader.load();
+        mainPane.setCenter(anchorPane);
+    }
+
+    @FXML
+    void humanResourceDashboardClicked(ActionEvent event) throws IOException {
+        this.lbl_user_clicked_path.setText("/ Human Resource / Dashboard");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/hr-dashboard-copy.fxml"));
         AnchorPane anchorPane = fxmlLoader.load();
         mainPane.setCenter(anchorPane);
     }
@@ -251,6 +262,8 @@ public class MainViewController {
         btn_human_resource_timesheets.setManaged(true);
         btn_human_resource_employees.setVisible(true);
         btn_human_resource_employees.setManaged(true);
+        btn_human_resource_dashboard.setVisible(true);
+        btn_human_resource_dashboard.setManaged(true);
 
     }
 
@@ -265,6 +278,7 @@ public class MainViewController {
         lbl_human_resource.setVisible(false);
         lbl_system.setVisible(false);
         btn_human_resource_employees.setVisible(false);
+        btn_human_resource_dashboard.setVisible(false);
 
         btn_finance_generate_payslip.setManaged(false);
         btn_finance_payroll.setManaged(false);
@@ -275,6 +289,7 @@ public class MainViewController {
         lbl_human_resource.setManaged(false);
         lbl_system.setManaged(false);
         btn_human_resource_employees.setManaged(false);
+        btn_human_resource_dashboard.setManaged(false);
     }
 
     public Label getLbl_employee_id() {
