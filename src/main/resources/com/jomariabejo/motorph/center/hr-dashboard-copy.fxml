@@ -152,7 +152,7 @@
                                  <children>
                                     <HBox layoutX="59.0" layoutY="62.0" prefHeight="362.0" prefWidth="988.0">
                                        <children>
-                                          <LineChart fx:id="line_chart_monthly_leave_request" animated="false" prefHeight="362.0" prefWidth="987.0">
+                                          <LineChart fx:id="line_chart_avg_hours_worked_per_employee" animated="false" prefHeight="362.0" prefWidth="987.0">
                                             <xAxis>
                                               <CategoryAxis side="BOTTOM" />
                                             </xAxis>
@@ -162,7 +162,7 @@
                                           </LineChart>
                                        </children>
                                     </HBox>
-                                    <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="14.0" prefHeight="40.0" prefWidth="175.0" text="Monthly Attendance">
+                                    <Label alignment="BOTTOM_CENTER" contentDisplay="CENTER" layoutX="66.0" layoutY="14.0" prefHeight="40.0" prefWidth="321.0" text="Avg. Regular Hours Worked Per Employee">
                                        <font>
                                           <Font size="17.0" />
                                        </font>

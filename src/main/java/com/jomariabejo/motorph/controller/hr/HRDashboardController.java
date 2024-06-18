@@ -1,6 +1,7 @@
 package com.jomariabejo.motorph.controller.hr;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
@@ -9,6 +10,7 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -33,7 +35,7 @@ public class HRDashboardController {
     private Label lbl_total_employees;
 
     @FXML
-    private LineChart<Number, Number> line_chart_monthly_leave_request;
+    private LineChart<String, BigDecimal> line_chart_avg_hours_worked_per_employee;
 
     @FXML
     private Label total_leave_request;
@@ -45,7 +47,14 @@ public class HRDashboardController {
 
     @FXML
     void reviewClicked(ActionEvent event) {
+        clearCharts();
+        populateAverageHoursWorkedByEmployee();
+        populateBarchartLeaveRequestByEmployee();
+    }
 
+    private void clearCharts() {
+        this.line_chart_avg_hours_worked_per_employee.getData().clear();
+        this.barchart_monthly_leave_request.getData().clear();
     }
 
     @FXML
@@ -54,7 +63,7 @@ public class HRDashboardController {
         writeNumberOfEmployees();
         writeNumberOfActiveEmployees();
         writeNumberOfLeaveRequest();
-        populateDailyAttendanceByEmployee();
+        populateAverageHoursWorkedByEmployee();
         populateBarchartLeaveRequestByEmployee();
     }
 
@@ -98,8 +107,67 @@ public class HRDashboardController {
     }
 
 
-    private void populateDailyAttendanceByEmployee() {
+    private void populateAverageHoursWorkedByEmployee() {
+            String query = "\n" +
+                    "SELECT\n" +
+                    "    CONCAT(e.first_name, ' ', e.last_name) AS employee_name,\n" +
+                    "    ROUND(\n" +
+                    "        AVG(\n" +
+                    "            CASE\n" +
+                    "                WHEN TIME(t.time_in) < '08:00:00' THEN (\n" +
+                    "                    TIME_TO_SEC(TIMEDIFF('08:00:00', t.time_in)) / 3600.0\n" +
+                    "                )\n" +
+                    "                WHEN TIME(t.time_in) >= '08:00:00' AND TIME(t.time_in) <= '17:00:00' THEN (\n" +
+                    "                    TIME_TO_SEC(TIMEDIFF(t.time_out, t.time_in)) / 3600.0\n" +
+                    "                )\n" +
+                    "                ELSE 0  -- Exclude cases where time_in > '17:00:00'\n" +
+                    "            END\n" +
+                    "        ),\n" +
+                    "        2\n" +
+                    "    ) AS avg_regular_hours_worked\n" +
+                    "FROM\n" +
+                    "    timesheet t\n" +
+                    "    JOIN employee e ON t.employee_id = e.employee_id\n" +
+                    "WHERE\n" +
+                    "    e.isActive = 1\n" +
+                    "    AND MONTH(t.date) = ?\n" +
+                    "    AND YEAR(t.date) = ?\n" +
+                    "GROUP BY\n" +
+                    "    e.employee_id, CONCAT(e.first_name, ' ', e.last_name)\n" +
+                    "ORDER BY\n" +
+                    "    avg_regular_hours_worked;\n";
 
+
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            // Get selected month and year from comboBoxMonth and comboBoxYear
+            int selectedMonthIndex = comboBoxMonth.getSelectionModel().getSelectedIndex() + 1; // Month index is 0-based
+            int selectedYear = comboBoxYear.getSelectionModel().getSelectedItem();
+
+            // Set parameters
+            pstmt.setInt(1, selectedMonthIndex);
+            pstmt.setInt(2, selectedYear);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            // setup line chart
+            XYChart.Series<String, BigDecimal> averageRegularHoursWorked = new XYChart.Series<>();
+            averageRegularHoursWorked.setName("Average Regular Hours Worked");
+
+            while (rs.next()) {
+                String employeeName = rs.getString(1);
+                BigDecimal employeeAverageRegularHoursWorked = rs.getBigDecimal(2);
+                averageRegularHoursWorked.getData().add(new XYChart.Data(
+                        employeeName,
+                        employeeAverageRegularHoursWorked
+                ));
+            }
+            line_chart_avg_hours_worked_per_employee.getData().add(averageRegularHoursWorked);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
         private void writeNumberOfLeaveRequest() {
             String query = "SELECT COUNT(*) as total_leave_request " +
