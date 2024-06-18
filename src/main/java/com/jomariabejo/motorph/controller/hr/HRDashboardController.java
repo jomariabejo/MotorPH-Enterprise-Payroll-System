@@ -1,8 +1,6 @@
 package com.jomariabejo.motorph.controller.hr;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
-import com.jomariabejo.motorph.utility.AlertUtility;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
@@ -40,13 +38,9 @@ public class HRDashboardController {
     @FXML
     private Label total_leave_request;
 
-    @FXML
-    void comboBoxMonthChanged(ActionEvent event) {
-
-    }
 
     @FXML
-    void reviewClicked(ActionEvent event) {
+    void reviewClicked() {
         clearCharts();
         populateAverageHoursWorkedByEmployee();
         populateBarchartLeaveRequestByEmployee();
@@ -159,7 +153,7 @@ public class HRDashboardController {
             while (rs.next()) {
                 String employeeName = rs.getString(1);
                 BigDecimal employeeAverageRegularHoursWorked = rs.getBigDecimal(2);
-                averageRegularHoursWorked.getData().add(new XYChart.Data(
+                averageRegularHoursWorked.getData().add(new XYChart.Data<>(
                         employeeName,
                         employeeAverageRegularHoursWorked
                 ));
@@ -267,9 +261,8 @@ public class HRDashboardController {
                 this.comboBoxYear.getItems().add(rs.getInt(1));
             }
 
-        }
-        catch (Exception e) {
-
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
