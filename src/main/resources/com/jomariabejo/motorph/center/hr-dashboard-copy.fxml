@@ -118,7 +118,7 @@
                                     <HBox prefHeight="68.0" prefWidth="182.0" />
                                     <HBox prefHeight="78.0" prefWidth="182.0">
                                        <children>
-                                          <ComboBox fx:id="comboBoxMonth" onAction="#comboBoxMonthChanged" prefHeight="70.0" prefWidth="177.0" promptText="Month" stylesheets="@../../../../css/custom/combobox.css" />
+                                          <ComboBox fx:id="comboBoxMonth" prefHeight="70.0" prefWidth="177.0" promptText="Month" stylesheets="@../../../../css/custom/combobox.css" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="57.0" prefWidth="182.0" />
@@ -129,7 +129,7 @@
                                     <HBox prefHeight="58.0" prefWidth="155.0" />
                                     <HBox prefHeight="70.0" prefWidth="155.0">
                                        <children>
-                                          <ComboBox fx:id="comboBoxYear" onAction="#comboBoxMonthChanged" prefHeight="70.0" prefWidth="158.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
+                                          <ComboBox fx:id="comboBoxYear" prefHeight="70.0" prefWidth="158.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
                                        </children>
                                     </HBox>
                                  </children>
