@@ -2,7 +2,7 @@
     -fx-background-image:url("Motor.jpg");
     -fx-background-position:center center;
     -fx-background-repeat:stretch;
-    -fx-background-size: Cover;
+    -fx-background-size: Cover
 }
 
 .topHolder{
