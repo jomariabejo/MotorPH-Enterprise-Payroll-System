@@ -1,6 +1,7 @@
 package com.jomariabejo.motorph.controller.personalinformation;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -185,13 +186,13 @@ MyLeaveRequestSubmissionController implements Initializable {
     private void saveLeaveRequest() {
         String selectedCategory = leaverequest_type.getSelectionModel().getSelectedItem();
         if (selectedCategory == null) {
-            showAlert("Error", "Please select a leave request type.");
+            AlertUtility.showErrorAlert("Error", "Please select a leave request type.",null);
             return;
         }
 
         int leaveReqCatId = fetchLeaveRequestCategoryId(selectedCategory);
         if (leaveReqCatId == -1) {
-            showAlert("Error", "Invalid leave request type.");
+            AlertUtility.showErrorAlert("Error", "Invalid leave request type.",null);
             return;
         }
 
@@ -214,13 +215,13 @@ MyLeaveRequestSubmissionController implements Initializable {
 
             int rowsAffected = preparedStatement.executeUpdate();
             if (rowsAffected > 0) {
-                showAlert("Success", "Leave request submitted successfully.");
+                AlertUtility.showInformation("Success", "Leave request submitted successfully.",null);
             } else {
-                showAlert("Error", "Failed to submit leave request.");
+                AlertUtility.showErrorAlert("Error", "Failed to submit leave request.", null);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            showAlert("Error", "An error occurred while submitting the leave request.");
+            AlertUtility.showErrorAlert("Error", "An error occurred while submitting the leave request.", null);
         }
     }
 
@@ -248,18 +249,5 @@ MyLeaveRequestSubmissionController implements Initializable {
         }
 
         return categoryId;
-    }
-
-    /**
-     * Show an alert with the specified title and content.
-     *
-     * @param title the title of the alert.
-     * @param content the content of the alert.
-     */
-    private void showAlert(String title, String content) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setContentText(content);
-        alert.showAndWait();
     }
 }
