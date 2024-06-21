@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class
-MyLeaveRequestSubmissionController implements Initializable {
+public class MyLeaveRequestSubmissionController {
     @FXML
     private Button btn_count;
 
@@ -68,8 +67,8 @@ MyLeaveRequestSubmissionController implements Initializable {
         this.leave_request_owner.setText(String.valueOf(employeeId));
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    @FXML
+    private void initialize() {
         setUpComboBox();
         setUpDatePicker();
     }
