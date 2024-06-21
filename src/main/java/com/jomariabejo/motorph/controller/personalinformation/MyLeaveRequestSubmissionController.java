@@ -1,17 +1,17 @@
 package com.jomariabejo.motorph.controller.personalinformation;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
+import com.jomariabejo.motorph.service.LeaveRequestService;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.util.Callback;
 
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,7 +20,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 public class MyLeaveRequestSubmissionController {
     @FXML
@@ -47,9 +46,16 @@ public class MyLeaveRequestSubmissionController {
     @FXML
     private TextField tf_total_days_left;
 
+    private LeaveRequestService leaveRequestService;
+
+    public MyLeaveRequestSubmissionController() {
+        this.leaveRequestService = new LeaveRequestService();
+    }
+
     @FXML
     void cancelBtnEvent(ActionEvent event) {
         // Handle cancel button event
+        Platform.exit();
     }
 
     @FXML
@@ -179,49 +185,64 @@ public class MyLeaveRequestSubmissionController {
         tf_total_days_left.setText(String.valueOf(daysBetween));
     }
 
-    /**
-     * Save the leave request to the database.
-     */
-    private void saveLeaveRequest() {
-        String selectedCategory = leaverequest_type.getSelectionModel().getSelectedItem();
+    public void validateSelectedCategory(String selectedCategory) {
         if (selectedCategory == null) {
-            AlertUtility.showErrorAlert("Error", "Please select a leave request type.",null);
+            AlertUtility.showErrorAlert("Error", "Please select a leave request type.", null);
             return;
         }
 
         int leaveReqCatId = fetchLeaveRequestCategoryId(selectedCategory);
         if (leaveReqCatId == -1) {
-            AlertUtility.showErrorAlert("Error", "Invalid leave request type.",null);
+            AlertUtility.showErrorAlert("Error", "Invalid leave request type.", null);
             return;
         }
 
-        LocalDate startDate = dp_leave_start_date.getValue();
-        LocalDate endDate = dp_leave_end_date.getValue();
+        // Proceed with further logic if necessary
+    }
+
+
+    /**
+     * Save the leave request to the database.
+     */
+    private void saveLeaveRequest() {
+        String selectedCategory = leaverequest_type.getSelectionModel().getSelectedItem();
+
+        validateSelectedCategory(selectedCategory);
+
+        LocalDate leaveStartDateValue = dp_leave_start_date.getValue();
+        LocalDate leaveEndDateValue = dp_leave_end_date.getValue();
         String reason = tf_reason.getText();
         int employeeId = Integer.parseInt(leave_request_owner.getText());
 
-        String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason,date_created) VALUES (?, ?, ?, ?, ?, ?)";
+        if (sufficientRemainingLeaveCredits(
+                leaveStartDateValue,
+                leaveEndDateValue,
+                employeeId
+        )) {
+            String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason,date_created) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+            try (Connection connection = DatabaseConnectionUtility.getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
 
-            preparedStatement.setInt(1, employeeId);
-            preparedStatement.setInt(2, leaveReqCatId);
-            preparedStatement.setDate(3, java.sql.Date.valueOf(startDate));
-            preparedStatement.setDate(4, java.sql.Date.valueOf(endDate));
-            preparedStatement.setString(5, reason);
-            preparedStatement.setDate(6, DateUtility.getDate());
+                preparedStatement.setInt(1, employeeId);
+                preparedStatement.setInt(2, fetchLeaveRequestCategoryId(selectedCategory));
+                preparedStatement.setDate(3, java.sql.Date.valueOf(leaveStartDateValue));
+                preparedStatement.setDate(4, java.sql.Date.valueOf(leaveEndDateValue));
+                preparedStatement.setString(5, reason);
+                preparedStatement.setDate(6, DateUtility.getDate());
 
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected > 0) {
-                AlertUtility.showInformation("Success", "Leave request submitted successfully.",null);
-            } else {
-                AlertUtility.showErrorAlert("Error", "Failed to submit leave request.", null);
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected > 0) {
+                    AlertUtility.showInformation("Success", "Leave request submitted successfully.",null);
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            AlertUtility.showErrorAlert("Error", "An error occurred while submitting the leave request.", null);
         }
+    }
+
+    private boolean sufficientRemainingLeaveCredits(LocalDate leaveStartDateValue, LocalDate leaveEndDateValue, int employeeId) {
+        return false;
     }
 
     /**
