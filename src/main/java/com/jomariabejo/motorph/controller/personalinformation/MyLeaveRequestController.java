@@ -53,14 +53,8 @@ public class MyLeaveRequestController {
     @FXML
     private TableView<?> tv_leave_requests;
 
-    /** TODO: Dapat makakapag submit ng leave request ang employee
-     * VACATION = 10,
-     * EMERGENCY = 5,
-     * SICK = 5
-     */
     @FXML
     void buttonFileLeaveRequestEvent(ActionEvent event) throws IOException {
-        System.out.println("File Leave Request Clicked...");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/filing-leave-request.fxml"));
 
         Parent root = fxmlLoader.load();
@@ -71,7 +65,6 @@ public class MyLeaveRequestController {
         stage.setScene(new Scene(root));
         stage.show();
         MyLeaveRequestSubmissionController myLeaveRequestSubmissionController = fxmlLoader.getController();
-        System.out.println("FROM LEAVE REQUEST CONTROLLER: EMPLOYEE ID IS = " + this.employeeId);
         myLeaveRequestSubmissionController.initData(this.employeeId);
     }
 

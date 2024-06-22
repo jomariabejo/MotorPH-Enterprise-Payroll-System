@@ -23,34 +23,19 @@ import java.util.List;
 
 public class MyLeaveRequestSubmissionController {
     @FXML
-    private Button btn_count;
-
-    @FXML
     private DatePicker dp_leave_end_date;
 
     @FXML
     private DatePicker dp_leave_start_date;
 
     @FXML
-    private Label leave_request_owner;
+    private Label employeeId;
 
     @FXML
     private ComboBox<String> leaverequest_type;
 
     @FXML
-    private TextField tf_available_leave_credits;
-
-    @FXML
     private TextField tf_reason;
-
-    @FXML
-    private TextField tf_total_days_left;
-
-    private LeaveRequestService leaveRequestService;
-
-    public MyLeaveRequestSubmissionController() {
-        this.leaveRequestService = new LeaveRequestService();
-    }
 
     @FXML
     void cancelBtnEvent(ActionEvent event) {
@@ -59,18 +44,12 @@ public class MyLeaveRequestSubmissionController {
     }
 
     @FXML
-    void countBtn(ActionEvent event) {
-        // Handle count button event
-        calculateTotalDays();
-    }
-
-    @FXML
     void submitBtnEvent(ActionEvent event) {
         saveLeaveRequest();
     }
 
     public void initData(int employeeId) {
-        this.leave_request_owner.setText(String.valueOf(employeeId));
+        this.employeeId.setText(String.valueOf(employeeId));
     }
 
     @FXML
@@ -85,15 +64,6 @@ public class MyLeaveRequestSubmissionController {
     public void setUpComboBox() {
         ObservableList<String> observableList = FXCollections.observableArrayList(fetchLeaveCategories());
         this.leaverequest_type.setItems(observableList);
-
-        // Add a listener to the ComboBox to handle selection changes
-        this.leaverequest_type.setOnAction(event -> {
-            String selectedCategory = this.leaverequest_type.getSelectionModel().getSelectedItem();
-            if (selectedCategory != null) {
-                int maxCredits = fetchMaxCredits(selectedCategory);
-                this.tf_available_leave_credits.setText(String.valueOf(maxCredits));
-            }
-        });
     }
 
     /**
@@ -147,44 +117,6 @@ public class MyLeaveRequestSubmissionController {
         return categories;
     }
 
-    /**
-     * Fetches the max credits for the given category from the database.
-     *
-     * @param categoryName the name of the leave request category.
-     * @return the max credits for the category.
-     */
-    private int fetchMaxCredits(String categoryName) {
-        int maxCredits = 0;
-        String query = "SELECT maxCredits FROM payroll_sys.leave_request_category WHERE categoryName = ?";
-
-        try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setString(1, categoryName);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    maxCredits = resultSet.getInt("maxCredits");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return maxCredits;
-    }
-
-    /**
-     * Calculate total days between start and end dates and display the result in tf_total_days_left.
-     */
-    private void calculateTotalDays() {
-        LocalDate startDate = dp_leave_start_date.getValue();
-        LocalDate endDate = dp_leave_end_date.getValue();
-
-        long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
-
-        tf_total_days_left.setText(String.valueOf(daysBetween));
-    }
-
     public void validateSelectedCategory(String selectedCategory) {
         if (selectedCategory == null) {
             AlertUtility.showErrorAlert("Error", "Please select a leave request type.", null);
@@ -201,9 +133,6 @@ public class MyLeaveRequestSubmissionController {
     }
 
 
-    /**
-     * Save the leave request to the database.
-     */
     private void saveLeaveRequest() {
         String selectedCategory = leaverequest_type.getSelectionModel().getSelectedItem();
 
@@ -212,14 +141,16 @@ public class MyLeaveRequestSubmissionController {
         LocalDate leaveStartDateValue = dp_leave_start_date.getValue();
         LocalDate leaveEndDateValue = dp_leave_end_date.getValue();
         String reason = tf_reason.getText();
-        int employeeId = Integer.parseInt(leave_request_owner.getText());
+        int employeeId = Integer.parseInt(this.employeeId.getText());
 
-        if (sufficientRemainingLeaveCredits(
-                leaveStartDateValue,
-                leaveEndDateValue,
-                employeeId
-        )) {
-            String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason,date_created) VALUES (?, ?, ?, ?, ?, ?)";
+        // Check for overlapping leave requests
+        if (hasOverlappingLeaveRequest(employeeId, leaveStartDateValue, leaveEndDateValue)) {
+            AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You already have a leave request overlapping with the selected dates.");
+            return;
+        }
+
+        if (hasRemainingLeaveCredits(leaveStartDateValue, leaveEndDateValue)) {
+            String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason, date_created) VALUES (?, ?, ?, ?, ?, ?)";
 
             try (Connection connection = DatabaseConnectionUtility.getConnection();
                  PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -233,16 +164,83 @@ public class MyLeaveRequestSubmissionController {
 
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected > 0) {
-                    AlertUtility.showInformation("Success", "Leave request submitted successfully.",null);
+                    AlertUtility.showInformation("Success", "Leave Request Submitted", "Leave request submitted successfully.");
                 }
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
+        } else {
+            AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You have fully consumed your leaves for this year. Cannot submit leave request.");
         }
     }
 
-    private boolean sufficientRemainingLeaveCredits(LocalDate leaveStartDateValue, LocalDate leaveEndDateValue, int employeeId) {
+    /**
+     * Checks if there is any overlapping leave request for the given employee and dates.
+     *
+     * @param employeeId the ID of the employee.
+     * @param startDate  the start date of the leave request.
+     * @param endDate    the end date of the leave request.
+     * @return true if there is an overlap, false otherwise.
+     */
+    private boolean hasOverlappingLeaveRequest(int employeeId, LocalDate startDate, LocalDate endDate) {
+        String query = "SELECT COUNT(*) AS overlapCount " +
+                "FROM payroll_sys.leave_request " +
+                "WHERE employee_id = ? " +
+                "AND status IN ('Approved', 'Pending') " +  // Consider only approved and pending requests
+                "AND start_date <= ? AND end_date >= ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.setDate(2, java.sql.Date.valueOf(endDate));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(startDate));
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int overlapCount = resultSet.getInt("overlapCount");
+                    return overlapCount > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         return false;
+    }
+
+    private boolean hasRemainingLeaveCredits(LocalDate leaveStartDateValue, LocalDate leaveEndDateValue) {
+        long remainingLeaveCredits = fetchRemainingLeaveCredits();
+        long appliedLeaveInDays = ChronoUnit.DAYS.between(leaveStartDateValue, leaveEndDateValue);
+
+        return remainingLeaveCredits >= appliedLeaveInDays;
+    }
+
+    private int fetchRemainingLeaveCredits() {
+        String query = "SELECT COALESCE(lrc.maxCredits, 0) - IFNULL(SUM(DATEDIFF(\n" +
+                "        CASE WHEN lr.start_date = lr.end_date THEN lr.start_date ELSE DATE_ADD(lr.end_date, INTERVAL 1 DAY) END,\n" +
+                "        lr.start_date)), 0) AS remaining_leave_balance, lrc.categoryName\n" +
+                "FROM leave_request_category lrc\n" +
+                "         LEFT JOIN leave_request lr ON lr.leave_request_category_id = lrc.leave_req_cat_id\n" +
+                "    AND lr.employee_id = ?\n" +
+                "    AND lr.status = 'Approved'\n" +
+                "    AND YEAR(lr.start_date) = YEAR(CURDATE())\n" +
+                "WHERE lrc.leave_req_cat_id = ?;";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, Integer.valueOf(employeeId.getText()));
+            pstmt.setInt(2, Integer.valueOf(fetchLeaveRequestCategoryId(leaverequest_type.getSelectionModel().getSelectedItem())));
+            try (ResultSet resultSet = pstmt.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("remaining_leave_balance");
+                }
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return -1; // means you can't submit leave request
     }
 
     /**
