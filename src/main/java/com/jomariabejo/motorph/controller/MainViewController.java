@@ -127,7 +127,6 @@ public class MainViewController {
 
         MyLeaveRequestController myLeaveRequestController = fxmlLoader.getController();
         myLeaveRequestController.setInitData(Integer.valueOf(this.lbl_employee_id.getText())); // inject the employee id
-        System.out.println("FROM MAINVIEW: EMPLOYEE ID IS = " + this.lbl_employee_id.getText());
         mainPane.setCenter(anchorPane);
     }
 
