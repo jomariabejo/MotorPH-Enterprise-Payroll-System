@@ -1,5 +1,7 @@
 package com.jomariabejo.motorph.controller;
 
+
+import com.jomariabejo.motorph.controller.personalinformation.MyLeaveRequestController;
 import com.jomariabejo.motorph.controller.personalinformation.MyPayslipController;
 import com.jomariabejo.motorph.controller.personalinformation.MyProfileController;
 import com.jomariabejo.motorph.controller.personalinformation.MyTimesheetController;
@@ -137,6 +139,9 @@ public class MainViewController {
         this.lbl_user_clicked_path.setText("/ Personal Information / My Leave Request");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-leave-request-view.fxml"));
         AnchorPane anchorPane = fxmlLoader.load();
+
+        MyLeaveRequestController myLeaveRequestController = fxmlLoader.getController();
+        myLeaveRequestController.setInitData(Integer.valueOf(this.lbl_employee_id.getText())); // inject the employee id
         mainPane.setCenter(anchorPane);
     }
 
@@ -293,6 +298,7 @@ public class MainViewController {
     }
 
     public Label getLbl_employee_id() {
+        System.out.println("Current value is : " + lbl_employee_id.getText());
         return lbl_employee_id;
     }
 

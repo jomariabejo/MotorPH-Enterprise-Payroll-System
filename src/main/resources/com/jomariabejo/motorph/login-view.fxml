@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720.0" minWidth="1440.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.LoginController">
    <left>
       <HBox prefHeight="720.0" prefWidth="916.0">
