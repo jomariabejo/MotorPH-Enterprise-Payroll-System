@@ -7,7 +7,7 @@ import com.jomariabejo.motorph.utility.TextReader;
 import java.sql.*;
 
 public class TaxRepository {
-    public void saveTax(Tax tax) throws SQLException {
+    public void saveTax(Tax tax)  {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\tax\\create_tax.sql");
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
@@ -27,10 +27,12 @@ public class TaxRepository {
             } else {
                 System.out.println("Insert tax failed");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    private Tax fetchTaxByEmployeeIdAndDate(int employeeId, Date dateCreated) throws SQLException {
+    private Tax fetchTaxByEmployeeIdAndDate(int employeeId, Date dateCreated) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\deduction\\get_deduction.sql");
         Tax tax = new Tax();
 
@@ -51,6 +53,8 @@ public class TaxRepository {
 
                 return tax;
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return tax;
     }

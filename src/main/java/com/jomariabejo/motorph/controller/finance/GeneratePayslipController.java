@@ -79,11 +79,7 @@ public class GeneratePayslipController {
                             GROSS_INCOMES.get(i).computeGrossIncome(),
                             deduction));
 
-                tax.setTaxableIncome(taxService.computeTax(
-                        GROSS_INCOMES.get(i).basicSalary(),
-                        GROSS_INCOMES.get(i).computeGrossIncome(),
-                        deduction
-                ));
+                tax.setTaxableIncome(GROSS_INCOMES.get(i).computeGrossIncome().subtract(deduction.totalContributions()));
                 AccountNumber accountNumber = employeeService.fetchEmployeeAccountNumber(GROSS_INCOMES.get(i).employeeId());
                 BigDecimal totalDeduction = deduction.totalContributions().add(tax.getWithheldTax());
                 BigDecimal netPay = GROSS_INCOMES.get(i).computeGrossIncome().subtract(totalDeduction).add(new BigDecimal(GROSS_INCOMES.get(i).total_allowance()));
@@ -119,8 +115,9 @@ public class GeneratePayslipController {
 
                 employeePayrollSummaryReports.add(employeePayrollSummaryReport);
 
-                executeButton.setText("Save");
+                System.out.println(employeePayrollSummaryReport.toString());
             }
+            executeButton.setText("Save");
             injectEmployeePayrollSummaryReportToTableView(employeePayrollSummaryReports);
         }
         // handle save generated payslips

@@ -7,8 +7,8 @@ import com.jomariabejo.motorph.utility.TextReader;
 import java.sql.*;
 
 public class DeductionRepository {
-    public void saveDeduction(Deduction deduction) throws SQLException {
-        String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\deduction\\create_deduction.sql");
+    public void saveDeduction(Deduction deduction) {
+        String query = "";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -28,6 +28,8 @@ public class DeductionRepository {
             } else {
                 System.out.println("Insert deduction failed");
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 

@@ -14,7 +14,7 @@ public class DatabaseConnectionUtility {
     private static final String PASSWORD = "";
 
     // Method to establish a database connection
-    public static Connection getConnection() throws SQLException {
+    public static Connection getConnection() {
         Connection connection = null;
         try {
             // Open a connection

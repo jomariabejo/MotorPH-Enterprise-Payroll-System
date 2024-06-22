@@ -18,7 +18,7 @@
                   <Region prefHeight="100.0" prefWidth="76.0" />
                   <ComboBox fx:id="comboBoxMonth" onAction="#comboBoxMonthChanged" prefHeight="64.0" prefWidth="178.0" promptText="Month" stylesheets="@../../../../css/custom/combobox.css" />
                   <ComboBox fx:id="comboBoxYear" layoutX="522.0" layoutY="48.0" onAction="#comboBoxYearChanged" prefHeight="64.0" prefWidth="190.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
-                  <Button mnemonicParsing="false" onAction="#viewReportClicked" stylesheets="@../../../../css/custom/button.css" text="View Report" />
+                  <Button mnemonicParsing="false" onAction="#reviewClicked" stylesheets="@../../../../css/custom/button.css" text="View Report" />
                </children>
             </HBox>
             <ScrollPane stylesheets="@../../../../css/custom/scrollpane.css">

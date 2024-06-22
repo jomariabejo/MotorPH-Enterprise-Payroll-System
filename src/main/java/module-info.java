@@ -12,7 +12,10 @@ module com.jomariabejo.motorph {
     requires java.logging;
     requires java.sql;
     requires com.opencsv;
+    requires org.apache.pdfbox;
 
+    opens com.jomariabejo.motorph.enums to javafx.fxml;
+    exports com.jomariabejo.motorph.enums to javafx.fxml;
     opens com.jomariabejo.motorph.entity;
     exports com.jomariabejo.motorph.entity to javafx.fxml;
     opens com.jomariabejo.motorph to javafx.fxml;
@@ -29,5 +32,7 @@ module com.jomariabejo.motorph {
     exports com.jomariabejo.motorph.controller.finance;
     opens com.jomariabejo.motorph.controller.personalinformation to javafx.fxml;
     exports com.jomariabejo.motorph.controller.personalinformation;
+    opens com.jomariabejo.motorph.controller.systemadmin to javafx.fxml;
+    exports com.jomariabejo.motorph.controller.systemadmin;
 
 }

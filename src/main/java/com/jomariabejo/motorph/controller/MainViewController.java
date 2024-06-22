@@ -1,6 +1,8 @@
 package com.jomariabejo.motorph.controller;
 
+
 import com.jomariabejo.motorph.controller.personalinformation.MyLeaveRequestController;
+import com.jomariabejo.motorph.controller.personalinformation.MyPayslipController;
 import com.jomariabejo.motorph.controller.personalinformation.MyProfileController;
 import com.jomariabejo.motorph.controller.personalinformation.MyTimesheetController;
 import com.jomariabejo.motorph.service.LoginManager;
@@ -46,6 +48,9 @@ public class MainViewController {
     private Button btn_human_resource_employees;
 
     @FXML
+    private Button btn_human_resource_dashboard;
+
+    @FXML
     private Label lbl_system;
 
     @FXML
@@ -89,9 +94,19 @@ public class MainViewController {
     }
 
     @FXML
-    void financePayrollClicked(ActionEvent event) {
-        this.lbl_user_clicked_path.setText("/ Finance / Payroll");
+    void financePayrollClicked(ActionEvent event) throws IOException {
+        this.lbl_user_clicked_path.setText("/ Finance / Dashboard");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/payroll-dashboard.fxml"));
+        AnchorPane anchorPane = fxmlLoader.load();
+        mainPane.setCenter(anchorPane);
+    }
 
+    @FXML
+    void humanResourceDashboardClicked(ActionEvent event) throws IOException {
+        this.lbl_user_clicked_path.setText("/ Human Resource / Dashboard");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/hr-dashboard-copy.fxml"));
+        AnchorPane anchorPane = fxmlLoader.load();
+        mainPane.setCenter(anchorPane);
     }
 
     @FXML
@@ -131,8 +146,14 @@ public class MainViewController {
     }
 
     @FXML
-    void personalInformationPayslipClicked(ActionEvent event) {
+    void personalInformationPayslipClicked(ActionEvent event) throws IOException {
         this.lbl_user_clicked_path.setText("/ Personal Information / My Payslips");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-payslips-view.fxml"));
+        AnchorPane anchorPane = fxmlLoader.load();
+        mainPane.setCenter(anchorPane);
+
+        MyPayslipController myPayslipController = fxmlLoader.getController();
+        myPayslipController.initData(Integer.valueOf(this.lbl_employee_id.getText()));
     }
 
     @FXML
@@ -183,7 +204,6 @@ public class MainViewController {
     }
     public void initSessionId(final LoginManager loginManager, int user_id, int employee_id, String role) throws SQLException, IOException {
         this.lbl_employee_id.setText(String.valueOf(employee_id));
-        System.out.printf("My role is " + role);
         switch (role) {
             case "HR Administrator":
                 showHRAccessButtons();
@@ -247,6 +267,8 @@ public class MainViewController {
         btn_human_resource_timesheets.setManaged(true);
         btn_human_resource_employees.setVisible(true);
         btn_human_resource_employees.setManaged(true);
+        btn_human_resource_dashboard.setVisible(true);
+        btn_human_resource_dashboard.setManaged(true);
 
     }
 
@@ -261,6 +283,7 @@ public class MainViewController {
         lbl_human_resource.setVisible(false);
         lbl_system.setVisible(false);
         btn_human_resource_employees.setVisible(false);
+        btn_human_resource_dashboard.setVisible(false);
 
         btn_finance_generate_payslip.setManaged(false);
         btn_finance_payroll.setManaged(false);
@@ -271,6 +294,7 @@ public class MainViewController {
         lbl_human_resource.setManaged(false);
         lbl_system.setManaged(false);
         btn_human_resource_employees.setManaged(false);
+        btn_human_resource_dashboard.setManaged(false);
     }
 
     public Label getLbl_employee_id() {

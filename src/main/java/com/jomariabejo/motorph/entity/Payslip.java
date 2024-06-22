@@ -5,10 +5,13 @@ import java.sql.Date;
 public class Payslip {
     private int payslipID;
     private int employeeID;
+    private String employeeName;
     private int allowanceID;
     private int taxID;
     private int deductionID;
-    private BigDecimal totalHoursWorked;
+    private BigDecimal totalRegularHoursWorked;
+    private BigDecimal totalOvertimeHoursWorked;
+    private BigDecimal totalHoursWorked; // regular hours worked + overtime hours worked
     private BigDecimal grossIncome;
     private BigDecimal netIncome;
     private Date payPeriodStart;
@@ -41,6 +44,15 @@ public class Payslip {
         this.payPeriodStart = payPeriodStart;
         this.payPeriodEnd = payPeriodEnd;
         this.dateCreated = dateCreated;
+    }
+
+    public Payslip(int payslipID,BigDecimal totalHoursWorked, BigDecimal grossIncome, BigDecimal netIncome, Date payPeriodStart, Date payPeriodEnd) {
+        this.payslipID = payslipID;
+        this.totalHoursWorked = totalHoursWorked;
+        this.grossIncome = grossIncome;
+        this.netIncome = netIncome;
+        this.payPeriodStart = payPeriodStart;
+        this.payPeriodEnd = payPeriodEnd;
     }
 
     public int getPayslipID() {
@@ -131,6 +143,23 @@ public class Payslip {
         this.deductionID = deductionID;
     }
 
+
+    public BigDecimal getTotalRegularHoursWorked() {
+        return totalRegularHoursWorked;
+    }
+
+    public void setTotalRegularHoursWorked(BigDecimal totalRegularHoursWorked) {
+        this.totalRegularHoursWorked = totalRegularHoursWorked;
+    }
+
+    public BigDecimal getTotalOvertimeHoursWorked() {
+        return totalOvertimeHoursWorked;
+    }
+
+    public void setTotalOvertimeHoursWorked(BigDecimal totalOvertimeHoursWorked) {
+        this.totalOvertimeHoursWorked = totalOvertimeHoursWorked;
+    }
+
     @Override
     public String toString() {
         return "Payslip{" +
@@ -147,4 +176,26 @@ public class Payslip {
                 ", dateCreated=" + dateCreated +
                 '}';
     }
+
+    public record PayslipViewer(int employeeId,
+                          String employeeName,
+                          Date payPeriodStart,
+                          Date payPeriodEnd,
+                          String positionName,
+                          double monthlyRate,
+                          double hourlyRate,
+                          double grossIncome,
+                          double sss,
+                          double philhealth,
+                          double pagibig,
+                          double withheldTax,
+                          double totalDeduction,
+                          double rice,
+                          double phone,
+                          double clothing,
+                          double totalBenefits,
+                          double takeHomePay,
+                          double totalRegularHoursWorked,
+                          double totalOvertimeHoursWorked,
+                          double totalHoursWorked) {}
 }
