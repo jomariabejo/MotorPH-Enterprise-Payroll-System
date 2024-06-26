@@ -1,10 +1,7 @@
-package com.jomariabejo.motorph.controller.personalinformation;
+package com.jomariabejo.motorph.controller.employee;
 
-import com.jomariabejo.motorph.controller.hr.HRViewEmployeeProfile;
-import com.jomariabejo.motorph.entity.Employee;
 import com.jomariabejo.motorph.entity.Payslip;
 import com.jomariabejo.motorph.service.PayslipService;
-import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -38,7 +35,6 @@ public class MyPayslipController {
 
     @FXML
     private void initialize() throws SQLException {
-        System.out.println("My payslip is displayed...");
         setUpTableView();
     }
 

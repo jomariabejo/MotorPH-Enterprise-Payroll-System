@@ -1,4 +1,4 @@
-package com.jomariabejo.motorph.controller.personalinformation;
+package com.jomariabejo.motorph.controller.employee;
 
 
 import com.jomariabejo.motorph.entity.Payslip;

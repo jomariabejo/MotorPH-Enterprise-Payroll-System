@@ -1,7 +1,6 @@
 /*
 File: count_total_employee_work_days_within_date_range.sql
 Description: Counts the total number of days each active employee worked within a given date range.
-Author: OpenAI ChatGPT
 Date Created: N/A
 Last Modified: May 4, 2024
 Version: 1.0

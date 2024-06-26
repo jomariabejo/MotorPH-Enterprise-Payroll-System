@@ -1,10 +1,10 @@
 package com.jomariabejo.motorph.controller;
 
 
-import com.jomariabejo.motorph.controller.personalinformation.MyLeaveRequestController;
-import com.jomariabejo.motorph.controller.personalinformation.MyPayslipController;
-import com.jomariabejo.motorph.controller.personalinformation.MyProfileController;
-import com.jomariabejo.motorph.controller.personalinformation.MyTimesheetController;
+import com.jomariabejo.motorph.controller.employee.MyLeaveRequestController;
+import com.jomariabejo.motorph.controller.employee.MyPayslipController;
+import com.jomariabejo.motorph.controller.employee.MyProfileController;
+import com.jomariabejo.motorph.controller.employee.MyTimesheetController;
 import com.jomariabejo.motorph.service.LoginManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

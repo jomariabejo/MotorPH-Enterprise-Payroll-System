@@ -13,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720.0" minWidth="1440.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.LoginController">
    <left>
       <HBox prefHeight="720.0" prefWidth="916.0">
@@ -42,7 +41,7 @@
       <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
             <Region prefHeight="145.0" prefWidth="331.0" />
-            <Label text="Login to your Account">
+            <Label text="Login to your Account" textFill="#00000098">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>
@@ -52,7 +51,7 @@
             </Label>
             <VBox alignment="CENTER" spacing="16.0">
                <children>
-                  <TextField fx:id="usernameField" promptText="Username" stylesheets="@../../../css/custom/textfields.css">
+                  <TextField fx:id="usernameField" promptText="Username" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/textfields.css">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -60,7 +59,7 @@
                         <Insets left="64.0" right="64.0" />
                      </VBox.margin>
                   </TextField>
-                  <PasswordField fx:id="passwordField" promptText="Password" stylesheets="@../../../css/custom/textfields.css">
+                  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/textfields.css">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -68,21 +67,11 @@
                         <Insets left="64.0" right="64.0" />
                      </VBox.margin>
                   </PasswordField>
-                  <Button fx:id="loginBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="394.0" stylesheets="@../../../css/custom/button.css" text="Login">
+                  <Button fx:id="loginBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="394.0" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/button.css" text="Login">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="registerBtn" layoutX="75.0" layoutY="144.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="394.0" stylesheets="@../../../css/custom/button.css" text="Register">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                  <Label alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="400.0" stylesheets="@../../../css/custom/label.css" text="Forgot Password">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
                </children>
             </VBox>
             <Label />

@@ -1,6 +1,6 @@
 package com.jomariabejo.motorph.service;
 
-import com.jomariabejo.motorph.record.Salary;
+import com.jomariabejo.motorph.record.SalaryStructure;
 import com.jomariabejo.motorph.repository.SalaryRepository;
 
 public class SalaryDetailService {
@@ -10,7 +10,7 @@ public class SalaryDetailService {
         this.salaryRepository = new SalaryRepository();
     }
 
-    public Salary fetchSalaryDetails(int employeeId) {
+    public SalaryStructure fetchSalaryDetails(int employeeId) {
         return salaryRepository.fetchSalaryDetailsByEmployeeId(employeeId);
     }
 }

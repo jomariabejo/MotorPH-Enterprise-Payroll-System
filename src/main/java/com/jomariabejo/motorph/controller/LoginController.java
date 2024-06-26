@@ -32,7 +32,8 @@ public class LoginController {
             if (userName.isEmpty()) {
                 c.error("Please provide username.");
                 loginBtn.setDisable(true);
-            }/* enable the log in button when both fields is not empty */ else if (!userName.isEmpty() && !passwordField.getText().isEmpty())
+            }/* enable the log in button when both fields is not empty */
+            else if (!userName.isEmpty() && !passwordField.getText().isEmpty())
                 loginBtn.setDisable(false);
         }).decorates(usernameField).immediate(); /* Validator for password field. */
         passwordValidator.createCheck().dependsOn("password", passwordField.textProperty()).withMethod(c -> {

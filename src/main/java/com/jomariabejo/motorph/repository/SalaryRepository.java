@@ -1,7 +1,7 @@
 package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
-import com.jomariabejo.motorph.record.Salary;
+import com.jomariabejo.motorph.record.SalaryStructure;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,14 +17,14 @@ public class SalaryRepository {
      * @return The salary details of the specified employee.
      * @throws RuntimeException If there is an error during database operation.
      */
-    public Salary fetchSalaryDetailsByEmployeeId(int employeeId) {
+    public SalaryStructure fetchSalaryDetailsByEmployeeId(int employeeId) {
         String query = "SELECT basic_salary, gross_semi_monthly_rate, hourly_rate FROM employee WHERE employee_id = ?";
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, employeeId);
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
-                    return new Salary(
+                    return new SalaryStructure(
                             resultSet.getBigDecimal("basic_salary"),
                             resultSet.getBigDecimal("gross_semi_monthly_rate"),
                             resultSet.getBigDecimal("hourly_rate"));

@@ -1,10 +1,8 @@
-package com.jomariabejo.motorph.controller.personalinformation;
+package com.jomariabejo.motorph.controller.employee;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
-import com.jomariabejo.motorph.service.LeaveRequestService;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -141,7 +139,7 @@ public class MyLeaveRequestSubmissionController {
         String reason = tf_reason.getText();
         int employeeId = Integer.parseInt(this.employeeId.getText());
 
-        if (leaveStartDateValue.isBefore(leaveEndDateValue)) {
+        if (leaveStartDateValue.isBefore(leaveEndDateValue) || leaveStartDateValue.isEqual(leaveEndDateValue)) {
             // Check for overlapping leave requests
             if (hasOverlappingLeaveRequest(employeeId, leaveStartDateValue, leaveEndDateValue)) {
                 AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You already have a leave request overlapping with the selected dates.");

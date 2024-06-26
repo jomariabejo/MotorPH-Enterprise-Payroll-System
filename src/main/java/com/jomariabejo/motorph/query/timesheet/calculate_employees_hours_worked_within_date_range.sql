@@ -1,7 +1,6 @@
 /*
 File: calculate_employees_hours_worked_within_date_range.sql
 Description: Calculates the total hours worked by all active employees within a given date range.
-Author: OpenAI ChatGPT
 Date Created: N/A
 Last Modified: May 4, 2024
 Version: 1.0

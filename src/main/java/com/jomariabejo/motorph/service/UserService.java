@@ -33,4 +33,8 @@ public class UserService {
     public boolean modifyUser(User user) {
         return userRepository.modifyUser(user);
     }
+
+    public boolean changePassword(int employeeId, String existingPassword, String newPassword) {
+        return userRepository.changePassword(employeeId, existingPassword, newPassword);
+    }
 }
