@@ -31,6 +31,7 @@ public class PayslipRepository {
 
     /**
      * Save multiple payslip into database.
+     *
      * @param employeePayrollSummaryReports
      */
     public void saveMultiplePayslip(ObservableList<EmployeePayrollSummaryReport> employeePayrollSummaryReports) {
@@ -88,22 +89,22 @@ public class PayslipRepository {
         String query = "INSERT INTO payslip (payslip_id, employee_id, alw_id, deduction_id, tax_id, pay_period_start, pay_period_end, total_hours_worked, gross_income, net_income, date_created) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)\n";
         counter++;
 
-        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)){
-            preparedStatement.setInt(1,payslip.getPayslipID());
-            preparedStatement.setInt(2,payslip.getEmployeeID());
-            preparedStatement.setInt(3,payslip.getAllowanceID());
-            preparedStatement.setInt(4,payslip.getDeductionID());
-            preparedStatement.setInt(5,payslip.getTaxID());
-            preparedStatement.setDate(6,payslip.getPayPeriodStart());
-            preparedStatement.setDate(7,payslip.getPayPeriodEnd());
-            preparedStatement.setBigDecimal(8,payslip.getTotalHoursWorked());
-            preparedStatement.setBigDecimal(9,payslip.getGrossIncome());
-            preparedStatement.setBigDecimal(10,payslip.getNetIncome());
-            preparedStatement.setDate(11,payslip.getDateCreated());
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, payslip.getPayslipID());
+            preparedStatement.setInt(2, payslip.getEmployeeID());
+            preparedStatement.setInt(3, payslip.getAllowanceID());
+            preparedStatement.setInt(4, payslip.getDeductionID());
+            preparedStatement.setInt(5, payslip.getTaxID());
+            preparedStatement.setDate(6, payslip.getPayPeriodStart());
+            preparedStatement.setDate(7, payslip.getPayPeriodEnd());
+            preparedStatement.setBigDecimal(8, payslip.getTotalHoursWorked());
+            preparedStatement.setBigDecimal(9, payslip.getGrossIncome());
+            preparedStatement.setBigDecimal(10, payslip.getNetIncome());
+            preparedStatement.setDate(11, payslip.getDateCreated());
 
             int rowsAffected = preparedStatement.executeUpdate();
 
-            System.out.println((rowsAffected > 0) ? ("Save payslip success " + counter)  : ("Not saved " + counter));
+            System.out.println((rowsAffected > 0) ? ("Save payslip success " + counter) : ("Not saved " + counter));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -119,14 +120,14 @@ public class PayslipRepository {
 
             while (resultSet.next()) {
                 myPayslips.add(
-                    new Payslip(
-                            resultSet.getInt(1),
-                            resultSet.getBigDecimal(2).setScale(4),
-                            resultSet.getBigDecimal(3).setScale(4),
-                            resultSet.getBigDecimal(4).setScale(4),
-                            resultSet.getDate(5),
-                            resultSet.getDate(6)
-                    )
+                        new Payslip(
+                                resultSet.getInt(1),
+                                resultSet.getBigDecimal(2).setScale(4),
+                                resultSet.getBigDecimal(3).setScale(4),
+                                resultSet.getBigDecimal(4).setScale(4),
+                                resultSet.getDate(5),
+                                resultSet.getDate(6)
+                        )
                 );
             }
             return myPayslips;
@@ -138,29 +139,27 @@ public class PayslipRepository {
     // 1st process get the payslip
     // 2nd process get the regular hours worked and overtime hours worked.
     public Payslip.PayslipViewer fetchPayslipBreakdown(int payslipId) {
-
-
         String query = "SELECT\n" +
                 "    p.employee_id,\n" +
                 "    CONCAT(e.first_name, ' ', e.last_name) AS EMPLOYEE_NAME,\n" +
                 "    p.pay_period_start,\n" +
                 "    p.pay_period_end,\n" +
                 "    pstn.name,\n" +
-                "    e.basic_salary as MONTHLY_RATE,\n" +
-                "    e.hourly_rate as HOURLY_RATE,\n" +
+                "    e.basic_salary AS MONTHLY_RATE,\n" +
+                "    e.hourly_rate AS HOURLY_RATE,\n" +
                 "    p.gross_income,\n" +
                 "    d.sss,\n" +
                 "    d.philhealth,\n" +
                 "    d.pagibig,\n" +
                 "    t.withheld_tax,\n" +
-                "    ((d.total_contribution) + (t.withheld_tax)) AS TOTAL_DEDUCTION,\n" +
+                "    (d.total_contribution + t.withheld_tax) AS TOTAL_DEDUCTION,\n" +
                 "    a.rice,\n" +
                 "    a.phone,\n" +
                 "    a.clothing,\n" +
-                "    (a.total_amount) AS TOTAL_BENEFITS,\n" +
+                "    a.total_amount AS TOTAL_BENEFITS,\n" +
                 "    p.net_income AS TAKE_HOME_PAY,\n" +
-                "    ts.total_regular_hours_worked,\n" +
-                "    ts.total_overtime_hours_worked,\n" +
+                "    COALESCE(ts.total_regular_hours_worked, 0) AS total_regular_hours_worked,\n" +
+                "    COALESCE(ts.total_overtime_hours_worked, 0) AS total_overtime_hours_worked,\n" +
                 "    p.total_hours_worked\n" +
                 "FROM\n" +
                 "    payslip p\n" +
@@ -169,43 +168,40 @@ public class PayslipRepository {
                 "    INNER JOIN allowance a ON p.alw_id = a.alw_id\n" +
                 "    INNER JOIN deduction d ON p.deduction_id = d.deduction_id\n" +
                 "    INNER JOIN tax t ON p.tax_id = t.tax_id\n" +
-                "    INNER JOIN (\n" +
+                "    LEFT JOIN (\n" +
                 "        SELECT\n" +
                 "            t.employee_id,\n" +
                 "            SUM(\n" +
-                "                CASE WHEN TIME(t.time_in) < '08:00:00' THEN (\n" +
-                "                    TIME_TO_SEC(TIMEDIFF('08:00:00', t.time_in)) / 3600.0\n" +
-                "                ) WHEN TIME(t.time_out) > '17:00:00' THEN (\n" +
-                "                    TIME_TO_SEC(TIMEDIFF('17:00:00', t.time_in)) / 3600.0\n" +
-                "                ) ELSE (\n" +
-                "                    TIME_TO_SEC(TIMEDIFF(t.time_out, t.time_in)) / 3600.0\n" +
-                "                ) END\n" +
+                "                CASE\n" +
+                "                    WHEN TIME(t.time_out) <= '17:00:00' THEN (TIME_TO_SEC(TIMEDIFF(t.time_out, t.time_in)) / 3600.0)\n" +
+                "                    ELSE (TIME_TO_SEC(TIMEDIFF('17:00:00', t.time_in)) / 3600.0)\n" +
+                "                END\n" +
                 "            ) AS total_regular_hours_worked,\n" +
                 "            SUM(\n" +
-                "                CASE WHEN t.time_out <= '17:00:00' THEN 0 ELSE (\n" +
-                "                    TIME_TO_SEC(TIMEDIFF(t.time_out, '17:00:00')) / 3600.0\n" +
-                "                ) END\n" +
+                "                CASE\n" +
+                "                    WHEN TIME(t.time_out) > '17:00:00' THEN (TIME_TO_SEC(TIMEDIFF(t.time_out, '17:00:00')) / 3600.0)\n" +
+                "                    ELSE 0\n" +
+                "                END\n" +
                 "            ) AS total_overtime_hours_worked\n" +
                 "        FROM\n" +
                 "            timesheet t\n" +
-                "            JOIN employee e ON t.employee_id = e.employee_id\n" +
-                "            JOIN department d ON e.dept_id = d.dept_id\n" +
-                "            JOIN payslip p ON e.employee_id = p.employee_id\n" +
                 "        WHERE\n" +
-                "            e.isActive = 1\n" +
-                "            AND t.date BETWEEN p.pay_period_start AND p.pay_period_end\n" +
-                "            AND t.employee_id = p.employee_id\n" +
+                "            t.date BETWEEN (SELECT pay_period_start FROM payslip WHERE payslip_id = ?) AND \n" +
+                "            (SELECT pay_period_end FROM payslip WHERE payslip_id = ?)\n" +
                 "        GROUP BY\n" +
                 "            t.employee_id\n" +
                 "    ) AS ts ON p.employee_id = ts.employee_id\n" +
                 "WHERE\n" +
                 "    p.payslip_id = ?;\n";
-
         try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)){
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, payslipId);
+            preparedStatement.setInt(2, payslipId);
+            preparedStatement.setInt(3, payslipId);
+
 
             ResultSet resultSet = preparedStatement.executeQuery();
+
 
             if (resultSet.next()) {
                 return new Payslip.PayslipViewer(
@@ -246,8 +242,10 @@ public class PayslipRepository {
                 "FROM payslip\n" +
                 "GROUP BY payslip.pay_period_start, payslip.pay_period_end\n";
 
+
         try(Connection connection = DatabaseConnectionUtility.getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query)) {
+          
             ArrayList<Payslip> payslips = new ArrayList<>();
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
