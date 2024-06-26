@@ -24,14 +24,18 @@ public class PayslipService {
     }
 
     public ArrayList < Payslip > fetchPayslipByEmployeeId(int employeeId) {
-        return payslipRepository.fetchPayslipByPayslipId(employeeId);
+        return payslipRepository.fetchPayslipByEmployeeId(employeeId);
     }
 
-    public Payslip.PayslipViewer fetchPayslip(int payslipId) {
+    public Payslip.PayslipViewer fetchPayslipBreakdown(int payslipId) {
         return payslipRepository.fetchPayslipBreakdown(payslipId);
     }
 
     public ObservableList<Payslip> fetchPayslipSummary() {
         return payslipRepository.fetchPayslipSummary();
+    }
+
+    public ObservableList<Payslip> fetchPayslipBetweenPayStartDateAndPayEndDate(java.sql.Date payStartDate, java.sql.Date payEndDate) {
+        return payslipRepository.fetchPayslipBetweenPayStartAndPayEnd(payStartDate, payEndDate);
     }
 }

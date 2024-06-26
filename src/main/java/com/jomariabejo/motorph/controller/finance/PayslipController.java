@@ -1,6 +1,6 @@
 package com.jomariabejo.motorph.controller.finance;
 
-import com.jomariabejo.motorph.controller.employee.ViewMyPayslipController;
+import com.jomariabejo.motorph.controller.employee.MyPayslipController;
 import com.jomariabejo.motorph.entity.Payslip;
 import com.jomariabejo.motorph.service.PayslipService;
 import javafx.fxml.FXML;
@@ -58,22 +58,28 @@ public class PayslipController {
                 viewButton.setOnAction(event -> {
                     Payslip payslip = getTableView().getItems().get(getIndex());
 
-//                    try {
-//                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/payslip-view.fxml"));
-//
-//                        Parent root = fxmlLoader.load();
-//                        Stage stage = new Stage();
-//                        stage.initModality(Modality.APPLICATION_MODAL);
-//                        stage.initStyle(StageStyle.UNDECORATED);
-//                        stage.setScene(new Scene(root));
-//                        stage.show();
-//
-//                        ViewMyPayslipController viewMyPayslipController = fxmlLoader.getController();
-//                        viewMyPayslipController.initPayslipId(payslip.getPayslipID());
-//
-//                    } catch (IOException | SQLException e) {
-//                        throw new RuntimeException(e);
-//                    }
+
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-payslips-view.fxml"));
+
+                    Parent root;
+                    try {
+                        root = fxmlLoader.load();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initStyle(StageStyle.DECORATED);
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Payslip Generated from " + payslip.getPayPeriodStart() + " to " + payslip.getPayPeriodEnd());
+                    stage.show();
+
+
+                    MyPayslipController payslipController = fxmlLoader.getController();
+                    payslipController.initEntirePayslip(
+                            payslip.getPayPeriodStart(),
+                            payslip.getPayPeriodEnd()
+                    );
                 });
 
                 Image viewIcon = new Image(getClass().getResourceAsStream("/img/view-icon.png"));

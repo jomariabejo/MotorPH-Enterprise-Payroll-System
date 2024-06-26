@@ -13,10 +13,7 @@ import com.jomariabejo.motorph.utility.DateUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class PayslipRepository {
@@ -111,7 +108,7 @@ public class PayslipRepository {
         }
     }
 
-    public ArrayList<Payslip> fetchPayslipByPayslipId(int employeeId) {
+    public ArrayList<Payslip> fetchPayslipByEmployeeId(int employeeId) {
         String query = "SELECT payslip_id, total_hours_worked, gross_income, net_income, pay_period_start, pay_period_end FROM payslip WHERE employee_id = ?";
         ArrayList<Payslip> myPayslips = new ArrayList<>();
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -261,6 +258,33 @@ public class PayslipRepository {
                 payslips.add(payslip);
             }
             return FXCollections.observableList(payslips);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ObservableList<Payslip> fetchPayslipBetweenPayStartAndPayEnd(Date payStartDate, Date payEndDate) {
+        String query = "SELECT payslip_id, total_hours_worked, gross_income, net_income, pay_period_start, pay_period_end FROM payslip WHERE pay_period_start = ? AND pay_period_end = ?";
+        ArrayList<Payslip> myPayslips = new ArrayList<>();
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDate(1, payStartDate);
+            preparedStatement.setDate(2, payEndDate);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                myPayslips.add(
+                        new Payslip(
+                                resultSet.getInt(1),
+                                resultSet.getBigDecimal(2).setScale(4),
+                                resultSet.getBigDecimal(3).setScale(4),
+                                resultSet.getBigDecimal(4).setScale(4),
+                                resultSet.getDate(5),
+                                resultSet.getDate(6)
+                        )
+                );
+            }
+            return FXCollections.observableList(myPayslips);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

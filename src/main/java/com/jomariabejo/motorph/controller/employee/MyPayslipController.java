@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 public class MyPayslipController {
@@ -63,7 +64,7 @@ public class MyPayslipController {
                         stage.setScene(new Scene(root));
                         stage.show();
 
-                        ViewMyPayslipController viewMyPayslipController = fxmlLoader.getController();
+                        ViewPayslipController viewMyPayslipController = fxmlLoader.getController();
                         viewMyPayslipController.initPayslipId(payslip.getPayslipID());
 
                     } catch (IOException e) {
@@ -108,6 +109,12 @@ public class MyPayslipController {
 
     public void initData(Integer myEmployeeId) {
         ObservableList observableList = FXCollections.observableList(payslipService.fetchPayslipByEmployeeId(myEmployeeId));
+        this.tv_my_payslips.setItems(observableList);
+        setUpTotalResult();
+    }
+
+    public void initEntirePayslip(Date payPeriodStart, Date payPeriodEnd) {
+        ObservableList observableList = FXCollections.observableList(payslipService.fetchPayslipBetweenPayStartDateAndPayEndDate(payPeriodStart,payPeriodEnd));
         this.tv_my_payslips.setItems(observableList);
         setUpTotalResult();
     }
