@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.employee.MyPayslipController">
+<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.finance.PayslipController">
     <children>
         <VBox layoutX="277.0" layoutY="130.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -29,26 +29,16 @@
                   <Region prefHeight="89.0" prefWidth="868.0" />
                     </children>
                 </HBox>
-            <TableView fx:id="tv_my_payslips" prefHeight="500.0" stylesheets="@../../../../css/custom/tableView.css" tableMenuButtonVisible="true">
+            <TableView fx:id="tv_employee_payslips" prefHeight="500.0" stylesheets="@../../../../css/custom/tableView.css" tableMenuButtonVisible="true">
                <columns>
-                  <TableColumn minWidth="175.0" prefWidth="155.19998931884766" text="Payslip Id">
-                     <cellValueFactory>
-                        <PropertyValueFactory property="payslipID" />
-                     </cellValueFactory>
-                  </TableColumn>
                   <TableColumn minWidth="175.0" prefWidth="155.19998931884766" text="Pay Period Start">
                      <cellValueFactory>
                         <PropertyValueFactory property="payPeriodStart" />
                      </cellValueFactory>
                   </TableColumn>
-                  <TableColumn minWidth="175.0" prefWidth="141.5999755859375" text="Pay Period End">
+                  <TableColumn minWidth="175.0" prefWidth="155.19998931884766" text="Pay Period End">
                      <cellValueFactory>
                         <PropertyValueFactory property="payPeriodEnd" />
-                     </cellValueFactory>
-                  </TableColumn>
-                  <TableColumn minWidth="175.0" prefWidth="120.00003051757812" text="Total Hours Worked">
-                     <cellValueFactory>
-                        <PropertyValueFactory property="totalHoursWorked" />
                      </cellValueFactory>
                   </TableColumn>
                   <TableColumn minWidth="175.0" prefWidth="111.19997864961624" text="Gross Income">

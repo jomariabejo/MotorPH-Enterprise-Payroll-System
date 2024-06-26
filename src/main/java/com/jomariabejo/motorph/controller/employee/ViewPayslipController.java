@@ -1,4 +1,4 @@
-package com.jomariabejo.motorph.controller.personalinformation;
+package com.jomariabejo.motorph.controller.employee;
 
 
 import com.jomariabejo.motorph.entity.Payslip;
@@ -10,11 +10,11 @@ import javafx.scene.control.TextField;
 
 import java.sql.SQLException;
 
-public class ViewMyPayslipController {
+public class ViewPayslipController {
 
     private PayslipService payslipService;
 
-    public ViewMyPayslipController() {
+    public ViewPayslipController() {
         this.payslipService = new PayslipService();
     }
 
@@ -96,7 +96,7 @@ public class ViewMyPayslipController {
     }
 
     public void initPayslipId(int payslipId) throws SQLException {
-        Payslip.PayslipViewer payslipViewer = payslipService.fetchPayslip(payslipId);
+        Payslip.PayslipViewer payslipViewer = payslipService.fetchPayslipBreakdown(payslipId);
 
         // Set text on labels
         tf_employee_id.setText(String.valueOf(payslipViewer.employeeId()));

@@ -8,19 +8,20 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class computePagIbigContributionTestForSalary1000To1500 {
+public class computePagIbigContributionTestForSalaryStructureOver1500 {
     private BigDecimal monthlyBasicSalary;
     private BigDecimal expectedPagibigComputation;
     private DeductionService deductionService;
 
     @BeforeEach
     void setUp() {
-        monthlyBasicSalary = new BigDecimal("1000.00");
-        expectedPagibigComputation = new BigDecimal("10.00"); // 1% Contribution
+        monthlyBasicSalary = new BigDecimal("2000.00");
+        expectedPagibigComputation = new BigDecimal("40.00"); // 2% Contribution
         deductionService = new DeductionService();
     }
     @Test
-    void pagibigComputationShouldBe10() {
-        assertEquals(expectedPagibigComputation, deductionService.deductPagIbig(monthlyBasicSalary), "The Pag-ibig computation for salaries between 1,000 to 1,500 meets the desired contribution outcome");
+    void pagibigComputationShouldBe40() {
+        assertEquals(expectedPagibigComputation, deductionService.deductPagIbig(monthlyBasicSalary), "The Pag-ibig computation for salaries over 1,500 accurately meets the desired contribution outcome.");
     }
 }
+

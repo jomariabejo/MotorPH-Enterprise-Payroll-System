@@ -8,14 +8,13 @@ import com.jomariabejo.motorph.entity.Tax;
 import com.jomariabejo.motorph.service.DeductionService;
 import com.jomariabejo.motorph.service.TaxCategoryService;
 import com.jomariabejo.motorph.service.TaxService;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.AutoIncrementUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class PayslipRepository {
@@ -110,7 +109,7 @@ public class PayslipRepository {
         }
     }
 
-    public ArrayList<Payslip> fetchPayslipByPayslipId(int employeeId) {
+    public ArrayList<Payslip> fetchPayslipByEmployeeId(int employeeId) {
         String query = "SELECT payslip_id, total_hours_worked, gross_income, net_income, pay_period_start, pay_period_end FROM payslip WHERE employee_id = ?";
         ArrayList<Payslip> myPayslips = new ArrayList<>();
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -238,4 +237,89 @@ public class PayslipRepository {
         }
         return null;
     }
+
+    public ObservableList<Payslip> fetchPayslipSummary() {
+        String query = "SELECT payslip.pay_period_start, \n" +
+                "       payslip.pay_period_end,\n" +
+                "       SUM(payslip.gross_income) AS total_gross_income,\n" +
+                "       SUM(payslip.net_income) AS total_net_income\n" +
+                "FROM payslip\n" +
+                "GROUP BY payslip.pay_period_start, payslip.pay_period_end\n";
+
+        try(Connection connection = DatabaseConnectionUtility.getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query)) {
+            ArrayList<Payslip> payslips = new ArrayList<>();
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Payslip payslip = new Payslip();
+                payslip.setPayPeriodStart(rs.getDate(1));
+                payslip.setPayPeriodEnd(rs.getDate(2));
+                payslip.setGrossIncome(rs.getBigDecimal(3));
+                payslip.setNetIncome(rs.getBigDecimal(4));
+                payslips.add(payslip);
+            }
+            return FXCollections.observableList(payslips);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ObservableList<Payslip> fetchPayslipBetweenPayStartAndPayEnd(Date payStartDate, Date payEndDate) {
+        String query = "SELECT payslip_id, total_hours_worked, gross_income, net_income, pay_period_start, pay_period_end FROM payslip WHERE pay_period_start = ? AND pay_period_end = ?";
+        ArrayList<Payslip> myPayslips = new ArrayList<>();
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDate(1, payStartDate);
+            preparedStatement.setDate(2, payEndDate);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                myPayslips.add(
+                        new Payslip(
+                                resultSet.getInt(1),
+                                resultSet.getBigDecimal(2).setScale(4),
+                                resultSet.getBigDecimal(3).setScale(4),
+                                resultSet.getBigDecimal(4).setScale(4),
+                                resultSet.getDate(5),
+                                resultSet.getDate(6)
+                        )
+                );
+            }
+            return FXCollections.observableList(myPayslips);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean checkIfCanCreatePayslipForPayPeriod(Date startPayDate, Date endPayDate) {
+        String query = "SELECT COUNT(*) FROM payslip " +
+                "WHERE (? BETWEEN pay_period_start AND pay_period_end " +
+                "OR ? BETWEEN pay_period_start AND pay_period_end " +
+                "OR pay_period_start BETWEEN ? AND ? " +
+                "OR pay_period_end BETWEEN ? AND ?)";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDate(1, startPayDate);
+            preparedStatement.setDate(2, endPayDate);
+            preparedStatement.setDate(3, startPayDate);
+            preparedStatement.setDate(4, endPayDate);
+            preparedStatement.setDate(5, startPayDate);
+            preparedStatement.setDate(6, endPayDate);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int payslipsCount = resultSet.getInt(1);
+                if (payslipsCount >= 0) {
+                    AlertUtility.showErrorAlert("Failed", "Pay period exist", "Pay period exist\\nThe pay period that you've inputted is already generated, please check on payslips");
+                }
+                return payslipsCount == 0; // Returns true if no overlapping payslip found
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error checking payslip overlap", e);
+        }
+
+        return true; // Default to true if an exception occurs
+    }
+
 }

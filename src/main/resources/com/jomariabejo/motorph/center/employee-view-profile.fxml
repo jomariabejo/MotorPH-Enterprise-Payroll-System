@@ -42,7 +42,7 @@
                                 </Label>
                                 <ImageView fx:id="image_path" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../../../../img/profilesample.jpg" />
+                                        <Image url="@../../../../img/profile.jpg" />
                                     </image>
                                 </ImageView>
                                 <HBox alignment="CENTER" spacing="8.0">

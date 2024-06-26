@@ -1,12 +1,8 @@
-package com.jomariabejo.motorph.controller.personalinformation;
+package com.jomariabejo.motorph.controller.finance;
 
-import com.jomariabejo.motorph.controller.hr.HRViewEmployeeProfile;
-import com.jomariabejo.motorph.entity.Employee;
+import com.jomariabejo.motorph.controller.employee.MyPayslipController;
 import com.jomariabejo.motorph.entity.Payslip;
 import com.jomariabejo.motorph.service.PayslipService;
-import com.jomariabejo.motorph.utility.AlertUtility;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -23,10 +19,10 @@ import javafx.stage.StageStyle;
 import java.io.IOException;
 import java.sql.SQLException;
 
-public class MyPayslipController {
+public class PayslipController {
     private PayslipService payslipService;
 
-    public MyPayslipController() {
+    public PayslipController() {
         this.payslipService = new PayslipService();
     }
 
@@ -34,12 +30,17 @@ public class MyPayslipController {
     private Label lbl_tv_total_result;
 
     @FXML
-    private TableView<Payslip> tv_my_payslips;
+    private TableView<Payslip> tv_employee_payslips;
 
     @FXML
     private void initialize() throws SQLException {
-        System.out.println("My payslip is displayed...");
         setUpTableView();
+        populateTableView();
+        setUpTotalResult();
+    }
+
+    private void populateTableView() {
+        this.tv_employee_payslips.setItems(payslipService.fetchPayslipSummary());
     }
 
     private void setUpTableView() throws SQLException {
@@ -57,24 +58,28 @@ public class MyPayslipController {
                 viewButton.setOnAction(event -> {
                     Payslip payslip = getTableView().getItems().get(getIndex());
 
+
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-payslips-view.fxml"));
+
+                    Parent root;
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/payslip-view.fxml"));
-
-                        Parent root = fxmlLoader.load();
-                        Stage stage = new Stage();
-                        stage.initModality(Modality.APPLICATION_MODAL);
-                        stage.initStyle(StageStyle.UNDECORATED);
-                        stage.setScene(new Scene(root));
-                        stage.show();
-
-                        ViewMyPayslipController viewMyPayslipController = fxmlLoader.getController();
-                        viewMyPayslipController.initPayslipId(payslip.getPayslipID());
-
+                        root = fxmlLoader.load();
                     } catch (IOException e) {
                         throw new RuntimeException(e);
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
                     }
+                    Stage stage = new Stage();
+                    stage.initModality(Modality.WINDOW_MODAL);
+                    stage.initStyle(StageStyle.DECORATED);
+                    stage.setScene(new Scene(root));
+                    stage.setTitle("Payslip Generated from " + payslip.getPayPeriodStart() + " to " + payslip.getPayPeriodEnd());
+                    stage.show();
+
+
+                    MyPayslipController payslipController = fxmlLoader.getController();
+                    payslipController.initEntirePayslip(
+                            payslip.getPayPeriodStart(),
+                            payslip.getPayPeriodEnd()
+                    );
                 });
 
                 Image viewIcon = new Image(getClass().getResourceAsStream("/img/view-icon.png"));
@@ -101,18 +106,12 @@ public class MyPayslipController {
                 }
             }
         });
-        this.tv_my_payslips.getColumns().add(actionsColumn);
+        this.tv_employee_payslips.getColumns().add(actionsColumn);
     }
 
 
     private void setUpTotalResult() {
-        int tblViewSize = tv_my_payslips.getItems().size();
+        int tblViewSize = tv_employee_payslips.getItems().size();
         this.lbl_tv_total_result.setText(String.valueOf(tblViewSize));
-    }
-
-    public void initData(Integer myEmployeeId) {
-        ObservableList observableList = FXCollections.observableList(payslipService.fetchPayslipByEmployeeId(myEmployeeId));
-        this.tv_my_payslips.setItems(observableList);
-        setUpTotalResult();
     }
 }

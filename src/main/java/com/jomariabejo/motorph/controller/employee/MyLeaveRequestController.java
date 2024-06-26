@@ -1,4 +1,4 @@
-package com.jomariabejo.motorph.controller.personalinformation;
+package com.jomariabejo.motorph.controller.employee;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.LeaveRequest;
@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.sql.*;
 
 public class MyLeaveRequestController {
+
     @FXML
     private Button buttonCheckLeaveCreditsEvent;
 

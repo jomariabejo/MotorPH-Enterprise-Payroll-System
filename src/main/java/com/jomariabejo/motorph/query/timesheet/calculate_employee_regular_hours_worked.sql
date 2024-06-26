@@ -1,7 +1,6 @@
 /*
 File: calculate_employee_regular_hours_worked.sql
 Description: Calculates the total regular hours worked by an employee within a given date range.
-Author: OpenAI ChatGPT
 Date Created: N/A
 Last Modified: May 4, 2024
 Version: 1.0

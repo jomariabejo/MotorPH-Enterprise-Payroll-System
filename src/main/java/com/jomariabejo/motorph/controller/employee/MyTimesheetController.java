@@ -1,12 +1,10 @@
-package com.jomariabejo.motorph.controller.personalinformation;
+package com.jomariabejo.motorph.controller.employee;
 
-import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.Timesheet;
 import com.jomariabejo.motorph.service.TimesheetService;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.DateConverter;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -15,12 +13,8 @@ import javafx.scene.control.TableView;
 
 import java.math.BigDecimal;
 import java.sql.*;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.TimeZone;
 
 public class MyTimesheetController {
     private final TimesheetService timesheetService;

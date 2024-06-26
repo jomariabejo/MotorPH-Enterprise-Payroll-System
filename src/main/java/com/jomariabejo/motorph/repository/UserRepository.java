@@ -150,9 +150,8 @@ public class UserRepository {
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             if (e.getMessage().contains("Duplicate entry")) {
-                AlertUtility.showErrorAlert("Duplicate Entry", "Employee has active user account","Employee have already user account ");
-            }
-            else {
+                AlertUtility.showErrorAlert("Duplicate Entry", "Employee has active user account", "Employee have already user account ");
+            } else {
                 throw new RuntimeException(e);
             }
         }
@@ -186,13 +185,13 @@ public class UserRepository {
     public boolean modifyUser(User user) {
         String query = "UPDATE user SET username = ?, PASSWORD = ?, employee_id = ?, role_id = ? WHERE user_id = ?";
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
 
-            pstmt.setString(1,user.getUsername());
-            pstmt.setString(2,user.getPassword());
-            pstmt.setInt(3,user.getEmployeeID());
-            pstmt.setInt(4,user.getRoleID());
+            pstmt.setString(1, user.getUsername());
+            pstmt.setString(2, user.getPassword());
+            pstmt.setInt(3, user.getEmployeeID());
+            pstmt.setInt(4, user.getRoleID());
             pstmt.setInt(5, user.getUserID());
 
             return pstmt.executeUpdate() == 1; // 1 means updated successfully
@@ -204,18 +203,20 @@ public class UserRepository {
     }
 
 
+    public boolean changePassword(int employeeId, String existingPassword, String newPassword) {
+        String query = "UPDATE user SET PASSWORD = ? WHERE user.employee_id = ? AND user.password = ?";
 
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
 
+            pstmt.setString(1, newPassword);
+            pstmt.setInt(2, employeeId);
+            pstmt.setString(3, existingPassword);
 
+            return pstmt.executeUpdate() == 1; // 1 means updated successfully
 
-
-
-
-
-
-
-
-
-
-
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

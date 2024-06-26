@@ -459,7 +459,7 @@ public class TimesheetRepository {
                 "            TIMEDIFF(TIME(t.time_out), '17:00:00')\n" +
                 "        ELSE '00:00:00' END AS overtime_hours_worked\n" +
                 "    FROM timesheet t\n" +
-                "    WHERE t.employee_id = ?\n";
+                "    WHERE t.employee_id = ?\n ORDER BY t.date DESC";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, employeeId);

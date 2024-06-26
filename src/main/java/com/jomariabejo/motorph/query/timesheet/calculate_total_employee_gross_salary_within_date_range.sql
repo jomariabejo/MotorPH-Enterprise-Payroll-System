@@ -1,7 +1,6 @@
 /*
 File: calculate_total_employee_gross_salary_within_date_range.sql
 Description: Calculates the total gross salary earned by all active employees within a given date range based on their hourly rate and hours worked.
-Author: OpenAI ChatGPT
 Date Created: N/A
 Last Modified: May 4, 2024
 Version: 1.1

@@ -32,9 +32,9 @@ CREATE TABLE IF NOT EXISTS `allowance` (
   PRIMARY KEY (`alw_id`),
   KEY `FK_allowance_employee` (`employee_id`),
   CONSTRAINT `FK_allowance_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.allowance: ~39 rows (approximately)
+-- Dumping data for table payroll_sys.allowance: ~34 rows (approximately)
 INSERT INTO `allowance` (`alw_id`, `clothing`, `rice`, `phone`, `total_amount`, `dateCreated`, `dateModified`, `employee_id`) VALUES
 	(3, 1500, 2000, 1000, 4500, '2024-04-19', '2024-04-19 09:08:29', 6),
 	(4, 1500, 2000, 1000, 4500, '2024-04-19', '2024-04-19 09:08:29', 7),
@@ -69,12 +69,14 @@ INSERT INTO `allowance` (`alw_id`, `clothing`, `rice`, `phone`, `total_amount`, 
 	(33, 1500, 500, 500, 2000, '2024-04-19', '2024-04-19 09:19:26', 36),
 	(34, 1500, 1000, 1000, 3500, '2024-04-19', '2024-04-19 09:23:43', 37),
 	(35, 1500, 1000, 1000, 3500, '2024-04-19', '2024-04-19 09:23:43', 38),
-	(36, 1500, 1000, 1000, 3500, '2024-04-19', '2024-04-19 09:23:43', 39);
+	(36, 1500, 1000, 1000, 3500, '2024-04-19', '2024-04-19 09:23:43', 39),
+	(43, 1000, 1000, 1000, 3000, '2024-06-05', '2024-06-05 19:44:54', 52),
+	(44, 500, 500, 500, 1500, '2024-06-21', '2024-06-21 13:31:40', 53);
 
 -- Dumping structure for table payroll_sys.deduction
 CREATE TABLE IF NOT EXISTS `deduction` (
   `deduction_id` int NOT NULL AUTO_INCREMENT,
-  `employee_id` int NOT NULL,
+  `employee_id` int DEFAULT NULL,
   `sss` decimal(20,2) NOT NULL,
   `philhealth` decimal(20,2) NOT NULL,
   `pagibig` decimal(20,2) NOT NULL,
@@ -83,41 +85,42 @@ CREATE TABLE IF NOT EXISTS `deduction` (
   PRIMARY KEY (`deduction_id`),
   KEY `FK__employee` (`employee_id`),
   CONSTRAINT `FK__employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.deduction: ~60 rows (approximately)
+-- Dumping data for table payroll_sys.deduction: ~32 rows (approximately)
 INSERT INTO `deduction` (`deduction_id`, `employee_id`, `sss`, `philhealth`, `pagibig`, `total_contribution`, `date_created`) VALUES
-	(1, 6, 1125.00, 900.00, 100.00, 2125.00, '2024-05-21'),
-	(2, 7, 1125.00, 900.00, 100.00, 2125.00, '2024-05-21'),
-	(3, 8, 1125.00, 900.00, 100.00, 2125.00, '2024-05-21'),
-	(4, 9, 1125.00, 900.00, 100.00, 2125.00, '2024-05-21'),
-	(5, 10, 1125.00, 790.05, 100.00, 2015.05, '2024-05-21'),
-	(6, 11, 1125.00, 790.05, 100.00, 2015.05, '2024-05-21'),
-	(7, 12, 1125.00, 644.63, 100.00, 1869.63, '2024-05-21'),
-	(8, 13, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21'),
-	(9, 14, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21'),
-	(10, 15, 1125.00, 790.05, 100.00, 2015.05, '2024-05-21'),
-	(11, 16, 1125.00, 762.38, 100.00, 1987.38, '2024-05-21'),
-	(12, 17, 1125.00, 577.13, 100.00, 1802.13, '2024-05-21'),
-	(13, 18, 1125.00, 360.00, 100.00, 1585.00, '2024-05-21'),
-	(14, 19, 1125.00, 360.00, 100.00, 1585.00, '2024-05-21'),
-	(15, 20, 1125.00, 802.50, 100.00, 2027.50, '2024-05-21'),
-	(16, 21, 1125.00, 644.63, 100.00, 1869.63, '2024-05-21'),
-	(17, 22, 1125.00, 627.75, 100.00, 1852.75, '2024-05-21'),
-	(18, 23, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21'),
-	(19, 24, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21'),
-	(20, 25, 1125.00, 348.75, 100.00, 1573.75, '2024-05-21'),
-	(21, 26, 1125.00, 348.75, 100.00, 1573.75, '2024-05-21'),
-	(22, 27, 1125.00, 360.00, 100.00, 1585.00, '2024-05-21'),
-	(23, 28, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21'),
-	(24, 29, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21'),
-	(25, 30, 1125.00, 360.00, 100.00, 1585.00, '2024-05-21'),
-	(26, 31, 1125.00, 371.25, 100.00, 1596.25, '2024-05-21'),
-	(27, 32, 1125.00, 371.25, 100.00, 1596.25, '2024-05-21'),
-	(28, 33, 1125.00, 360.00, 100.00, 1585.00, '2024-05-21'),
-	(29, 34, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21'),
-	(30, 35, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21'),
-	(31, 36, 1125.00, 337.50, 100.00, 1562.50, '2024-05-21');
+	(1, 6, 1125.00, 900.00, 100.00, 2125.00, '2024-06-26'),
+	(2, 7, 1125.00, 900.00, 100.00, 2125.00, '2024-06-26'),
+	(3, 8, 1125.00, 900.00, 100.00, 2125.00, '2024-06-26'),
+	(4, 9, 1125.00, 900.00, 100.00, 2125.00, '2024-06-26'),
+	(5, 10, 1125.00, 790.05, 100.00, 2015.05, '2024-06-26'),
+	(6, 11, 1125.00, 790.05, 100.00, 2015.05, '2024-06-26'),
+	(7, 12, 1125.00, 644.63, 100.00, 1869.63, '2024-06-26'),
+	(8, 13, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(9, 14, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(10, 15, 1125.00, 790.05, 100.00, 2015.05, '2024-06-26'),
+	(11, 16, 1125.00, 762.38, 100.00, 1987.38, '2024-06-26'),
+	(12, 17, 1125.00, 577.13, 100.00, 1802.13, '2024-06-26'),
+	(13, 18, 1125.00, 360.00, 100.00, 1585.00, '2024-06-26'),
+	(14, 19, 1125.00, 360.00, 100.00, 1585.00, '2024-06-26'),
+	(15, 20, 1125.00, 802.50, 100.00, 2027.50, '2024-06-26'),
+	(16, 21, 1125.00, 644.63, 100.00, 1869.63, '2024-06-26'),
+	(17, 22, 1125.00, 627.75, 100.00, 1852.75, '2024-06-26'),
+	(18, 23, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(19, 24, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(20, 25, 1125.00, 348.75, 100.00, 1573.75, '2024-06-26'),
+	(21, 26, 1125.00, 348.75, 100.00, 1573.75, '2024-06-26'),
+	(22, 27, 1125.00, 360.00, 100.00, 1585.00, '2024-06-26'),
+	(23, 28, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(24, 29, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(25, 30, 1125.00, 360.00, 100.00, 1585.00, '2024-06-26'),
+	(26, 31, 1125.00, 371.25, 100.00, 1596.25, '2024-06-26'),
+	(27, 32, 1125.00, 371.25, 100.00, 1596.25, '2024-06-26'),
+	(28, 33, 1125.00, 360.00, 100.00, 1585.00, '2024-06-26'),
+	(29, 34, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(30, 35, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(31, 36, 1125.00, 337.50, 100.00, 1562.50, '2024-06-26'),
+	(32, 52, 135.00, 750.00, 11.37, 896.37, '2024-06-26');
 
 -- Dumping structure for table payroll_sys.department
 CREATE TABLE IF NOT EXISTS `department` (
@@ -138,6 +141,16 @@ INSERT INTO `department` (`dept_id`, `name`, `description`, `date_created`) VALU
 	(6, 'Supply Chain and Logistics', 'Supply Chain and Logistics', '2024-03-30'),
 	(7, 'Customer Service', 'Customer Service and Relations', '2024-03-30'),
 	(8, 'Finance', 'Payroll Manager\r\nPayroll Team Leader\r\nPayroll Rank and File', '2024-04-07');
+
+-- Dumping structure for view payroll_sys.department_monthly_payroll_report
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `department_monthly_payroll_report` (
+	`department` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`month` INT(10) NULL,
+	`employee_count` BIGINT(19) NOT NULL,
+	`total_gross_income` DECIMAL(42,6) NULL,
+	`total_net_income` DECIMAL(42,6) NULL
+) ENGINE=MyISAM;
 
 -- Dumping structure for table payroll_sys.employee
 CREATE TABLE IF NOT EXISTS `employee` (
@@ -166,11 +179,11 @@ CREATE TABLE IF NOT EXISTS `employee` (
   KEY `FK_employee_position` (`position_id`),
   CONSTRAINT `FK_employee_department` FOREIGN KEY (`dept_id`) REFERENCES `department` (`dept_id`),
   CONSTRAINT `FK_employee_position` FOREIGN KEY (`position_id`) REFERENCES `position` (`position_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=54 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.employee: ~37 rows (approximately)
+-- Dumping data for table payroll_sys.employee: ~34 rows (approximately)
 INSERT INTO `employee` (`employee_id`, `first_name`, `last_name`, `birthday`, `address`, `contact_number`, `status`, `date_hired`, `position_id`, `supervisor`, `dept_id`, `sss`, `philhealth`, `pagibig`, `tin`, `basic_salary`, `gross_semi_monthly_rate`, `hourly_rate`, `isActive`, `profile_img`) VALUES
-	(6, 'Manuel IIIV', 'Garcia', '1983-10-11', 'Valero Carpark Building Valero Street 1227, Makati City', '966-860-270', 'Regular', '2020-02-01', 1, 'N/A', 1, '44-4506057-3', '820126853951', '691295330870', '442-605-657-000', 90000.00, 45000.00, 535.71, b'1', NULL),
+	(6, 'Manuel IIIV', 'Garcia', '1983-10-11', 'Valero Carpark Building Valero Street 1227, Makati City', '966-860-270', 'Regular', NULL, 2, 'N/A', 2, '44-4506057-3', '820126853951', '691295330870', '442-605-657-000', 90000.00, 45000.00, 535.71, b'1', NULL),
 	(7, 'Antonio James', 'Lim', '1988-06-18', 'San Antonio De Padua 2, Block 1 Lot 8 and 2, Dasmarinas, Cavite', '171-867-411', 'Regular', '2020-02-01', 2, 'Garcia, Manuel |||', 1, '52-2061274-9', '331735646338', '663904995411', '683-102-776-000', 60000.00, 30000.00, 357.14, b'1', NULL),
 	(8, 'Bianca Sofia', 'Aquino', '1989-08-04', 'Rm. 402 4/F Jiao Building Timog Avenue Cor. Quezon Avenue 1100, Quezon City', '966-889-370', 'Regular', '2020-02-01', 3, 'Garcia, Manuel |||', 1, '30-8870406-2', '177451189665', '171519773969', '971-711-280-000', 60000.00, 30000.00, 357.14, b'1', NULL),
 	(9, 'Isabella', 'Reyes', '1994-06-16', '460 Solanda Street Intramuros 1000, Manila', '786-868-477', 'Regular', '2020-02-01', 4, 'Garcia, Manuel |||', 1, '40-2511815-0', '341911411254', '416946776041', '876-809-437-000', 60000.00, 30000.00, 357.14, b'1', NULL),
@@ -203,11 +216,23 @@ INSERT INTO `employee` (`employee_id`, `first_name`, `last_name`, `birthday`, `a
 	(36, 'Delia ', 'Aguilar', '1989-01-27', '95 Cremin Junction, Surallah 2809 Cotabato', '529-705-439', 'Probationary', '2020-02-01', 15, 'De Leon, Selena', 4, '52-1859253-1', '136451303068', '110018813465', '599-312-588-000', 22500.00, 11250.00, 133.93, b'1', NULL),
 	(37, 'John Rafael', 'Castro', '1992-02-09', 'Hi-way, Yati, Liloan Cebu', '332-424-955 ', 'Regular', '2020-02-01', 16, 'Reyes, Isabella', 5, '26-7145133-4', '601644902402', '697764069311', '404-768-309-000', 52670.00, 26335.00, 313.51, b'1', NULL),
 	(38, 'Carlos Ian', 'Martinez', '1990-11-16', 'Bulala, Camalaniugan', '078-854-208', 'Regular', '2020-02-01', 17, 'Reyes, Isabella', 6, '11-5062972-7', '380685387212', '993372963726', '256-436-296-000', 52670.00, 26335.00, 313.51, b'1', NULL),
-	(39, 'Beatriz', 'Santos', '1990-08-07', 'Agapita Building, Metro Manila', '526-639-511', 'Regular', '2020-02-01', 18, 'Reyes, Isabella', 7, '20-2987501-5', '918460050077', '874042259378', '911-529-713-000', 52670.00, 26335.00, 313.51, b'1', NULL);
+	(39, 'Beatriz', 'Santos', '1990-08-07', 'Agapita Building, Metro Manila', '526-639-511', 'Regular', '2020-02-01', 18, 'Reyes, Isabella', 7, '20-2987501-5', '918460050077', '874042259378', '911-529-713-000', 52670.00, 26335.00, 313.51, b'1', NULL),
+	(51, 'John', 'Doe', '1990-05-15', '123 Main St, Anytown', '123-456-7890', 'Regular', '2024-06-05', 1, 'Jane Smith', 1, '123-456-789', '123-456-789', '123-456-789', '123-456-789', 50000.00, 25000.00, 20.00, b'1', NULL),
+	(52, 'Lawrence', 'Sample', '0008-10-21', 'asdf', 'asdf', 'Regular', NULL, 6, 'N/A', 1, '1234', '1234', '1234', '1234', 50000.00, 25000.00, 100.00, b'1', NULL),
+	(53, 'Test First Name', 'Test Last Name', '2001-09-22', '25', '25', 'Regular', NULL, 2, 'n/a', 2, '1', '1', '1', '1', 50000.00, 25000.00, 100.00, b'0', NULL);
 
--- Dumping structure for view payroll_sys.employee_pay_period_monthly_hours_worked
+-- Dumping structure for view payroll_sys.employee_allowance_cost
 -- Creating temporary table to overcome VIEW dependency errors
-CREATE TABLE `employee_pay_period_monthly_hours_worked` (
+CREATE TABLE `employee_allowance_cost` (
+	`SUM(clothing)` DECIMAL(32,0) NULL,
+	`SUM(rice)` DECIMAL(32,0) NULL,
+	`SUM(phone)` DECIMAL(32,0) NULL,
+	`TOTAL_ALLOWANCE` DECIMAL(32,0) NULL
+) ENGINE=MyISAM;
+
+-- Dumping structure for view payroll_sys.employee_monthly_hours_worked
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `employee_monthly_hours_worked` (
 	`employee_id` INT(10) NULL,
 	`pay_month_period` VARCHAR(7) NULL COLLATE 'utf8mb4_0900_ai_ci',
 	`total_hours_worked` TIME NULL
@@ -240,12 +265,16 @@ CREATE TABLE IF NOT EXISTS `leave_request` (
   KEY `FK_leave_request_employee` (`employee_id`),
   CONSTRAINT `FK_leave_request_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `FK_leave_request_leave_request_category` FOREIGN KEY (`leave_request_category_id`) REFERENCES `leave_request_category` (`leave_req_cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.leave_request: ~2 rows (approximately)
+-- Dumping data for table payroll_sys.leave_request: ~3 rows (approximately)
 INSERT INTO `leave_request` (`leave_request_id`, `employee_id`, `leave_request_category_id`, `start_date`, `end_date`, `date_created`, `reason`, `status`) VALUES
-	(9, 6, 1, '2024-05-20', '2024-05-24', '2024-05-20 07:16:53', 'I\'m feeling unwell and will be taking a sick leave for the specefied date, but will be reachable via email if needed.', 'Approved'),
-	(10, 8, 3, '2024-05-01', '2024-05-05', '2024-05-20 07:18:01', 'I\'ll be on vacation from May 01,2024 to May 05,2024, and will have limited access to email during this time.', 'Disapproved');
+	(2, 30, 1, '2024-06-13', '2024-06-15', '2024-06-12 16:00:00', 'i want to leave', 'Approved'),
+	(3, 30, 1, '2024-06-18', '2024-06-21', '2024-06-12 16:00:00', 'i want to leave', 'Approved'),
+	(7, 34, 1, '2024-07-01', '2024-07-05', '2024-06-21 16:00:00', '', 'Approved'),
+	(13, 25, 1, '2024-06-22', '2024-06-27', '2024-06-21 16:00:00', '', 'Approved'),
+	(14, 6, 3, '2024-06-23', '2024-06-29', '2024-06-22 16:00:00', '', 'Approved'),
+	(15, 6, 2, '2024-07-01', '2024-07-01', '2024-06-24 16:00:00', '', 'Pending');
 
 -- Dumping structure for table payroll_sys.leave_request_category
 CREATE TABLE IF NOT EXISTS `leave_request_category` (
@@ -262,13 +291,24 @@ INSERT INTO `leave_request_category` (`leave_req_cat_id`, `categoryName`, `descr
 	(2, 'EMERGENCY', 'EMERGENCY LEAVE', 5),
 	(3, 'VACATION', 'VACATION LEAVE', 10);
 
+-- Dumping structure for view payroll_sys.monthly_payroll_report
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `monthly_payroll_report` (
+	`MONTH` INT(10) NULL,
+	`BENEFITS` DECIMAL(32,0) NULL,
+	`GROSS_INCOME` DECIMAL(42,6) NULL,
+	`NET_INCOME` DECIMAL(42,6) NULL,
+	`DEDUCTION_CTB` DECIMAL(42,2) NULL,
+	`WITHHELD_TAX` DECIMAL(42,6) NULL
+) ENGINE=MyISAM;
+
 -- Dumping structure for table payroll_sys.payslip
 CREATE TABLE IF NOT EXISTS `payslip` (
   `payslip_id` int NOT NULL AUTO_INCREMENT,
-  `employee_id` int NOT NULL,
-  `alw_id` int NOT NULL,
-  `deduction_id` int NOT NULL,
-  `tax_id` int NOT NULL,
+  `employee_id` int DEFAULT NULL,
+  `alw_id` int DEFAULT NULL,
+  `deduction_id` int DEFAULT NULL,
+  `tax_id` int DEFAULT NULL,
   `pay_period_start` date NOT NULL,
   `pay_period_end` date NOT NULL,
   `total_hours_worked` decimal(20,6) NOT NULL DEFAULT '0.000000',
@@ -284,41 +324,42 @@ CREATE TABLE IF NOT EXISTS `payslip` (
   CONSTRAINT `FK_payslip_deduction` FOREIGN KEY (`deduction_id`) REFERENCES `deduction` (`deduction_id`),
   CONSTRAINT `FK_payslip_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `FK_payslip_tax` FOREIGN KEY (`tax_id`) REFERENCES `tax` (`tax_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.payslip: ~30 rows (approximately)
+-- Dumping data for table payroll_sys.payslip: ~32 rows (approximately)
 INSERT INTO `payslip` (`payslip_id`, `employee_id`, `alw_id`, `deduction_id`, `tax_id`, `pay_period_start`, `pay_period_end`, `total_hours_worked`, `gross_income`, `net_income`, `date_created`) VALUES
-	(1, 6, 3, 1, 1, '2024-05-01', '2024-05-31', 209.383100, 112168.620000, 90697.630000, '2024-05-21'),
-	(2, 7, 4, 2, 2, '2024-05-01', '2024-05-31', 217.633200, 77725.530000, 65587.470000, '2024-05-21'),
-	(3, 8, 5, 3, 3, '2024-05-01', '2024-05-31', 221.483500, 79100.620000, 66550.030000, '2024-05-21'),
-	(4, 9, 6, 4, 4, '2024-05-01', '2024-05-31', 222.933100, 79618.320000, 66512.420000, '2024-05-21'),
-	(5, 10, 7, 5, 5, '2024-05-01', '2024-05-31', 224.233300, 70299.380000, 59466.130000, '2024-05-21'),
-	(6, 11, 8, 6, 6, '2024-05-01', '2024-05-31', 217.450200, 68172.810000, 57951.570000, '2024-05-21'),
-	(7, 12, 9, 7, 7, '2024-05-01', '2024-05-31', 203.500000, 52055.300000, 46972.500000, '2024-05-21'),
-	(8, 13, 10, 8, 8, '2024-05-01', '2024-05-31', 214.433400, 28719.070000, 29391.860000, '2024-05-21'),
-	(9, 14, 11, 9, 9, '2024-05-01', '2024-05-31', 214.133200, 28678.860000, 28959.690000, '2024-05-21'),
-	(10, 15, 12, 10, 10, '2024-05-01', '2024-05-31', 213.383200, 66897.770000, 56995.290000, '2024-05-21'),
-	(11, 16, 13, 11, 11, '2024-05-01', '2024-05-31', 216.966600, 77487.450000, 64517.150000, '2024-05-21'),
-	(12, 17, 14, 12, 12, '2024-05-01', '2024-05-31', 213.366700, 76201.780000, 64746.850000, '2024-05-21'),
-	(13, 18, 15, 13, 13, '2024-05-01', '2024-05-31', 226.966500, 81058.810000, 67898.770000, '2024-05-21'),
-	(14, 19, 16, 14, 14, '2024-05-01', '2024-05-31', 211.416400, 66281.150000, 57455.360000, '2024-05-21'),
-	(15, 20, 17, 15, 15, '2024-05-01', '2024-05-31', 211.799800, 66401.360000, 56613.640000, '2024-05-21'),
-	(16, 21, 18, 16, 16, '2024-05-01', '2024-05-31', 212.983300, 54481.130000, 47791.870000, '2024-05-21'),
-	(17, 22, 19, 17, 17, '2024-05-01', '2024-05-31', 222.400200, 55402.110000, 48495.270000, '2024-05-21'),
-	(18, 23, 20, 18, 18, '2024-05-01', '2024-05-31', 221.450000, 29658.800000, 29143.640000, '2024-05-21'),
-	(19, 24, 21, 19, 19, '2024-05-01', '2024-05-31', 219.516800, 29399.890000, 28936.510000, '2024-05-21'),
-	(20, 25, 23, 20, 20, '2024-05-01', '2024-05-31', 224.350100, 31047.810000, 30245.850000, '2024-05-21'),
-	(21, 26, 22, 21, 21, '2024-05-01', '2024-05-31', 214.450200, 29677.770000, 29149.820000, '2024-05-21'),
-	(22, 27, 24, 22, 22, '2024-05-01', '2024-05-31', 209.283100, 29898.180000, 29317.140000, '2024-05-21'),
-	(23, 28, 25, 23, 23, '2024-05-01', '2024-05-31', 222.567000, 29808.400000, 29263.320000, '2024-05-21'),
-	(24, 29, 26, 24, 24, '2024-05-01', '2024-05-31', 219.300100, 29370.860000, 28913.290000, '2024-05-21'),
-	(25, 30, 27, 25, 25, '2024-05-01', '2024-05-31', 213.049800, 30436.300000, 29747.640000, '2024-05-21'),
-	(26, 31, 28, 26, 26, '2024-05-01', '2024-05-31', 210.550100, 31018.240000, 30204.190000, '2024-05-21'),
-	(27, 32, 29, 27, 27, '2024-05-01', '2024-05-31', 207.399800, 30554.140000, 29832.910000, '2024-05-21'),
-	(28, 33, 30, 28, 28, '2024-05-01', '2024-05-31', 215.766700, 30824.430000, 30058.140000, '2024-05-21'),
-	(29, 34, 31, 29, 29, '2024-05-01', '2024-05-31', 217.283500, 29100.780000, 29697.220000, '2024-05-21'),
-	(30, 35, 32, 30, 30, '2024-05-01', '2024-05-31', 214.299700, 28701.160000, 29377.530000, '2024-05-21'),
-	(31, 36, 33, 31, 31, '2024-05-01', '2024-05-31', 208.300400, 27897.670000, 28734.740000, '2024-05-21');
+	(1, 6, 3, 1, 1, '2024-06-01', '2024-06-30', 173.517200, 92954.900000, 77248.030000, '2024-06-26'),
+	(2, 7, 4, 2, 2, '2024-06-01', '2024-06-30', 205.783200, 73493.410000, 63624.990000, '2024-06-26'),
+	(3, 8, 5, 3, 3, '2024-06-01', '2024-06-30', 220.950000, 78910.090000, 67416.660000, '2024-06-26'),
+	(4, 9, 6, 4, 4, '2024-06-01', '2024-06-30', 211.583300, 75564.860000, 65075.000000, '2024-06-26'),
+	(5, 10, 7, 5, 5, '2024-06-01', '2024-06-30', 203.749800, 63877.600000, 55730.160000, '2024-06-26'),
+	(6, 11, 8, 6, 6, '2024-06-01', '2024-06-30', 216.916500, 68005.500000, 58826.090000, '2024-06-26'),
+	(7, 12, 9, 7, 7, '2024-06-01', '2024-06-30', 207.850100, 53168.050000, 47407.060000, '2024-06-26'),
+	(8, 13, 10, 8, 8, '2024-06-01', '2024-06-30', 216.249800, 28962.330000, 28586.460000, '2024-06-26'),
+	(9, 14, 11, 9, 9, '2024-06-01', '2024-06-30', 208.900000, 27977.970000, 27798.980000, '2024-06-26'),
+	(10, 15, 12, 10, 10, '2024-06-01', '2024-06-30', 205.233500, 64342.760000, 56079.030000, '2024-06-26'),
+	(11, 16, 13, 11, 11, '2024-06-01', '2024-06-30', 206.983400, 73922.050000, 63021.370000, '2024-06-26'),
+	(12, 17, 14, 12, 12, '2024-06-01', '2024-06-30', 211.050100, 75374.430000, 63767.710000, '2024-06-26'),
+	(13, 18, 15, 13, 13, '2024-06-01', '2024-06-30', 209.699900, 74892.220000, 62982.150000, '2024-06-26'),
+	(14, 19, 16, 14, 14, '2024-06-01', '2024-06-30', 210.366800, 65952.100000, 56608.570000, '2024-06-26'),
+	(15, 20, 17, 15, 15, '2024-06-01', '2024-06-30', 204.983100, 64264.250000, 56010.810000, '2024-06-26'),
+	(16, 21, 18, 16, 16, '2024-06-01', '2024-06-30', 213.250000, 54549.350000, 48443.040000, '2024-06-26'),
+	(17, 22, 19, 17, 17, '2024-06-01', '2024-06-30', 217.483300, 54177.270000, 48176.640000, '2024-06-26'),
+	(18, 23, 20, 18, 18, '2024-06-01', '2024-06-30', 198.899900, 26638.660000, 26727.530000, '2024-06-26'),
+	(19, 24, 21, 19, 19, '2024-06-01', '2024-06-30', 204.650300, 27408.810000, 27343.650000, '2024-06-26'),
+	(20, 25, 23, 20, 20, '2024-06-01', '2024-06-30', 207.399800, 28702.060000, 28369.250000, '2024-06-26'),
+	(21, 26, 22, 21, 21, '2024-06-01', '2024-06-30', 223.199600, 30888.600000, 30118.480000, '2024-06-26'),
+	(22, 27, 24, 22, 22, '2024-06-01', '2024-06-30', 203.849900, 29122.000000, 28696.200000, '2024-06-26'),
+	(23, 28, 25, 23, 23, '2024-06-01', '2024-06-30', 209.366700, 28040.480000, 27848.980000, '2024-06-26'),
+	(24, 29, 26, 24, 24, '2024-06-01', '2024-06-30', 207.000300, 27723.550000, 27595.440000, '2024-06-26'),
+	(25, 30, 27, 25, 25, '2024-06-01', '2024-06-30', 199.299900, 28471.980000, 28176.180000, '2024-06-26'),
+	(26, 31, 28, 26, 26, '2024-06-01', '2024-06-30', 212.650200, 31327.630000, 30451.700000, '2024-06-26'),
+	(27, 32, 29, 27, 27, '2024-06-01', '2024-06-30', 201.916700, 29746.370000, 29186.700000, '2024-06-26'),
+	(28, 33, 30, 28, 28, '2024-06-01', '2024-06-30', 209.716900, 29960.150000, 29366.720000, '2024-06-26'),
+	(29, 34, 31, 29, 29, '2024-06-01', '2024-06-30', 217.233200, 29094.050000, 28691.840000, '2024-06-26'),
+	(30, 35, 32, 30, 30, '2024-06-01', '2024-06-30', 205.933400, 27580.660000, 27481.130000, '2024-06-26'),
+	(31, 36, 33, 31, 31, '2024-06-01', '2024-06-30', 215.466600, 28857.440000, 28502.550000, '2024-06-26'),
+	(32, 52, 43, 32, 32, '2024-06-01', '2024-06-30', 11.366700, 1136.670000, 3240.300000, '2024-06-26');
 
 -- Dumping structure for table payroll_sys.permission
 CREATE TABLE IF NOT EXISTS `permission` (
@@ -381,7 +422,7 @@ CREATE TABLE IF NOT EXISTS `role` (
   CONSTRAINT `FK_role_permission` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`permission_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.role: ~5 rows (approximately)
+-- Dumping data for table payroll_sys.role: ~6 rows (approximately)
 INSERT INTO `role` (`role_id`, `name`, `description`, `permission_id`) VALUES
 	(3, 'Employee', 'Employee Access Level', 2),
 	(5, 'HR Administrator', 'Manage employee record and manages employee leave requests', 1),
@@ -394,48 +435,49 @@ INSERT INTO `role` (`role_id`, `name`, `description`, `permission_id`) VALUES
 CREATE TABLE IF NOT EXISTS `tax` (
   `tax_id` int NOT NULL AUTO_INCREMENT,
   `taxable_income` decimal(20,6) NOT NULL,
-  `tax_cat_id` int NOT NULL DEFAULT '0',
-  `withheld_tax` int NOT NULL,
-  `employee_id` int NOT NULL,
+  `tax_cat_id` int DEFAULT '0',
+  `withheld_tax` decimal(20,6) NOT NULL DEFAULT '0.000000',
+  `employee_id` int DEFAULT NULL,
   `date_created` date NOT NULL,
   PRIMARY KEY (`tax_id`),
   KEY `FK_tax_employee` (`employee_id`),
   CONSTRAINT `FK_tax_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.tax: ~60 rows (approximately)
+-- Dumping data for table payroll_sys.tax: ~32 rows (approximately)
 INSERT INTO `tax` (`tax_id`, `taxable_income`, `tax_cat_id`, `withheld_tax`, `employee_id`, `date_created`) VALUES
-	(1, 23845.990000, 4, 23846, 6, '2024-05-21'),
-	(2, 13513.060000, 4, 13513, 7, '2024-05-21'),
-	(3, 13925.590000, 4, 13926, 8, '2024-05-21'),
-	(4, 14080.900000, 4, 14081, 9, '2024-05-21'),
-	(5, 11318.200000, 4, 11318, 10, '2024-05-21'),
-	(6, 10706.190000, 4, 10706, 11, '2024-05-21'),
-	(7, 6713.170000, 3, 6713, 12, '2024-05-21'),
-	(8, 1264.710000, 2, 1265, 13, '2024-05-21'),
-	(9, 1256.670000, 2, 1257, 14, '2024-05-21'),
-	(10, 10387.430000, 4, 10387, 15, '2024-05-21'),
-	(11, 13482.920000, 4, 13483, 16, '2024-05-21'),
-	(12, 13152.800000, 4, 13153, 17, '2024-05-21'),
-	(13, 14675.040000, 4, 14675, 18, '2024-05-21'),
-	(14, 10340.790000, 3, 10341, 19, '2024-05-21'),
-	(15, 10260.220000, 3, 10260, 20, '2024-05-21'),
-	(16, 7319.630000, 3, 7320, 21, '2024-05-21'),
-	(17, 7554.090000, 3, 7554, 22, '2024-05-21'),
-	(18, 1452.660000, 2, 1453, 23, '2024-05-21'),
-	(19, 1400.880000, 2, 1401, 24, '2024-05-21'),
-	(20, 1728.210000, 2, 1728, 25, '2024-05-21'),
-	(21, 1454.200000, 2, 1454, 26, '2024-05-21'),
-	(22, 1496.040000, 2, 1496, 27, '2024-05-21'),
-	(23, 1482.580000, 2, 1483, 28, '2024-05-21'),
-	(24, 1395.070000, 2, 1395, 29, '2024-05-21'),
-	(25, 1603.660000, 2, 1604, 30, '2024-05-21'),
-	(26, 1717.800000, 2, 1718, 31, '2024-05-21'),
-	(27, 1624.980000, 2, 1625, 32, '2024-05-21'),
-	(28, 1681.290000, 2, 1681, 33, '2024-05-21'),
-	(29, 1341.060000, 2, 1341, 34, '2024-05-21'),
-	(30, 1261.130000, 2, 1261, 35, '2024-05-21'),
-	(31, 1100.430000, 2, 1100, 36, '2024-05-21');
+	(1, 90829.900000, 1, 18081.870000, 6, '2024-06-26'),
+	(2, 71368.410000, 1, 12243.420000, 7, '2024-06-26'),
+	(3, 76785.090000, 1, 13868.430000, 8, '2024-06-26'),
+	(4, 73439.860000, 1, 12864.860000, 9, '2024-06-26'),
+	(5, 61862.550000, 1, 9632.390000, 10, '2024-06-26'),
+	(6, 65990.450000, 1, 10664.360000, 11, '2024-06-26'),
+	(7, 51298.420000, 1, 6991.360000, 12, '2024-06-26'),
+	(8, 27399.830000, 1, 1313.370000, 13, '2024-06-26'),
+	(9, 26415.470000, 1, 1116.490000, 14, '2024-06-26'),
+	(10, 62327.710000, 1, 9748.680000, 15, '2024-06-26'),
+	(11, 71934.670000, 1, 12413.300000, 16, '2024-06-26'),
+	(12, 73572.300000, 1, 12904.590000, 17, '2024-06-26'),
+	(13, 73307.220000, 1, 12825.070000, 18, '2024-06-26'),
+	(14, 64367.100000, 1, 10258.530000, 19, '2024-06-26'),
+	(15, 62236.750000, 1, 9725.940000, 20, '2024-06-26'),
+	(16, 52679.720000, 1, 7336.680000, 21, '2024-06-26'),
+	(17, 52324.520000, 1, 7247.880000, 22, '2024-06-26'),
+	(18, 25076.160000, 1, 848.630000, 23, '2024-06-26'),
+	(19, 25846.310000, 1, 1002.660000, 24, '2024-06-26'),
+	(20, 27128.310000, 1, 1259.060000, 25, '2024-06-26'),
+	(21, 29314.850000, 1, 1696.370000, 26, '2024-06-26'),
+	(22, 27537.000000, 1, 1340.800000, 27, '2024-06-26'),
+	(23, 26477.980000, 1, 1129.000000, 28, '2024-06-26'),
+	(24, 26161.050000, 1, 1065.610000, 29, '2024-06-26'),
+	(25, 26886.980000, 1, 1210.800000, 30, '2024-06-26'),
+	(26, 29731.380000, 1, 1779.680000, 31, '2024-06-26'),
+	(27, 28150.120000, 1, 1463.420000, 32, '2024-06-26'),
+	(28, 28375.150000, 1, 1508.430000, 33, '2024-06-26'),
+	(29, 27531.550000, 1, 1339.710000, 34, '2024-06-26'),
+	(30, 26018.160000, 1, 1037.030000, 35, '2024-06-26'),
+	(31, 27294.940000, 1, 1292.390000, 36, '2024-06-26'),
+	(32, 240.300000, 1, 0.000000, 52, '2024-06-26');
 
 -- Dumping structure for table payroll_sys.tax_category
 CREATE TABLE IF NOT EXISTS `tax_category` (
@@ -446,16 +488,9 @@ CREATE TABLE IF NOT EXISTS `tax_category` (
   `additional_tax_rate` decimal(10,2) DEFAULT NULL,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`tax_cat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.tax_category: ~6 rows (approximately)
-INSERT INTO `tax_category` (`tax_cat_id`, `minimum_monthly_rate`, `maximum_monthly_rate`, `tax_rate`, `additional_tax_rate`, `name`) VALUES
-	(1, 0.00, 20832.00, 0.00, 0.00, 'No withholding tax'),
-	(2, 20833.00, 33333.00, 0.20, 0.00, 'First Bracket'),
-	(3, 33333.00, 66667.00, 0.25, 2500.00, 'Second Bracket'),
-	(4, 66667.00, 166667.00, 0.30, 10833.00, 'Third Bracket'),
-	(5, 166667.00, 666667.00, 0.32, 40833.33, 'Fourth Bracket'),
-	(6, 666667.00, 999999.99, 0.35, 200833.33, 'Fifth Bracket');
+-- Dumping data for table payroll_sys.tax_category: ~0 rows (approximately)
 
 -- Dumping structure for table payroll_sys.timesheet
 CREATE TABLE IF NOT EXISTS `timesheet` (
@@ -467,9 +502,9 @@ CREATE TABLE IF NOT EXISTS `timesheet` (
   PRIMARY KEY (`timesheet_id`),
   KEY `FK_timesheet_employee` (`employee_id`),
   CONSTRAINT `FK_timesheet_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8466 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8488 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.timesheet: ~2,820 rows (approximately)
+-- Dumping data for table payroll_sys.timesheet: ~2,819 rows (approximately)
 INSERT INTO `timesheet` (`timesheet_id`, `date`, `time_in`, `time_out`, `employee_id`) VALUES
 	(5644, '2024-04-02', '08:37:00', '17:53:00', 6),
 	(5645, '2024-04-03', '11:08:00', '16:12:00', 6),
@@ -504,7 +539,7 @@ INSERT INTO `timesheet` (`timesheet_id`, `date`, `time_in`, `time_out`, `employe
 	(5675, '2024-05-03', '09:00:00', '17:19:00', 6),
 	(5676, '2024-05-04', '08:54:00', '17:02:00', 6),
 	(5677, '2024-05-05', '10:41:00', '17:37:00', 6),
-	(5678, '2024-05-06', '10:37:00', '17:39:00', 6),
+	(5678, '2024-05-06', '08:00:00', '00:00:00', 6),
 	(5679, '2024-05-07', '11:46:00', '16:16:00', 6),
 	(5680, '2024-05-08', '10:34:00', '17:23:00', 6),
 	(5681, '2024-05-09', '10:05:00', '16:09:00', 6),
@@ -526,15 +561,11 @@ INSERT INTO `timesheet` (`timesheet_id`, `date`, `time_in`, `time_out`, `employe
 	(5697, '2024-05-25', '09:50:00', '17:20:00', 6),
 	(5698, '2024-05-26', '10:10:00', '17:20:00', 6),
 	(5699, '2024-05-27', '10:44:00', '16:50:00', 6),
-	(5700, '2024-05-28', '08:14:00', '17:37:00', 6),
 	(5701, '2024-05-29', '08:13:00', '16:57:00', 6),
 	(5702, '2024-05-30', '10:01:00', '17:56:00', 6),
 	(5703, '2024-05-31', '11:51:00', '16:27:00', 6),
 	(5704, '2024-06-01', '10:13:00', '17:37:00', 6),
 	(5705, '2024-06-02', '08:58:00', '17:07:00', 6),
-	(5706, '2024-06-03', '10:32:00', '16:24:00', 6),
-	(5707, '2024-06-04', '08:34:00', '16:28:00', 6),
-	(5708, '2024-06-05', '09:34:00', '17:52:00', 6),
 	(5709, '2024-06-06', '10:51:00', '17:05:00', 6),
 	(5710, '2024-06-07', '11:16:00', '16:43:00', 6),
 	(5711, '2024-06-08', '11:30:00', '16:52:00', 6),
@@ -708,10 +739,10 @@ INSERT INTO `timesheet` (`timesheet_id`, `date`, `time_in`, `time_out`, `employe
 	(5879, '2024-05-25', '11:53:00', '17:40:00', 8),
 	(5880, '2024-05-26', '10:17:00', '17:16:00', 8),
 	(5881, '2024-05-27', '11:28:00', '16:54:00', 8),
-	(5882, '2024-05-28', '09:28:00', '17:10:00', 8),
+	(5882, '2024-05-28', '09:28:00', '21:30:00', 8),
 	(5883, '2024-05-29', '10:05:00', '17:36:00', 8),
 	(5884, '2024-05-30', '09:54:00', '16:37:00', 8),
-	(5885, '2024-05-31', '08:27:00', '17:46:00', 8),
+	(5885, '2024-05-31', '08:27:00', '15:16:00', 8),
 	(5886, '2024-06-01', '11:49:00', '16:06:00', 8),
 	(5887, '2024-06-02', '08:01:00', '16:45:00', 8),
 	(5888, '2024-06-03', '09:25:00', '16:11:00', 8),
@@ -897,7 +928,7 @@ INSERT INTO `timesheet` (`timesheet_id`, `date`, `time_in`, `time_out`, `employe
 	(6068, '2024-06-01', '09:58:00', '17:27:00', 10),
 	(6069, '2024-06-02', '11:37:00', '16:38:00', 10),
 	(6070, '2024-06-03', '11:44:00', '17:22:00', 10),
-	(6071, '2024-06-04', '10:26:00', '17:40:00', 10),
+	(6071, '2024-06-04', '10:26:00', '20:07:00', 10),
 	(6072, '2024-06-05', '08:09:00', '16:51:00', 10),
 	(6073, '2024-06-06', '08:56:00', '16:46:00', 10),
 	(6074, '2024-06-07', '10:02:00', '16:21:00', 10),
@@ -3289,7 +3320,13 @@ INSERT INTO `timesheet` (`timesheet_id`, `date`, `time_in`, `time_out`, `employe
 	(8460, '2024-06-27', '11:05:00', '17:43:00', 36),
 	(8461, '2024-06-28', '11:50:00', '17:05:00', 36),
 	(8462, '2024-06-29', '09:13:00', '17:48:00', 36),
-	(8463, '2024-06-30', '08:06:00', '17:26:00', 36);
+	(8463, '2024-06-30', '08:06:00', '17:26:00', 36),
+	(8471, '2024-05-28', '08:00:00', '22:00:00', 6),
+	(8472, '2024-06-04', '11:42:00', '12:06:00', 6),
+	(8484, '2024-06-05', '09:18:00', '09:18:00', 6),
+	(8485, '2024-06-05', '08:30:00', '19:52:00', 52),
+	(8486, '2024-06-10', '09:23:00', '09:23:00', 52),
+	(8487, '2024-06-11', '08:09:00', '08:09:00', 52);
 
 -- Dumping structure for view payroll_sys.timesheet_summary
 -- Creating temporary table to overcome VIEW dependency errors
@@ -3308,19 +3345,16 @@ CREATE TABLE IF NOT EXISTS `user` (
   `role_id` int DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `employee_id` (`employee_id`),
   KEY `FK_user_role` (`role_id`),
   KEY `FK_user_employee` (`employee_id`),
   CONSTRAINT `FK_user_employee` FOREIGN KEY (`employee_id`) REFERENCES `employee` (`employee_id`),
   CONSTRAINT `FK_user_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table payroll_sys.user: ~34 rows (approximately)
+-- Dumping data for table payroll_sys.user: ~31 rows (approximately)
 INSERT INTO `user` (`user_id`, `username`, `password`, `employee_id`, `role_id`) VALUES
-	(3, 'garciamanuel iii', 'XzzGwbmiFhfwdK9BDnVshOt4pJebiVjHMOhPcoSMPLU=', 6, 13),
-	(4, 'limantonio', 'd9K60EegbWANNwTJNCupug==', 7, 13),
-	(5, 'aquinobianca sofia', 'zv0FvCz9cGQDkUcjo6c8QZgA0aHq1UW18J7MaZDYH4g=', 8, 13),
-	(6, 'reyesisabella', 'fdks9Sz1hpcd8OTe5pbAqw==', 9, 13),
-	(7, 'villanuevaandrea mae', 'qiay3grCS0c85hDhwGxEJHPFyNJJcBpg3sTY4oGGny0=', 11, 5),
+	(7, 'villanuevaandrea mae', 'hello', 11, 3),
 	(8, 'san josebrad ', 'SL0RJ7xWpZ4aT5N', 12, 3),
 	(9, 'romualdezalice', 'peved7jAmywPk6A', 13, 3),
 	(10, 'atienzarosie ', 'jWCY2eKdNiZFCiQ', 14, 3),
@@ -3337,29 +3371,42 @@ INSERT INTO `user` (`user_id`, `username`, `password`, `employee_id`, `role_id`)
 	(21, 'bautistamark ', 'FMXnpmSpz1l3knZE', 25, 3),
 	(22, 'lazarodarlene ', '0G1Xc8jNuER0clcM', 26, 3),
 	(23, 'delos santoskolby ', 'FCoac5NXYCrAWEKD', 27, 3),
-	(24, 'santosvella ', 'xZz5C4jYHVlU2JXY', 28, 3),
+	(24, 'santosvella ', 'xZz5C4jYHVlU2JXY', 28, 13),
 	(25, 'del rosariotomas', 'Tsic7hVsWgp5meEo', 29, 3),
 	(26, 'tolentinojacklyn ', '6lOrpXMJnBLMDTXg', 30, 3),
 	(27, 'gutierrezpercival ', 'zNq4Ga2TdkofDZCZ', 31, 3),
 	(28, 'manalaysaygarfield ', 'WWqiZNsQVx4l35nL', 32, 3),
 	(29, 'villegaslizeth ', '3HSQWqGeFGpfdQtc', 33, 3),
-	(30, 'ramoscarol ', 'ec9xw4GlYwmGO9f1', 34, 3),
+	(30, '2', '2', 34, 3),
 	(31, 'macedaemelia ', 'ujcU2HXyZdgjBbfF', 35, 3),
 	(32, 'aguilardelia ', 'BuctKVpkiZQTXF5p', 36, 3),
 	(33, 'castrojohn rafael', 'ff2exigRnUF1jPPC', 37, 3),
-	(34, 'martinezcarlos ian', 'xGXXPaHlzJDslJns', 38, 3),
-	(35, 'santosbeatriz', 'vqQjhHFcEbIL4HIa', 39, 3),
-	(36, 'hernandezeduard', 'v10sZNpSezgpUG71', 10, 9);
+	(43, '1', 'ha', 6, 13);
 
--- Dumping structure for view payroll_sys.employee_pay_period_monthly_hours_worked
+-- Dumping structure for view payroll_sys.department_monthly_payroll_report
 -- Removing temporary table and create final VIEW structure
-DROP TABLE IF EXISTS `employee_pay_period_monthly_hours_worked`;
-CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `employee_pay_period_monthly_hours_worked` AS select `timesheet`.`employee_id` AS `employee_id`,date_format(`timesheet`.`date`,'%Y-%m') AS `pay_month_period`,sec_to_time(sum(time_to_sec(timediff(`timesheet`.`time_out`,`timesheet`.`time_in`)))) AS `total_hours_worked` from `timesheet` group by `timesheet`.`employee_id`,date_format(`timesheet`.`date`,'%Y-%m');
+DROP TABLE IF EXISTS `department_monthly_payroll_report`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `department_monthly_payroll_report` AS select `dep`.`name` AS `department`,month(`p`.`pay_period_start`) AS `month`,count(`p`.`employee_id`) AS `employee_count`,sum(`p`.`gross_income`) AS `total_gross_income`,sum(`p`.`net_income`) AS `total_net_income` from (((`payslip` `p` join `employee` `e` on((`p`.`employee_id` = `e`.`employee_id`))) join `position` `pos` on((`e`.`position_id` = `pos`.`position_id`))) join `department` `dep` on((`e`.`dept_id` = `dep`.`dept_id`))) group by `dep`.`name`,month(`p`.`pay_period_start`);
+
+-- Dumping structure for view payroll_sys.employee_allowance_cost
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `employee_allowance_cost`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `employee_allowance_cost` AS select sum(`allowance`.`clothing`) AS `SUM(clothing)`,sum(`allowance`.`rice`) AS `SUM(rice)`,sum(`allowance`.`phone`) AS `SUM(phone)`,sum(`allowance`.`total_amount`) AS `TOTAL_ALLOWANCE` from `allowance`;
+
+-- Dumping structure for view payroll_sys.employee_monthly_hours_worked
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `employee_monthly_hours_worked`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `employee_monthly_hours_worked` AS select `timesheet`.`employee_id` AS `employee_id`,date_format(`timesheet`.`date`,'%Y-%m') AS `pay_month_period`,sec_to_time(sum(time_to_sec(timediff(`timesheet`.`time_out`,`timesheet`.`time_in`)))) AS `total_hours_worked` from `timesheet` group by `timesheet`.`employee_id`,date_format(`timesheet`.`date`,'%Y-%m');
 
 -- Dumping structure for view payroll_sys.employee_timesheets
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `employee_timesheets`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `employee_timesheets` AS select `t`.`timesheet_id` AS `timesheet_id`,`t`.`date` AS `date`,`t`.`time_in` AS `time_in`,`t`.`time_out` AS `time_out`,`t`.`employee_id` AS `employee_id`,sec_to_time(sum((case when (cast(`t`.`time_in` as time) < '08:00:00') then time_to_sec(timediff('08:00:00',`t`.`time_in`)) when (cast(`t`.`time_out` as time) > '17:00:00') then time_to_sec(timediff('17:00:00',`t`.`time_in`)) else time_to_sec(timediff(`t`.`time_out`,`t`.`time_in`)) end))) AS `regular_hours_worked`,sec_to_time(sum((case when (cast(`t`.`time_out` as time) > '17:00:00') then time_to_sec(timediff(`t`.`time_out`,'17:00:00')) else 0 end))) AS `overtime` from (`timesheet` `t` join `employee` `e` on((`t`.`employee_id` = `e`.`employee_id`))) where (`e`.`isActive` = 1) group by `t`.`timesheet_id`,`t`.`date`,`t`.`time_in`,`t`.`time_out`,`t`.`employee_id`;
+
+-- Dumping structure for view payroll_sys.monthly_payroll_report
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `monthly_payroll_report`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `monthly_payroll_report` AS select extract(month from `p`.`date_created`) AS `MONTH`,sum(`alw`.`total_amount`) AS `BENEFITS`,sum(`p`.`gross_income`) AS `GROSS_INCOME`,sum(`p`.`net_income`) AS `NET_INCOME`,sum(`d`.`total_contribution`) AS `DEDUCTION_CTB`,sum(`tx`.`withheld_tax`) AS `WITHHELD_TAX` from (((`payslip` `p` join `deduction` `d` on((`p`.`deduction_id` = `d`.`deduction_id`))) join `tax` `tx` on((`p`.`tax_id` = `tx`.`tax_id`))) join `allowance` `alw` on((`p`.`employee_id` = `alw`.`employee_id`))) group by extract(month from `p`.`date_created`);
 
 -- Dumping structure for view payroll_sys.timesheet_summary
 -- Removing temporary table and create final VIEW structure
