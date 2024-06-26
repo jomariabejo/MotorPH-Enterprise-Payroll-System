@@ -30,4 +30,8 @@ public class PayslipService {
     public Payslip.PayslipViewer fetchPayslip(int payslipId) {
         return payslipRepository.fetchPayslipBreakdown(payslipId);
     }
+
+    public ObservableList<Payslip> fetchPayslipSummary() {
+        return payslipRepository.fetchPayslipSummary();
+    }
 }

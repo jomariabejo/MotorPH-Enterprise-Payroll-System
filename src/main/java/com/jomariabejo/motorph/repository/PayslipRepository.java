@@ -10,6 +10,7 @@ import com.jomariabejo.motorph.service.TaxCategoryService;
 import com.jomariabejo.motorph.service.TaxService;
 import com.jomariabejo.motorph.utility.AutoIncrementUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.Connection;
@@ -237,5 +238,31 @@ public class PayslipRepository {
             throw new RuntimeException(e);
         }
         return null;
+    }
+
+    public ObservableList<Payslip> fetchPayslipSummary() {
+        String query = "SELECT payslip.pay_period_start, \n" +
+                "       payslip.pay_period_end,\n" +
+                "       SUM(payslip.gross_income) AS total_gross_income,\n" +
+                "       SUM(payslip.net_income) AS total_net_income\n" +
+                "FROM payslip\n" +
+                "GROUP BY payslip.pay_period_start, payslip.pay_period_end\n";
+
+        try(Connection connection = DatabaseConnectionUtility.getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query)) {
+            ArrayList<Payslip> payslips = new ArrayList<>();
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                Payslip payslip = new Payslip();
+                payslip.setPayPeriodStart(rs.getDate(1));
+                payslip.setPayPeriodEnd(rs.getDate(2));
+                payslip.setGrossIncome(rs.getBigDecimal(3));
+                payslip.setNetIncome(rs.getBigDecimal(4));
+                payslips.add(payslip);
+            }
+            return FXCollections.observableList(payslips);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -62,6 +62,8 @@ public class MainViewController {
     @FXML
     private Label lbl_employee_id;
 
+    @FXML
+    private Button btn_finance_payslip;
 
     @FXML
     void dropDownClicked(ActionEvent event) {
@@ -97,6 +99,14 @@ public class MainViewController {
     void financePayrollClicked(ActionEvent event) throws IOException {
         this.lbl_user_clicked_path.setText("/ Finance / Dashboard");
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/payroll-dashboard.fxml"));
+        AnchorPane anchorPane = fxmlLoader.load();
+        mainPane.setCenter(anchorPane);
+    }
+
+    @FXML
+    public void financePayslipsClicked() throws IOException {
+        this.lbl_user_clicked_path.setText("/ Finance / Payslips Summary");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/finance-payslips.fxml"));
         AnchorPane anchorPane = fxmlLoader.load();
         mainPane.setCenter(anchorPane);
     }
@@ -253,9 +263,11 @@ public class MainViewController {
         lbl_finance.setVisible(true);
         btn_finance_generate_payslip.setVisible(true);
         btn_finance_payroll.setVisible(true);
+        btn_finance_payslip.setVisible(true);
         lbl_finance.setManaged(true);
         btn_finance_generate_payslip.setManaged(true);
         btn_finance_payroll.setManaged(true);
+        btn_finance_payslip.setManaged(true);
     }
 
     private void showHRAccessButtons() {
@@ -284,6 +296,7 @@ public class MainViewController {
         lbl_system.setVisible(false);
         btn_human_resource_employees.setVisible(false);
         btn_human_resource_dashboard.setVisible(false);
+        btn_finance_payslip.setVisible(false);
 
         btn_finance_generate_payslip.setManaged(false);
         btn_finance_payroll.setManaged(false);
@@ -295,14 +308,6 @@ public class MainViewController {
         lbl_system.setManaged(false);
         btn_human_resource_employees.setManaged(false);
         btn_human_resource_dashboard.setManaged(false);
-    }
-
-    public Label getLbl_employee_id() {
-        System.out.println("Current value is : " + lbl_employee_id.getText());
-        return lbl_employee_id;
-    }
-
-    public void setLbl_employee_id(Label lbl_employee_id) {
-        this.lbl_employee_id = lbl_employee_id;
+        btn_finance_payslip.setManaged(false);
     }
 }
