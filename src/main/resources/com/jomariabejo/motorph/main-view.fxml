@@ -7,6 +7,8 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -48,7 +50,7 @@
                            <font>
                               <Font name="Segoe UI Emoji" size="22.0" />
                            </font></Label>
-                        <Button fx:id="btn_finance_payslip" alignment="TOP_LEFT" layoutX="35.0" layoutY="700.0" mnemonicParsing="false" onAction="#financePayslipsClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payslips"/>
+                        <Button fx:id="btn_finance_payslip" alignment="TOP_LEFT" layoutX="35.0" layoutY="700.0" mnemonicParsing="false" onAction="#financePayslipsClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payslips" />
                         <Button fx:id="btn_finance_payroll" alignment="TOP_LEFT" layoutX="36.0" layoutY="493.0" mnemonicParsing="false" onAction="#financePayrollClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payroll Dashboard" />
                         <Button fx:id="btn_finance_generate_payslip" alignment="TOP_LEFT" layoutX="36.0" layoutY="606.0" mnemonicParsing="false" onAction="#financeGeneratePayslipClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Generate Payslip" />
                         <Label fx:id="lbl_system" layoutX="23.0" layoutY="364.0" prefWidth="225.0" text="System" textFill="#909090">
@@ -96,6 +98,15 @@
                         <Insets left="48.0" />
                      </padding>
                   </Label>
+                  <VBox alignment="CENTER">
+                     <children>
+                        <ImageView fitHeight="108.0" fitWidth="116.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../img/logo.jpeg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </VBox>
                </children>
             </GridPane>
             </children>

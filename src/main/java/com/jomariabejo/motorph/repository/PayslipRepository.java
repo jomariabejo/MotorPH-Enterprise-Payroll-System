@@ -8,6 +8,7 @@ import com.jomariabejo.motorph.entity.Tax;
 import com.jomariabejo.motorph.service.DeductionService;
 import com.jomariabejo.motorph.service.TaxCategoryService;
 import com.jomariabejo.motorph.service.TaxService;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.AutoIncrementUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
 import javafx.collections.FXCollections;
@@ -289,4 +290,36 @@ public class PayslipRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean checkIfCanCreatePayslipForPayPeriod(Date startPayDate, Date endPayDate) {
+        String query = "SELECT COUNT(*) FROM payslip " +
+                "WHERE (? BETWEEN pay_period_start AND pay_period_end " +
+                "OR ? BETWEEN pay_period_start AND pay_period_end " +
+                "OR pay_period_start BETWEEN ? AND ? " +
+                "OR pay_period_end BETWEEN ? AND ?)";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setDate(1, startPayDate);
+            preparedStatement.setDate(2, endPayDate);
+            preparedStatement.setDate(3, startPayDate);
+            preparedStatement.setDate(4, endPayDate);
+            preparedStatement.setDate(5, startPayDate);
+            preparedStatement.setDate(6, endPayDate);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                int payslipsCount = resultSet.getInt(1);
+                if (payslipsCount >= 0) {
+                    AlertUtility.showErrorAlert("Failed", "Pay period exist", "Pay period exist\\nThe pay period that you've inputted is already generated, please check on payslips");
+                }
+                return payslipsCount == 0; // Returns true if no overlapping payslip found
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error checking payslip overlap", e);
+        }
+
+        return true; // Default to true if an exception occurs
+    }
+
 }
