@@ -37,17 +37,6 @@ public class HRTimesheetsController implements Initializable {
     private TableView<Timesheet> tv_timesheets;
 
     @FXML
-    private TableColumn<Integer, Timesheet> tc_timesheetId;
-    @FXML
-    private TableColumn<Integer, Timesheet> tc_employeeId;
-    @FXML
-    private TableColumn<Date, Timesheet> tc_date;
-    @FXML
-    private TableColumn<Timestamp, Timesheet> tc_timeIn;
-    @FXML
-    private TableColumn<Timestamp, Timesheet> tc_timeOut;
-
-    @FXML
     void paginationChanged(MouseEvent event) {
         loadTimesheetsForPage(pagination.getCurrentPageIndex());
     }

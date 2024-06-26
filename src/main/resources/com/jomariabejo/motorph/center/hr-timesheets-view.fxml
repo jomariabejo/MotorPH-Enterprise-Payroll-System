@@ -57,7 +57,7 @@
                                 <PropertyValueFactory property="employeeId" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn fx:id="tc_date" prefWidth="150.0" text="Date" visible="false">
+                        <TableColumn fx:id="tc_date" prefWidth="150.0" text="Date" visible="true">
                             <cellValueFactory>
                                 <PropertyValueFactory property="date" />
                             </cellValueFactory>
@@ -73,6 +73,9 @@
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
                 </TableView>
                 <Pagination fx:id="pagination" onDragDetected="#paginationChanged" prefHeight="81.0" prefWidth="1131.0" stylesheets="@../../../../css/custom/pagination.css" />
             </children>
