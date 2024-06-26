@@ -24,22 +24,38 @@
                <children>
                   <VBox alignment="TOP_CENTER" layoutX="116.0" layoutY="48.0" prefHeight="616.0" prefWidth="250.4" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Label fx:id="lbl_employee_id" opacity="0.0" text="hidden_component_employee_id" />
-                        <Label fx:id="lbl_personal_information" prefWidth="225.0" stylesheets="@../../../css/custom/label.css" text="Personal Information" />
-                        <Button fx:id="btn_personal_information_profile" mnemonicParsing="false" onAction="#personalInformationProfileClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Profile" />
-                        <Button fx:id="btn_personal_information_timesheet" layoutX="58.0" layoutY="10.0" mnemonicParsing="false" onAction="#personalInformationTimesheetClicked" prefHeight="53.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Timesheet" />
-                        <Button fx:id="btn_personal_information_leave_request" layoutX="58.0" layoutY="63.0" mnemonicParsing="false" onAction="#personalInformationLeaveRequestClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Leave Request" />
-                        <Button fx:id="btn_personal_information_payslip" layoutX="58.0" layoutY="116.0" mnemonicParsing="false" onAction="#personalInformationPayslipClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payslip" />
-                        <Label fx:id="lbl_human_resource" layoutX="24.0" layoutY="10.0" prefWidth="225.0" stylesheets="@../../../css/custom/label.css" text="Human Resource" />
-                        <Button fx:id="btn_human_resource_dashboard" layoutX="35.0" layoutY="393.0" mnemonicParsing="false" onAction="#humanResourceDashboardClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Dashboard" />
-                        <Button fx:id="btn_human_resource_employees" layoutX="36.0" layoutY="394.0" mnemonicParsing="false" onAction="#humanResourceEmployeesClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Employees" />
-                        <Button fx:id="btn_human_resource_timesheets" layoutX="36.0" layoutY="364.0" mnemonicParsing="false" onAction="#humanResourceTimesheetsClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Timesheets" />
-                        <Button fx:id="btn_human_resource_leave_request" layoutX="36.0" layoutY="429.0" mnemonicParsing="false" onAction="#humanResourceLeaveRequestClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Leave Request" />
-                        <Label fx:id="lbl_finance" layoutX="23.0" layoutY="317.0" prefWidth="225.0" stylesheets="@../../../css/custom/label.css" text="Finance" />
-                        <Button fx:id="btn_finance_payroll" layoutX="36.0" layoutY="493.0" mnemonicParsing="false" onAction="#financePayrollClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payroll" />
-                        <Button fx:id="btn_finance_generate_payslip" layoutX="36.0" layoutY="606.0" mnemonicParsing="false" onAction="#financeGeneratePayslipClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Generate Payslip" />
-                        <Label fx:id="lbl_system" layoutX="23.0" layoutY="364.0" prefWidth="225.0" stylesheets="@../../../css/custom/label.css" text="System" />
-                        <Button fx:id="btn_system_users" layoutX="36.0" layoutY="671.0" mnemonicParsing="false" onAction="#systemUsersClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Users" />
+                        <Label fx:id="lbl_employee_id" opacity="0.0" text="hidden_component_employee_id">
+                           <font>
+                              <Font name="Segoe UI Emoji" size="12.0" />
+                           </font></Label>
+                        <Label fx:id="lbl_personal_information" prefWidth="225.0" style="-fx-opacity: 50;" text="Personal Information" textFill="#909090">
+                           <font>
+                              <Font name="Segoe UI Emoji" size="22.0" />
+                           </font></Label>
+                        <Button fx:id="btn_personal_information_profile" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#personalInformationProfileClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Profile" />
+                        <Button fx:id="btn_personal_information_timesheet" alignment="TOP_LEFT" layoutX="58.0" layoutY="10.0" mnemonicParsing="false" onAction="#personalInformationTimesheetClicked" prefHeight="53.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Timesheet" />
+                        <Button fx:id="btn_personal_information_leave_request" alignment="TOP_LEFT" layoutX="58.0" layoutY="63.0" mnemonicParsing="false" onAction="#personalInformationLeaveRequestClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Leave Request" />
+                        <Button fx:id="btn_personal_information_payslip" alignment="TOP_LEFT" layoutX="58.0" layoutY="116.0" mnemonicParsing="false" onAction="#personalInformationPayslipClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payslip" />
+                        <Label fx:id="lbl_human_resource" layoutX="24.0" layoutY="10.0" prefWidth="225.0" text="Human Resource" textFill="#909090">
+                           <font>
+                              <Font name="Segoe UI Emoji" size="22.0" />
+                           </font></Label>
+                        <Button fx:id="btn_human_resource_dashboard" alignment="TOP_LEFT" layoutX="35.0" layoutY="393.0" mnemonicParsing="false" onAction="#humanResourceDashboardClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Dashboard" />
+                        <Button fx:id="btn_human_resource_employees" alignment="TOP_LEFT" layoutX="36.0" layoutY="394.0" mnemonicParsing="false" onAction="#humanResourceEmployeesClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Employees" />
+                        <Button fx:id="btn_human_resource_timesheets" alignment="TOP_LEFT" layoutX="36.0" layoutY="364.0" mnemonicParsing="false" onAction="#humanResourceTimesheetsClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Timesheets" />
+                        <Button fx:id="btn_human_resource_leave_request" alignment="TOP_LEFT" layoutX="36.0" layoutY="429.0" mnemonicParsing="false" onAction="#humanResourceLeaveRequestClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Leave Request" />
+                        <Label fx:id="lbl_finance" layoutX="23.0" layoutY="317.0" prefWidth="225.0" text="Finance" textFill="#909090">
+                           <font>
+                              <Font name="Segoe UI Emoji" size="22.0" />
+                           </font></Label>
+                        <Button fx:id="btn_finance_payslip" alignment="TOP_LEFT" layoutX="35.0" layoutY="700.0" mnemonicParsing="false" onAction="#financePayslipsClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payslips"/>
+                        <Button fx:id="btn_finance_payroll" alignment="TOP_LEFT" layoutX="36.0" layoutY="493.0" mnemonicParsing="false" onAction="#financePayrollClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payroll Dashboard" />
+                        <Button fx:id="btn_finance_generate_payslip" alignment="TOP_LEFT" layoutX="36.0" layoutY="606.0" mnemonicParsing="false" onAction="#financeGeneratePayslipClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Generate Payslip" />
+                        <Label fx:id="lbl_system" layoutX="23.0" layoutY="364.0" prefWidth="225.0" text="System" textFill="#909090">
+                           <font>
+                              <Font name="Segoe UI Emoji" size="22.0" />
+                           </font></Label>
+                        <Button fx:id="btn_system_users" alignment="TOP_LEFT" layoutX="36.0" layoutY="671.0" mnemonicParsing="false" onAction="#systemUsersClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Users" />
                      </children>
                   </VBox>
                </children>
@@ -65,8 +81,6 @@
                               <ComboBox fx:id="comboBoxSettings" onAction="#dropDownClicked" prefHeight="56.0" prefWidth="188.0" promptText="Settings" style="-fx-font-size: 20;" styleClass="-fx-font-size: 48px;" stylesheets="@../../../css/custom/combobox.css">
                                   <items>
                                       <FXCollections fx:factory="observableArrayList">
-                                          <String fx:value="About Us" />
-                                          <String fx:value="Documentation" />
                                           <String fx:value="Logout" />
                                       </FXCollections>
                                   </items>
