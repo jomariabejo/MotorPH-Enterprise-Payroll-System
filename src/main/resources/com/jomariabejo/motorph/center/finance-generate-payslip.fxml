@@ -68,7 +68,7 @@
                                           <PropertyValueFactory property="hourlyRate" />
                                       </cellValueFactory>
                                   </TableColumn>
-                                  <TableColumn minWidth="175.0" prefWidth="111.19997864961624" style="-fx-background-color: #black;" text="Total Hours Worked">
+                                  <TableColumn minWidth="175.0" prefWidth="111.19997864961624" style="-fx-background-color: #black;" text="Regular Hours Worked">
                                       <cellValueFactory>
                                           <PropertyValueFactory property="totalRegularHoursWorked" />
                                       </cellValueFactory>
