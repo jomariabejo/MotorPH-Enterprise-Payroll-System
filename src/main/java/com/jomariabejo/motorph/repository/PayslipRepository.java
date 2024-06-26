@@ -242,8 +242,10 @@ public class PayslipRepository {
                 "FROM payslip\n" +
                 "GROUP BY payslip.pay_period_start, payslip.pay_period_end\n";
 
-        try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+        try(Connection connection = DatabaseConnectionUtility.getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query)) {
+          
             ArrayList<Payslip> payslips = new ArrayList<>();
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
