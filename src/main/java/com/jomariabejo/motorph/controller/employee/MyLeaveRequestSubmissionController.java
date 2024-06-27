@@ -212,25 +212,40 @@ public class MyLeaveRequestSubmissionController {
     private boolean hasRemainingLeaveCredits(LocalDate leaveStartDateValue, LocalDate leaveEndDateValue) {
         long remainingLeaveCredits = fetchRemainingLeaveCredits();
         long appliedLeaveInDays = ChronoUnit.DAYS.between(leaveStartDateValue, leaveEndDateValue);
-
-        return remainingLeaveCredits >= appliedLeaveInDays;
+        System.out.println("Applied leave in day is = " + appliedLeaveInDays);
+        return remainingLeaveCredits > appliedLeaveInDays;
     }
 
     private int fetchRemainingLeaveCredits() {
-        String query = "SELECT COALESCE(lrc.maxCredits, 0) - IFNULL(SUM(DATEDIFF(\n" +
-                "        CASE WHEN lr.start_date = lr.end_date THEN lr.start_date ELSE DATE_ADD(lr.end_date, INTERVAL 1 DAY) END,\n" +
-                "        lr.start_date)), 0) AS remaining_leave_balance, lrc.categoryName\n" +
-                "FROM leave_request_category lrc\n" +
-                "         LEFT JOIN leave_request lr ON lr.leave_request_category_id = lrc.leave_req_cat_id\n" +
-                "    AND lr.employee_id = ?\n" +
-                "    AND lr.status = 'Approved'\n" +
-                "    AND YEAR(lr.start_date) = YEAR(CURDATE())\n" +
-                "WHERE lrc.leave_req_cat_id = ?;";
+        String query = "SELECT \n" +
+                "    COALESCE(\n" +
+                "        lrc.maxCredits - COALESCE(SUM(\n" +
+                "            CASE \n" +
+                "                WHEN lr.start_date = lr.end_date THEN 1  -- Count as 1 day if start_date equals end_date\n" +
+                "                ELSE DATEDIFF(lr.end_date, lr.start_date) + 1  -- Calculate days between start_date and end_date\n" +
+                "            END\n" +
+                "        ), 0),\n" +
+                "        lrc.maxCredits\n" +
+                "    ) AS remaining_leave_balance\n" +
+                "FROM \n" +
+                "    leave_request_category lrc\n" +
+                "LEFT JOIN \n" +
+                "    leave_request lr ON lr.leave_request_category_id = lrc.leave_req_cat_id\n" +
+                "        AND lr.employee_id = ?\n" +
+                "        AND YEAR(lr.start_date) = YEAR(CURDATE())\n" +
+                "        AND YEAR(lr.end_date) = YEAR(CURDATE())\n" +
+                "        AND lr.leave_request_category_id = ?\n" +
+                "        AND lr.status = 'Approved'\n" +
+                "WHERE \n" +
+                "    lrc.leave_req_cat_id = ?\n" +
+                "GROUP BY\n" +
+                "    lrc.maxCredits;\n";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, Integer.valueOf(employeeId.getText()));
             pstmt.setInt(2, Integer.valueOf(fetchLeaveRequestCategoryId(leaverequest_type.getSelectionModel().getSelectedItem())));
+            pstmt.setInt(3, Integer.valueOf(fetchLeaveRequestCategoryId(leaverequest_type.getSelectionModel().getSelectedItem())));
             try (ResultSet resultSet = pstmt.executeQuery()) {
                 if (resultSet.next()) {
                     return resultSet.getInt("remaining_leave_balance");
