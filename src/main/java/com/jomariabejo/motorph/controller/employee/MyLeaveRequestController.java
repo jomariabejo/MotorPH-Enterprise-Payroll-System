@@ -78,7 +78,7 @@ public class MyLeaveRequestController {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.initStyle(StageStyle.DECORATED);
-        stage.setTitle("Remaing Leave Credits");
+        stage.setTitle("Remaining Leave Credits");
         stage.setScene(new Scene(root));
         stage.show();
         MyRemainingLeaveRequestCredits myRemainingLeaveRequestCredits = fxmlLoader.getController();
