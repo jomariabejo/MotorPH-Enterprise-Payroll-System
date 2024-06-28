@@ -5,7 +5,6 @@ import com.jomariabejo.motorph.repository.AllowanceRepository;
 
 import java.sql.SQLException;
 
-/** TODO: FINISH CRUD **/
 public class AllowanceService {
     AllowanceRepository allowanceRepository = new AllowanceRepository();
     public void createAllowance(Allowance allowance) throws SQLException {

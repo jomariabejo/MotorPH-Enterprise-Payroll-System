@@ -7,9 +7,6 @@ import com.jomariabejo.motorph.utility.TextReader;
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- * TODO: CHECK IF WORKING PROPERLY
- */
 public class LeaveRequestRepository {
 
     public void createLeaveRequest(LeaveRequest leaveRequest) {
@@ -134,12 +131,6 @@ public class LeaveRequestRepository {
     }
 
 
-    /**
-     * TODO : CATEGORY NAME SHOULD BE INSERTED IN QUERY
-     * @param employeeId
-     * @param categoryId
-     * @return
-     */
     public double calculateRemainingLeaveBalance(int employeeId, int categoryId) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\leave_request\\calculate_remaining_leave_balance.sql");
 

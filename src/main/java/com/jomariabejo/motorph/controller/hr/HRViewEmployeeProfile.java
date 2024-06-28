@@ -200,10 +200,6 @@ public class HRViewEmployeeProfile {
 
     public void saveClicked(ActionEvent event) throws ParseException, SQLException {
 
-        /**
-         * TODO: We are now able to create employee, however there is null values for 'date_hired' & 'is_active'
-         * Due: 04/31/2024
-         */
         if (tf_eid.getText().equals("Auto generate employee id")) {
             {
                 boolean isEmployeeRecordConfirmed = AlertUtility.showConfirmation("Save new employee", "Are you sure you want to save these changes? Once confirmed, the data will be saved.",null);
