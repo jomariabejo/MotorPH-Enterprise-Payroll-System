@@ -3,9 +3,17 @@ package com.jomariabejo.motorph.controller.employee;
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.service.UserService;
 import com.jomariabejo.motorph.utility.AlertUtility;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -82,5 +90,18 @@ public class ForgotPasswordController {
             }
         }
         return 0;
+    }
+
+    @FXML
+    public void possessAVerificationCodeAlreadyButtonClicked() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/process_generated_code.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setTitle("Process generated code");
+        stage.setScene(new Scene(root));
+        stage.show();
+        this.tf_username.getScene().getWindow().hide();
     }
 }

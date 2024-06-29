@@ -2,7 +2,6 @@ package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.User;
-import com.jomariabejo.motorph.service.UserService;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.TextReader;
 
@@ -221,6 +220,22 @@ public class UserRepository {
         }
     }
 
+    public boolean changePassword(int userId, String newPassword) {
+        String query = "UPDATE user SET PASSWORD = ? WHERE user.user_id = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            pstmt.setString(1, newPassword);
+            pstmt.setInt(2, userId);
+
+            return pstmt.executeUpdate() == 1;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public boolean saveVerificationCode(String username, int code) {
         String query = "UPDATE USER SET verification_code = ? WHERE username = ?";
 
@@ -255,5 +270,36 @@ public class UserRepository {
             throw new RuntimeException(e);
         }
         return false;
+    }
+
+    public int fetchUserIdByVerificationCode(int verificationCode) {
+        String query = "SELECT user_id FROM user where verification_code = ?";
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, verificationCode);
+
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if (resultSet.next()) {
+                return (resultSet.getInt(1));
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
+
+    public void resetVerificationCode(int userId) {
+        String query = "UPDATE USER SET VERIFICATION_CODE = NULL WHERE USER_ID = ?";
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setInt(1, userId);
+
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
