@@ -2,6 +2,7 @@ package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.User;
+import com.jomariabejo.motorph.service.UserService;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.TextReader;
 
@@ -218,5 +219,41 @@ public class UserRepository {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public boolean saveVerificationCode(String username, int code) {
+        String query = "UPDATE USER SET verification_code = ? WHERE username = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(2, username);
+            pstmt.setInt(1, code);
+
+            int rowAffected = pstmt.executeUpdate();
+
+            return rowAffected > 0;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public boolean isUsernameExist(String username) {
+        String query = "SELECT COUNT(USER.username) FROM USER WHERE username = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.setString(1, username);
+
+            ResultSet resultSet = pstmt.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return false;
     }
 }

@@ -37,4 +37,12 @@ public class UserService {
     public boolean changePassword(int employeeId, String existingPassword, String newPassword) {
         return userRepository.changePassword(employeeId, existingPassword, newPassword);
     }
+
+    public boolean saveVerificationCode(String username, int code) {
+        return userRepository.saveVerificationCode(username, code);
+    }
+
+    public boolean isUsernameExist(String username) {
+        return userRepository.isUsernameExist(username);
+    }
 }

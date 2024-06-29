@@ -1,5 +1,7 @@
 package com.jomariabejo.motorph.controller;
 
+import com.jomariabejo.motorph.controller.employee.ForgotPasswordController;
+import com.jomariabejo.motorph.controller.employee.MyRemainingLeaveRequestCredits;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.repository.UserRepository;
 import com.jomariabejo.motorph.service.LoginManager;
@@ -7,14 +9,22 @@ import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import net.synedra.validatorfx.Validator;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
+import java.util.Stack;
 
 public class LoginController {
     @FXML
@@ -69,6 +79,15 @@ public class LoginController {
         }
     }
 
-    public void forgotPasswordClicked(MouseEvent mouseEvent) {
+    @FXML
+    public void forgotPasswordClicked(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/forgot_password.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setTitle("Forgot password");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }
