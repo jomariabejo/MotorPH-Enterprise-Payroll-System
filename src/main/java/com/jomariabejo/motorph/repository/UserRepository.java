@@ -302,4 +302,26 @@ public class UserRepository {
             throw new RuntimeException(e);
         }
     }
+
+    public ArrayList<User> fetchUserWithVerificationCode() {
+        ArrayList<User> users = new ArrayList<>();
+
+        String query = "SELECT user_id, verification_code FROM USER WHERE verification_code > 0";
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            ResultSet resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                User user = new User();
+                user.setUserID(resultSet.getInt(1));
+                user.setVerificationCode(resultSet.getInt(2));
+
+                users.add(user);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return users;
+    }
 }

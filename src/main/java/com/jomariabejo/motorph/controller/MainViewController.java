@@ -66,6 +66,9 @@ public class MainViewController {
     private Button btn_finance_payslip;
 
     @FXML
+    private Button btn_system_admin_view_change_password_requests;
+
+    @FXML
     void dropDownClicked(ActionEvent event) {
         if (event.getSource() instanceof ComboBox<?>) {
             ComboBox < String > comboBox = (ComboBox < String > ) event.getSource();
@@ -208,6 +211,14 @@ public class MainViewController {
     }
 
     @FXML
+    public void systemUsersChangePasswordRequest() throws IOException {
+        this.lbl_user_clicked_path.setText("/ System / Change Password Requests");
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/system-generated-code.fxml"));
+        AnchorPane loader = fxmlLoader.load();
+        mainPane.setCenter(loader);
+    }
+
+    @FXML
     private void initialize() {
         // hide all buttons
         hideButtons();
@@ -257,6 +268,8 @@ public class MainViewController {
         btn_system_users.setVisible(true);
         lbl_system.setManaged(true);
         btn_system_users.setManaged(true);
+        btn_system_admin_view_change_password_requests.setVisible(true);
+        btn_system_admin_view_change_password_requests.setManaged(true);
     }
 
     private void showPayrollButtons() {
@@ -297,6 +310,7 @@ public class MainViewController {
         btn_human_resource_employees.setVisible(false);
         btn_human_resource_dashboard.setVisible(false);
         btn_finance_payslip.setVisible(false);
+        btn_system_admin_view_change_password_requests.setVisible(false);
 
         btn_finance_generate_payslip.setManaged(false);
         btn_finance_payroll.setManaged(false);
@@ -309,5 +323,6 @@ public class MainViewController {
         btn_human_resource_employees.setManaged(false);
         btn_human_resource_dashboard.setManaged(false);
         btn_finance_payslip.setManaged(false);
+        btn_system_admin_view_change_password_requests.setManaged(false);
     }
 }

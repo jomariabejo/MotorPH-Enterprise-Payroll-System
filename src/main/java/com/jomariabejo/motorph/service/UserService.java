@@ -3,6 +3,10 @@ package com.jomariabejo.motorph.service;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.repository.UserRepository;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class UserService {
     private final UserRepository userRepository;
 
@@ -56,5 +60,9 @@ public class UserService {
 
     public void resetVerificationCode(int userId) {
         userRepository.resetVerificationCode(userId);
+    }
+
+    public ArrayList<User> fetchUserWithVerificationCode() {
+        return userRepository.fetchUserWithVerificationCode();
     }
 }
