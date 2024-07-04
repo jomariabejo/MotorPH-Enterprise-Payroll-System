@@ -90,7 +90,7 @@ public class PayrollDashboardController {
                 "JOIN tax t ON p.tax_id = t.tax_id\n" +
                 "WHERE p.pay_period_start = ?\n" +
                 "    AND p.pay_period_end = ?\n" +
-                "GROUP BY d.name;\n";
+                "GROUP BY d.name";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
@@ -111,38 +111,34 @@ public class PayrollDashboardController {
             seriesNetIncomes.setName("Net Incomes");
 
             while (resultSet.next()) {
-                seriesGrossIncomes.getData().add(
-                    new XYChart.Data<>(
-                        resultSet.getString(1), 2));
-                seriesBenefits.getData().add(
-                    new XYChart.Data<>(
-                        resultSet.getString(1),
-                        resultSet.getInt(2)));
-                seriesDeductions.getData().add(
-                    new XYChart.Data<>(
-                        resultSet.getString(1),
-                        resultSet.getInt(4)));
-                seriesNetIncomes.getData().add(
-                    new XYChart.Data<>(
-                        resultSet.getString(1),
-                        resultSet.getInt(5)));
+                String departmentName = resultSet.getString("department_name");
+                int totalGrossIncome = resultSet.getInt("total_gross_income");
+                int totalNetIncome = resultSet.getInt("total_net_income");
+                int totalBenefits = resultSet.getInt("total_benefits");
+                int totalDeduction = resultSet.getInt("total_deduction");
+
+                // Handle null values, if necessary
+                if (departmentName != null) {
+                    seriesGrossIncomes.getData().add(new XYChart.Data<>(departmentName, totalGrossIncome));
+                    seriesBenefits.getData().add(new XYChart.Data<>(departmentName, totalBenefits));
+                    seriesDeductions.getData().add(new XYChart.Data<>(departmentName, totalDeduction));
+                    seriesNetIncomes.getData().add(new XYChart.Data<>(departmentName, totalNetIncome));
+                }
             }
 
-            boolean isBenefitsSizeIsZero = seriesBenefits.getData().isEmpty();
-            boolean isGrossIncomesSizeIsZero = seriesGrossIncomes.getData().isEmpty();
-            boolean isNetIncomesSizeIsZero = seriesNetIncomes.getData().isEmpty();
-            boolean isDeductionsSizeIsZero = seriesDeductions.getData().isEmpty();
-            if (isBenefitsSizeIsZero && isGrossIncomesSizeIsZero && isDeductionsSizeIsZero && isNetIncomesSizeIsZero) {
+            // Clear existing data and add new series
+            barchartPayrollReportByDepartment.getData().clear();
+            barchartPayrollReportByDepartment.getData().addAll(seriesGrossIncomes, seriesBenefits, seriesDeductions, seriesNetIncomes);
+
+            // Handle empty chart data
+            if (seriesGrossIncomes.getData().isEmpty() && seriesBenefits.getData().isEmpty() &&
+                    seriesDeductions.getData().isEmpty() && seriesNetIncomes.getData().isEmpty()) {
                 AlertUtility.showInformation("No payslips found",
-                        "For start pay date: " + dp_start_pay_date.getValue() + " and end pay date: " + dp_end_pay_date.getValue(),null
-                        );
-            }
-            else {
-                barchartPayrollReportByDepartment.getData().clear(); // clean cache
-                barchartPayrollReportByDepartment.getData().addAll(seriesGrossIncomes,seriesBenefits,seriesDeductions,seriesNetIncomes);
+                        "For start pay date: " + dp_start_pay_date.getValue() + " and end pay date: " + dp_end_pay_date.getValue(), null);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
 }

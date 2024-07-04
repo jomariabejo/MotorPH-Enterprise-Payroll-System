@@ -1,5 +1,6 @@
 package com.jomariabejo.motorph.service;
 
+import com.jomariabejo.motorph.entity.Role;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.repository.UserRepository;
 

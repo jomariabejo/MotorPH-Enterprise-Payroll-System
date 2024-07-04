@@ -43,4 +43,8 @@ public class PayslipService {
     public boolean canCreatePayslip(Date startPayDate, Date endPayDate) {
         return payslipRepository.checkIfCanCreatePayslipForPayPeriod(startPayDate, endPayDate);
     }
+
+    public void modifyPayslip(Payslip payslip) {
+        payslipRepository.modifyPayslip(payslip);
+    }
 }

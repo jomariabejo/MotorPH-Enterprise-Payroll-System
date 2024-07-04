@@ -2,6 +2,7 @@ package com.jomariabejo.motorph.controller.employee;
 
 import com.jomariabejo.motorph.entity.Payslip;
 import com.jomariabejo.motorph.service.PayslipService;
+import com.jomariabejo.motorph.service.UserService;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

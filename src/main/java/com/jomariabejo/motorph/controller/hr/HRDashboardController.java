@@ -1,6 +1,7 @@
 package com.jomariabejo.motorph.controller.hr;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 public class HRDashboardController {
 
     @FXML
-    private BarChart<String, Number> barchart_monthly_leave_request;
+    private BarChart<String, Double> barchart_monthly_leave_request;
 
     @FXML
     private ComboBox<String> comboBoxMonth;
@@ -57,14 +58,12 @@ public class HRDashboardController {
         writeNumberOfEmployees();
         writeNumberOfActiveEmployees();
         writeNumberOfLeaveRequest();
-        populateAverageHoursWorkedByEmployee();
-        populateBarchartLeaveRequestByEmployee();
     }
 
 
     private void populateBarchartLeaveRequestByEmployee() {
         // setup series data for our barchart
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        XYChart.Series<String, Double> series = new XYChart.Series<>();
         series.setName("Number of Leave Requests");
 
         String query = "SELECT CONCAT(e.first_name, ' ', e.last_name), COUNT(lr.leave_request_id) AS total_leave_requests\n" +
@@ -88,15 +87,13 @@ public class HRDashboardController {
 
             while (rs.next()) {
                 String employeeName = rs.getString(1);
-                System.out.printf(employeeName);
-                int totalLeaveRequests = rs.getInt("total_leave_requests");
+                double totalLeaveRequests = rs.getInt("total_leave_requests");
                 series.getData().add(new XYChart.Data<>(employeeName, totalLeaveRequests));
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         this.barchart_monthly_leave_request.getData().add(series);
     }
 

@@ -4,6 +4,7 @@ import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.Deduction;
 import com.jomariabejo.motorph.repository.DeductionRepository;
 import com.jomariabejo.motorph.utility.TextReader;
+import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -126,5 +127,36 @@ public class DeductionService {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void modifyDeduction(Deduction deduction, int payslipNumber) {
+        String query = "UPDATE deduction d " +
+                "JOIN payslip p ON d.deduction_id = p.deduction_id " +
+                "SET d.sss = ?, d.philhealth = ?, d.pagibig = ?, d.total_contribution = ? " +
+                "WHERE p.payslip_id = ?";
+
+        try (Connection conn = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            // Set parameters for the prepared statement
+            pstmt.setBigDecimal(1, deduction.getSss());
+            pstmt.setBigDecimal(2, deduction.getPhilhealth());
+            pstmt.setBigDecimal(3, deduction.getPagibig());
+
+            // Calculate and set total contribution
+            BigDecimal totalContribution = deduction.calculateTotalContribution();
+            pstmt.setBigDecimal(4, totalContribution);
+
+            pstmt.setInt(5, payslipNumber);
+
+            // Execute the update
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential errors
+        }
+
     }
 }

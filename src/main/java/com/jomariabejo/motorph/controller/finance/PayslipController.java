@@ -43,23 +43,22 @@ public class PayslipController {
         this.tv_employee_payslips.setItems(payslipService.fetchPayslipSummary());
     }
 
-    private void setUpTableView() throws SQLException {
+    private void setUpTableView() {
         // Define the custom cell for the actions column
         TableColumn<Payslip, Void> actionsColumn = new TableColumn<>("Actions");
         actionsColumn.setPrefWidth(150);
         actionsColumn.setCellFactory(param -> new TableCell<>() {
             final Button viewButton = new Button();
+            final Button updateButton = new Button();
 
             final HBox actionsBox = new HBox(viewButton);
             {
-                actionsBox.setAlignment(Pos.CENTER); // Align HBox content to center
-                actionsBox.setSpacing(5); // Set spacing between buttons
+                actionsBox.setAlignment(Pos.CENTER);
+                actionsBox.setSpacing(5);
 
                 viewButton.setOnAction(event -> {
                     Payslip payslip = getTableView().getItems().get(getIndex());
-
-
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-payslips-view.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/employee-payslip-viewer.fxml"));
 
                     Parent root;
                     try {
@@ -75,7 +74,7 @@ public class PayslipController {
                     stage.show();
 
 
-                    MyPayslipController payslipController = fxmlLoader.getController();
+                    EmployeesPayslipController payslipController = fxmlLoader.getController();
                     payslipController.initEntirePayslip(
                             payslip.getPayPeriodStart(),
                             payslip.getPayPeriodEnd()
@@ -83,10 +82,15 @@ public class PayslipController {
                 });
 
                 Image viewIcon = new Image(getClass().getResourceAsStream("/img/view-icon.png"));
+                Image updateIcon = new Image(getClass().getResourceAsStream("/img/editemployeeicon.png"));
 
                 ImageView viewIconView = new ImageView(viewIcon);
                 viewIconView.setFitWidth(36);
                 viewIconView.setFitHeight(24);
+
+                ImageView updateIconView = new ImageView(updateIcon);
+                updateIconView.setFitWidth(36);
+                updateIconView.setFitHeight(24);
 
                 Image deleteIcon = new Image(getClass().getResourceAsStream("/img/delete-icon.png"));
                 ImageView deleteIconView = new ImageView(deleteIcon);
@@ -94,6 +98,7 @@ public class PayslipController {
                 deleteIconView.setFitHeight(24);
 
                 viewButton.setGraphic(viewIconView);
+                updateButton.setGraphic(updateIconView);
             }
 
             @Override

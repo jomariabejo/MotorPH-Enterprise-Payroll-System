@@ -13,7 +13,9 @@ import com.jomariabejo.motorph.utility.AutoIncrementUtility;
 import com.jomariabejo.motorph.utility.DateUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.XYChart;
 
+import java.math.RoundingMode;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -122,9 +124,9 @@ public class PayslipRepository {
                 myPayslips.add(
                         new Payslip(
                                 resultSet.getInt(1),
-                                resultSet.getBigDecimal(2).setScale(4),
-                                resultSet.getBigDecimal(3).setScale(4),
-                                resultSet.getBigDecimal(4).setScale(4),
+                                resultSet.getBigDecimal(2).setScale(2, RoundingMode.HALF_UP),
+                                resultSet.getBigDecimal(3).setScale(2, RoundingMode.HALF_UP),
+                                resultSet.getBigDecimal(4).setScale(2, RoundingMode.HALF_UP),
                                 resultSet.getDate(5),
                                 resultSet.getDate(6)
                         )
@@ -243,9 +245,9 @@ public class PayslipRepository {
                 "GROUP BY payslip.pay_period_start, payslip.pay_period_end\n";
 
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query)) {
-          
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
             ArrayList<Payslip> payslips = new ArrayList<>();
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -275,9 +277,9 @@ public class PayslipRepository {
                 myPayslips.add(
                         new Payslip(
                                 resultSet.getInt(1),
-                                resultSet.getBigDecimal(2).setScale(4),
-                                resultSet.getBigDecimal(3).setScale(4),
-                                resultSet.getBigDecimal(4).setScale(4),
+                                resultSet.getBigDecimal(2).setScale(2, RoundingMode.HALF_UP),
+                                resultSet.getBigDecimal(3).setScale(2, RoundingMode.HALF_UP),
+                                resultSet.getBigDecimal(4).setScale(2, RoundingMode.HALF_UP),
                                 resultSet.getDate(5),
                                 resultSet.getDate(6)
                         )
@@ -320,4 +322,23 @@ public class PayslipRepository {
         return true; // Default to true if an exception occurs
     }
 
+    public void modifyPayslip(Payslip payslip) {
+        String query = "UPDATE PAYSLIP SET " +
+                "total_hours_worked = ?," +
+                "gross_income = ?," +
+                "net_income = ? " +
+                "WHERE payslip_id = ?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
+
+            pstmt.setBigDecimal(1, payslip.getTotalHoursWorked());
+            pstmt.setBigDecimal(2, payslip.getGrossIncome());
+            pstmt.setBigDecimal(3, payslip.getNetIncome());
+            pstmt.setInt(4,payslip.getPayslipID());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

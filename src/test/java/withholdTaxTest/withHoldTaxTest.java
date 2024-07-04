@@ -31,7 +31,6 @@ public class withHoldTaxTest {
 
         BigDecimal  withholdTaxComputationResult = taxService.computeTax(
                 BigDecimal.valueOf(25000),
-                BigDecimal.valueOf(25000),
                 deduction);
 
 
@@ -50,7 +49,6 @@ public class withHoldTaxTest {
         deduction.setPagibig(BigDecimal.valueOf(100));
 
         BigDecimal  withholdingtax = taxService.computeTax(
-                BigDecimal.valueOf(60000),
                 BigDecimal.valueOf(80648),
                 deduction);
 

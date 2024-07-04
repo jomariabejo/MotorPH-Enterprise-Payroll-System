@@ -6,7 +6,6 @@ import com.jomariabejo.motorph.repository.TaxRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.sql.SQLException;
 
 public class TaxService {
     private final DeductionService deductionService;
@@ -17,8 +16,11 @@ public class TaxService {
         taxRepository = new TaxRepository();
     }
 
+    public BigDecimal computeTaxableIncome(BigDecimal grossSalary, BigDecimal totalContribution) {
+        return grossSalary.subtract(totalContribution);
+    }
 
-    public BigDecimal computeTax(BigDecimal basicSalary, BigDecimal grossSalary, Deduction deduction) {
+    public BigDecimal computeTax(BigDecimal grossSalary, Deduction deduction) {
 
         BigDecimal totalContribution = deduction.totalContributions();
         BigDecimal taxableIncome = grossSalary.subtract(totalContribution);
@@ -47,5 +49,9 @@ public class TaxService {
 
     public void saveTax(Tax tax) {
             taxRepository.saveTax(tax);
+    }
+
+    public void modifyTaxByPayslipId(Tax tax, int payslipId) {
+        taxRepository.modifyTax(tax, payslipId);
     }
 }

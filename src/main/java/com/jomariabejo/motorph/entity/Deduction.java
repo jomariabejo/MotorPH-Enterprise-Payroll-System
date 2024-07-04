@@ -94,4 +94,8 @@ public class Deduction {
                 ", dateCreated=" + dateCreated +
                 '}';
     }
+
+    public BigDecimal calculateTotalContribution() {
+        return sss.add(philhealth).add(pagibig);
+    }
 }
