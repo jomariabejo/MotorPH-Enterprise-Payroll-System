@@ -3,6 +3,9 @@ package com.jomariabejo.motorph.controller.hr;
 import com.jomariabejo.motorph.entity.Employee;
 import com.jomariabejo.motorph.service.EmployeeService;
 import com.jomariabejo.motorph.utility.AlertUtility;
+import com.jomariabejo.motorph.utility.CSVReaderUtility;
+import com.opencsv.CSVReader;
+import com.opencsv.exceptions.CsvException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,10 +27,13 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class HRHomeController {
 
@@ -307,5 +313,83 @@ public class HRHomeController {
         } finally {
             refreshTable();
         }
+    }
+
+    public void addMultipleEmployeeClicked() {
+        try {
+            String csvPath;
+            csvPath = AlertUtility.showPathInputDialog();
+            boolean fileExist = checkIfExist(csvPath);
+            boolean columnSizeShouldBe19 = CSVReaderUtility.readAllLines(Path.of(csvPath)).size() == 18;
+
+            ArrayList<String> defaultHeaders = new ArrayList<>();
+
+            defaultHeaders.add("Employee #");
+            defaultHeaders.add("Last Name");
+            defaultHeaders.add("First Name");
+            defaultHeaders.add("Birthday");
+            defaultHeaders.add("Address");
+            defaultHeaders.add("Phone Number");
+            defaultHeaders.add("SSS #");
+            defaultHeaders.add("Philhealth #");
+            defaultHeaders.add("TIN #");
+            defaultHeaders.add("Pag-ibig #");
+            defaultHeaders.add("Status");
+            defaultHeaders.add("Position");
+            defaultHeaders.add("Immediate Supervisor");
+            defaultHeaders.add("Basic Salary");
+            defaultHeaders.add("Rice Subsidy");
+            defaultHeaders.add("Phone Allowance");
+            defaultHeaders.add("Clothing Allowance");
+            defaultHeaders.add("Gross Semi-monthly Rate");
+            defaultHeaders.add("Hourly Rate");
+
+
+            // Normalize and trim headers
+            List<String> normalizedDefaultHeaders = normalizeAndTrimHeaders(defaultHeaders);
+            List<String> normalizedCSVHeaders = normalizeAndTrimHeaders(CSVReaderUtility.readHeaders(Path.of(csvPath)));
+
+            // Compare
+            if (normalizedDefaultHeaders.equals(normalizedCSVHeaders)) {
+                System.out.println("Headers match!");
+            } else {
+                System.out.println("Headers do not match.");
+            }
+
+            if (!fileExist) {
+                throw new FileNotFoundException();
+            }
+            else if (!columnSizeShouldBe19) {
+                AlertUtility.showErrorAlert
+                        ("Invalid csv path",
+                                "The csv that you have entered has invalid column size",
+                                "Please make sure that you're using the 'multi-employee-registration-template.csv'");
+            }
+
+            else if (!normalizedDefaultHeaders.equals(normalizedCSVHeaders)) {
+                AlertUtility.showErrorAlert(
+                        "Headers do not match",
+                        "Please try again.",
+                        "Please make sure that you follow the format of 'multi-employee-registration-template.csv'");
+            } else {
+                saveEmployees(CSVReaderUtility.readAllLines(Path.of(csvPath)));
+            }
+        }
+        catch (IOException | CsvException e) {
+
+        }
+    }
+
+    private void saveEmployees(List<String[]> strings) {
+    }
+
+    private static List<String> normalizeAndTrimHeaders(List<String> headers) {
+        return headers.stream()
+                .map(header -> header == null ? "" : header.trim().toLowerCase())
+                .collect(Collectors.toList());
+    }
+
+    private boolean checkIfExist(String csvPath) {
+        return CSVReaderUtility.checkIfExist(csvPath);
     }
 }

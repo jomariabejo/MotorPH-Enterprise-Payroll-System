@@ -1,0 +1,6 @@
+Employee #,Last Name,First Name,Birthday,Address,Phone Number,SSS #,Philhealth #,TIN #,Pag-ibig #,Status,Position,Immediate Supervisor,Basic Salary,Rice Subsidy,Phone Allowance,Clothing Allowance,Gross Semi-monthly Rate,Hourly Rate
+1,Delgado,Alice,03/15/1985,101 Maple Street, Quezon City,0917-123-4567,34-5678901-2,123456789012,345-678-901-234,567890123456,Regular,HR Manager,N/A,55,000,1,200,1,500,800,27,500,321.43
+2,Reyes,Juan,07/22/1990,202 Oak Avenue, Makati City,0918-234-5678,23-4567890-1,234567890123,456-789-012-345,678901234567,Regular,IT Specialist,Delgado, Alice,45,000,1,200,1,500,800,22,500,267.86
+3,Lopez,Emily,11/10/1982,303 Pine Road, Pasig City,0919-345-6789,45-6789012-3,345678901234,567-890-123-456,789012345678,Regular,Marketing Manager,Delgado, Alice,50,000,1,200,1,500,800,25,000,297.62
+4,Castro,Michael,05/28/1995,404 Cedar Lane, Mandaluyong City,0920-456-7890,56-7890123-4,456789012345,678-901-234-567,890123456789,Regular,Sales Executive,Delgado, Alice,40,000,1,200,1,500,800,20,000,238.10
+5,Martinez,Laura,09/14/1988,505 Birch Blvd, Taguig City,0921-567-8901,67-8901234-5,567890123456,789-012-345-678,901234567890,Regular,Customer Service Rep,Delgado, Alice,35,000,1,200,1,500,800,17,500,208.33

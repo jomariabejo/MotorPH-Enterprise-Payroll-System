@@ -2,6 +2,7 @@ package com.jomariabejo.motorph.utility;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
 
 import java.util.Optional;
 
@@ -50,6 +51,23 @@ public class AlertUtility {
         alert.setHeaderText(header);
         alert.setContentText(content);
         alert.showAndWait();
+    }
+
+    /**
+     * Prompts the user to paste the path of the multi-employee registration file.
+     *
+     * @return the path entered by the user, or an empty string if cancelled
+     */
+    public static String showPathInputDialog() {
+        // Create a TextInputDialog
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Paste the path of the multi-employee registration");
+        dialog.setHeaderText(null); // No header
+        dialog.setContentText("Please paste the path of the multi-employee registration:");
+
+        // Get the user's input
+        Optional<String> result = dialog.showAndWait();
+        return result.orElse(""); // Return the input or an empty string if cancelled
     }
 
 }
