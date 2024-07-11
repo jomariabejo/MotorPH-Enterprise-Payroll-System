@@ -14,6 +14,10 @@ public class EmployeeService {
         employeeRepository.createNewEmployeeRecord(employee);
     }
 
+    public void saveEmployeeWithProvidedEmployeeId(Employee employee) {
+        employeeRepository.createNewEmployeeRecordWithProvidedEmployeeId(employee);
+    }
+
     public ArrayList<Employee> fetchEmployees() throws SQLException {
         return employeeRepository.getEmployees();
     }

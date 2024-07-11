@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.nio.file.Path;
 import java.sql.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,18 +45,6 @@ public class HRHomeController {
 
     @FXML
     private ComboBox cb_employment_status;
-
-    @FXML
-    private Button btn_search;
-
-    @FXML
-    private TableColumn<Integer, Employee> tc_employeeNo;
-
-    @FXML
-    private TableColumn<Integer, Employee> tc_firstName;
-
-    @FXML
-    private TableColumn<Integer, Employee> tc_lastName;
 
     @FXML
     private TableView<Employee> tv_employee;
@@ -76,26 +65,6 @@ public class HRHomeController {
         }
     }
 
-
-    /**
-     * Clear employee table
-     */
-    private void clearActionsTable() {
-        // Assuming you have a TableView called employeesTableView
-
-        // Clear existing columns named "Actions"
-        List<TableColumn<Employee, ?>> columnsToRemove = new ArrayList<>();
-        for (TableColumn<Employee, ?> column : tv_employee.getColumns()) {
-            if (column.getText().equals("Actions")) {
-                columnsToRemove.add(column);
-            }
-        }
-        tv_employee.getColumns().removeAll(columnsToRemove);
-
-        // Clear TableView items
-        tv_employee.getItems().clear();
-
-    }
 
     private void setUpEmployeesTableView() throws SQLException {
         tv_employee.setItems(null); // clear data employee table view
@@ -327,7 +296,7 @@ public class HRHomeController {
             String csvPath;
             csvPath = AlertUtility.showPathInputDialog();
             boolean fileExist = checkIfExist(csvPath);
-            boolean columnSizeShouldBe19 = CSVReaderUtility.readHeaders(Path.of(csvPath)).size() == 19;
+            boolean columnSizeShouldBe20 = CSVReaderUtility.readHeaders(Path.of(csvPath)).size() == 20;
             System.out.println("Size sample: " + CSVReaderUtility.readHeaders(Path.of(csvPath)).size());
             ArrayList<String> defaultHeaders = getStrings();
 
@@ -345,7 +314,7 @@ public class HRHomeController {
 
             if (!fileExist) {
                 throw new FileNotFoundException();
-            } else if (!columnSizeShouldBe19) {
+            } else if (!columnSizeShouldBe20) {
                 AlertUtility.showErrorAlert
                         ("Invalid csv path",
                                 "The csv that you have entered has invalid column size",
@@ -384,6 +353,7 @@ public class HRHomeController {
         defaultHeaders.add("Clothing Allowance");
         defaultHeaders.add("Gross Semi-monthly Rate");
         defaultHeaders.add("Hourly Rate");
+        defaultHeaders.add("Department Name");
         return defaultHeaders;
     }
 
@@ -393,7 +363,7 @@ public class HRHomeController {
             for (String[] data : employeeList) {
                 Employee newEmployee = mapToEmployee(data);
                 Allowance allowance = mapToAllowance(data);
-                employeeService.saveEmployee(newEmployee);
+                employeeService.saveEmployeeWithProvidedEmployeeId(newEmployee);
                 allowanceService.createAllowance(allowance);
             }
             AlertUtility.showInformation("Success", "Employee saved successfully", String.valueOf(employeeList.size()) + " employees added." );
@@ -405,11 +375,12 @@ public class HRHomeController {
     private Allowance mapToAllowance(String[] data) {
         Allowance allowance = new Allowance();
         allowance.setEmployeeID(Integer.parseInt(data[0]));
-        allowance.setRiceAllowance(Integer.parseInt(data[14]));
-        allowance.setClothingAllowance(Integer.parseInt(data[15]));
-        allowance.setPhoneAllowance(Integer.parseInt(data[16]));
+        allowance.setRiceAllowance(Integer.parseInt(data[14].replace(",","")));
+        allowance.setClothingAllowance(Integer.parseInt(data[15].replace(",","")));
+        allowance.setPhoneAllowance(Integer.parseInt(data[16].replace(",","")));
         allowance.setTotalAmount(allowance.getRiceAllowance() + allowance.getClothingAllowance() + allowance.getPhoneAllowance());
         allowance.setDateCreated(DateUtility.getDate());
+        allowance.setDateModified(Timestamp.from(Instant.now()));
         return allowance;
     }
 
@@ -427,17 +398,18 @@ public class HRHomeController {
         employee.setPagibig(data[9]);
         employee.setStatus(EmployeeStatus.valueOf(data[10]));
         employee.setPositionId(switchPositionNameToPositionId(data[11]));
-        employee.setDeptId(switchDepartmentNameToDepartmentId(data[12]));
+        employee.setDeptId(switchDepartmentNameToDepartmentId(data[19]));
         employee.setSupervisor(data[12]);
-        employee.setBasicSalary(BigDecimal.valueOf(Long.parseLong(data[13])));
+        employee.setBasicSalary(BigDecimal.valueOf(Long.parseLong(data[13].replace(",",""))));
         employee.setDateHired(DateUtility.getDate());
-        employee.setGrossSemiMonthlyRate(BigDecimal.valueOf(Float.parseFloat(data[17])));
-        employee.setHourlyRate(BigDecimal.valueOf(Float.parseFloat(data[18])));
+        employee.setGrossSemiMonthlyRate(BigDecimal.valueOf(Float.parseFloat(data[17].replace(",",""))));
+        employee.setHourlyRate(BigDecimal.valueOf(Float.parseFloat(data[18].replace(",",""))));
         return employee;
     }
 
     private int switchDepartmentNameToDepartmentId(String departmentName) {
-        String query = "SELECT position.position_id FROM position WHERE position.name = ?";
+        System.out.println("My department name is : " + departmentName);
+        String query = "SELECT department.dept_id FROM department WHERE department.name = ?";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)

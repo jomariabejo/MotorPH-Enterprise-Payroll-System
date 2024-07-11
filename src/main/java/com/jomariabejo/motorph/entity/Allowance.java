@@ -102,4 +102,18 @@ public class Allowance {
     public void setDateModified(Timestamp dateModified) {
         this.dateModified = dateModified;
     }
+
+    @Override
+    public String toString() {
+        return "Allowance{" +
+                "allowanceID=" + allowanceID +
+                ", employeeID=" + employeeID +
+                ", clothingAllowance=" + clothingAllowance +
+                ", riceAllowance=" + riceAllowance +
+                ", phoneAllowance=" + phoneAllowance +
+                ", totalAmount=" + totalAmount +
+                ", dateCreated=" + dateCreated +
+                ", dateModified=" + dateModified +
+                '}';
+    }
 }

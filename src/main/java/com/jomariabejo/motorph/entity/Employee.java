@@ -210,4 +210,28 @@
         public void setHourlyRate(BigDecimal hourlyRate) {
             this.hourlyRate = hourlyRate;
         }
+
+        @Override
+        public String toString() {
+            return "Employee{" +
+                    "employeeId=" + employeeId +
+                    ", firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", birthday=" + birthday +
+                    ", address='" + address + '\'' +
+                    ", contactNumber='" + contactNumber + '\'' +
+                    ", status=" + status +
+                    ", dateHired=" + dateHired +
+                    ", positionId=" + positionId +
+                    ", supervisor='" + supervisor + '\'' +
+                    ", deptId=" + deptId +
+                    ", sss='" + sss + '\'' +
+                    ", philhealth='" + philhealth + '\'' +
+                    ", pagibig='" + pagibig + '\'' +
+                    ", tin='" + tin + '\'' +
+                    ", basicSalary=" + basicSalary +
+                    ", grossSemiMonthlyRate=" + grossSemiMonthlyRate +
+                    ", hourlyRate=" + hourlyRate +
+                    '}';
+        }
     }

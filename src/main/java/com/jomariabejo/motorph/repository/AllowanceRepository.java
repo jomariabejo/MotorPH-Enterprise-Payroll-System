@@ -2,13 +2,17 @@ package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.Allowance;
+import com.jomariabejo.motorph.utility.DateUtility;
 import com.jomariabejo.motorph.utility.TextReader;
 
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDate;
 
 public class AllowanceRepository {
     public void createAllowanceRecord(Allowance allowance) {
-        String query = "INSERT INTO ALLOWANCE( clothing, rice, phone, total_amount, dateCreated, dateModified, employee_id) VALUES ( ?, ?, ?, ?, ?, ?, ? );";
+        System.out.println("ALLOWANCE INSERTING : " + allowance.toString());;
+        String query = "INSERT INTO ALLOWANCE( clothing, rice, phone, total_amount, dateCreated, dateModified, employee_id) VALUES ( ?, ?, ?, ?, ?, ?, ?);";
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, allowance.getClothingAllowance());

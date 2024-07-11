@@ -20,6 +20,7 @@ public class EmployeeRepository {
     public final String QUERY_BASE_PATH = "src/main/java/com/jomariabejo/motorph/query/employee";
 
     public void createNewEmployeeRecord(Employee employee) {
+        System.out.println(employee.toString());
         String query = "INSERT INTO EMPLOYEE (\n" +
                 "    first_name, last_name, birthday, address,\n" +
                 "    contact_number, status, date_hired,\n" +
@@ -30,6 +31,31 @@ public class EmployeeRepository {
                 "VALUES\n" +
                 "    (\n" +
                 "        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,\n" +
+                "        ?\n" +
+                "    );";
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            preparedStatementSetter(employee, ps);
+
+            ps.executeUpdate();
+            System.out.println("Record Created");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void createNewEmployeeRecordWithProvidedEmployeeId(Employee employee) {
+        System.out.println(employee.toString());
+        String query = "INSERT INTO EMPLOYEE (\n" +
+                "    employee_id, first_name, last_name, birthday, address,\n" +
+                "    contact_number, status, date_hired,\n" +
+                "    position_id, supervisor, dept_id,\n" +
+                "    sss, philhealth, pagibig, tin, basic_salary,\n" +
+                "    gross_semi_monthly_rate, hourly_rate\n" +
+                ")\n" +
+                "VALUES\n" +
+                "    (\n" +
+                "        ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,\n" +
                 "        ?\n" +
                 "    );";
         try (Connection connection = DatabaseConnectionUtility.getConnection();
@@ -78,23 +104,44 @@ public class EmployeeRepository {
     }
 
     private void preparedStatementSetter(Employee employee, PreparedStatement ps) throws SQLException {
-        ps.setString(1, employee.getFirstName());
-        ps.setString(2, employee.getLastName());
-        ps.setDate(3, employee.getBirthday());
-        ps.setString(4, employee.getAddress());
-        ps.setString(5, employee.getContactNumber());
-        ps.setString(6, String.valueOf(employee.getStatus()));
-        ps.setDate(7, employee.getDateHired());
-        ps.setInt(8, employee.getPositionId());
-        ps.setString(9, employee.getSupervisor());
-        ps.setInt(10, employee.getDeptId());
-        ps.setString(11, employee.getSss());
-        ps.setString(12, employee.getPhilhealth());
-        ps.setString(13, employee.getPagibig());
-        ps.setString(14, employee.getTin());
-        ps.setBigDecimal(15, employee.getBasicSalary());
-        ps.setBigDecimal(16, employee.getGrossSemiMonthlyRate());
-        ps.setBigDecimal(17, employee.getHourlyRate());
+        if (employee.getEmployeeId() == 0 && employee.getDeptId() == 0) { // proceed to else, if there is no provided employee id and department id
+            ps.setString(1, employee.getFirstName());
+            ps.setString(2, employee.getLastName());
+            ps.setDate(3, employee.getBirthday());
+            ps.setString(4, employee.getAddress());
+            ps.setString(5, employee.getContactNumber());
+            ps.setString(6, String.valueOf(employee.getStatus()));
+            ps.setDate(7, employee.getDateHired());
+            ps.setInt(8, employee.getPositionId());
+            ps.setString(9, employee.getSupervisor());
+            ps.setInt(10, employee.getDeptId());
+            ps.setString(11, employee.getSss());
+            ps.setString(12, employee.getPhilhealth());
+            ps.setString(13, employee.getPagibig());
+            ps.setString(14, employee.getTin());
+            ps.setBigDecimal(15, employee.getBasicSalary());
+            ps.setBigDecimal(16, employee.getGrossSemiMonthlyRate());
+            ps.setBigDecimal(17, employee.getHourlyRate());
+        } else {
+            ps.setInt(1, employee.getEmployeeId());
+            ps.setString(2, employee.getFirstName());
+            ps.setString(3, employee.getLastName());
+            ps.setDate(4, employee.getBirthday());
+            ps.setString(5, employee.getAddress());
+            ps.setString(6, employee.getContactNumber());
+            ps.setString(7, String.valueOf(employee.getStatus()));
+            ps.setDate(8, employee.getDateHired());
+            ps.setInt(9, employee.getPositionId());
+            ps.setString(10, employee.getSupervisor());
+            ps.setInt(11, employee.getDeptId());
+            ps.setString(12, employee.getSss());
+            ps.setString(13, employee.getPhilhealth());
+            ps.setString(14, employee.getPagibig());
+            ps.setString(15, employee.getTin());
+            ps.setBigDecimal(16, employee.getBasicSalary());
+            ps.setBigDecimal(17, employee.getGrossSemiMonthlyRate());
+            ps.setBigDecimal(18, employee.getHourlyRate());
+        }
     }
 
     public Employee getEmployeeById(int employeeId) throws SQLException {
@@ -347,7 +394,7 @@ public class EmployeeRepository {
         try (Connection connection = DatabaseConnectionUtility.getConnection();
 
              PreparedStatement prepStatement = connection.prepareStatement(query)) {
-            prepStatement.setInt(1,employeeId);
+            prepStatement.setInt(1, employeeId);
             int isUpdated = prepStatement.executeUpdate();
             if (isUpdated > 0) {
                 System.out.println("Updated success");
@@ -361,8 +408,8 @@ public class EmployeeRepository {
         String query = QueryPath.Employee.COUNT_INACTIVE_EMPLOYEES;
         int totalInactiveEmployees = 0;
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection();
-            PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -378,9 +425,9 @@ public class EmployeeRepository {
     public AccountNumber fetchEmployeeAccountNumber(int employeeId) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\employee\\get_employee_bank_accounts.sql");
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection();
-            PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1,employeeId);
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, employeeId);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
