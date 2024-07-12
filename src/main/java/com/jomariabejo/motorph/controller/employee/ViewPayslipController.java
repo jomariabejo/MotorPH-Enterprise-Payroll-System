@@ -1,14 +1,13 @@
 package com.jomariabejo.motorph.controller.employee;
 
 
+import com.jomariabejo.motorph.entity.Allowance;
 import com.jomariabejo.motorph.entity.Deduction;
 import com.jomariabejo.motorph.entity.Payslip;
 import com.jomariabejo.motorph.entity.Tax;
-import com.jomariabejo.motorph.service.DeductionService;
-import com.jomariabejo.motorph.service.PayslipService;
-import com.jomariabejo.motorph.service.TaxCategoryService;
-import com.jomariabejo.motorph.service.TaxService;
+import com.jomariabejo.motorph.service.*;
 import com.jomariabejo.motorph.utility.AlertUtility;
+import com.jomariabejo.motorph.utility.DateUtility;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -17,6 +16,8 @@ import javafx.scene.control.TextField;
 
 import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 public class ViewPayslipController {
 
@@ -170,18 +171,24 @@ public class ViewPayslipController {
         this.tf_employee_id.getScene().getWindow().hide();
     }
 
-    /**
-     * TODO:
-     * 1. Modify the deduction
-     * 2. Modify the tax
-     * 3. Modify the payslip
-     */
-
-
     private void executePayslipModification() {
         modifyDeduction();
         modifyTax();
         modifyPayslip();
+        modifyAllowance();
+    }
+
+    private void modifyAllowance() {
+        AllowanceService allowanceService = new AllowanceService();
+        Allowance allowance = new Allowance();
+        allowance.setEmployeeID(Integer.parseInt(this.tf_employee_id.getText()));
+        allowance.setDateModified(Timestamp.from(Instant.now()));
+        allowance.setRiceAllowance((int) Double.parseDouble(this.tf_rice_subsidy.getText().replace("Php ", "")));
+        allowance.setPhoneAllowance((int) Double.parseDouble(this.tf_phone_allowance.getText().replace("Php ", "")));
+        allowance.setClothingAllowance((int) Double.parseDouble(this.tf_clothing_allowance.getText().replace("Php ", "")));
+        int totalAmount = allowance.getRiceAllowance() + allowance.getPhoneAllowance() + allowance.getClothingAllowance();
+        allowance.setTotalAmount(totalAmount);
+        allowanceService.updateAllowance(allowance, Integer.parseInt(this.tf_employee_id.getText()));
     }
 
     private void modifyTax() {

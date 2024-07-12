@@ -47,6 +47,23 @@ public class AllowanceRepository {
         }
     }
 
+    public void updateAllowance(Allowance allowance, int employee_id) {
+        String query = "UPDATE allowance SET clothing=?, rice=?, phone=?, total_amount=?, dateModified=? WHERE employee_id=?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, allowance.getClothingAllowance());
+            ps.setInt(2, allowance.getRiceAllowance());
+            ps.setInt(3, allowance.getPhoneAllowance());
+            ps.setInt(4, allowance.getTotalAmount());
+            ps.setTimestamp(5, allowance.getDateModified());
+            ps.setInt(6, employee_id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Allowance getAllowanceByEmployeeId(int employeeId) {
         String query = "SELECT * FROM allowance WHERE employee_id = ?";
 

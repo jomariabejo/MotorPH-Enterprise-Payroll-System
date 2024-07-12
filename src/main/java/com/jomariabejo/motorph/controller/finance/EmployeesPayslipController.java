@@ -109,12 +109,6 @@ public class EmployeesPayslipController {
         this.lbl_tv_total_result.setText(String.valueOf(tblViewSize));
     }
 
-    public void initData(Integer myEmployeeId) {
-        ObservableList observableList = FXCollections.observableList(payslipService.fetchPayslipByEmployeeId(myEmployeeId));
-        this.tv_my_payslips.setItems(observableList);
-        setUpTotalResult();
-    }
-
     public void initEntirePayslip(Date payPeriodStart, Date payPeriodEnd) {
         ObservableList observableList = FXCollections.observableList(payslipService.fetchPayslipBetweenPayStartDateAndPayEndDate(payPeriodStart,payPeriodEnd));
         this.tv_my_payslips.setItems(observableList);

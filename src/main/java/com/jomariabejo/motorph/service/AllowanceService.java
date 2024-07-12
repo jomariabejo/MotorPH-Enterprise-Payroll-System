@@ -11,17 +11,22 @@ public class AllowanceService {
         allowanceRepository.createAllowanceRecord(allowance);
     }
 
-    public Allowance getAllowanceByEmployeeId(int employeeId) throws SQLException {
+    public Allowance getAllowanceByEmployeeId(int employeeId) {
         return allowanceRepository.getAllowanceByEmployeeId(employeeId);
     }
 
-    public int getAllowanceIdByEmployeeId(int employeeId) throws SQLException {
+    public int getAllowanceIdByEmployeeId(int employeeId) {
         return allowanceRepository.getAllowanceIdByEmployeeId(employeeId);
     }
 
-    public void updateAllowance(Allowance allowance) throws SQLException {
+    public void updateAllowance(Allowance allowance) {
         allowanceRepository.updateAllowance(allowance);
     }
+
+    public void updateAllowance(Allowance allowance, int employeeId) {
+        allowanceRepository.updateAllowance(allowance, employeeId);
+    }
+
     public void deleteAllowance() {
 
     }
