@@ -67,4 +67,21 @@ public class AlertUtility {
         return result.orElse(""); // Return the input or an empty string if cancelled
     }
 
+    public static String showEmployeeIdInputDialog() {
+        // Create a TextInputDialog
+        TextInputDialog dialog = new TextInputDialog();
+        dialog.setTitle("Enter employee number:");
+        dialog.setHeaderText(null); // No header
+        dialog.setContentText("Please paste the employee id:");
+
+        // Show dialog and wait for user response
+        Optional<String> result = dialog.showAndWait();
+
+        // Process user input
+        if (result.isPresent() && !result.get().trim().isEmpty()) {
+            return result.get().trim(); // Return trimmed input if present
+        } else {
+            return ""; // Return empty string if input is empty or dialog is cancelled
+        }
+    }
 }

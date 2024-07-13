@@ -1,7 +1,8 @@
 package com.jomariabejo.motorph.controller.hr;
 
+import com.jomariabejo.motorph.controller.employee.MyLeaveRequestSubmissionController;
 import com.jomariabejo.motorph.entity.LeaveRequest;
-import com.jomariabejo.motorph.repository.LeaveRequestRepository;
+import com.jomariabejo.motorph.service.EmployeeService;
 import com.jomariabejo.motorph.service.LeaveRequestService;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.collections.FXCollections;
@@ -323,6 +324,32 @@ public class HRLeaveRequestController {
             searchingEmployeeLeaveRequests(event);
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void fileEmployeeLeave() throws IOException {
+        String employeeId = (AlertUtility.showEmployeeIdInputDialog());
+        EmployeeService employeeService = new EmployeeService();
+
+        try {
+            if (!employeeId.isEmpty() && employeeService.checkIfEmployeeExist(Integer.parseInt(employeeId))) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/filing-leave-request.fxml"));
+                Parent root = fxmlLoader.load();
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.initStyle(StageStyle.DECORATED);
+                stage.setTitle("Filing New Leave Request");
+                stage.setScene(new Scene(root));
+                stage.show();
+                MyLeaveRequestSubmissionController myLeaveRequestSubmissionController = fxmlLoader.getController();
+                myLeaveRequestSubmissionController.initData(Integer.parseInt(employeeId));
+            }
+            else {
+                AlertUtility.showErrorAlert("Invalid employee id", "Employee not found", "Please try again.");
+            }
+        }
+        catch (Exception e) {
+                AlertUtility.showErrorAlert("Failed", "Invalid employee id", e.getMessage());
         }
     }
 }
