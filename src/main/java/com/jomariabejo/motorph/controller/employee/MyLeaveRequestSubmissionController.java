@@ -115,60 +115,81 @@ public class MyLeaveRequestSubmissionController {
         return categories;
     }
 
-    public void validateSelectedCategory(String selectedCategory) {
+    public boolean validateSelectedCategory(String selectedCategory) {
+        int leaveReqCatId = fetchLeaveRequestCategoryId(selectedCategory);
+
         if (selectedCategory == null) {
             AlertUtility.showErrorAlert("Error", "Please select a leave request type.", null);
-            return;
+            return false;
         }
 
-        int leaveReqCatId = fetchLeaveRequestCategoryId(selectedCategory);
-        if (leaveReqCatId == -1) {
+        else if (leaveReqCatId == -1) {
             AlertUtility.showErrorAlert("Error", "Invalid leave request type.", null);
-            return;
+            return false;
         }
+
+        else return true;
     }
 
 
     private void saveLeaveRequest() {
         String selectedCategory = leaverequest_type.getSelectionModel().getSelectedItem();
-
-        validateSelectedCategory(selectedCategory);
+        boolean isValidSelectedCategory = validateSelectedCategory(selectedCategory);
 
         LocalDate leaveStartDateValue = dp_leave_start_date.getValue();
         LocalDate leaveEndDateValue = dp_leave_end_date.getValue();
         String reason = tf_reason.getText();
         int employeeId = Integer.parseInt(this.employeeId.getText());
 
-        if (leaveStartDateValue.isBefore(leaveEndDateValue) || leaveStartDateValue.isEqual(leaveEndDateValue)) {
-            // Check for overlapping leave requests
-            if (hasOverlappingLeaveRequest(employeeId, leaveStartDateValue, leaveEndDateValue)) {
-                AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You already have a leave request overlapping with the selected dates.");
-                return;
-            } else if (hasRemainingLeaveCredits(leaveStartDateValue, leaveEndDateValue)) {
-                String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason, date_created) VALUES (?, ?, ?, ?, ?, ?)";
-
-                try (Connection connection = DatabaseConnectionUtility.getConnection();
-                     PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
-
-                    preparedStatement.setInt(1, employeeId);
-                    preparedStatement.setInt(2, fetchLeaveRequestCategoryId(selectedCategory));
-                    preparedStatement.setDate(3, java.sql.Date.valueOf(leaveStartDateValue));
-                    preparedStatement.setDate(4, java.sql.Date.valueOf(leaveEndDateValue));
-                    preparedStatement.setString(5, reason);
-                    preparedStatement.setDate(6, DateUtility.getDate());
-
-                    int rowsAffected = preparedStatement.executeUpdate();
-                    if (rowsAffected > 0) {
-                        AlertUtility.showInformation("Success", "Leave Request Submitted", "Leave request submitted successfully.");
-                    }
-                } catch (SQLException e) {
-                }
-            } else {
-                AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You have fully consumed your leaves for this year. Cannot submit leave request.");
-            }
-        } else {
-            AlertUtility.showErrorAlert("Error", "Invalid leave end date.", "Leave end date should be after start date.");
+        if (!isValidSelectedCategory) {
+            return;
         }
+
+        if (!leaveStartDateValue.isBefore(leaveEndDateValue) && !leaveStartDateValue.isEqual(leaveEndDateValue)) {
+            AlertUtility.showErrorAlert("Error", "Invalid leave end date.", "Leave end date should be after start date.");
+            return;
+        }
+
+        if (hasOverlappingLeaveRequest(employeeId, leaveStartDateValue, leaveEndDateValue)) {
+            AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You already have a leave request overlapping with the selected dates.");
+            return;
+        }
+
+        if (!hasRemainingLeaveCredits(leaveStartDateValue, leaveEndDateValue)) {
+            AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You have fully consumed your leaves for this year. Cannot submit leave request.");
+            return;
+        }
+
+        if (tf_reason.getText().length() <= 50) {
+            AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "Reason must be at least 50 characters long.");
+            return;
+        }
+
+// If all validations pass, proceed with inserting the leave request
+        String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason, date_created) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
+
+            preparedStatement.setInt(1, employeeId);
+            preparedStatement.setInt(2, fetchLeaveRequestCategoryId(selectedCategory));
+            preparedStatement.setDate(3, java.sql.Date.valueOf(leaveStartDateValue));
+            preparedStatement.setDate(4, java.sql.Date.valueOf(leaveEndDateValue));
+            preparedStatement.setString(5, reason);
+            preparedStatement.setDate(6, DateUtility.getDate());
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            if (rowsAffected > 0) {
+                AlertUtility.showInformation("Success", "Leave Request Submitted", "Leave request submitted successfully.");
+            } else {
+                AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "Failed to submit leave request. Please try again.");
+            }
+
+        } catch (SQLException e) {
+            // Handle database errors
+            AlertUtility.showErrorAlert("Error", "Database Error", "Failed to submit leave request due to database error.");
+        }
+
     }
 
     /**
