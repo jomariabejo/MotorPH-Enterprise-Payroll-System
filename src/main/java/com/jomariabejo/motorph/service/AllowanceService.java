@@ -5,24 +5,29 @@ import com.jomariabejo.motorph.repository.AllowanceRepository;
 
 import java.sql.SQLException;
 
-/** TODO: FINISH CRUD **/
 public class AllowanceService {
     AllowanceRepository allowanceRepository = new AllowanceRepository();
+
     public void createAllowance(Allowance allowance) throws SQLException {
         allowanceRepository.createAllowanceRecord(allowance);
     }
 
-    public Allowance getAllowanceByEmployeeId(int employeeId) throws SQLException {
+    public Allowance getAllowanceByEmployeeId(int employeeId) {
         return allowanceRepository.getAllowanceByEmployeeId(employeeId);
     }
 
-    public int getAllowanceIdByEmployeeId(int employeeId) throws SQLException {
+    public int getAllowanceIdByEmployeeId(int employeeId) {
         return allowanceRepository.getAllowanceIdByEmployeeId(employeeId);
     }
 
-    public void updateAllowance(Allowance allowance) throws SQLException {
+    public void updateAllowance(Allowance allowance) {
         allowanceRepository.updateAllowance(allowance);
     }
+
+    public void updateAllowance(Allowance allowance, int employeeId) {
+        allowanceRepository.updateAllowance(allowance, employeeId);
+    }
+
     public void deleteAllowance() {
 
     }

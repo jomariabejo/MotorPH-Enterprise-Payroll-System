@@ -181,26 +181,21 @@ public class MyProfileController {
 
         if (employeePasswordExist()) {
 
-        }
-
-        else if (isPasswordSame(newPassword, confirmPassword)) {
+        } else if (isPasswordSame(newPassword, confirmPassword)) {
             UserService userService = new UserService();
             int employeeId = Integer.parseInt(this.tf_employee_id.getText());
 
             boolean isModified =
-                userService.changePassword(
-                    employeeId,
-                    existingPassword,
-                    newPassword);
+                    userService.changePassword(
+                            employeeId,
+                            existingPassword,
+                            newPassword);
             if (isModified) {
                 AlertUtility.showInformation("Password Change Status", "Password Update Success", "Your password has been successfully updated.");
-            }
-            else {
+            } else {
                 AlertUtility.showInformation("Password Change Status", "Password Update Failed", "Your password could not be updated. Please try again.");
             }
-        }
-
-        else {
+        } else {
             AlertUtility.showErrorAlert("Password Error", "Password Mismatch", "Your new password and confirm password do not match.");
         }
     }
@@ -228,11 +223,9 @@ public class MyProfileController {
             String strNewPassword = c.get("newPassword");
             if (strNewPassword.isEmpty()) {
                 c.error("New password is empty");
-            }
-            else if (isPasswordSame(strNewPassword, this.tf_confirm_new_password.getText())) {
+            } else if (isPasswordSame(strNewPassword, this.tf_confirm_new_password.getText())) {
                 enableChangePasswordConfirmButton();
-            }
-            else {
+            } else {
                 c.error("Your new password and confirm password do not match.");
                 disableChangePasswordConfirmButton();
             }
@@ -241,11 +234,9 @@ public class MyProfileController {
             String strConfirmedNewPassword = c.get("confirmedNewPassword");
             if (strConfirmedNewPassword.isEmpty()) {
                 c.error("Confirmed new password is empty");
-            }
-            else if (isPasswordSame(strConfirmedNewPassword, this.tf_new_password.getText())) {
+            } else if (isPasswordSame(strConfirmedNewPassword, this.tf_new_password.getText())) {
                 enableChangePasswordConfirmButton();
-            }
-            else {
+            } else {
                 c.error("Your new password and confirm password do not match.");
                 disableChangePasswordConfirmButton();
             }

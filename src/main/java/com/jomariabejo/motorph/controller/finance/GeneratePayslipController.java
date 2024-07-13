@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 
 public class GeneratePayslipController {
@@ -67,12 +66,8 @@ public class GeneratePayslipController {
 
             executeButton.setText("Execute");
             tv_generated_payroll.getItems().clear();
-        }
-
-        else if (isDateValidated && isInBetweenDateLessThanAMonth) {
-            System.out.println("1.0");
+        } else if (isDateValidated && isInBetweenDateLessThanAMonth) {
             if (payslipService.canCreatePayslip(Date.valueOf(dp_startPayDate.getValue()), Date.valueOf(dp_endPayDate.getValue()))) {
-                System.out.println("2.0");
                 ArrayList<EmployeePayrollSummaryReport> employeePayrollSummaryReports = new ArrayList<>();
 
                 ArrayList<GrossIncome> GROSS_INCOMES = timesheetService.fetchGrossIncome(Date.valueOf(dp_startPayDate.getValue()), Date.valueOf(dp_endPayDate.getValue()));
@@ -91,7 +86,6 @@ public class GeneratePayslipController {
 
                     tax.setWithheldTax(
                             taxService.computeTax(
-                                    GROSS_INCOMES.get(i).basicSalary(),
                                     GROSS_INCOMES.get(i).computeGrossIncome(),
                                     deduction));
 
@@ -137,7 +131,6 @@ public class GeneratePayslipController {
             }
 
         } else {
-            System.out.println("1.1");
             AlertUtility.showErrorAlert(
                     "Failed",
                     "Verify your pay period",

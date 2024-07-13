@@ -4,7 +4,7 @@ import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.enums.AccessType;
 import com.jomariabejo.motorph.service.EmployeeService;
-import com.jomariabejo.motorph.service.RoleService.RoleService;
+import com.jomariabejo.motorph.service.RoleService;
 import com.jomariabejo.motorph.service.UserService;
 import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.DateUtility;

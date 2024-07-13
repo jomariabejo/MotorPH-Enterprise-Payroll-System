@@ -11,4 +11,3 @@ public class DateConversionUtility {
         return new Date(utilDate.getTime());
     }
 }
-

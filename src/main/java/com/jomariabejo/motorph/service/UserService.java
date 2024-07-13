@@ -1,12 +1,17 @@
 package com.jomariabejo.motorph.service;
 
+import com.jomariabejo.motorph.entity.Role;
 import com.jomariabejo.motorph.entity.User;
 import com.jomariabejo.motorph.repository.UserRepository;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserService {
     private final UserRepository userRepository;
 
-    public UserService()  {
+    public UserService() {
         this.userRepository = new UserRepository();
     }
 
@@ -36,5 +41,29 @@ public class UserService {
 
     public boolean changePassword(int employeeId, String existingPassword, String newPassword) {
         return userRepository.changePassword(employeeId, existingPassword, newPassword);
+    }
+
+    public boolean changePassword(int userId, String newPassword) {
+        return userRepository.changePassword(userId, newPassword);
+    }
+
+    public boolean saveVerificationCode(String username, int code) {
+        return userRepository.saveVerificationCode(username, code);
+    }
+
+    public boolean isUsernameExist(String username) {
+        return userRepository.isUsernameExist(username);
+    }
+
+    public int fetchUserIdByVerificationCode(int verificationCode) {
+        return userRepository.fetchUserIdByVerificationCode(verificationCode);
+    }
+
+    public void resetVerificationCode(int userId) {
+        userRepository.resetVerificationCode(userId);
+    }
+
+    public ArrayList<User> fetchUserWithVerificationCode() {
+        return userRepository.fetchUserWithVerificationCode();
     }
 }

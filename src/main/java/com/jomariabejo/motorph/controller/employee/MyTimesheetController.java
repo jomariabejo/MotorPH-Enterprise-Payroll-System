@@ -27,27 +27,27 @@ public class MyTimesheetController {
     String formattedTime = currentTime.format(timeFormatter);
 
     @FXML
-    private TableColumn<Date,Timesheet> date;
+    private TableColumn<Date, Timesheet> date;
 
     @FXML
     private Label lbl_tv_total_result;
 
 
     @FXML
-    private TableColumn<BigDecimal,Timesheet> overtimeHoursWorked;
+    private TableColumn<BigDecimal, Timesheet> overtimeHoursWorked;
 
 
     @FXML
-    private TableColumn<BigDecimal,Timesheet> tc_regularHoursWorked;
+    private TableColumn<BigDecimal, Timesheet> tc_regularHoursWorked;
 
     @FXML
-    private TableColumn<Time,Timesheet> tc_timeIn;
+    private TableColumn<Time, Timesheet> tc_timeIn;
 
     @FXML
-    private TableColumn<Time,Timesheet> tc_timeOut;
+    private TableColumn<Time, Timesheet> tc_timeOut;
 
     @FXML
-    private TableColumn<Integer,Timesheet> tc_timesheetId;
+    private TableColumn<Integer, Timesheet> tc_timesheetId;
 
 
     @FXML
@@ -68,7 +68,7 @@ public class MyTimesheetController {
                 timesheet.setEmployeeId(employeeId);
                 timesheet.setRegularHoursWorked(Time.valueOf("00:00:00"));
                 timesheet.setOvertimeHoursWorked(Time.valueOf("00:00:00"));
-                this.tv_timesheets.getItems().add(0,timesheet); // Insert the new timesheet at index 0 of the table view
+                this.tv_timesheets.getItems().add(0, timesheet); // Insert the new timesheet at index 0 of the table view
                 this.lbl_tv_total_result.setText(String.valueOf(tv_timesheets.getItems().size())); // Increment the number of results
                 System.out.println("Timesheet Date: " + timesheet.getDate());
                 System.out.println("Timesheet Time In: " + timesheet.getTimeIn());
@@ -129,6 +129,7 @@ public class MyTimesheetController {
             AlertUtility.showErrorAlert("Database Error", "Error Occurred", "Failed to connect to the database.");
         }
     }
+
     @FXML
     void viewEmployeePerformanceButtonClicked(ActionEvent event) {
 

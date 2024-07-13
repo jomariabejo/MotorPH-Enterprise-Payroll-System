@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.finance.EmployeesPayslipController">
+    <children>
+        <VBox layoutX="277.0" layoutY="130.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="24.0">
+                    <children>
+                        <Label fx:id="lbl_tv_total_result1" layoutX="276.0" layoutY="41.0" prefHeight="35.0" prefWidth="116.0" stylesheets="@../../../../css/custom/label.css" text="No. Result:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="lbl_tv_total_result" prefHeight="35.0" prefWidth="78.0" stylesheets="@../../../../css/custom/label.css" text="#####">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                        <Region prefHeight="89.0" prefWidth="868.0" />
+                    </children>
+                </HBox>
+                <TableView fx:id="tv_my_payslips" prefHeight="500.0" stylesheets="@../../../../css/custom/tableView.css" tableMenuButtonVisible="true">
+                    <columns>
+                        <TableColumn minWidth="175.0" prefWidth="155.19998931884766" text="Payslip Id">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="payslipID" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn minWidth="175.0" prefWidth="155.19998931884766" text="Pay Period Start">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="payPeriodStart" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn minWidth="175.0" prefWidth="141.5999755859375" text="Pay Period End">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="payPeriodEnd" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn minWidth="175.0" prefWidth="120.00003051757812" text="Total Hours Worked">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="totalHoursWorked" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn minWidth="175.0" prefWidth="111.19997864961624" text="Gross Income">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="grossIncome" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn minWidth="175.0" prefWidth="111.19997864961624" text="Net Income">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="netIncome" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

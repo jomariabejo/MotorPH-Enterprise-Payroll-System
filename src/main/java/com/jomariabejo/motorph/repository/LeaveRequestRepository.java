@@ -7,9 +7,6 @@ import com.jomariabejo.motorph.utility.TextReader;
 import java.sql.*;
 import java.util.ArrayList;
 
-/**
- * TODO: CHECK IF WORKING PROPERLY
- */
 public class LeaveRequestRepository {
 
     public void createLeaveRequest(LeaveRequest leaveRequest) {
@@ -81,7 +78,7 @@ public class LeaveRequestRepository {
         String query = "UPDATE leave_request SET status=? WHERE leave_request_id=?";
         try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setString(1, leaveRequestStatus.toString());
-            ps.setInt(2,leaveRequestId);
+            ps.setInt(2, leaveRequestId);
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
@@ -134,12 +131,6 @@ public class LeaveRequestRepository {
     }
 
 
-    /**
-     * TODO : CATEGORY NAME SHOULD BE INSERTED IN QUERY
-     * @param employeeId
-     * @param categoryId
-     * @return
-     */
     public double calculateRemainingLeaveBalance(int employeeId, int categoryId) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\leave_request\\calculate_remaining_leave_balance.sql");
 
@@ -177,7 +168,7 @@ public class LeaveRequestRepository {
     public int countEmployeeLeaveRequest(int employeeId) throws SQLException {
         String query = "SELECT COUNT(*) FROM LEAVE_REQUEST WHERE EMPLOYEE_ID = ?";
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, employeeId);
 
             ResultSet rs = ps.executeQuery();
@@ -243,6 +234,7 @@ public class LeaveRequestRepository {
         }
         return leaveRequests;
     }
+
     public ArrayList<LeaveRequest> fetchLeaveRequestForPage(int pageIndex, int rowsPerPage, String leaveRequestStatus, int employeeId) throws SQLException {
         ArrayList<LeaveRequest> leaveRequests = new ArrayList<>();
         String query = "SELECT * FROM LEAVE_REQUEST WHERE status = ? && employee_id = ? ORDER BY DATE_CREATED LIMIT ? OFFSET ? ";
@@ -402,7 +394,7 @@ public class LeaveRequestRepository {
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1,leaveRequestId);
+            ps.setInt(1, leaveRequestId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

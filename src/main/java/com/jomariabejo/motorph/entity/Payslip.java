@@ -2,6 +2,7 @@ package com.jomariabejo.motorph.entity;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+
 public class Payslip {
     private int payslipID;
     private int employeeID;
@@ -46,7 +47,7 @@ public class Payslip {
         this.dateCreated = dateCreated;
     }
 
-    public Payslip(int payslipID,BigDecimal totalHoursWorked, BigDecimal grossIncome, BigDecimal netIncome, Date payPeriodStart, Date payPeriodEnd) {
+    public Payslip(int payslipID, BigDecimal totalHoursWorked, BigDecimal grossIncome, BigDecimal netIncome, Date payPeriodStart, Date payPeriodEnd) {
         this.payslipID = payslipID;
         this.totalHoursWorked = totalHoursWorked;
         this.grossIncome = grossIncome;
@@ -178,24 +179,25 @@ public class Payslip {
     }
 
     public record PayslipViewer(int employeeId,
-                          String employeeName,
-                          Date payPeriodStart,
-                          Date payPeriodEnd,
-                          String positionName,
-                          double monthlyRate,
-                          double hourlyRate,
-                          double grossIncome,
-                          double sss,
-                          double philhealth,
-                          double pagibig,
-                          double withheldTax,
-                          double totalDeduction,
-                          double rice,
-                          double phone,
-                          double clothing,
-                          double totalBenefits,
-                          double takeHomePay,
-                          double totalRegularHoursWorked,
-                          double totalOvertimeHoursWorked,
-                          double totalHoursWorked) {}
+                                String employeeName,
+                                Date payPeriodStart,
+                                Date payPeriodEnd,
+                                String positionName,
+                                double monthlyRate,
+                                double hourlyRate,
+                                double grossIncome,
+                                double sss,
+                                double philhealth,
+                                double pagibig,
+                                double withheldTax,
+                                double totalDeduction,
+                                double rice,
+                                double phone,
+                                double clothing,
+                                double totalBenefits,
+                                double takeHomePay,
+                                double totalRegularHoursWorked,
+                                double totalOvertimeHoursWorked,
+                                double totalHoursWorked) {
+    }
 }

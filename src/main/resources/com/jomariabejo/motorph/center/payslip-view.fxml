@@ -282,6 +282,12 @@
                                     </HBox>
                                  </children>
                               </VBox>
+                              <HBox alignment="CENTER_RIGHT">
+                                 <children>
+                                    <Button fx:id="cancelButton" mnemonicParsing="false" onAction="#cancelClicked" stylesheets="@../../../../css/custom/button-small.css" text="Cancel" />
+                                    <Button fx:id="submitButton" mnemonicParsing="false" onAction="#saveClciked" stylesheets="@../../../../css/custom/button-small.css" text="Save" />
+                                 </children>
+                              </HBox>
                            </children>
                         </VBox>
                      </content>

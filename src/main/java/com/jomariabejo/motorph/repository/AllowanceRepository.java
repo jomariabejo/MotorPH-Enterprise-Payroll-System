@@ -2,13 +2,18 @@ package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.Allowance;
+import com.jomariabejo.motorph.utility.DateUtility;
 import com.jomariabejo.motorph.utility.TextReader;
 
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDate;
 
 public class AllowanceRepository {
     public void createAllowanceRecord(Allowance allowance) {
-        String query = "INSERT INTO ALLOWANCE( clothing, rice, phone, total_amount, dateCreated, dateModified, employee_id) VALUES ( ?, ?, ?, ?, ?, ?, ? );";
+        System.out.println("ALLOWANCE INSERTING : " + allowance.toString());
+        ;
+        String query = "INSERT INTO ALLOWANCE( clothing, rice, phone, total_amount, dateCreated, dateModified, employee_id) VALUES ( ?, ?, ?, ?, ?, ?, ?);";
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {
             ps.setInt(1, allowance.getClothingAllowance());
@@ -37,6 +42,23 @@ public class AllowanceRepository {
             ps.setTimestamp(5, new Timestamp(System.currentTimeMillis())); // Set current timestamp
             ps.setInt(6, allowance.getAllowanceID());
 
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateAllowance(Allowance allowance, int employee_id) {
+        String query = "UPDATE allowance SET clothing=?, rice=?, phone=?, total_amount=?, dateModified=? WHERE employee_id=?";
+
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement ps = connection.prepareStatement(query)) {
+            ps.setInt(1, allowance.getClothingAllowance());
+            ps.setInt(2, allowance.getRiceAllowance());
+            ps.setInt(3, allowance.getPhoneAllowance());
+            ps.setInt(4, allowance.getTotalAmount());
+            ps.setTimestamp(5, allowance.getDateModified());
+            ps.setInt(6, employee_id);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

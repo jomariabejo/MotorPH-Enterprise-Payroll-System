@@ -2,19 +2,22 @@ package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.Tax;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import com.jomariabejo.motorph.utility.TextReader;
+import javafx.scene.chart.XYChart;
 
+import java.math.BigDecimal;
 import java.sql.*;
 
 public class TaxRepository {
-    public void saveTax(Tax tax)  {
+    public void saveTax(Tax tax) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\tax\\create_tax.sql");
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
-            preparedStatement.setInt(1,tax.getTaxId());
-            preparedStatement.setBigDecimal(2, tax.getTaxableIncome()   );
+            preparedStatement.setInt(1, tax.getTaxId());
+            preparedStatement.setBigDecimal(2, tax.getTaxableIncome());
             preparedStatement.setInt(3, tax.getTaxCategoryId());
             preparedStatement.setBigDecimal(4, tax.getWithheldTax());
             preparedStatement.setInt(5, tax.getEmployeeId());
@@ -32,30 +35,56 @@ public class TaxRepository {
         }
     }
 
-    private Tax fetchTaxByEmployeeIdAndDate(int employeeId, Date dateCreated) {
-        String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\deduction\\get_deduction.sql");
-        Tax tax = new Tax();
+    public void updateTaxByPayslipId(int payslipId, BigDecimal taxableIncome, int taxCategoryId, BigDecimal withheldTax) {
+        String query = "UPDATE tax t " +
+                "JOIN payslip p ON t.employee_id = p.employee_id " +
+                "SET t.taxable_income = ?, t.tax_cat_id = ?, t.withheld_tax = ? " +
+                "WHERE p.payslip_id = ?";
+
+        try (Connection conn = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            // Set parameters for the prepared statement
+            pstmt.setBigDecimal(1, taxableIncome);
+            pstmt.setInt(2, taxCategoryId);
+            pstmt.setBigDecimal(3, withheldTax);
+            pstmt.setInt(4, payslipId);
+
+            // Execute the update
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void modifyTax(Tax tax, int payslipId) {
+        String query = "UPDATE tax t " +
+                "JOIN payslip p ON t.tax_id = p.tax_id " +
+                "SET " +
+                "t.taxable_income = ?, " +
+                "t.tax_cat_id = ?, " +
+                "t.withheld_tax = ? " +
+                "WHERE p.payslip_id = ?";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setDate(1,dateCreated);
-            preparedStatement.setInt(2,employeeId);
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
 
-            ResultSet resultSet = preparedStatement.executeQuery();
+            pstmt.setBigDecimal(1, tax.getTaxableIncome());
+            pstmt.setInt(2, tax.getTaxCategoryId());
+            pstmt.setBigDecimal(3, tax.getWithheldTax());
+            pstmt.setInt(4, payslipId);
 
-            if (resultSet.next()) {
-                tax.setEmployeeId(resultSet.getInt("employee_id"));
-                tax.setWithheldTax(resultSet.getBigDecimal("withheld_tax"));
-                tax.setDateCreated(resultSet.getDate("date_created"));
-                tax.setTaxableIncome(resultSet.getBigDecimal("taxable_income"));
-                tax.setTaxCategoryId(resultSet.getInt("tax_cat_id"));
-                tax.setTaxId(resultSet.getInt("tax_id"));
+            int rowsAffected = pstmt.executeUpdate();
 
-                return tax;
+            if (rowsAffected > 0) {
+                System.out.println("Tax updated successfully");
+                System.out.println(tax.toString());
             }
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return tax;
     }
 }

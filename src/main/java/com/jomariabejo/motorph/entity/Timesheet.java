@@ -15,7 +15,8 @@ public class Timesheet {
     private Time overtimeHoursWorked;
 
     // Constructors
-    public Timesheet() {}
+    public Timesheet() {
+    }
 
     public Timesheet(int timesheetId, Date date, Time timeIn, Time timeOut, int employeeId) {
         this.timesheetId = timesheetId;

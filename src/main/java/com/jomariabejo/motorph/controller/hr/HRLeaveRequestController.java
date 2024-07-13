@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class HRLeaveRequestController {
     private final int ROWS_PER_PAGE = 100;
     private LeaveRequestService leaveRequestService;
-    
+
     @FXML
     private ComboBox<String> cb_leave_req_status;
 
@@ -219,10 +219,6 @@ public class HRLeaveRequestController {
                             throw new RuntimeException(e);
                         }
                     }
-
-                    /**
-                     * TODO REALTIME TIME UpDATE OF TABLEVIEW WHEN DELETING A LEAVE RECORD RECORD
-                     */
                 });
 
                 // Load the delete icon image

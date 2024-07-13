@@ -1,4 +1,4 @@
-package com.jomariabejo.motorph.service.RoleService;
+package com.jomariabejo.motorph.service;
 
 import com.jomariabejo.motorph.repository.RoleRepository;
 

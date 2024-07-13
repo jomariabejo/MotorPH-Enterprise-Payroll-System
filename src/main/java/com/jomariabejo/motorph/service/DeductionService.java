@@ -4,6 +4,7 @@ import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
 import com.jomariabejo.motorph.entity.Deduction;
 import com.jomariabejo.motorph.repository.DeductionRepository;
 import com.jomariabejo.motorph.utility.TextReader;
+import javafx.scene.control.Label;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -107,7 +108,7 @@ public class DeductionService {
     public void saveDeduction(Deduction deduction) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\deduction\\create_deduction.sql");
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, deduction.getDeductionID());
             preparedStatement.setInt(2, deduction.getEmployeeID());
             preparedStatement.setBigDecimal(3, deduction.getSss());
@@ -119,12 +120,42 @@ public class DeductionService {
 
             if (rowAffected > 0) {
                 System.out.println("Insert deduction success.");
-            }
-            else {
+            } else {
                 System.out.println("Insert deduction failed.");
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void modifyDeduction(Deduction deduction, int payslipNumber) {
+        String query = "UPDATE deduction d " +
+                "JOIN payslip p ON d.deduction_id = p.deduction_id " +
+                "SET d.sss = ?, d.philhealth = ?, d.pagibig = ?, d.total_contribution = ? " +
+                "WHERE p.payslip_id = ?";
+
+        try (Connection conn = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            // Set parameters for the prepared statement
+            pstmt.setBigDecimal(1, deduction.getSss());
+            pstmt.setBigDecimal(2, deduction.getPhilhealth());
+            pstmt.setBigDecimal(3, deduction.getPagibig());
+
+            // Calculate and set total contribution
+            BigDecimal totalContribution = deduction.calculateTotalContribution();
+            pstmt.setBigDecimal(4, totalContribution);
+
+            pstmt.setInt(5, payslipNumber);
+
+            // Execute the update
+            int rowsAffected = pstmt.executeUpdate();
+            System.out.println("Rows affected: " + rowsAffected);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle any potential errors
+        }
+
     }
 }

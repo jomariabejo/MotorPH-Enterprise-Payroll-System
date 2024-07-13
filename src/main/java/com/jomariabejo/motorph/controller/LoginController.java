@@ -7,12 +7,18 @@ import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import net.synedra.validatorfx.Validator;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -32,8 +38,7 @@ public class LoginController {
             if (userName.isEmpty()) {
                 c.error("Please provide username.");
                 loginBtn.setDisable(true);
-            }/* enable the log in button when both fields is not empty */
-            else if (!userName.isEmpty() && !passwordField.getText().isEmpty())
+            }/* enable the log in button when both fields is not empty */ else if (!userName.isEmpty() && !passwordField.getText().isEmpty())
                 loginBtn.setDisable(false);
         }).decorates(usernameField).immediate(); /* Validator for password field. */
         passwordValidator.createCheck().dependsOn("password", passwordField.textProperty()).withMethod(c -> {
@@ -69,6 +74,15 @@ public class LoginController {
         }
     }
 
-    public void forgotPasswordClicked(MouseEvent mouseEvent) {
+    @FXML
+    public void forgotPasswordClicked() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/forgot_password.fxml"));
+        Parent root = fxmlLoader.load();
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initStyle(StageStyle.DECORATED);
+        stage.setTitle("Enter username to get verification code.");
+        stage.setScene(new Scene(root));
+        stage.show();
     }
 }

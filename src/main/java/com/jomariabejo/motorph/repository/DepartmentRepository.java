@@ -14,7 +14,6 @@ public class DepartmentRepository {
         this.connection = connection;
     }
 
-    // CREATE operation
     public void create(Department department) throws SQLException {
         String query = "INSERT INTO department (name, description, date_created) VALUES (?, ?, ?)";
         try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {

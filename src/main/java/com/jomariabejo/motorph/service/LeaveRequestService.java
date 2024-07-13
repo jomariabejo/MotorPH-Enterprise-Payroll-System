@@ -51,7 +51,7 @@ public class LeaveRequestService {
     }
 
     public boolean checkIfEmployeeHasLeaveRequestRecords(int employeeId, String status) {
-        return leaveRequestRepository.checkIfEmployeeHasLeaveRequestRecords(employeeId,status);
+        return leaveRequestRepository.checkIfEmployeeHasLeaveRequestRecords(employeeId, status);
     }
 
 
@@ -78,6 +78,7 @@ public class LeaveRequestService {
     public int countLeaveRequestPage(String status) throws SQLException {
         return leaveRequestRepository.countLeaveRequestsPageCount(status);
     }
+
     public int countLeaveRequestPage(int employeeId, String status) throws SQLException {
         return leaveRequestRepository.countLeaveRequestsPageCount(employeeId, status);
     }

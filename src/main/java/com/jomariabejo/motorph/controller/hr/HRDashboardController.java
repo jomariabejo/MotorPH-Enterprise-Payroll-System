@@ -1,6 +1,7 @@
 package com.jomariabejo.motorph.controller.hr;
 
 import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
+import com.jomariabejo.motorph.utility.AlertUtility;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 public class HRDashboardController {
 
     @FXML
-    private BarChart<String, Number> barchart_monthly_leave_request;
+    private BarChart<String, Double> barchart_monthly_leave_request;
 
     @FXML
     private ComboBox<String> comboBoxMonth;
@@ -57,14 +58,12 @@ public class HRDashboardController {
         writeNumberOfEmployees();
         writeNumberOfActiveEmployees();
         writeNumberOfLeaveRequest();
-        populateAverageHoursWorkedByEmployee();
-        populateBarchartLeaveRequestByEmployee();
     }
 
 
     private void populateBarchartLeaveRequestByEmployee() {
         // setup series data for our barchart
-        XYChart.Series<String, Number> series = new XYChart.Series<>();
+        XYChart.Series<String, Double> series = new XYChart.Series<>();
         series.setName("Number of Leave Requests");
 
         String query = "SELECT CONCAT(e.first_name, ' ', e.last_name), COUNT(lr.leave_request_id) AS total_leave_requests\n" +
@@ -88,49 +87,46 @@ public class HRDashboardController {
 
             while (rs.next()) {
                 String employeeName = rs.getString(1);
-                System.out.printf(employeeName);
-                int totalLeaveRequests = rs.getInt("total_leave_requests");
+                double totalLeaveRequests = rs.getInt("total_leave_requests");
                 series.getData().add(new XYChart.Data<>(employeeName, totalLeaveRequests));
             }
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
         this.barchart_monthly_leave_request.getData().add(series);
     }
 
 
     private void populateAverageHoursWorkedByEmployee() {
-            String query = "\n" +
-                    "SELECT\n" +
-                    "    CONCAT(e.first_name, ' ', e.last_name) AS employee_name,\n" +
-                    "    ROUND(\n" +
-                    "        AVG(\n" +
-                    "            CASE\n" +
-                    "                WHEN TIME(t.time_in) < '08:00:00' THEN (\n" +
-                    "                    TIME_TO_SEC(TIMEDIFF('08:00:00', t.time_in)) / 3600.0\n" +
-                    "                )\n" +
-                    "                WHEN TIME(t.time_in) >= '08:00:00' AND TIME(t.time_in) <= '17:00:00' THEN (\n" +
-                    "                    TIME_TO_SEC(TIMEDIFF(t.time_out, t.time_in)) / 3600.0\n" +
-                    "                )\n" +
-                    "                ELSE 0  -- Exclude cases where time_in > '17:00:00'\n" +
-                    "            END\n" +
-                    "        ),\n" +
-                    "        2\n" +
-                    "    ) AS avg_regular_hours_worked\n" +
-                    "FROM\n" +
-                    "    timesheet t\n" +
-                    "    JOIN employee e ON t.employee_id = e.employee_id\n" +
-                    "WHERE\n" +
-                    "    e.isActive = 1\n" +
-                    "    AND MONTH(t.date) = ?\n" +
-                    "    AND YEAR(t.date) = ?\n" +
-                    "GROUP BY\n" +
-                    "    e.employee_id, CONCAT(e.first_name, ' ', e.last_name)\n" +
-                    "ORDER BY\n" +
-                    "    avg_regular_hours_worked;\n";
-
+        String query = "\n" +
+                "SELECT\n" +
+                "    CONCAT(e.first_name, ' ', e.last_name) AS employee_name,\n" +
+                "    ROUND(\n" +
+                "        AVG(\n" +
+                "            CASE\n" +
+                "                WHEN TIME(t.time_in) < '08:00:00' THEN (\n" +
+                "                    TIME_TO_SEC(TIMEDIFF('08:00:00', t.time_in)) / 3600.0\n" +
+                "                )\n" +
+                "                WHEN TIME(t.time_in) >= '08:00:00' AND TIME(t.time_in) <= '17:00:00' THEN (\n" +
+                "                    TIME_TO_SEC(TIMEDIFF(t.time_out, t.time_in)) / 3600.0\n" +
+                "                )\n" +
+                "                ELSE 0  -- Exclude cases where time_in > '17:00:00'\n" +
+                "            END\n" +
+                "        ),\n" +
+                "        2\n" +
+                "    ) AS avg_regular_hours_worked\n" +
+                "FROM\n" +
+                "    timesheet t\n" +
+                "    JOIN employee e ON t.employee_id = e.employee_id\n" +
+                "WHERE\n" +
+                "    e.isActive = 1\n" +
+                "    AND MONTH(t.date) = ?\n" +
+                "    AND YEAR(t.date) = ?\n" +
+                "GROUP BY\n" +
+                "    e.employee_id, CONCAT(e.first_name, ' ', e.last_name)\n" +
+                "ORDER BY\n" +
+                "    avg_regular_hours_worked;\n";
 
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
@@ -163,8 +159,9 @@ public class HRDashboardController {
             throw new RuntimeException(e);
         }
     }
-        private void writeNumberOfLeaveRequest() {
-            String query = "SELECT COUNT(*) as total_leave_request " +
+
+    private void writeNumberOfLeaveRequest() {
+        String query = "SELECT COUNT(*) as total_leave_request " +
                 "FROM leave_request " +
                 "WHERE MONTH(leave_request.start_date) = ? " +
                 "AND YEAR(leave_request.start_date) = ?";
@@ -195,7 +192,7 @@ public class HRDashboardController {
         String query = "SELECT COUNT(*) as total_active_employees FROM employee WHERE employee.isActive = 1;";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query)){
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -210,7 +207,7 @@ public class HRDashboardController {
         String query = "SELECT COUNT(*) as total_employees FROM employee";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query)){
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -253,7 +250,7 @@ public class HRDashboardController {
         String query = "SELECT DISTINCT YEAR(timesheet.date) AS year FROM timesheet;";
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query)){
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             ResultSet rs = pstmt.executeQuery();
 

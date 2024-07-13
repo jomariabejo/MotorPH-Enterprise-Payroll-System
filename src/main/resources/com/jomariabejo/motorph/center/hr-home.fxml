@@ -32,12 +32,21 @@
                <children>
                   <HBox alignment="CENTER">
                      <children>
-                        <Button fx:id="btn_search1" layoutX="745.0" layoutY="10.0" mnemonicParsing="false" onAction="#addNewEmployeeClicked" prefHeight="46.0" prefWidth="200.0" stylesheets="@../../../../css/custom/button-small.css" text="Add New Employee">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Button>
-                        <Region prefHeight="38.0" prefWidth="492.0" />
+                        <HBox spacing="4.8">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#addNewEmployeeClicked" prefHeight="46.0" prefWidth="200.0" stylesheets="@../../../../css/custom/button-small.css" text="Add New Employee">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                              <Button mnemonicParsing="false" onAction="#addMultipleEmployeeClicked" prefHeight="46.0" prefWidth="200.0" stylesheets="@../../../../css/custom/button-small.css" text="Add Multi-Employee ">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <Region prefHeight="47.0" prefWidth="281.0" />
                         <ComboBox fx:id="cb_employment_status" onAction="#employeementIsActiveChanged" prefWidth="150.0" stylesheets="@../../../../css/custom/combobox-small.css" value="Active">
                            <items>
                               <FXCollections fx:factory="observableArrayList">
