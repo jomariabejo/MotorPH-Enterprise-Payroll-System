@@ -69,9 +69,8 @@ public class PayrollDashboardController {
 
     private void setUpBarchart() {
         if (isStartPayDateNull() || isEndPayDateNull()) {
-            AlertUtility.showInformation("Please provide start pay date and end pay date",null,null);
-        }
-        else {
+            AlertUtility.showInformation("Please provide start pay date and end pay date", null, null);
+        } else {
             fetchPayrollReportData();
         }
     }

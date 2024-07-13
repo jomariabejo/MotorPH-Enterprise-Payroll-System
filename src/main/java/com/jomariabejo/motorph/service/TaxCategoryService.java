@@ -13,7 +13,7 @@ public class TaxCategoryService {
     public int fetchTaxCategoryIdByMonthlyRate(BigDecimal monthlyRate) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\tax_category\\get_tax_category_id_by_monthly_rate.sql");
 
-        try (Connection  connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setBigDecimal(1, monthlyRate);
             preparedStatement.setBigDecimal(2, monthlyRate);
 

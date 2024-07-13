@@ -44,7 +44,7 @@ public class HRLeaveRequestApproval {
 
     @FXML
     void viewLeaveMessageClicked(ActionEvent event) {
-        AlertUtility.showInformation("Leave Request Of " + employeeName,leaveRequestService.getLeaveRequestMessage(Integer.parseInt(leaveRequestId.getText())), null);
+        AlertUtility.showInformation("Leave Request Of " + employeeName, leaveRequestService.getLeaveRequestMessage(Integer.parseInt(leaveRequestId.getText())), null);
     }
 
     @FXML

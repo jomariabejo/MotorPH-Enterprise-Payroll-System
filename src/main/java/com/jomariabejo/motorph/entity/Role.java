@@ -6,7 +6,8 @@ public class Role {
     private String description;
     private int permissionID;
 
-    public Role() {}
+    public Role() {
+    }
 
     public Role(String name, String description, int permissionID) {
         this.name = name;

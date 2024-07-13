@@ -18,7 +18,7 @@ public class CSVReaderUtility {
      *
      * @param filePath the path to the CSV file
      * @return a list of String arrays representing the CSV rows
-     * @throws IOException if an I/O error occurs
+     * @throws IOException  if an I/O error occurs
      * @throws CsvException if a CSV parsing error occurs
      */
     public static List<String[]> readAllLines(Path filePath) throws IOException, CsvException {
@@ -37,7 +37,7 @@ public class CSVReaderUtility {
      *
      * @param filePath the path to the CSV file
      * @return a list of String arrays representing the CSV rows
-     * @throws IOException if an I/O error occurs
+     * @throws IOException  if an I/O error occurs
      * @throws CsvException if a CSV parsing error occurs
      */
     public static List<String[]> readLineByLine(Path filePath) throws IOException, CsvException {
@@ -77,7 +77,7 @@ public class CSVReaderUtility {
      *
      * @param filePath the path to the CSV file
      * @return a list of Strings representing the CSV headers
-     * @throws IOException if an I/O error occurs
+     * @throws IOException  if an I/O error occurs
      * @throws CsvException if a CSV parsing error occurs
      */
     public static ArrayList<String> readHeaders(Path filePath) throws IOException, CsvException {

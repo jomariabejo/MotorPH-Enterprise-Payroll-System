@@ -335,7 +335,7 @@ public class PayslipRepository {
             pstmt.setBigDecimal(1, payslip.getTotalHoursWorked());
             pstmt.setBigDecimal(2, payslip.getGrossIncome());
             pstmt.setBigDecimal(3, payslip.getNetIncome());
-            pstmt.setInt(4,payslip.getPayslipID());
+            pstmt.setInt(4, payslip.getPayslipID());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);

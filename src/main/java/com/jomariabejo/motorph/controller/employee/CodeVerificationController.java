@@ -45,7 +45,7 @@ public class CodeVerificationController {
         int userId = userService.fetchUserIdByVerificationCode(verificationCodeInput);
 
         if (userId > 0) {
-            
+
             displayNewPasswordProcessing(userId);
 
         } else {

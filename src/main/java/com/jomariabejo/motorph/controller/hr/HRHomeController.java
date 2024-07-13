@@ -366,7 +366,7 @@ public class HRHomeController {
                 employeeService.saveEmployeeWithProvidedEmployeeId(newEmployee);
                 allowanceService.createAllowance(allowance);
             }
-            AlertUtility.showInformation("Success", "Employee saved successfully", String.valueOf(employeeList.size()) + " employees added." );
+            AlertUtility.showInformation("Success", "Employee saved successfully", String.valueOf(employeeList.size()) + " employees added.");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -375,9 +375,9 @@ public class HRHomeController {
     private Allowance mapToAllowance(String[] data) {
         Allowance allowance = new Allowance();
         allowance.setEmployeeID(Integer.parseInt(data[0]));
-        allowance.setRiceAllowance(Integer.parseInt(data[14].replace(",","")));
-        allowance.setClothingAllowance(Integer.parseInt(data[15].replace(",","")));
-        allowance.setPhoneAllowance(Integer.parseInt(data[16].replace(",","")));
+        allowance.setRiceAllowance(Integer.parseInt(data[14].replace(",", "")));
+        allowance.setClothingAllowance(Integer.parseInt(data[15].replace(",", "")));
+        allowance.setPhoneAllowance(Integer.parseInt(data[16].replace(",", "")));
         allowance.setTotalAmount(allowance.getRiceAllowance() + allowance.getClothingAllowance() + allowance.getPhoneAllowance());
         allowance.setDateCreated(DateUtility.getDate());
         allowance.setDateModified(Timestamp.from(Instant.now()));
@@ -400,10 +400,10 @@ public class HRHomeController {
         employee.setPositionId(switchPositionNameToPositionId(data[11]));
         employee.setDeptId(switchDepartmentNameToDepartmentId(data[19]));
         employee.setSupervisor(data[12]);
-        employee.setBasicSalary(BigDecimal.valueOf(Long.parseLong(data[13].replace(",",""))));
+        employee.setBasicSalary(BigDecimal.valueOf(Long.parseLong(data[13].replace(",", ""))));
         employee.setDateHired(DateUtility.getDate());
-        employee.setGrossSemiMonthlyRate(BigDecimal.valueOf(Float.parseFloat(data[17].replace(",",""))));
-        employee.setHourlyRate(BigDecimal.valueOf(Float.parseFloat(data[18].replace(",",""))));
+        employee.setGrossSemiMonthlyRate(BigDecimal.valueOf(Float.parseFloat(data[17].replace(",", ""))));
+        employee.setHourlyRate(BigDecimal.valueOf(Float.parseFloat(data[18].replace(",", ""))));
         return employee;
     }
 

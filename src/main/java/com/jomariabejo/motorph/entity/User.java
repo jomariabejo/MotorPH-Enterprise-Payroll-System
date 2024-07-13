@@ -8,7 +8,8 @@ public class User {
     private String password;
     private int verificationCode;
 
-    public User () {}
+    public User() {
+    }
 
     public User(int employeeID, int roleID, String username, String password) {
         this.employeeID = employeeID;

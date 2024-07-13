@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class EmployeeService {
     private final EmployeeRepository employeeRepository = new EmployeeRepository();
+
     public void saveEmployee(Employee employee) throws SQLException {
         employeeRepository.createNewEmployeeRecord(employee);
     }
@@ -29,6 +30,7 @@ public class EmployeeService {
     public ArrayList<Employee> fetchInactiveEmployees() throws SQLException {
         return employeeRepository.getInactiveEmployees();
     }
+
     public Employee fetchEmployee(int employeeId) throws SQLException {
         return employeeRepository.getEmployeeById(employeeId);
     }
@@ -49,6 +51,7 @@ public class EmployeeService {
             throw new RuntimeException(e);
         }
     }
+
     public void modifyEmployee(Employee employee) throws SQLException {
         employeeRepository.updateEmployeeRecord(employee);
     }
@@ -72,8 +75,7 @@ public class EmployeeService {
     public int countInactiveActiveEmployees() {
         try {
             return employeeRepository.countInactiveEmployees();
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw e;
         }
     }

@@ -13,7 +13,7 @@ public class Allowance {
     private Date dateCreated;
     private Timestamp dateModified;
 
-    public Allowance () {
+    public Allowance() {
 
     }
 

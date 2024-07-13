@@ -66,9 +66,7 @@ public class GeneratePayslipController {
 
             executeButton.setText("Execute");
             tv_generated_payroll.getItems().clear();
-        }
-
-        else if (isDateValidated && isInBetweenDateLessThanAMonth) {
+        } else if (isDateValidated && isInBetweenDateLessThanAMonth) {
             if (payslipService.canCreatePayslip(Date.valueOf(dp_startPayDate.getValue()), Date.valueOf(dp_endPayDate.getValue()))) {
                 ArrayList<EmployeePayrollSummaryReport> employeePayrollSummaryReports = new ArrayList<>();
 

@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class AllowanceService {
     AllowanceRepository allowanceRepository = new AllowanceRepository();
+
     public void createAllowance(Allowance allowance) throws SQLException {
         allowanceRepository.createAllowanceRecord(allowance);
     }

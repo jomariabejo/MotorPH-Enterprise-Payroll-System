@@ -48,6 +48,7 @@ public class MyPayslipController {
             final Button viewButton = new Button();
 
             final HBox actionsBox = new HBox(viewButton);
+
             {
                 actionsBox.setAlignment(Pos.CENTER); // Align HBox content to center
                 actionsBox.setSpacing(5); // Set spacing between buttons
@@ -115,7 +116,7 @@ public class MyPayslipController {
     }
 
     public void initEntirePayslip(Date payPeriodStart, Date payPeriodEnd) {
-        ObservableList observableList = FXCollections.observableList(payslipService.fetchPayslipBetweenPayStartDateAndPayEndDate(payPeriodStart,payPeriodEnd));
+        ObservableList observableList = FXCollections.observableList(payslipService.fetchPayslipBetweenPayStartDateAndPayEndDate(payPeriodStart, payPeriodEnd));
         this.tv_my_payslips.setItems(observableList);
         setUpTotalResult();
     }

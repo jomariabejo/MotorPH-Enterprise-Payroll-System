@@ -48,7 +48,7 @@ public class TaxService {
 
 
     public void saveTax(Tax tax) {
-            taxRepository.saveTax(tax);
+        taxRepository.saveTax(tax);
     }
 
     public void modifyTaxByPayslipId(Tax tax, int payslipId) {

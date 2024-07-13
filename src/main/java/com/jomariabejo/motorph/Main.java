@@ -10,6 +10,7 @@ public class Main extends Application {
     /**
      * Standard entry point for Java applications.
      * It calls launch(args), which starts the JavaFX application.
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -21,6 +22,7 @@ public class Main extends Application {
      * It's called when the JavaFX application starts.
      * It receives a Stage parameter,
      * which represents the primary stage (window) of the application.
+     *
      * @param primaryStage
      */
     public void start(Stage primaryStage) {

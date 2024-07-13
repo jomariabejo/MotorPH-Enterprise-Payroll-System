@@ -11,7 +11,8 @@ import java.time.LocalDate;
 
 public class AllowanceRepository {
     public void createAllowanceRecord(Allowance allowance) {
-        System.out.println("ALLOWANCE INSERTING : " + allowance.toString());;
+        System.out.println("ALLOWANCE INSERTING : " + allowance.toString());
+        ;
         String query = "INSERT INTO ALLOWANCE( clothing, rice, phone, total_amount, dateCreated, dateModified, employee_id) VALUES ( ?, ?, ?, ?, ?, ?, ?);";
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement ps = connection.prepareStatement(query)) {

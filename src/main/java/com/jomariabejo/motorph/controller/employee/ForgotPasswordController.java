@@ -50,22 +50,19 @@ public class ForgotPasswordController {
                             "Your system admin will provide the verification code.");
 
                     tf_username.getScene().getWindow().hide();
-                }
-                else {
+                } else {
                     AlertUtility.showErrorAlert(
                             "Forgot password failed",
                             "Your forgot password failed",
                             "Please try again.");
                 }
-            }
-            else {
+            } else {
                 AlertUtility.showErrorAlert(
                         "Username not found",
                         "Entered username not found",
                         "Please try again.");
             }
-        }
-        else {
+        } else {
             tf_username.getScene().getWindow().hide();
         }
     }
@@ -75,17 +72,15 @@ public class ForgotPasswordController {
 
         try (Connection connection = DatabaseConnectionUtility.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)
-        ){
+        ) {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
             }
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             if (e.getMessage().contains("Duplicate entry")) {
                 AlertUtility.showErrorAlert("Failed", "Duplicate entry", "Please try again.");
-            }
-            else {
+            } else {
                 e.printStackTrace();
             }
         }

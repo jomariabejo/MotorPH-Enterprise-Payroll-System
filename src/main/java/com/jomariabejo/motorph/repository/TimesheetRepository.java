@@ -481,7 +481,7 @@ public class TimesheetRepository {
                     Time regularHoursWorked = resultSet.getTime("regular_hours_worked");
 
                     // Check if regular hours worked is negative or null
-                    if (regularHoursWorked==null || regularHoursWorked.getTime() < Time.valueOf("00:00:00").getTime()) {
+                    if (regularHoursWorked == null || regularHoursWorked.getTime() < Time.valueOf("00:00:00").getTime()) {
                         regularHoursWorked = Time.valueOf("00:00:00"); // Set regular hours worked to zero
                     }
 
@@ -541,7 +541,7 @@ public class TimesheetRepository {
                     Time regularHoursWorked = resultSet.getTime("regular_hours_worked");
 
                     // Check if regular hours worked is negative or null
-                    if (regularHoursWorked==null || regularHoursWorked.getTime() < Time.valueOf("00:00:00").getTime()) {
+                    if (regularHoursWorked == null || regularHoursWorked.getTime() < Time.valueOf("00:00:00").getTime()) {
                         regularHoursWorked = Time.valueOf("00:00:00"); // Set regular hours worked to zero
                     }
 
@@ -562,7 +562,6 @@ public class TimesheetRepository {
             throw new RuntimeException(e);
         }
     }
-
 
 
     public ArrayList<Timesheet> fetchMyTimesheetAscending(int employeeId) {
@@ -611,8 +610,7 @@ public class TimesheetRepository {
                 } catch (IllegalArgumentException e) {
                     if (regularHoursWorked == null) {
                         timesheet.setRegularHoursWorked(Time.valueOf("00:00:00"));
-                    }
-                    else if (regularHoursWorked.startsWith("-")) {
+                    } else if (regularHoursWorked.startsWith("-")) {
                         timesheet.setRegularHoursWorked(Time.valueOf("00:00:00"));
                     } else {
                         throw new RuntimeException("Error parsing time: " + e.getMessage(), e);

@@ -124,6 +124,7 @@ public class HRViewEmployeeProfile {
 
         tf_dept.setItems(FXCollections.observableList(departmentService.getDepartmentsName()));
     }
+
     public void initData(int employeeId, boolean isModifying) throws SQLException {
         tf_eid.setText(String.valueOf(employeeId));
         displayEmployeeInformation();
@@ -202,7 +203,7 @@ public class HRViewEmployeeProfile {
 
         if (tf_eid.getText().equals("Auto generate employee id")) {
             {
-                boolean isEmployeeRecordConfirmed = AlertUtility.showConfirmation("Save new employee", "Are you sure you want to save these changes? Once confirmed, the data will be saved.",null);
+                boolean isEmployeeRecordConfirmed = AlertUtility.showConfirmation("Save new employee", "Are you sure you want to save these changes? Once confirmed, the data will be saved.", null);
 
                 if (isEmployeeRecordConfirmed) {
                     try {
@@ -214,9 +215,8 @@ public class HRViewEmployeeProfile {
 
                         try {
                             employee.setStatus(EmployeeStatus.valueOf(tf_status.getText()));
-                        }
-                        catch (Exception e) {
-                            AlertUtility.showErrorAlert("Invalid Input", "Employee status should only be (Regular,Probationary)",e.getMessage());
+                        } catch (Exception e) {
+                            AlertUtility.showErrorAlert("Invalid Input", "Employee status should only be (Regular,Probationary)", e.getMessage());
                             tf_status.requestFocus();
                         }
 
@@ -226,13 +226,12 @@ public class HRViewEmployeeProfile {
                         employee.setPagibig(tf_pagibigNum.getText());
                         employee.setTin(tf_tinNum.getText());
 
-                        String [] birthday = tf_bday.getText().split("/");
+                        String[] birthday = tf_bday.getText().split("/");
                         try {
-                            String yyyy = birthday[0], mm = birthday[1], dd= birthday[2];
-                            employee.setBirthday(new Date(Integer.valueOf(yyyy)-1_900, Integer.valueOf(mm), Integer.valueOf(dd)));
-                        }
-                        catch (Exception e) {
-                            AlertUtility.showErrorAlert("Invalid birthday format", "Format example (mm/dd/yyyy)",e.getMessage());
+                            String yyyy = birthday[0], mm = birthday[1], dd = birthday[2];
+                            employee.setBirthday(new Date(Integer.valueOf(yyyy) - 1_900, Integer.valueOf(mm), Integer.valueOf(dd)));
+                        } catch (Exception e) {
+                            AlertUtility.showErrorAlert("Invalid birthday format", "Format example (mm/dd/yyyy)", e.getMessage());
                         }
                         employee.setBasicSalary(BigDecimalUtility.createBigDecimal(tf_basicSalary.getText()));
                         employee.setGrossSemiMonthlyRate(BigDecimalUtility.createBigDecimal(tf_grossSemiMonthlyRate.getText()));
@@ -264,13 +263,12 @@ public class HRViewEmployeeProfile {
                         // Hide current fxml window
                         Button saveButton = (Button) event.getSource();
                         saveButton.getScene().getWindow().hide();
-                    }
-                    catch (SQLException sqlException) {
-                            AlertUtility.showErrorAlert("Invalid input",sqlException.getCause().toString(), sqlException.getMessage());
-                        }
+                    } catch (SQLException sqlException) {
+                        AlertUtility.showErrorAlert("Invalid input", sqlException.getCause().toString(), sqlException.getMessage());
                     }
                 }
             }
+        }
 
         // editing employee record
         else {
@@ -281,11 +279,11 @@ public class HRViewEmployeeProfile {
                  * Update EMployee Record
                  */
                 Employee employee = new Employee(
-                        Integer.valueOf(tf_eid.getText()),tf_fname.getText(),tf_lname.getText(), DateConverter.parseSqlDate(tf_bday.getText()),
+                        Integer.valueOf(tf_eid.getText()), tf_fname.getText(), tf_lname.getText(), DateConverter.parseSqlDate(tf_bday.getText()),
                         tf_address.getText(),
                         tf_phoneNum.getText(),
                         EmployeeStatus.valueOf(tf_status.getText()),
-                        tf_supervisor.getText(),tf_sssNum.getText(),tf_philhealthNum.getText(),tf_pagibigNum.getText(),tf_tinNum.getText(),
+                        tf_supervisor.getText(), tf_sssNum.getText(), tf_philhealthNum.getText(), tf_pagibigNum.getText(), tf_tinNum.getText(),
                         BigDecimal.valueOf(Double.parseDouble(tf_basicSalary.getText())),
                         BigDecimal.valueOf(Double.parseDouble(tf_grossSemiMonthlyRate.getText())),
                         BigDecimal.valueOf(Double.parseDouble(tf_hourlyRate.getText()))
@@ -293,7 +291,7 @@ public class HRViewEmployeeProfile {
                 );
                 // Save the employee record
 
-                AlertUtility.showInformation(String.valueOf(switchDepartmentNameToInt(tf_dept.getSelectionModel().getSelectedItem().toString())),null,null);
+                AlertUtility.showInformation(String.valueOf(switchDepartmentNameToInt(tf_dept.getSelectionModel().getSelectedItem().toString())), null, null);
                 employee.setDeptId(switchDepartmentNameToInt(tf_dept.getSelectionModel().getSelectedItem().toString()));
 
                 System.out.println("DEPT : " + employee.getDeptId());
@@ -382,6 +380,7 @@ public class HRViewEmployeeProfile {
         }
         return deptName;
     }
+
     private int switchDepartmentNameToInt(String deptName) {
         int deptId = 0;
         switch (deptName) {
@@ -492,46 +491,46 @@ public class HRViewEmployeeProfile {
                 positionName = "Chief Marketing Officer";
                 break;
             case 5:
-                positionName =  "IT Operations and Systems";
+                positionName = "IT Operations and Systems";
                 break;
             case 6:
-                positionName =  "HR Manager";
+                positionName = "HR Manager";
                 break;
             case 7:
                 positionName = "HR Team Leader";
                 break;
             case 8:
-                positionName =  "HR Rank and File";
+                positionName = "HR Rank and File";
                 break;
             case 9:
-                positionName =  "Payroll Manager";
+                positionName = "Payroll Manager";
                 break;
             case 10:
                 positionName = "Payroll Team Leader";
                 break;
             case 11:
-                positionName =  "Payroll Rank and File";
+                positionName = "Payroll Rank and File";
                 break;
             case 12:
-                positionName =  "Accounting Head";
+                positionName = "Accounting Head";
                 break;
             case 13:
-                positionName =  "Account Manager";
+                positionName = "Account Manager";
                 break;
             case 14:
                 positionName = "Account Team Leader";
                 break;
             case 15:
-                positionName =  "Account Rank and File";
+                positionName = "Account Rank and File";
                 break;
             case 16:
                 positionName = "Sales & Marketing";
                 break;
             case 17:
-                positionName =  "Supply Chain and Logistics";
+                positionName = "Supply Chain and Logistics";
                 break;
             case 18:
-                positionName =  "Customer Service and Relations";
+                positionName = "Customer Service and Relations";
                 break;
         }
         return positionName;

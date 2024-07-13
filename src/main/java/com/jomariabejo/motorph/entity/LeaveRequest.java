@@ -22,6 +22,7 @@ public class LeaveRequest {
 
     public LeaveRequest() {
     }
+
     public LeaveRequest(int employeeID, int getLeaveRequestID, Date startDate, Date endDate, Timestamp dateCreated, String reason, LeaveRequestStatus status) {
         this.employeeID = employeeID;
         this.leaveRequestCategoryId = getLeaveRequestID;

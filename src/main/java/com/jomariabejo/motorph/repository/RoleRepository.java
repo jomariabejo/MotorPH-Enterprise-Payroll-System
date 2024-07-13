@@ -12,8 +12,8 @@ public class RoleRepository {
     public int fetchRoleId(String roleName) {
         String query = "SELECT role_id FROM role WHERE role.name = ?";
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, roleName);
 
             ResultSet resultSet = pstmt.executeQuery();
@@ -30,8 +30,8 @@ public class RoleRepository {
     public String fetchRoleName(int roleID) {
         String query = "SELECT role.name FROM role WHERE role.role_id = ?";
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnectionUtility.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, roleID);
 
             ResultSet resultSet = pstmt.executeQuery();

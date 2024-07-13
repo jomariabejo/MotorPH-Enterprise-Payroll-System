@@ -144,9 +144,7 @@ public class MyLeaveRequestSubmissionController {
             if (hasOverlappingLeaveRequest(employeeId, leaveStartDateValue, leaveEndDateValue)) {
                 AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You already have a leave request overlapping with the selected dates.");
                 return;
-            }
-
-            else if (hasRemainingLeaveCredits(leaveStartDateValue, leaveEndDateValue)) {
+            } else if (hasRemainingLeaveCredits(leaveStartDateValue, leaveEndDateValue)) {
                 String insertQuery = "INSERT INTO payroll_sys.leave_request (employee_id, leave_request_category_id, start_date, end_date, reason, date_created) VALUES (?, ?, ?, ?, ?, ?)";
 
                 try (Connection connection = DatabaseConnectionUtility.getConnection();
@@ -168,8 +166,7 @@ public class MyLeaveRequestSubmissionController {
             } else {
                 AlertUtility.showErrorAlert("Error", "Leave Request Submission Error", "You have fully consumed your leaves for this year. Cannot submit leave request.");
             }
-        }
-        else {
+        } else {
             AlertUtility.showErrorAlert("Error", "Invalid leave end date.", "Leave end date should be after start date.");
         }
     }

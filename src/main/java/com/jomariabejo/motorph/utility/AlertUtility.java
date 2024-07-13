@@ -9,7 +9,6 @@ import java.util.Optional;
 public class AlertUtility {
 
     /**
-     *
      * @param title
      * @param header
      * @param content
@@ -23,7 +22,6 @@ public class AlertUtility {
     }
 
     /**
-     *
      * @param title
      * @param header
      * @param content
@@ -40,7 +38,6 @@ public class AlertUtility {
     }
 
     /**
-     *
      * @param title
      * @param header
      * @param content

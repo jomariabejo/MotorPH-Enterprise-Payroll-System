@@ -214,9 +214,9 @@ public class ViewPayslipController {
         DeductionService deductionService = new DeductionService();
 
         Deduction deduction = new Deduction();
-        deduction.setPagibig(BigDecimal.valueOf(Float.parseFloat(this.tf_pagibig.getText().replace("Php ",""))));
-        deduction.setPhilhealth(BigDecimal.valueOf(Float.parseFloat(this.tf_philhealth.getText().replace("Php ",""))));
-        deduction.setSss(BigDecimal.valueOf(Float.parseFloat(this.tf_social_security_system.getText().replace("Php ",""))));
+        deduction.setPagibig(BigDecimal.valueOf(Float.parseFloat(this.tf_pagibig.getText().replace("Php ", ""))));
+        deduction.setPhilhealth(BigDecimal.valueOf(Float.parseFloat(this.tf_philhealth.getText().replace("Php ", ""))));
+        deduction.setSss(BigDecimal.valueOf(Float.parseFloat(this.tf_social_security_system.getText().replace("Php ", ""))));
 
         deductionService.modifyDeduction(deduction, Integer.parseInt(tf_payslip_number.getText()));
     }
@@ -227,24 +227,24 @@ public class ViewPayslipController {
 
         BigDecimal regularHoursWorked = BigDecimal.valueOf(Float.parseFloat(this.tf_regular_hours_worked.getText()));
         BigDecimal overtimeHoursWorked = BigDecimal.valueOf(Float.parseFloat(this.tf_overtime_hours_worked.getText()));
-        BigDecimal totalHoursWorked =  regularHoursWorked.add(overtimeHoursWorked);
+        BigDecimal totalHoursWorked = regularHoursWorked.add(overtimeHoursWorked);
         payslip.setTotalHoursWorked(totalHoursWorked);
 
         payslip.setGrossIncome(BigDecimal.valueOf(Float.valueOf(tf_gross_income.getText().replace("Php ", ""))));
 
         payslip.setNetIncome(
                 payslip.getGrossIncome()
-                    .add
-                        (
-                            BigDecimal.valueOf(
-                                Float.valueOf(this.tf_total_benefits.getText()
-                                .replace("Php ", "")))
-                        )
-                    .subtract
-                        (
-                            BigDecimal.valueOf(
-                                Float.parseFloat(this.tf_total_deductions.getText()
-                                .replace("Php ",""))))
+                        .add
+                                (
+                                        BigDecimal.valueOf(
+                                                Float.valueOf(this.tf_total_benefits.getText()
+                                                        .replace("Php ", "")))
+                                )
+                        .subtract
+                                (
+                                        BigDecimal.valueOf(
+                                                Float.parseFloat(this.tf_total_deductions.getText()
+                                                        .replace("Php ", ""))))
         );
 
         this.payslipService.modifyPayslip(payslip);

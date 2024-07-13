@@ -108,7 +108,7 @@ public class DeductionService {
     public void saveDeduction(Deduction deduction) {
         String query = TextReader.readTextFile("src\\main\\java\\com\\jomariabejo\\motorph\\query\\deduction\\create_deduction.sql");
 
-        try(Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection connection = DatabaseConnectionUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, deduction.getDeductionID());
             preparedStatement.setInt(2, deduction.getEmployeeID());
             preparedStatement.setBigDecimal(3, deduction.getSss());
@@ -120,8 +120,7 @@ public class DeductionService {
 
             if (rowAffected > 0) {
                 System.out.println("Insert deduction success.");
-            }
-            else {
+            } else {
                 System.out.println("Insert deduction failed.");
             }
         } catch (SQLException e) {

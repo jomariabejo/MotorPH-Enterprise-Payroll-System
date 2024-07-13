@@ -52,6 +52,7 @@ public class PayslipController {
             final Button updateButton = new Button();
 
             final HBox actionsBox = new HBox(viewButton);
+
             {
                 actionsBox.setAlignment(Pos.CENTER);
                 actionsBox.setSpacing(5);

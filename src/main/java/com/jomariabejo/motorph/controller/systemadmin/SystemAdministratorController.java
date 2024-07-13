@@ -25,44 +25,44 @@ import java.sql.SQLException;
 
 public class SystemAdministratorController {
 
-        @FXML
-        private Button btn_search;
+    @FXML
+    private Button btn_search;
 
-        @FXML
-        private TextField tf_searchField;
+    @FXML
+    private TextField tf_searchField;
 
-        @FXML
-        private TableView<User> tv_users;
+    @FXML
+    private TableView<User> tv_users;
 
-        @FXML
-        private TableColumn<Integer, User> userId;
+    @FXML
+    private TableColumn<Integer, User> userId;
 
-        @FXML
-        void searchBtnClicked(ActionEvent event) {
+    @FXML
+    void searchBtnClicked(ActionEvent event) {
 
+    }
+
+    @FXML
+    void searchiTextField(ActionEvent event) {
+
+    }
+
+    @FXML
+    private void initialize() {
+        try {
+            setUsersTableView();
+            populateTableView();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
-
-        @FXML
-        void searchiTextField(ActionEvent event) {
-
-        }
-
-        @FXML
-        private void initialize() {
-            try {
-                setUsersTableView();
-                populateTableView();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+    }
 
     private void populateTableView() {
         String query = "SELECT user_id, username, password FROM user";
 
-        try(
-            Connection connection = DatabaseConnectionUtility.getConnection();
-            PreparedStatement pstmt = connection.prepareStatement(query)) {
+        try (
+                Connection connection = DatabaseConnectionUtility.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             ResultSet resultSet = pstmt.executeQuery();
 
@@ -91,12 +91,13 @@ public class SystemAdministratorController {
             final Button deleteButton = new Button();
 
             final HBox actionsBox = new HBox(editButton, viewButton, deleteButton);
+
             {
                 actionsBox.setAlignment(Pos.CENTER); // Align HBox content to center
                 actionsBox.setSpacing(5); // Set spacing between buttons
 
                 editButton.setOnAction(event -> {
-                            // Handle edit action here ⚠️
+                    // Handle edit action here ⚠️
                     {
                         User user = getTableView().getItems().get(getIndex());
 
@@ -118,7 +119,7 @@ public class SystemAdministratorController {
                             throw new RuntimeException(e);
                         }
                     }
-                    });
+                });
                 viewButton.setOnAction(event -> {
                     User user = getTableView().getItems().get(getIndex());
 
@@ -134,7 +135,7 @@ public class SystemAdministratorController {
                         stage.show();
 
                         UserController addNewUserController = fxmlLoader.getController();
-                        addNewUserController.initUserIdAndAccessType(user.getUserID(),AccessType.VIEW);
+                        addNewUserController.initUserIdAndAccessType(user.getUserID(), AccessType.VIEW);
 
                     } catch (IOException e) {
                         throw new RuntimeException(e);
@@ -177,7 +178,7 @@ public class SystemAdministratorController {
                         stage.show();
 
                         UserController userController = fxmlLoader.getController();
-                        userController.initUserIdAndAccessType(user.getUserID(),AccessType.DELETE);
+                        userController.initUserIdAndAccessType(user.getUserID(), AccessType.DELETE);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

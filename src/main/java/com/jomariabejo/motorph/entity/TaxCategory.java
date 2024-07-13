@@ -8,7 +8,8 @@ public class TaxCategory {
     private int additionalTaxRate;
     private String name;
 
-    public TaxCategory() {}
+    public TaxCategory() {
+    }
 
     public TaxCategory(int minimumMonthlyRate, int maximumMonthlyRate, int taxRate, int additionalTaxRate, String name) {
         this.minimumMonthlyRate = minimumMonthlyRate;

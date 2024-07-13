@@ -71,7 +71,7 @@ public class MainViewController {
     @FXML
     void dropDownClicked(ActionEvent event) {
         if (event.getSource() instanceof ComboBox<?>) {
-            ComboBox < String > comboBox = (ComboBox < String > ) event.getSource();
+            ComboBox<String> comboBox = (ComboBox<String>) event.getSource();
             String selectedValue = comboBox.getValue();
 
             switch (selectedValue) {
@@ -223,6 +223,7 @@ public class MainViewController {
         // hide all buttons
         hideButtons();
     }
+
     public void initSessionId(final LoginManager loginManager, int user_id, int employee_id, String role) throws SQLException, IOException {
         this.lbl_employee_id.setText(String.valueOf(employee_id));
         switch (role) {
