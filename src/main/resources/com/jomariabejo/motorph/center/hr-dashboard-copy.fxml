@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.hr.HRDashboardController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.hr.HRDashboardController">
    <children>
       <VBox layoutX="305.0" layoutY="20.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -33,7 +33,7 @@
                      <children>
                         <HBox prefHeight="183.0" prefWidth="1131.0">
                            <children>
-                              <VBox prefHeight="170.0" prefWidth="56.0" />
+                              <VBox prefHeight="177.0" prefWidth="5.0" />
                               <VBox prefHeight="170.0" prefWidth="178.0">
                                  <children>
                                     <HBox prefHeight="57.0" prefWidth="106.0" />
@@ -50,20 +50,20 @@
                                        <children>
                                           <Label alignment="CENTER" prefHeight="51.0" prefWidth="166.0" text="Total Employees">
                                              <font>
-                                                <Font size="23.0" />
+                                                <Font size="21.0" />
                                              </font>
                                           </Label>
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="177.0" prefWidth="25.0" />
-                              <VBox prefHeight="170.0" prefWidth="178.0">
+                              <VBox prefHeight="177.0" prefWidth="10.0" />
+                              <VBox prefHeight="177.0" prefWidth="186.0">
                                  <children>
                                     <HBox prefHeight="57.0" prefWidth="106.0" />
                                     <HBox prefHeight="67.0" prefWidth="178.0">
                                        <children>
-                                          <Label fx:id="lbl_active_employees" alignment="BOTTOM_CENTER" prefHeight="70.0" prefWidth="170.0" text="40">
+                                          <Label fx:id="lbl_active_employees" alignment="BOTTOM_CENTER" prefHeight="67.0" prefWidth="138.0" text="40">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -72,30 +72,30 @@
                                     </HBox>
                                     <HBox prefHeight="40.0" prefWidth="178.0">
                                        <children>
-                                          <Label alignment="CENTER" prefHeight="40.0" prefWidth="191.0" text="Active Employees">
+                                          <Label alignment="CENTER_RIGHT" contentDisplay="CENTER" prefHeight="40.0" prefWidth="164.0" text="Active Employees">
                                              <font>
-                                                <Font size="23.0" />
+                                                <Font size="21.0" />
                                              </font>
                                           </Label>
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="177.0" prefWidth="28.0" />
+                              <VBox prefHeight="177.0" prefWidth="13.0" />
                               <VBox prefHeight="170.0" prefWidth="178.0">
                                  <children>
                                     <HBox prefHeight="57.0" prefWidth="106.0">
                                        <children>
-                                          <Label alignment="CENTER" prefHeight="54.0" prefWidth="158.0" text="HR Dashboard">
+                                          <Label alignment="CENTER" prefHeight="54.0" prefWidth="221.0" text="HR Dashboard">
                                              <font>
-                                                <Font size="17.0" />
+                                                <Font size="25.0" />
                                              </font>
                                           </Label>
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="67.0" prefWidth="178.0">
                                        <children>
-                                          <Label fx:id="total_leave_request" alignment="BOTTOM_CENTER" prefHeight="67.0" prefWidth="462.0" text="7">
+                                          <Label fx:id="total_leave_request" alignment="BOTTOM_CENTER" prefHeight="67.0" prefWidth="123.0" text="7">
                                              <font>
                                                 <Font size="40.0" />
                                              </font>
@@ -104,9 +104,9 @@
                                     </HBox>
                                     <HBox prefHeight="40.0" prefWidth="178.0">
                                        <children>
-                                          <Label alignment="CENTER" prefHeight="51.0" prefWidth="166.0" text="Total Requests">
+                                          <Label prefHeight="51.0" prefWidth="166.0" text="Total Requests">
                                              <font>
-                                                <Font size="23.0" />
+                                                <Font size="21.0" />
                                              </font>
                                           </Label>
                                        </children>
@@ -115,31 +115,31 @@
                               </VBox>
                               <VBox prefHeight="177.0" prefWidth="181.0">
                                  <children>
-                                    <HBox prefHeight="68.0" prefWidth="182.0" />
+                                    <HBox prefHeight="68.0" prefWidth="168.0" />
                                     <HBox prefHeight="78.0" prefWidth="182.0">
                                        <children>
-                                          <ComboBox fx:id="comboBoxMonth" prefHeight="70.0" prefWidth="177.0" promptText="Month" stylesheets="@../../../../css/custom/combobox.css" />
+                                          <ComboBox fx:id="comboBoxMonth" prefHeight="52.0" prefWidth="179.0" promptText="Month" stylesheets="@../../../../css/custom/combobox.css" />
                                        </children>
                                     </HBox>
                                     <HBox prefHeight="57.0" prefWidth="182.0" />
                                  </children>
                               </VBox>
-                              <VBox prefHeight="177.0" prefWidth="155.0">
+                              <VBox prefHeight="177.0" prefWidth="182.0">
                                  <children>
                                     <HBox prefHeight="58.0" prefWidth="155.0" />
                                     <HBox prefHeight="70.0" prefWidth="155.0">
                                        <children>
-                                          <ComboBox fx:id="comboBoxYear" prefHeight="70.0" prefWidth="158.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
+                                          <ComboBox fx:id="comboBoxYear" prefHeight="66.0" prefWidth="178.0" promptText="Year" stylesheets="@../../../../css/custom/combobox.css" />
                                        </children>
                                     </HBox>
                                  </children>
                               </VBox>
-                              <VBox prefHeight="177.0" prefWidth="131.0">
+                              <VBox prefHeight="177.0" prefWidth="176.0">
                                  <children>
                                     <HBox prefHeight="57.0" prefWidth="120.0" />
-                                    <HBox prefHeight="75.0" prefWidth="131.0">
+                                    <HBox prefHeight="75.0" prefWidth="159.0">
                                        <children>
-                                          <Button mnemonicParsing="false" onAction="#reviewClicked" prefHeight="70.0" prefWidth="130.0" stylesheets="@../../../../css/custom/button.css" text="View " />
+                                          <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#reviewClicked" prefHeight="70.0" prefWidth="169.0" stylesheets="@../../../../css/custom/button.css" text="View " />
                                        </children>
                                     </HBox>
                                  </children>

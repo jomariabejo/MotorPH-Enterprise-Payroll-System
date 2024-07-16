@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
@@ -8,109 +7,75 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720.0" minWidth="1440.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.LoginController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="720.0" minWidth="1440.0" prefHeight="720.0" prefWidth="1080.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.LoginController">
    <left>
       <HBox prefHeight="720.0" prefWidth="916.0">
          <children>
-            <VBox alignment="CENTER" prefHeight="720.0" prefWidth="921.0" style="-fx-background-color: #c4c2c2;">
+            <AnchorPane prefHeight="720.0" prefWidth="1356.0">
                <children>
-                  <ImageView fitHeight="452.0" fitWidth="517.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../../../img/logo.jpeg" />
-                     </image>
-                     <VBox.margin>
-                        <Insets left="24.0" right="24.0" />
-                     </VBox.margin>
-                  </ImageView>
-                  <Label text="MotorPH">
+                  <Label layoutX="923.0" layoutY="152.0" text="Login to your Account" textFill="#00000098">
                      <font>
-                        <Font name="Arial Black" size="64.0" />
+                        <Font name="System Bold" size="33.0" />
                      </font>
                   </Label>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-   </left>
-   <center>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Region prefHeight="145.0" prefWidth="331.0" />
-            <Label text="Login to your Account" textFill="#00000098">
-               <font>
-                  <Font name="System Bold" size="36.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="48.0" />
-               </VBox.margin>
-            </Label>
-            <VBox alignment="CENTER" spacing="16.0">
-               <children>
-                  <TextField fx:id="usernameField" promptText="Username" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/textfields.css">
+                  <TextField fx:id="usernameField" layoutX="924.0" layoutY="253.0" prefHeight="51.0" prefWidth="380.0" promptText="Username" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/textfields.css">
                      <font>
                         <Font size="24.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets left="64.0" right="64.0" />
-                     </VBox.margin>
                   </TextField>
-                  <PasswordField fx:id="passwordField" promptText="Password" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/textfields.css">
+                  <PasswordField fx:id="passwordField" layoutX="923.0" layoutY="319.0" prefHeight="51.0" prefWidth="381.0" promptText="Password" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/textfields.css">
                      <font>
                         <Font size="24.0" />
                      </font>
-                     <VBox.margin>
-                        <Insets left="64.0" right="64.0" />
-                     </VBox.margin>
                   </PasswordField>
-                  <Button fx:id="loginBtn" mnemonicParsing="false" prefHeight="26.0" prefWidth="394.0" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/button.css" text="Login">
+                  <Button fx:id="loginBtn" layoutX="917.0" layoutY="401.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="394.0" style="-fx-background-radius: 25px; -fx-border-radius: 25px;" stylesheets="@../../../css/custom/button.css" text="Login">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
+                  <Hyperlink alignment="CENTER" contentDisplay="RIGHT" layoutX="999.0" layoutY="471.0" onAction="#forgotPasswordClicked" prefHeight="23.0" prefWidth="229.0" text="Forgot Pasword?" textFill="#2989ff">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Hyperlink>
+                  <Label layoutX="315.0" layoutY="508.0" text="© 2024 All rights reserved.">
+                     <font>
+                        <Font name="System Italic" size="14.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="162.0" fitWidth="1440.0" layoutY="558.0">
+                     <image>
+                        <Image url="@../../../img/lower.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="174.0" fitWidth="1446.0" layoutX="-3.0">
+                     <image>
+                        <Image url="@../../../img/upper.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="312.0" fitWidth="509.0" layoutX="167.0" layoutY="206.0">
+                     <image>
+                        <Image url="@../../../img/motor2.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="194.0" layoutY="145.0" text="MotorPH Payroll System" textFill="#000000b2">
+                     <font>
+                        <Font name="System Bold" size="43.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="645.0" fitWidth="156.0" layoutX="761.0" layoutY="52.0">
+                     <image>
+                        <Image url="@../../../img/line.png" />
+                     </image>
+                  </ImageView>
                </children>
-            </VBox>
-            <Hyperlink alignment="CENTER" contentDisplay="RIGHT" onAction="#forgotPasswordClicked" prefHeight="23.0" prefWidth="229.0" text="Forgot Pasword?" textFill="#2989ff">
-               <font>
-                  <Font size="14.0" />
-               </font>
-               <VBox.margin>
-                  <Insets top="7.2" />
-               </VBox.margin>
-            </Hyperlink>
-            <Region prefHeight="51.0" prefWidth="331.0" />
-            <HBox prefHeight="23.0" prefWidth="331.0">
-               <VBox.margin>
-                  <Insets left="24.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="409.0" prefHeight="23.0" prefWidth="331.0">
-               <VBox.margin>
-                  <Insets left="24.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox layoutX="10.0" layoutY="420.0" prefHeight="23.0" prefWidth="331.0">
-               <children>
-                  <BorderPane prefHeight="23.0" prefWidth="300.0" />
-               </children>
-               <VBox.margin>
-                  <Insets left="24.0" />
-               </VBox.margin>
-            </HBox>
-            <Label text="All Rights Reserved">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </Label>
+            </AnchorPane>
          </children>
-      </VBox>
-   </center>
+      </HBox>
+   </left>
 </BorderPane>

@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" minHeight="720.0" minWidth="1440.0" stylesheets="@../../../css/custom/main-view-style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.MainViewController">
+<BorderPane fx:id="mainPane" minHeight="720.0" minWidth="1440.0" stylesheets="@../../../css/custom/main-view-style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.MainViewController">
     <left>
       <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER">
          <content>
@@ -101,9 +101,9 @@
                   </Label>
                   <VBox alignment="CENTER">
                      <children>
-                        <ImageView fitHeight="108.0" fitWidth="116.0" opacity="0.39" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="107.0" fitWidth="200.0">
                            <image>
-                              <Image url="@../../../img/logo.jpeg" />
+                              <Image url="@../../../img/motor2.png" />
                            </image>
                         </ImageView>
                      </children>
