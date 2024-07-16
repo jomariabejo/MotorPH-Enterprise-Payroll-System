@@ -86,7 +86,7 @@
                                  <children>
                                     <HBox prefHeight="57.0" prefWidth="106.0">
                                        <children>
-                                          <Label alignment="CENTER" prefHeight="54.0" prefWidth="221.0" text="HR Dashboard">
+                                          <Label alignment="CENTER_RIGHT" prefHeight="54.0" prefWidth="221.0" text="HR  ">
                                              <font>
                                                 <Font size="25.0" />
                                              </font>
@@ -115,7 +115,14 @@
                               </VBox>
                               <VBox prefHeight="177.0" prefWidth="181.0">
                                  <children>
-                                    <HBox prefHeight="68.0" prefWidth="168.0" />
+                                    <HBox prefHeight="68.0" prefWidth="168.0">
+                                       <children>
+                                          <Label prefHeight="54.0" prefWidth="221.0" text="Dashboard">
+                                             <font>
+                                                <Font size="25.0" />
+                                             </font>
+                                          </Label>
+                                       </children></HBox>
                                     <HBox prefHeight="78.0" prefWidth="182.0">
                                        <children>
                                           <ComboBox fx:id="comboBoxMonth" prefHeight="52.0" prefWidth="179.0" promptText="Month" stylesheets="@../../../../css/custom/combobox.css" />

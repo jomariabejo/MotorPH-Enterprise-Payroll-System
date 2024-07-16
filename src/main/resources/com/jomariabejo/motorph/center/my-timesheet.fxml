@@ -22,11 +22,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbl_tv_total_result" prefHeight="42.0" prefWidth="126.0" stylesheets="@../../../../css/custom/label-large.css" text="####">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
+                  <Label fx:id="lbl_tv_total_result" prefHeight="42.0" prefWidth="126.0" stylesheets="@../../../../css/custom/label-large.css" text="####" />
                   <HBox prefHeight="100.0" prefWidth="139.0" />
                   <Region prefHeight="100.0" prefWidth="202.0" />
                   <Button mnemonicParsing="false" onAction="#btnSetTimeIn" prefHeight="53.0" prefWidth="172.0" style="-fx-background-color: #81C784;" stylesheets="@../../../../css/custom/button.css" text="Set Time In" textFill="#d5dbf069" />

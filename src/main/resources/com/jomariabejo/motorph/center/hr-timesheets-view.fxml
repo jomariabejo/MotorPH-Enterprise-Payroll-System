@@ -13,28 +13,44 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.hr.HRTimesheetsController">
+<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.hr.HRTimesheetsController">
     <children>
         <VBox layoutX="277.0" layoutY="130.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="24.0">
                     <children>
-                  <Label fx:id="lbl_tv_total_result1" layoutX="276.0" layoutY="41.0" prefHeight="35.0" prefWidth="119.0" stylesheets="@../../../../css/custom/label.css" text="No. Result:">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl_tv_total_result" prefHeight="27.0" prefWidth="156.0" stylesheets="@../../../../css/custom/label.css" text="#####">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Region prefHeight="89.0" prefWidth="311.0" />
-                        <Label stylesheets="@../../../../css/custom/label.css" text="Search Employee">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
+                  <HBox alignment="TOP_RIGHT" prefHeight="89.0" prefWidth="212.0">
+                     <children>
+                        <HBox prefHeight="89.0" prefWidth="154.0">
+                           <children>
+                              <Label fx:id="lbl_tv_total_result1" prefHeight="89.0" prefWidth="166.0" stylesheets="@../../../../css/custom/label.css" text="No. of Results:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <HBox prefHeight="89.0" prefWidth="126.0">
+                     <children>
+                        <Label fx:id="lbl_tv_total_result" prefHeight="94.0" prefWidth="97.0" stylesheets="@../../../../css/custom/label.css" text="#####">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
                         </Label>
+                     </children>
+                  </HBox>
+                  <Region prefHeight="89.0" prefWidth="322.0" />
+                  <HBox prefHeight="89.0" prefWidth="214.0">
+                     <children>
+                              <Label prefHeight="89.0" prefWidth="210.0" stylesheets="@../../../../css/custom/label.css" text="Search Employee">
+                                  <font>
+                                      <Font size="18.0" />
+                                  </font>
+                              </Label>
+                     </children>
+                  </HBox>
                         <TextField fx:id="tf_search" onAction="#searching" promptText="Enter employee id" stylesheets="@../../../../css/custom/textfields.css">
                             <font>
                                 <Font size="18.0" />
