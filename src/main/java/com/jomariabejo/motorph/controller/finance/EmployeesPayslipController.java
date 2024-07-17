@@ -23,7 +23,7 @@ import java.sql.Date;
 import java.sql.SQLException;
 
 public class EmployeesPayslipController {
-    private PayslipService payslipService;
+    private final PayslipService payslipService;
 
     public EmployeesPayslipController() {
         this.payslipService = new PayslipService();

@@ -30,9 +30,9 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="518.0" prefWidth="1179.0">
                <children>
-                  <HBox alignment="CENTER">
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1186.0">
                      <children>
-                        <HBox spacing="4.8">
+                        <HBox prefHeight="50.0" prefWidth="431.0" spacing="4.8">
                            <children>
                               <Button mnemonicParsing="false" onAction="#addNewEmployeeClicked" prefHeight="46.0" prefWidth="200.0" stylesheets="@../../../../css/custom/button-small.css" text="Add New Employee">
                                  <font>
@@ -63,7 +63,7 @@
                               <Insets left="48.0" />
                            </HBox.margin>
                         </TextField>
-                        <Button fx:id="btn_search" mnemonicParsing="false" onAction="#searchBtnClicked" text="Search">
+                        <Button fx:id="btn_search" mnemonicParsing="false" onAction="#searchBtnClicked" stylesheets="@../../../../css/custom/button-small.css" text="Search">
                            <font>
                               <Font size="16.0" />
                            </font>

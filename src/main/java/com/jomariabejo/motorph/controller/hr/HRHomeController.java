@@ -366,7 +366,7 @@ public class HRHomeController {
                 employeeService.saveEmployeeWithProvidedEmployeeId(newEmployee);
                 allowanceService.createAllowance(allowance);
             }
-            AlertUtility.showInformation("Success", "Employee saved successfully", String.valueOf(employeeList.size()) + " employees added.");
+            AlertUtility.showInformation("Success", "Employee saved successfully", employeeList.size() + " employees added.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

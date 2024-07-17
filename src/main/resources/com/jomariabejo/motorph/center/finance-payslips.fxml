@@ -10,18 +10,28 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.finance.PayslipController">
+<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.finance.PayslipController">
     <children>
         <VBox layoutX="277.0" layoutY="130.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="24.0">
                     <children>
-                  <Label fx:id="lbl_tv_total_result1" layoutX="276.0" layoutY="41.0" prefHeight="35.0" prefWidth="116.0" stylesheets="@../../../../css/custom/label.css" text="No. Result:">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lbl_tv_total_result" prefHeight="35.0" prefWidth="78.0" stylesheets="@../../../../css/custom/label.css" text="#####">
+                  <HBox prefHeight="100.0" prefWidth="268.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="39.0" />
+                        <HBox prefHeight="100.0" prefWidth="234.0">
+                           <children>
+                              <HBox prefHeight="100.0" prefWidth="39.0" />
+                              <Label fx:id="lbl_tv_total_result1" prefHeight="100.0" prefWidth="175.0" stylesheets="@../../../../css/custom/label.css" text="No. of Results:">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+                  <Label fx:id="lbl_tv_total_result" prefHeight="35.0" prefWidth="149.0" stylesheets="@../../../../css/custom/label.css" text="#####">
                      <font>
                         <Font size="18.0" />
                      </font>

@@ -68,7 +68,7 @@ public class MyProfileController {
     @FXML
     private TextField tf_supervisor;
 
-    private SalaryDetailService salaryDetailService;
+    private final SalaryDetailService salaryDetailService;
 
     public MyProfileController() {
         this.salaryDetailService = new SalaryDetailService();
@@ -149,8 +149,8 @@ public class MyProfileController {
      * Controller for 'Change Password Tab'
      */
 
-    private Validator newPasswordValidator = new Validator();
-    private Validator confirmPasswordValidator = new Validator();
+    private final Validator newPasswordValidator = new Validator();
+    private final Validator confirmPasswordValidator = new Validator();
 
     @FXML
     private Button confirmNewPasswordButton;

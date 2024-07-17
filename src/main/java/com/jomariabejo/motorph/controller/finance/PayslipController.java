@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 public class PayslipController {
-    private PayslipService payslipService;
+    private final PayslipService payslipService;
 
     public PayslipController() {
         this.payslipService = new PayslipService();

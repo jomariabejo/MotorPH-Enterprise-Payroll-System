@@ -30,7 +30,8 @@ public class LoginController {
     @FXML
     private Button loginBtn, registerBtn;
     private final UserRepository userRepository = new UserRepository();
-    private Validator usernameValidator = new Validator(), passwordValidator = new Validator();
+    private final Validator usernameValidator = new Validator();
+    private final Validator passwordValidator = new Validator();
 
     public void initialize() { /* Validator for username field. */
         usernameValidator.createCheck().dependsOn("username", usernameField.textProperty()).withMethod(c -> {

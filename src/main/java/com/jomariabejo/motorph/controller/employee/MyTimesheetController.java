@@ -123,7 +123,6 @@ public class MyTimesheetController {
             } else {
                 AlertUtility.showErrorAlert("Timeout Error", "Oops!",
                         "You've already Timed Out");
-                ;
             }
         } catch (SQLException e) {
             AlertUtility.showErrorAlert("Database Error", "Error Occurred", "Failed to connect to the database.");

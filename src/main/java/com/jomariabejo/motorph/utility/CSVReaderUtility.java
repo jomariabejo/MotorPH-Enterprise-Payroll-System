@@ -10,6 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class CSVReaderUtility {
@@ -89,9 +90,7 @@ public class CSVReaderUtility {
             // Read the first line (header) if available
             String[] headerLine = csvReader.readNext();
             if (headerLine != null) {
-                for (String header : headerLine) {
-                    headers.add(header);
-                }
+                Collections.addAll(headers, headerLine);
             }
         }
         return headers;
@@ -104,8 +103,6 @@ public class CSVReaderUtility {
         String[] headersArray = {
         };
 
-        for (String header : headersArray) {
-            DEFAULT_HEADERS.add(header);
-        }
+        Collections.addAll(DEFAULT_HEADERS, headersArray);
     }
 }

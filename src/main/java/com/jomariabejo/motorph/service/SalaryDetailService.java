@@ -4,7 +4,7 @@ import com.jomariabejo.motorph.record.SalaryStructure;
 import com.jomariabejo.motorph.repository.SalaryRepository;
 
 public class SalaryDetailService {
-    private SalaryRepository salaryRepository;
+    private final SalaryRepository salaryRepository;
 
     public SalaryDetailService() {
         this.salaryRepository = new SalaryRepository();

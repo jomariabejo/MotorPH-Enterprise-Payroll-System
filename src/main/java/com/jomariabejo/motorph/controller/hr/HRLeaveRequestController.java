@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class HRLeaveRequestController {
     private final int ROWS_PER_PAGE = 100;
-    private LeaveRequestService leaveRequestService;
+    private final LeaveRequestService leaveRequestService;
 
     @FXML
     private ComboBox<String> cb_leave_req_status;

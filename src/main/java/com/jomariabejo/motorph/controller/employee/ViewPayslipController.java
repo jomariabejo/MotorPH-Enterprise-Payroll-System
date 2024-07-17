@@ -21,7 +21,7 @@ import java.time.Instant;
 
 public class ViewPayslipController {
 
-    private PayslipService payslipService;
+    private final PayslipService payslipService;
 
     public ViewPayslipController() {
         this.payslipService = new PayslipService();

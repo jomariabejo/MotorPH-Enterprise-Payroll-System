@@ -28,9 +28,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class UserController implements Initializable {
-    private EmployeeService employeeService;
-    private UserService userService;
-    private RoleService roleService;
+    private final EmployeeService employeeService;
+    private final UserService userService;
+    private final RoleService roleService;
     private AccessType accessType;
 
     @FXML
@@ -145,7 +145,6 @@ public class UserController implements Initializable {
                     this.tf_password.getText()
             );
             System.out.printf(user.toString());
-            ;
 
             boolean isModificationSuccess = userService.modifyUser(
                     new User(
@@ -318,7 +317,7 @@ public class UserController implements Initializable {
         }
 
         // Name of the CSV file
-        String filename = DateUtility.getDate().toString() + "_" + "UserCredentials for " + employeeService.fetchEmployeeName(Integer.parseInt(tf_employeeId.getText())).get().toString();
+        String filename = DateUtility.getDate().toString() + "_" + "UserCredentials for " + employeeService.fetchEmployeeName(Integer.parseInt(tf_employeeId.getText())).get();
 
         // Writing to the CSV file
         try (FileWriter fileWriter = new FileWriter(directory.resolve(filename).toString())) {

@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 public class TaxTest {
 
@@ -15,10 +16,10 @@ public class TaxTest {
         Tax tax = new Tax();
         assertEquals(0, tax.getTaxId());
         assertEquals(0, tax.getEmployeeId());
-        assertEquals(null, tax.getTaxableIncome());
+        assertNull(tax.getTaxableIncome());
         assertEquals(0, tax.getTaxCategoryId());
-        assertEquals(null, tax.getWithheldTax());
-        assertEquals(null, tax.getDateCreated());
+        assertNull(tax.getWithheldTax());
+        assertNull(tax.getDateCreated());
     }
 
     @Test
