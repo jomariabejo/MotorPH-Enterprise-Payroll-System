@@ -310,9 +310,7 @@ public class PayslipRepository {
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 int payslipsCount = resultSet.getInt(1);
-                if (payslipsCount >= 0) {
-                    AlertUtility.showErrorAlert("Failed", "Pay period exist", "Pay period exist\\nThe pay period that you've inputted is already generated, please check on payslips");
-                }
+
                 return payslipsCount == 0; // Returns true if no overlapping payslip found
             }
         } catch (SQLException e) {

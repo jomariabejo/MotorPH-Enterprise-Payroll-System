@@ -3,7 +3,7 @@ package com.jomariabejo.motorph.service;
 import com.jomariabejo.motorph.repository.RoleRepository;
 
 public class RoleService {
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
 
     public RoleService() {
         this.roleRepository = new RoleRepository();

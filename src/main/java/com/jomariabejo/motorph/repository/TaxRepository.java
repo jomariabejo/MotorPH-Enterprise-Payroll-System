@@ -80,7 +80,7 @@ public class TaxRepository {
 
             if (rowsAffected > 0) {
                 System.out.println("Tax updated successfully");
-                System.out.println(tax.toString());
+                System.out.println(tax);
             }
 
         } catch (SQLException e) {

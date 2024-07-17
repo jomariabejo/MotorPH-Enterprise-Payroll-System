@@ -11,45 +11,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.employee.MyLeaveRequestController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="636.0" prefWidth="1131.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.employee.MyLeaveRequestController">
     <children>
-        <VBox layoutX="277.0" layoutY="130.0" prefHeight="636.0" prefWidth="1131.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER" layoutX="10.0" layoutY="10.0">
             <children>
-                <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="24.0">
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="24.0">
                     <children>
-                  <HBox prefHeight="100.0" prefWidth="53.0">
-                     <children>
-                        <HBox prefHeight="100.0" prefWidth="51.0" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="10.0" />
-                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="261.0">
-                     <children>
-                        <Label fx:id="lbl_tv_total_result1" alignment="BOTTOM_LEFT" prefHeight="27.0" prefWidth="170.0" stylesheets="@../../../../css/custom/label.css" text="No. of Results:">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
+                        <Label fx:id="lbl_tv_total_result1" prefHeight="35.0" prefWidth="166.0" stylesheets="@../../../../css/custom/label.css" text="No. of Results:">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
                         </Label>
-                     </children>
-                  </VBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <Label fx:id="lbl_tv_total_result" prefHeight="114.0" prefWidth="114.0" stylesheets="@../../../../css/custom/label.css" text="#####">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-                  <VBox prefHeight="100.0" prefWidth="138.0" />
-                  <HBox prefHeight="100.0" prefWidth="200.0" />
-                  <HBox prefHeight="100.0" prefWidth="63.0" />
-                  <Region prefHeight="100.0" prefWidth="38.0" />
-                  <Button mnemonicParsing="false" onAction="#buttonCheckLeaveCreditsEvent" prefHeight="54.0" prefWidth="350.0" stylesheets="@../../../../css/custom/button.css" text="Check Leave Credits" />
-                        <Button layoutX="822.0" layoutY="28.0" mnemonicParsing="false" onAction="#buttonFileLeaveRequestEvent" prefHeight="54.0" prefWidth="350.0" stylesheets="@../../../../css/custom/button.css" text="File Leave Request" />
+                        <Label fx:id="lbl_tv_total_result" prefHeight="42.0" prefWidth="126.0" stylesheets="@../../../../css/custom/label-large.css" text="####" />
+                  <Region prefHeight="100.0" prefWidth="236.0" />
+                        <Button mnemonicParsing="false" onAction="#buttonCheckLeaveCreditsEvent" prefHeight="54.0" prefWidth="251.0" stylesheets="@../../../../css/custom/button.css" text="Check Leave Credits" />
+                        <Button layoutX="822.0" layoutY="28.0" mnemonicParsing="false" onAction="#buttonFileLeaveRequestEvent" prefHeight="54.0" prefWidth="242.0" stylesheets="@../../../../css/custom/button.css" text="File Leave Request" />
                     </children>
                 </HBox>
-                <TableView fx:id="tv_leave_requests" prefHeight="480.0" prefWidth="1079.0" stylesheets="@../../../../css/custom/tableView.css">
+                <TableView fx:id="tv_leave_requests" prefHeight="475.0" prefWidth="1116.0" stylesheets="@../../../../css/custom/tableView.css">
                     <columns>
                         <TableColumn fx:id="tc_leaveRequestId" prefWidth="110.0" text="Leave Request Id">
                             <cellValueFactory>
@@ -77,9 +56,9 @@
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
                 </TableView>
             </children>
         </VBox>
