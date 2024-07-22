@@ -1,1 +1,0 @@
-SELECT COUNT(employee_id) AS NumberOfEmployees FROM employee;

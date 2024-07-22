@@ -1,98 +1,88 @@
 package com.jomariabejo.motorph.repository;
 
-import com.jomariabejo.motorph.entity.Department;
+import com.jomariabejo.motorph.model.Department;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
-import java.sql.*;
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
-public class DepartmentRepository {
+public class DepartmentRepository implements GenericRepository<Department, Integer> {
 
-    private final Connection connection;
+    private final SessionFactory sessionFactory;
 
-    public DepartmentRepository(Connection connection) {
-        this.connection = connection;
+    public DepartmentRepository(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
-    public void create(Department department) throws SQLException {
-        String query = "INSERT INTO department (name, description, date_created) VALUES (?, ?, ?)";
-        try (PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            statement.setString(1, department.getName());
-            statement.setString(2, department.getDescription());
-            statement.setDate(3, department.getDateCreated());
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
-            if (resultSet.next()) {
-                int departmentID = resultSet.getInt(1);
-                department.setDepartmentID(departmentID);
-            }
-        }
+    @Override
+    public Department findById(Integer id) {
+        Session session = sessionFactory.openSession();
+        Department department = session.get(Department.class, id);
+        session.close();
+        return department;
     }
 
-    // GET operation by ID
-    public Department get(int departmentID) throws SQLException {
-        String query = "SELECT * FROM department WHERE dept_id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, departmentID);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return extractDepartment(resultSet);
-            }
-            return null;
-        }
-    }
-
-    // GET operation for all departments
-    public List<Department> getAll() throws SQLException {
-        List<Department> departments = new ArrayList<>();
-        String query = "SELECT * FROM department";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
-                departments.add(extractDepartment(resultSet));
-            }
-        }
+    @Override
+    public List<Department> findAll() {
+        Session session = sessionFactory.openSession();
+        List<Department> departments = session.createQuery("FROM Department", Department.class).list();
+        session.close();
         return departments;
     }
 
-    // UPDATE operation
-    public void update(Department department) throws SQLException {
-        String query = "UPDATE department SET name = ?, description = ? WHERE dept_id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setString(1, department.getName());
-            statement.setString(2, department.getDescription());
-            statement.setInt(3, department.getDepartmentID());
-            statement.executeUpdate();
-        }
-    }
-
-    // DELETE operation
-    public void delete(int departmentID) throws SQLException {
-        String query = "DELETE FROM department WHERE dept_id = ?";
-        try (PreparedStatement statement = connection.prepareStatement(query)) {
-            statement.setInt(1, departmentID);
-            statement.executeUpdate();
-        }
-    }
-
-    // Helper method to extract Department object from ResultSet
-    private Department extractDepartment(ResultSet resultSet) throws SQLException {
-        int departmentID = resultSet.getInt("dept_id");
-        String name = resultSet.getString("name");
-        String description = resultSet.getString("description");
-        java.sql.Date dateCreated = resultSet.getDate("date_created");
-        return new Department(departmentID, name, description, dateCreated);
-    }
-
-    public List<String> getDepartmentsName() throws SQLException {
-        List<String> departments = new ArrayList<>();
-        String query = "SELECT name FROM department";
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-            while (resultSet.next()) {
-                departments.add(resultSet.getString("name"));
+    @Override
+    public void save(Department department) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.save(department);
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
             }
+            throw e; // or display error message
+        } finally {
+            session.close();
         }
-        return departments;
+    }
+
+    @Override
+    public void update(Department department) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.update(department);
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            throw e; // or display error message
+        } finally {
+            session.close();
+        }
+    }
+
+    @Override
+    public void delete(Department department) {
+        Session session = sessionFactory.openSession();
+        Transaction tx = null;
+        try {
+            tx = session.beginTransaction();
+            session.delete(department);
+            tx.commit();
+        } catch (RuntimeException e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+            }
+            throw e; // or display error message
+        } finally {
+            session.close();
+        }
     }
 }
