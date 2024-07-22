@@ -1,40 +1,43 @@
 package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.model.Department;
+import com.jomariabejo.motorph.HibernateUtil;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class DepartmentRepository implements GenericRepository<Department, Integer> {
 
-    private final SessionFactory sessionFactory;
+    private final HibernateUtil hibernateUtil;
 
-    public DepartmentRepository(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
+    public DepartmentRepository(HibernateUtil hibernateUtil) {
+        this.hibernateUtil = hibernateUtil;
     }
 
     @Override
     public Department findById(Integer id) {
-        Session session = sessionFactory.openSession();
-        Department department = session.get(Department.class, id);
-        session.close();
-        return department;
+        Session session = hibernateUtil.openSession();
+        try {
+            return session.get(Department.class, id);
+        } finally {
+            session.close();
+        }
     }
 
     @Override
     public List<Department> findAll() {
-        Session session = sessionFactory.openSession();
-        List<Department> departments = session.createQuery("FROM Department", Department.class).list();
-        session.close();
-        return departments;
+        Session session = hibernateUtil.openSession();
+        try {
+            return session.createQuery("FROM Department", Department.class).list();
+        } finally {
+            session.close();
+        }
     }
 
     @Override
     public void save(Department department) {
-        Session session = sessionFactory.openSession();
+        Session session = hibernateUtil.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -44,7 +47,7 @@ public class DepartmentRepository implements GenericRepository<Department, Integ
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            throw e; // or display error message
+            throw e;
         } finally {
             session.close();
         }
@@ -52,7 +55,7 @@ public class DepartmentRepository implements GenericRepository<Department, Integ
 
     @Override
     public void update(Department department) {
-        Session session = sessionFactory.openSession();
+        Session session = hibernateUtil.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -62,7 +65,7 @@ public class DepartmentRepository implements GenericRepository<Department, Integ
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            throw e; // or display error message
+            throw e;
         } finally {
             session.close();
         }
@@ -70,7 +73,7 @@ public class DepartmentRepository implements GenericRepository<Department, Integ
 
     @Override
     public void delete(Department department) {
-        Session session = sessionFactory.openSession();
+        Session session = hibernateUtil.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
@@ -80,7 +83,7 @@ public class DepartmentRepository implements GenericRepository<Department, Integ
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            throw e; // or display error message
+            throw e;
         } finally {
             session.close();
         }

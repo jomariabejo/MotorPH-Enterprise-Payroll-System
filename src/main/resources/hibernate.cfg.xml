@@ -1,0 +1,38 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/payroll_system?useSSL=false&amp;serverTimezone=UTC</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">admin</property>
+
+        <!-- SQL dialect for MySQL -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+        <!-- Echo all executed SQL to console -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+
+        <!-- Automatically create/update the database schema -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <!-- Mapping resource -->
+        <!-- Replace with your package path and entity class name -->
+        <mapping class="com.jomariabejo.motorph.model.Department"/>
+        <mapping class="com.jomariabejo.motorph.model.Employee"/>
+        <mapping class="com.jomariabejo.motorph.model.LeaveBalance"/>
+        <mapping class="com.jomariabejo.motorph.model.LeaveRequest"/>
+        <mapping class="com.jomariabejo.motorph.model.LeaveRequestType"/>
+        <mapping class="com.jomariabejo.motorph.model.OvertimeRequest"/>
+        <mapping class="com.jomariabejo.motorph.model.Payslip"/>
+        <mapping class="com.jomariabejo.motorph.model.PayslipHistory"/>
+        <mapping class="com.jomariabejo.motorph.model.Position"/>
+        <mapping class="com.jomariabejo.motorph.model.Role"/>
+        <mapping class="com.jomariabejo.motorph.model.Timesheet"/>
+        <mapping class="com.jomariabejo.motorph.model.User"/>
+    </session-factory>
+</hibernate-configuration>

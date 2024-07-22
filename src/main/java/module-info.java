@@ -8,31 +8,16 @@ module com.jomariabejo.motorph {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires eu.hansolo.tilesfx;
-    requires MaterialFX;
     requires java.logging;
     requires java.sql;
     requires com.opencsv;
     requires org.apache.pdfbox;
+    requires static lombok;
+    requires jakarta.persistence;
+    requires org.hibernate.orm.core;
 
-    opens com.jomariabejo.motorph.enums to javafx.fxml;
-    exports com.jomariabejo.motorph.enums to javafx.fxml;
-    opens com.jomariabejo.motorph.entity;
-    exports com.jomariabejo.motorph.entity to javafx.fxml;
     opens com.jomariabejo.motorph to javafx.fxml;
     exports com.jomariabejo.motorph;
-    opens com.jomariabejo.motorph.controller to javafx.fxml;
-    exports com.jomariabejo.motorph.controller;
-    exports com.jomariabejo.motorph.service;
-    opens com.jomariabejo.motorph.service to javafx.fxml;
-    opens com.jomariabejo.motorph.controller.hr to javafx.fxml;
-    exports com.jomariabejo.motorph.controller.hr;
-    opens com.jomariabejo.motorph.query;
-    exports com.jomariabejo.motorph.query;
-    opens com.jomariabejo.motorph.controller.finance to javafx.fxml;
-    exports com.jomariabejo.motorph.controller.finance;
-    opens com.jomariabejo.motorph.controller.employee to javafx.fxml;
-    exports com.jomariabejo.motorph.controller.employee;
-    opens com.jomariabejo.motorph.controller.systemadmin to javafx.fxml;
-    exports com.jomariabejo.motorph.controller.systemadmin;
-
+    opens com.jomariabejo.motorph.model to javafx.fxml;
+    exports com.jomariabejo.motorph.model;
 }
