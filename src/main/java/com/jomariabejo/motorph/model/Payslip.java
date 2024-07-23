@@ -1,13 +1,12 @@
 package com.jomariabejo.motorph.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.LocalDate;
 
 @Getter
@@ -16,6 +15,7 @@ import java.time.LocalDate;
 @Table(name = "payslip", schema = "payroll_system")
 public class Payslip {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PayslipID", nullable = false)
     private Integer id;
 
@@ -46,6 +46,7 @@ public class Payslip {
     @Column(name = "DaysWorked", nullable = false)
     private Integer daysWorked;
 
+    @ColumnDefault("0.0000")
     @Column(name = "OvertimeHours", nullable = false, precision = 8, scale = 4)
     private BigDecimal overtimeHours;
 
@@ -81,5 +82,56 @@ public class Payslip {
 
     @Column(name = "NetPay", nullable = false, precision = 18, scale = 4)
     private BigDecimal netPay;
+
+    @Column(name = "CompanyID")
+    private Integer companyID;
+
+    @Column(name = "CompanyName", length = 100)
+    private String companyName;
+
+    @Column(name = "PayrollRunDate")
+    private LocalDate payrollRunDate;
+
+    @Column(name = "PaymentDate")
+    private LocalDate paymentDate;
+
+    @Column(name = "PaymentMethod", length = 50)
+    private String paymentMethod;
+
+    @Column(name = "EmployeeDepartment", length = 100)
+    private String employeeDepartment;
+
+    @Column(name = "EmployeeManager", length = 100)
+    private String employeeManager;
+
+    @Column(name = "LeaveDays")
+    private Integer leaveDays;
+
+    @Column(name = "AbsenceDays")
+    private Integer absenceDays;
+
+    @Column(name = "TaxableIncome", precision = 18, scale = 4)
+    private BigDecimal taxableIncome;
+
+    @Column(name = "TaxableBenefits", precision = 18, scale = 4)
+    private BigDecimal taxableBenefits;
+
+    @Column(name = "Bonus", precision = 18, scale = 4)
+    private BigDecimal bonus;
+
+    @Column(name = "OtherDeductions", precision = 18, scale = 4)
+    private BigDecimal otherDeductions;
+
+    @Column(name = "CreatedBy", length = 100)
+    private String createdBy;
+
+    @Column(name = "CreatedDate")
+    private Instant createdDate;
+
+    @Column(name = "LastModifiedBy", length = 100)
+    private String lastModifiedBy;
+
+    @Column(name = "LastModifiedDate")
+    private Instant lastModifiedDate;
 
 }

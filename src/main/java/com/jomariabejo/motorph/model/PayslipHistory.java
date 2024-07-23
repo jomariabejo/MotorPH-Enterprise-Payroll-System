@@ -3,6 +3,9 @@ package com.jomariabejo.motorph.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
 
@@ -18,12 +21,14 @@ public class PayslipHistory {
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "PayslipID", nullable = false)
     private Payslip payslipID;
 
     @Column(name = "ModifiedBy", nullable = false, length = 100)
     private String modifiedBy;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "ModificationDate", nullable = false)
     private Instant modificationDate;
 
@@ -37,5 +42,13 @@ public class PayslipHistory {
     @Lob
     @Column(name = "NewValue")
     private String newValue;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "EmployeeDepartment")
+    private Department employeeDepartment;
+
+    @Lob
+    @Column(name = "ModifiedFieldDetails")
+    private String modifiedFieldDetails;
 
 }

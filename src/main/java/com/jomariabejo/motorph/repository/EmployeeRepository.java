@@ -36,12 +36,12 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
     }
 
     @Override
-    public void save(Employee department) {
+    public void save(Employee employee) {
         Session session = hibernateUtil.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.save(department);
+            session.save(employee);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {
@@ -54,12 +54,12 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
     }
 
     @Override
-    public void update(Employee department) {
+    public void update(Employee employee) {
         Session session = hibernateUtil.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.update(department);
+            session.update(employee);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {
@@ -72,12 +72,12 @@ public class EmployeeRepository implements GenericRepository<Employee, Integer> 
     }
 
     @Override
-    public void delete(Employee department) {
+    public void delete(Employee employee) {
         Session session = hibernateUtil.openSession();
         Transaction tx = null;
         try {
             tx = session.beginTransaction();
-            session.delete(department);
+            session.delete(employee);
             tx.commit();
         } catch (RuntimeException e) {
             if (tx != null && tx.isActive()) {

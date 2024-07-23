@@ -6,7 +6,7 @@
     <session-factory>
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/payroll_system?useSSL=false&amp;serverTimezone=UTC</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/payroll_system</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password">admin</property>
 
@@ -20,8 +20,6 @@
         <!-- Automatically create/update the database schema -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
-        <!-- Mapping resource -->
-        <!-- Replace with your package path and entity class name -->
         <mapping class="com.jomariabejo.motorph.model.Department"/>
         <mapping class="com.jomariabejo.motorph.model.Employee"/>
         <mapping class="com.jomariabejo.motorph.model.LeaveBalance"/>

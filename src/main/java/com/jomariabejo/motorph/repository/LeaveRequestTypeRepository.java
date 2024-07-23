@@ -1,5 +1,9 @@
 package com.jomariabejo.motorph.repository;
 
+import com.jomariabejo.motorph.exception.LeaveRequestTypeNotFoundException;
+import com.jomariabejo.motorph.exception.DuplicateLeaveRequestTypeException;
+import com.jomariabejo.motorph.exception.InvalidLeaveRequestTypeException;
+import com.jomariabejo.motorph.exception.LeaveRequestTypeDeletionException;
 import com.jomariabejo.motorph.model.LeaveRequestType;
 import com.jomariabejo.motorph.HibernateUtil;
 import org.hibernate.Session;
@@ -19,7 +23,11 @@ public class LeaveRequestTypeRepository implements GenericRepository<LeaveReques
     public LeaveRequestType findById(Integer id) {
         Session session = hibernateUtil.openSession();
         try {
-            return session.get(LeaveRequestType.class, id);
+            LeaveRequestType leaveRequestType = session.get(LeaveRequestType.class, id);
+            if (leaveRequestType == null) {
+                throw new LeaveRequestTypeNotFoundException("Leave request type with ID " + id + " not found.");
+            }
+            return leaveRequestType;
         } finally {
             session.close();
         }
@@ -47,7 +55,11 @@ public class LeaveRequestTypeRepository implements GenericRepository<LeaveReques
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            throw e;
+            if (e.getCause() instanceof org.hibernate.exception.ConstraintViolationException) {
+                throw new DuplicateLeaveRequestTypeException("Leave request type with name " + leaveRequestType.getLeaveTypeName() + " already exists.");
+            } else {
+                throw new InvalidLeaveRequestTypeException("Failed to save leave request type.");
+            }
         } finally {
             session.close();
         }
@@ -65,7 +77,7 @@ public class LeaveRequestTypeRepository implements GenericRepository<LeaveReques
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            throw e;
+            throw new InvalidLeaveRequestTypeException("Failed to update leave request type.");
         } finally {
             session.close();
         }
@@ -83,7 +95,7 @@ public class LeaveRequestTypeRepository implements GenericRepository<LeaveReques
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
-            throw e;
+            throw new LeaveRequestTypeDeletionException("Failed to delete leave request type.");
         } finally {
             session.close();
         }
