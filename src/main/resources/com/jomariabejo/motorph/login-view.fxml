@@ -37,7 +37,7 @@
                         <Blend mode="SRC_ATOP" />
                      </effect>
                      <image>
-                        <Image url="@assets/icons-motorph/moto.jpg" />
+                        <Image url="@assets/icons/moto.jpg" />
                      </image>
                      <VBox.margin>
                         <Insets bottom="24.0" top="24.0" />
@@ -95,7 +95,7 @@
                      <graphic>
                         <ImageView fitHeight="60.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@assets/icons-motorph/login2.png" />
+                              <Image url="@assets/icons/login2.png" />
                            </image>
                            <effect>
                               <Blend />
