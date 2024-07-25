@@ -1,6 +1,6 @@
 package com.jomariabejo.motorph;
 
-import atlantafx.base.theme.PrimerDark;
+import atlantafx.base.theme.PrimerLight;
 import com.jomariabejo.motorph.controller.LoginViewController;
 import com.jomariabejo.motorph.controller.MainViewController;
 import javafx.application.Application;
@@ -8,6 +8,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
 
@@ -24,7 +26,7 @@ public class Launcher extends Application {
         primaryStage = stage; // Store the primary stage for later use
 
         // Set the default stylesheet for the application
-        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
 
         // Load the login view FXML file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/login-view.fxml"));
@@ -57,7 +59,7 @@ public class Launcher extends Application {
 
         // Pass parameters to the main view controller if necessary
         MainViewController controller = loader.getController();
-        controller.initializeData(username); // Example method to initialize data
+        controller.initializeUserNavigation(username); // Example method to initialize data
 
         // Create a new scene with the loaded FXML file
         Scene scene = new Scene(root);

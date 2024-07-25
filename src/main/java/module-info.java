@@ -15,12 +15,15 @@ module com.jomariabejo.motorph {
     requires jakarta.persistence;
     requires org.hibernate.orm.core;
     requires atlantafx.base;
+    requires jdk.compiler;
     opens com.jomariabejo.motorph to javafx.fxml;
     exports com.jomariabejo.motorph;
     exports com.jomariabejo.motorph.model;
     opens com.jomariabejo.motorph.model to org.hibernate.orm.core;
     opens com.jomariabejo.motorph.controller to javafx.fxml;
+    opens com.jomariabejo.motorph.controller.nav to javafx.fxml;
     exports com.jomariabejo.motorph.controller;
+    exports com.jomariabejo.motorph.controller.nav;
 
 
 }

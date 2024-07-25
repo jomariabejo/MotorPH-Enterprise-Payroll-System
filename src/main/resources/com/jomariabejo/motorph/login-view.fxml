@@ -18,7 +18,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="900.0" prefWidth="1440.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.LoginViewController">
+<VBox alignment="CENTER" prefHeight="1000.0" prefWidth="1600.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.LoginViewController">
   <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
   </padding>
@@ -106,22 +106,22 @@
                         <Insets bottom="48.0" />
                      </padding>
                   </Label>
-                  <TextField prefWidth="580.0" promptText="Username or employee id">
+                  <TextField prefWidth="550.0" promptText="Username or employee id">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <TextField layoutX="34.0" layoutY="450.0" prefWidth="580.0" promptText="Password">
+                  <TextField layoutX="34.0" layoutY="450.0" prefWidth="550.0" promptText="Password">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </TextField>
-                  <Button mnemonicParsing="false" onAction="#loginClicked" prefHeight="51.0" prefWidth="580.0" text="Login">
+                  <Button mnemonicParsing="false" onAction="#loginClicked" prefHeight="0.0" prefWidth="722.0" text="Login">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Button>
-                  <Hyperlink styleClass="lato-regular" text="Forgot Password?">
+                  <Hyperlink alignment="CENTER" prefHeight="0.0" prefWidth="722.0" styleClass="lato-regular" text="Forgot Password?">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -131,7 +131,7 @@
                         <Insets bottom="24.0" top="24.0" />
                      </VBox.margin>
                   </Line>
-                  <Button mnemonicParsing="false" prefHeight="51.0" prefWidth="290.0" style="-fx-background-color: Green;" text="Create new account" textFill="WHITE">
+                  <Button mnemonicParsing="false" prefHeight="0.0" prefWidth="722.0" text="Create new account">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>

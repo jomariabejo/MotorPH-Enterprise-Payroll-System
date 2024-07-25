@@ -47,7 +47,6 @@ public abstract class _AbstractHibernateRepository<T, ID extends Serializable> i
             session.save(entity);
             tx.commit();
         } catch (RuntimeException e) {
-            handleDuplicateEntryException(e); // Handle duplicate entry error
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
@@ -66,7 +65,6 @@ public abstract class _AbstractHibernateRepository<T, ID extends Serializable> i
             session.update(entity);
             tx.commit();
         } catch (RuntimeException e) {
-            handleDuplicateEntryException(e); // Handle duplicate entry error
             if (tx != null && tx.isActive()) {
                 tx.rollback();
             }
@@ -93,15 +91,4 @@ public abstract class _AbstractHibernateRepository<T, ID extends Serializable> i
             session.close();
         }
     }
-
-    private void handleDuplicateEntryException(RuntimeException ex) {
-        if (ex.getCause() instanceof ConstraintViolationException) {
-            ConstraintViolationException constraintEx = (ConstraintViolationException) ex.getCause();
-            handleConstraintViolationException(constraintEx);
-        } else {
-            System.err.println("Unhandled exception occurred: " + ex.getMessage());
-        }
-    }
-
-    protected abstract void handleConstraintViolationException(ConstraintViolationException ex);
 }
