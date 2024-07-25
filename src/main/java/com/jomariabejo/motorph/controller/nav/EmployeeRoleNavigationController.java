@@ -1,62 +1,19 @@
 package com.jomariabejo.motorph.controller.nav;
 
 import com.jomariabejo.motorph.controller.MainViewController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.fxml.Initializable;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class EmployeeRoleNavigationController {
 
     @Getter
     @Setter
     private MainViewController mainViewController;
-
-    @FXML
-    void contactSupportOnAction(ActionEvent event) {
-        this.mainViewController.rewriteLabel("/ Employee / Contact Support");
-    }
-
-    public void fileLeaveRequestOnAction(ActionEvent actionEvent) {
-        this.mainViewController.rewriteLabel("/ Employee / File Leave Request");
-    }
-
-    @FXML
-    void overtimeOnAction(ActionEvent event) {
-        this.mainViewController.rewriteLabel("/ Employee / Overtime");
-    }
-
-    @FXML
-    void overviewOnAction(ActionEvent event) {
-        this.mainViewController.rewriteLabel("/ Employee / Overview");
-    }
-
-    @FXML
-    void payslipOnAction(ActionEvent event) {
-        this.mainViewController.rewriteLabel("/ Employee / Payslip");
-    }
-
-    @FXML
-    void submitTimesheetOnAction(ActionEvent event) {
-        this.mainViewController.rewriteLabel("/ Employee / Submit Timesheet");
-    }
-
-    @FXML
-    void viewLeaveBalanceOnAction(ActionEvent event) {
-        this.mainViewController.rewriteLabel("/ Employee / View Leave Balance");
-    }
-
-    @FXML
-    void viewLeaveHistoryOnAction(ActionEvent event) {
-        this.mainViewController.rewriteLabel("/ Employee / View Leave History");
-    }
-
-    @FXML
-    void viewTimesheetOnAction(ActionEvent event) {
-        this.mainViewController.rewriteLabel("/ Employee / View Timesheet");
-    }
 
     // Default constructor
     public EmployeeRoleNavigationController() {
@@ -67,7 +24,52 @@ public class EmployeeRoleNavigationController {
         this.mainViewController = mainViewController;
     }
 
-    public void showHi() {
-        System.out.println("Hello");
+    @FXML
+    public void contactSupportOnAction() {
+        mainViewController.rewriteLabel("/ Employee / Contact Support");
+    }
+
+    @FXML
+    public void fileLeaveRequestOnAction() {
+        mainViewController.rewriteLabel("/ Employee / File Leave Request");
+    }
+
+    @FXML
+    public void overtimeOnAction() {
+        mainViewController.rewriteLabel("/ Employee / Overtime");
+    }
+
+    @FXML
+    public void overviewOnAction() {
+        mainViewController.rewriteLabel("/ Employee / Overview");
+    }
+
+    @FXML
+    public void payslipOnAction() {
+        mainViewController.rewriteLabel("/ Employee / Payslip");
+    }
+
+    @FXML
+    public void submitTimesheetOnAction() {
+        mainViewController.rewriteLabel("/ Employee / Submit Timesheet");
+    }
+
+    @FXML
+    public void viewLeaveBalanceOnAction() {
+        mainViewController.rewriteLabel("/ Employee / View Leave Balance");
+    }
+
+    @FXML
+    public void viewLeaveHistoryOnAction() {
+        this.mainViewController.rewriteLabel("/ Employee / View Leave History");
+    }
+
+    @FXML
+    public void viewTimesheetOnAction() {
+        this.mainViewController.rewriteLabel("/ Employee / View Timesheet");
+    }
+
+    public void reimbursementOnAction() {
+        this.mainViewController.rewriteLabel("/ Employee / Reimbursement");
     }
 }

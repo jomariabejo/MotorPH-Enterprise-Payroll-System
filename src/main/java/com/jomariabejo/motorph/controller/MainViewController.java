@@ -4,14 +4,10 @@ import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
 import com.jomariabejo.motorph.controller.nav.PayrollAdministratorNavigationController;
 import com.jomariabejo.motorph.controller.nav.SystemAdministratorNavigationController;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 
@@ -36,20 +32,19 @@ public class MainViewController {
     }
 
     public MainViewController() {
-        this.mainBorderPane = mainBorderPane;
          employeeRoleNavigationController = new EmployeeRoleNavigationController();
-         humanResourceAdministratorNavigationController = new HumanResourceAdministratorNavigationController(this);
-         payrollAdministratorNavigationController = new PayrollAdministratorNavigationController(this);
-         systemAdministratorNavigationController = new SystemAdministratorNavigationController(this);
+         humanResourceAdministratorNavigationController = new HumanResourceAdministratorNavigationController();
+         payrollAdministratorNavigationController = new PayrollAdministratorNavigationController();
+//         systemAdministratorNavigationController = new SystemAdministratorNavigationController();
     }
 
     public void initializeUserNavigation(String username) {
-        includeEmployeeRoleNavigation();
+        displayEmployeeRoleNavigation();
 //        includeSystemAdminRoleNavigation();
 //        includePayrollAdminRoleNavigation();
     }
 
-    private void includeHumanResourceAdminRoleNavigation() {
+    private void displayHumanResourceNavigation() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/nav/role-human-resource.fxml"));
 
@@ -60,21 +55,35 @@ public class MainViewController {
             // Load the controller separately
             humanResourceAdministratorNavigationController = loader.getController();
             humanResourceAdministratorNavigationController.setMainViewController(this);
+            humanResourceAdministratorNavigationController.humanResourceDashboardOnAction();
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
         }
     }
 
 
-    private void includePayrollAdminRoleNavigation() {
+    private void displayAccountingNavigation() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/nav/role-accounting.fxml"));
+
+            // Load the UI (AnchorPane)
+            AnchorPane humanResourceRoleNavigation = loader.load();
+            mainBorderPane.setLeft(humanResourceRoleNavigation);
+
+            // Load the controller separately
+            payrollAdministratorNavigationController = loader.getController();
+            payrollAdministratorNavigationController.setMainViewController(this);
+            payrollAdministratorNavigationController.dashboardOnActtion();
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
+    }
+
+    private void displaySystemAdminNavigation() {
 
     }
 
-    private void includeSystemAdminRoleNavigation() {
-
-    }
-
-    private void includeEmployeeRoleNavigation() {
+    private void displayEmployeeRoleNavigation() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/nav/role-employee.fxml"));
             AnchorPane employeeRoleNavigation = loader.load();
@@ -82,6 +91,7 @@ public class MainViewController {
 
             employeeRoleNavigationController = loader.getController();
             employeeRoleNavigationController.setMainViewController(this);
+            employeeRoleNavigationController.overviewOnAction();
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
         }
@@ -91,18 +101,18 @@ public class MainViewController {
      * Menu roles of the main view🫴
      */
     public void menuItemEmployeeOnAction(ActionEvent actionEvent) {
-        includeEmployeeRoleNavigation();
+        displayEmployeeRoleNavigation();
     }
 
     public void menuItemHumanResourceOnAction(ActionEvent actionEvent) {
-        includeHumanResourceAdminRoleNavigation();
+        displayHumanResourceNavigation();
     }
 
     public void menuItemAccountingOnAction(ActionEvent actionEvent) {
-        includePayrollAdminRoleNavigation();
+        displayAccountingNavigation();
     }
 
     public void menuISystemAdminOnAction(ActionEvent actionEvent) {
-        includeSystemAdminRoleNavigation();
+        displaySystemAdminNavigation();
     }
 }

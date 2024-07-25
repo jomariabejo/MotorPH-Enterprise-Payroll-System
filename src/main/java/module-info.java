@@ -24,6 +24,4 @@ module com.jomariabejo.motorph {
     opens com.jomariabejo.motorph.controller.nav to javafx.fxml;
     exports com.jomariabejo.motorph.controller;
     exports com.jomariabejo.motorph.controller.nav;
-
-
 }

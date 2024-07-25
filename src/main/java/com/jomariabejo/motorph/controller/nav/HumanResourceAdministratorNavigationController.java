@@ -1,7 +1,6 @@
 package com.jomariabejo.motorph.controller.nav;
 
 import com.jomariabejo.motorph.controller.MainViewController;
-import javafx.event.ActionEvent;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,24 +17,24 @@ public class HumanResourceAdministratorNavigationController {
         this.mainViewController = mainViewController;
     }
 
-    public void humanResourceDashboardOnAction(ActionEvent actionEvent) {
-        this.mainViewController.rewriteLabel("/ Human Resource / Dashboard");
+    public void humanResourceDashboardOnAction() {
+        mainViewController.rewriteLabel("/ Human Resource / Dashboard");
     }
 
-    public void employeesOnAction(ActionEvent actionEvent) {
-        this.mainViewController.rewriteLabel("/ Human Resource / H");
+    public void employeesOnAction() {
+        mainViewController.rewriteLabel("/ Human Resource / Employees");
     }
 
-    public void timesheetsOnAction(ActionEvent actionEvent) {
-        this.mainViewController.rewriteLabel("/ Human Resource / H");
+    public void timesheetsOnAction() {
+        mainViewController.rewriteLabel("/ Human Resource / Timesheets");
     }
 
-    public void leaveRequestsOnAction(ActionEvent actionEvent) {
-        this.mainViewController.rewriteLabel("/ Human Resource / H");
+    public void leaveRequestsOnAction() {
+        mainViewController.rewriteLabel("/ Human Resource / Leave Requests");
     }
 
-    public void overtimeRequestsOnAction(ActionEvent actionEvent) {
-        this.mainViewController.rewriteLabel("/ Human Resource / H");
+    public void overtimeRequestsOnAction() {
+        mainViewController.rewriteLabel("/ Human Resource / Overtime Requests");
     }
 
 

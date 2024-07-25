@@ -217,6 +217,29 @@
                   </HBox>
                </graphic>
             </Button>
+            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="731.0" mnemonicParsing="false" onAction="#reimbursementOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="27.0" fitWidth="27.0">
+                                 <image>
+                                    <Image url="@../assets/icons/reimbursement.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Reimbursement">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
             <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="744.0" mnemonicParsing="false" onAction="#contactSupportOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">

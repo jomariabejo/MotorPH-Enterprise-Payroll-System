@@ -1,5 +1,6 @@
 package com.jomariabejo.motorph;
 
+import atlantafx.base.theme.PrimerDark;
 import atlantafx.base.theme.PrimerLight;
 import com.jomariabejo.motorph.controller.LoginViewController;
 import com.jomariabejo.motorph.controller.MainViewController;
@@ -26,7 +27,7 @@ public class Launcher extends Application {
         primaryStage = stage; // Store the primary stage for later use
 
         // Set the default stylesheet for the application
-        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
 
         // Load the login view FXML file
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/login-view.fxml"));
