@@ -1,0 +1,48 @@
+package com.jomariabejo.motorph.model;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Lob;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.Immutable;
+
+import java.time.Instant;
+import java.time.LocalDate;
+
+/**
+ * Mapping for DB view
+ */
+@Getter
+@Setter
+@Entity
+@Immutable
+@Table(name = "vw_leave_requests", schema = "payroll_system")
+public class VwLeaveRequest {
+    @Column(name = "LeaveRequestID", nullable = false)
+    private Integer leaveRequestID;
+
+    @Column(name = "EmployeeID", nullable = false)
+    private Integer employeeID;
+
+    @Column(name = "FirstName", nullable = false, length = 100)
+    private String firstName;
+
+    @Column(name = "LastName", nullable = false, length = 100)
+    private String lastName;
+
+    @Column(name = "DateRequested", nullable = false)
+    private Instant dateRequested;
+
+    @Column(name = "StartDate", nullable = false)
+    private LocalDate startDate;
+
+    @Column(name = "EndDate", nullable = false)
+    private LocalDate endDate;
+
+    @Lob
+    @Column(name = "Status", nullable = false)
+    private String status;
+
+}

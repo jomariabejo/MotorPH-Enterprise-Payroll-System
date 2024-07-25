@@ -14,7 +14,6 @@ import org.hibernate.annotations.ColumnDefault;
 })
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID", nullable = false)
     private Integer id;
 
@@ -35,7 +34,6 @@ public class User {
     private Role roleID;
 
     @ColumnDefault("'Active'")
-    @Lob
     @Column(name = "Status", nullable = false)
     private String status;
 

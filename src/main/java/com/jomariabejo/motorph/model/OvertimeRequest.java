@@ -3,6 +3,7 @@ package com.jomariabejo.motorph.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -23,20 +24,21 @@ public class OvertimeRequest {
     @JoinColumn(name = "EmployeeID", nullable = false)
     private Employee employeeID;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "DateRequested", nullable = false)
     private Instant dateRequested;
 
     @Column(name = "Date", nullable = false)
     private LocalDate date;
 
-    @Column(name = "HoursRequested", nullable = false, precision = 8, scale = 2)
+    @Column(name = "HoursRequested", nullable = false, precision = 8, scale = 4)
     private BigDecimal hoursRequested;
 
     @Lob
     @Column(name = "Status", nullable = false)
     private String status;
 
-    @Column(name = "AdminRemarks")
-    private String adminRemarks;
+    @Column(name = "HRRemarks")
+    private String hRRemarks;
 
 }

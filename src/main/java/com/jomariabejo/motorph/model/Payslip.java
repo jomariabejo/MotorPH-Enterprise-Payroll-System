@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -15,9 +17,13 @@ import java.time.LocalDate;
 @Table(name = "payslip", schema = "payroll_system")
 public class Payslip {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PayslipID", nullable = false)
     private Integer id;
+
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "PayrollID", nullable = false)
+    private Payroll payrollID;
 
     @Column(name = "PayslipNumber", nullable = false, length = 20)
     private String payslipNumber;

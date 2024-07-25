@@ -2,7 +2,6 @@ package com.jomariabejo.motorph.service;
 
 import com.jomariabejo.motorph.model.LeaveBalance;
 import com.jomariabejo.motorph.repository.LeaveBalanceRepository;
-import com.jomariabejo.motorph.repository.LeaveBalanceRepository;
 
 import java.util.List;
 

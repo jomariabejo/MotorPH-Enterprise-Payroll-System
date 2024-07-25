@@ -3,6 +3,7 @@ package com.jomariabejo.motorph.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 
@@ -26,6 +27,7 @@ public class LeaveBalance {
     @JoinColumn(name = "LeaveTypeID", nullable = false)
     private LeaveRequestType leaveTypeID;
 
+    @ColumnDefault("0.00")
     @Column(name = "Balance", nullable = false, precision = 8, scale = 2)
     private BigDecimal balance;
 

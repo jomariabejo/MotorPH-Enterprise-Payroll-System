@@ -1,7 +1,7 @@
 package com.jomariabejo.motorph.repository;
 
-import com.jomariabejo.motorph.model.User;
 import com.jomariabejo.motorph.HibernateUtil;
+import com.jomariabejo.motorph.model.User;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

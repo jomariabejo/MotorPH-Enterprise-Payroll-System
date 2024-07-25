@@ -15,7 +15,6 @@ import java.time.LocalTime;
 @Table(name = "timesheet", schema = "payroll_system")
 public class Timesheet {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TimesheetID", nullable = false)
     private Integer id;
 
@@ -48,10 +47,4 @@ public class Timesheet {
     @JoinColumn(name = "Approver")
     private Employee approver;
 
-    public enum Status {
-        APPROVED,
-        DISAPPROVED,
-        SUBMITTED,
-        NOT_SUBMITTED
-    }
 }

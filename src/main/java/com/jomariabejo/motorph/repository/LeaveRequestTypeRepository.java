@@ -4,8 +4,8 @@ import com.jomariabejo.motorph.exception.LeaveRequestTypeNotFoundException;
 import com.jomariabejo.motorph.exception.DuplicateLeaveRequestTypeException;
 import com.jomariabejo.motorph.exception.InvalidLeaveRequestTypeException;
 import com.jomariabejo.motorph.exception.LeaveRequestTypeDeletionException;
-import com.jomariabejo.motorph.model.LeaveRequestType;
 import com.jomariabejo.motorph.HibernateUtil;
+import com.jomariabejo.motorph.model.LeaveRequestType;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 

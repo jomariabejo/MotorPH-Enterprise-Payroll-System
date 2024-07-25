@@ -3,6 +3,7 @@ package com.jomariabejo.motorph.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -27,6 +28,7 @@ public class LeaveRequest {
     @JoinColumn(name = "LeaveTypeID", nullable = false)
     private LeaveRequestType leaveTypeID;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "DateRequested", nullable = false)
     private Instant dateRequested;
 
