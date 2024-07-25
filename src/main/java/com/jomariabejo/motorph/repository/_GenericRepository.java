@@ -3,7 +3,7 @@ package com.jomariabejo.motorph.repository;
 import java.io.Serializable;
 import java.util.List;
 
-public interface GenericRepository<T, ID extends Serializable> {
+public interface _GenericRepository<T, ID extends Serializable> {
 
     T findById(ID id);
 
