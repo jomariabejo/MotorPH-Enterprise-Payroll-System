@@ -18,6 +18,7 @@ import java.time.Instant;
 })
 public class MessageStatus {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "status_id", nullable = false)
     private Integer id;
 
@@ -32,8 +33,7 @@ public class MessageStatus {
     private Employee employee;
 
     @ColumnDefault("'sent'")
-    @Lob
-    @Column(name = "status_type", nullable = false)
+    @Column(name = "status_type", nullable = false, length = 25)
     private String statusType;
 
     @ColumnDefault("CURRENT_TIMESTAMP")

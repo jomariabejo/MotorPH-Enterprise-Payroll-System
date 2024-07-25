@@ -16,6 +16,7 @@ import java.time.LocalDate;
 })
 public class TinCompliance {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TINComplianceID", nullable = false)
     private Integer id;
 

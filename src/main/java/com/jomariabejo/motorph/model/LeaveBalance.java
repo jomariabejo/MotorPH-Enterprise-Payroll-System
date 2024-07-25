@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 })
 public class LeaveBalance {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BalanceID", nullable = false)
     private Integer id;
 

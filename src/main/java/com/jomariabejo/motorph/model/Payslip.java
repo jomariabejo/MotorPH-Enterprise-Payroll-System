@@ -17,6 +17,7 @@ import java.time.LocalDate;
 @Table(name = "payslip", schema = "payroll_system")
 public class Payslip {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PayslipID", nullable = false)
     private Integer id;
 

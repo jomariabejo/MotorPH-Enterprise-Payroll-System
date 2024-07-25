@@ -15,6 +15,7 @@ import java.time.LocalDate;
 })
 public class PagibigContributionRate {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ContributionRateID", nullable = false)
     private Integer id;
 

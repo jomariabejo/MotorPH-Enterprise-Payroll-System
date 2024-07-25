@@ -15,6 +15,7 @@ import java.time.LocalTime;
 @Table(name = "timesheet", schema = "payroll_system")
 public class Timesheet {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TimesheetID", nullable = false)
     private Integer id;
 
@@ -39,8 +40,7 @@ public class Timesheet {
     private String remarks;
 
     @ColumnDefault("'Not Submitted'")
-    @Lob
-    @Column(name = "Status", nullable = false)
+    @Column(name = "Status", nullable = false, length = 20)
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY)

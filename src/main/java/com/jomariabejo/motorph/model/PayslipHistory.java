@@ -17,6 +17,7 @@ import java.time.Instant;
 })
 public class PayslipHistory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "HistoryID", nullable = false)
     private Integer id;
 

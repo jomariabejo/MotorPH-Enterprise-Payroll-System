@@ -18,6 +18,7 @@ import java.time.LocalDate;
 })
 public class Bonus {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "BonusID", nullable = false)
     private Integer id;
 

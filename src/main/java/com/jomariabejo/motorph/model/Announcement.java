@@ -16,6 +16,7 @@ import java.time.LocalDate;
 })
 public class Announcement {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "announcement_id", nullable = false)
     private Integer id;
 

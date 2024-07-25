@@ -16,6 +16,7 @@ import java.time.Instant;
 })
 public class PayrollApproval {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ApprovalID", nullable = false)
     private Integer id;
 

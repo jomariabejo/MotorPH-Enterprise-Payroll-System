@@ -1,4 +1,6 @@
 
+import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.model.Position;
 import com.jomariabejo.motorph.repository.EmployeeRepository;
 import com.jomariabejo.motorph.service.EmployeeService;
 import org.junit.jupiter.api.BeforeEach;

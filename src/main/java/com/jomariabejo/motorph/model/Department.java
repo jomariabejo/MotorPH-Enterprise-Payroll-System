@@ -7,9 +7,11 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "department", schema = "payroll_system")
+@Table(name = "department", schema = "payroll_system",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"DepartmentName"})})
 public class Department {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "DepartmentID", nullable = false)
     private Integer id;
 

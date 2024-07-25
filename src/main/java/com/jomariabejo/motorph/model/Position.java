@@ -12,6 +12,7 @@ import lombok.Setter;
 })
 public class Position {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "PositionID", nullable = false)
     private Integer id;
 

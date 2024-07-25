@@ -14,6 +14,7 @@ import org.hibernate.annotations.ColumnDefault;
 })
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "UserID", nullable = false)
     private Integer id;
 

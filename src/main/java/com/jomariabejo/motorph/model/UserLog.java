@@ -17,6 +17,7 @@ import java.time.Instant;
 })
 public class UserLog {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LogID", nullable = false)
     private Long id;
 

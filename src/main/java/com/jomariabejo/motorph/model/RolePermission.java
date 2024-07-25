@@ -14,6 +14,7 @@ import org.hibernate.annotations.OnDeleteAction;
 })
 public class RolePermission {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RolePermissionID", nullable = false)
     private Integer id;
 

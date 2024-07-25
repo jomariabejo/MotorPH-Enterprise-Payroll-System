@@ -17,6 +17,7 @@ import java.time.LocalDate;
 })
 public class PayrollTransaction {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "TransactionID", nullable = false)
     private Integer id;
 

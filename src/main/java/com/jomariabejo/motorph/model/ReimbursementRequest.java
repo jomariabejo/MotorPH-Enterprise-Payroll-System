@@ -18,6 +18,7 @@ import java.time.LocalDate;
 })
 public class ReimbursementRequest {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RequestID", nullable = false)
     private Integer id;
 

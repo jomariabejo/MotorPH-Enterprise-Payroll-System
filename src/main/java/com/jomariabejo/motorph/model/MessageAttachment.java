@@ -17,6 +17,7 @@ import java.time.Instant;
 })
 public class MessageAttachment {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attachment_id", nullable = false)
     private Integer id;
 

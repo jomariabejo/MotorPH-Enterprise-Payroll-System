@@ -17,6 +17,7 @@ import java.time.Instant;
 })
 public class Message {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "message_id", nullable = false)
     private Integer id;
 
@@ -37,8 +38,7 @@ public class Message {
     private Instant timestamp;
 
     @ColumnDefault("'unread'")
-    @Lob
-    @Column(name = "status", nullable = false)
+    @Column(name = "status", nullable = false, length = 20)
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

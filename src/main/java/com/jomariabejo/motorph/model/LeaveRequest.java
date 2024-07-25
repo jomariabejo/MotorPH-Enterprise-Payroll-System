@@ -17,6 +17,7 @@ import java.time.LocalDate;
 })
 public class LeaveRequest {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LeaveRequestID", nullable = false)
     private Integer id;
 

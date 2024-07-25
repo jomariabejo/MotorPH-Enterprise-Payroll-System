@@ -16,6 +16,7 @@ import java.time.Instant;
 })
 public class Conversation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "conversation_id", nullable = false)
     private Integer id;
 

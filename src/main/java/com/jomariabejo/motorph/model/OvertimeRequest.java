@@ -17,6 +17,7 @@ import java.time.LocalDate;
 })
 public class OvertimeRequest {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RequestID", nullable = false)
     private Integer id;
 

@@ -21,6 +21,7 @@ import java.time.LocalDate;
 })
 public class Employee {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EmployeeNumber", nullable = false)
     private Integer id;
 
@@ -52,8 +53,7 @@ public class Employee {
     private String pagibigNumber;
 
     @ColumnDefault("'PROBATIONARY'")
-    @Lob
-    @Column(name = "Status", nullable = false)
+    @Column(name = "Status", nullable = false, length = 255)
     private String status;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
