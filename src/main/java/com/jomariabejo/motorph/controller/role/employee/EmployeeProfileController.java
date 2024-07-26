@@ -5,18 +5,20 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Getter
 @Setter
 public class EmployeeProfileController {
 
+    private static final Logger LOGGER = Logger.getLogger(EmployeeProfileController.class.getName());
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
@@ -31,28 +33,6 @@ public class EmployeeProfileController {
 
     @FXML
     Button lastButton;
-
-    public EmployeeProfileController() {
-
-    }
-
-    public void setupBorderTopPane() {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/profile-top-pane.fxml"));
-            VBox anchorPane = (VBox) fxmlLoader.load();
-
-            employeeProfileBorderPane.setTop(anchorPane);
-
-            ProfileTopPane profileTopPane = fxmlLoader.getController();
-            profileTopPane.setEmployeeProfileController(this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void setupBorderCenterPane() {
-
-    }
 
     @FXML
     private Label address;
@@ -75,45 +55,22 @@ public class EmployeeProfileController {
     @FXML
     private Label position;
 
-    @FXML
-    void changePasswordClicked() {
-        this.employeeRoleNavigationController.getMainViewController().rewriteLabel("/ Employee / Change Password");
+    public EmployeeProfileController() {
     }
 
-    /**
-     * TODO IT CREATE NEW UI WHEN MORE INFO IS CLICKED
-     *
-     * @throws IOException
-     */
-    @FXML
-    void moreInfoClicked() {
-        if ("Profile".equals(lastButton.getText())) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/dashboard.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-                employeeProfileBorderPane.setCenter(anchorPane);
-                actionLabel.setText("Profile");
-                lastButton.setText("More Info");
-            } catch (IOException e) {
-                // Handle the exception appropriately
-                e.printStackTrace(); // Consider logging this exception instead of printing
-            }
-        } else {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/profile-more-info.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-                employeeProfileBorderPane.setCenter(anchorPane);
-                actionLabel.setText("More Info");
-                lastButton.setText("Profile");
-            } catch (IOException e) {
-                // Handle the exception appropriately
-                e.printStackTrace(); // Consider logging this exception instead of printing
-            }
+    public void setupBorderTopPane() {
+        loadVBox("/com/jomariabejo/motorph/role/employee/profile-top-pane.fxml");
+    }
+
+    private void loadVBox(String fxmlPath) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
+            VBox vBox = fxmlLoader.load();
+            employeeProfileBorderPane.setTop(vBox);
+            ProfileTopPane profileTopPane = fxmlLoader.getController();
+            profileTopPane.setEmployeeProfileController(this);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to load VBox: " + fxmlPath, e);
         }
-    }
-
-    public void profileClicked() throws IOException {
-
-
     }
 }

@@ -10,10 +10,14 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Getter
 @Setter
 public class ProfileTopPane {
+
+    private static final Logger LOGGER = Logger.getLogger(ProfileTopPane.class.getName());
 
     private EmployeeProfileController employeeProfileController;
 
@@ -28,34 +32,29 @@ public class ProfileTopPane {
 
     @FXML
     void changePasswordClicked(ActionEvent event) {
-
+        // Implement the change password logic here
     }
 
     @FXML
-    void moreInfoClicked(ActionEvent event) {
-        if (lastButton.getText().equals("Profile")) {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/dashboard.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-                this.employeeProfileController.getEmployeeProfileBorderPane().setCenter(anchorPane);
-                actionLabel.setText("Profile");
-                lastButton.setText("More Info");
-            } catch (IOException e) {
-                // Handle the exception appropriately
-                e.printStackTrace(); // Consider logging this exception instead of printing
-            }
-        }
-        else {
-            try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/profile-more-info.fxml"));
-                AnchorPane anchorPane = fxmlLoader.load();
-                this.employeeProfileController.getEmployeeProfileBorderPane().setCenter(anchorPane);
-                actionLabel.setText("More Info");
-                lastButton.setText("Profile");
-            } catch (IOException e) {
-                // Handle the exception appropriately
-                e.printStackTrace(); // Consider logging this exception instead of printing
-            }
+    void moreInfoClicked() {
+        String fxmlPath = lastButton.getText().equals("Profile")
+                ? "/com/jomariabejo/motorph/role/employee/dashboard.fxml"
+                : "/com/jomariabejo/motorph/role/employee/profile-more-info.fxml";
+        String newActionLabel = lastButton.getText().equals("Profile") ? "Profile" : "More Info";
+        String newLastButtonText = lastButton.getText().equals("Profile") ? "More Info" : "Profile";
+
+        loadFXML(fxmlPath, newActionLabel, newLastButtonText);
+    }
+
+    private void loadFXML(String fxmlPath, String actionLabelText, String lastButtonText) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
+            AnchorPane anchorPane = fxmlLoader.load();
+            employeeProfileController.getEmployeeProfileBorderPane().setCenter(anchorPane);
+            actionLabel.setText(actionLabelText);
+            lastButton.setText(lastButtonText);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to load FXML: " + fxmlPath, e);
         }
     }
 }
