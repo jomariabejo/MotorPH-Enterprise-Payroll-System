@@ -64,8 +64,9 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
     public void overviewOnAction() {
         mainViewController.rewriteLabel("/ Employee / Overview");
         loadView("/com/jomariabejo/motorph/role/employee/dashboard.fxml", controller -> {
-            if (controller instanceof EmployeeOverviewController employeeOverviewController) {
+            if (controller instanceof EmployeeProfileController employeeOverviewController) {
                 employeeOverviewController.setEmployeeRoleNavigationController(this);
+                employeeOverviewController.setupBorderTopPane();
             }
         });
     }
