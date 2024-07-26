@@ -10,6 +10,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+import org.hibernate.annotations.processing.Suppress;
 
 import java.io.IOException;
 
@@ -21,6 +25,8 @@ public class MainViewController {
     private SystemAdministratorNavigationController systemAdministratorNavigationController;
 
 
+    @Getter
+    @Setter
     @FXML
     private BorderPane mainBorderPane;
 
@@ -32,17 +38,17 @@ public class MainViewController {
     }
 
     public MainViewController() {
-         employeeRoleNavigationController = new EmployeeRoleNavigationController();
-         humanResourceAdministratorNavigationController = new HumanResourceAdministratorNavigationController();
-         payrollAdministratorNavigationController = new PayrollAdministratorNavigationController();
-//         systemAdministratorNavigationController = new SystemAdministratorNavigationController();
+        employeeRoleNavigationController = new EmployeeRoleNavigationController();
+        humanResourceAdministratorNavigationController = new HumanResourceAdministratorNavigationController();
+        payrollAdministratorNavigationController = new PayrollAdministratorNavigationController();
+        systemAdministratorNavigationController = new SystemAdministratorNavigationController();
     }
 
     public void initializeUserNavigation(String username) {
         displayEmployeeRoleNavigation();
-//        includeSystemAdminRoleNavigation();
-//        includePayrollAdminRoleNavigation();
     }
+
+
 
     private void displayHumanResourceNavigation() {
         try {
@@ -80,7 +86,20 @@ public class MainViewController {
     }
 
     private void displaySystemAdminNavigation() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/nav/role-system-administrator.fxml"));
 
+            // Load the UI (AnchorPane)
+            AnchorPane humanResourceRoleNavigation = loader.load();
+            mainBorderPane.setLeft(humanResourceRoleNavigation);
+
+            // Load the controller separately
+            systemAdministratorNavigationController = loader.getController();
+            systemAdministratorNavigationController.setMainViewController(this);
+            systemAdministratorNavigationController.dashboard();
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
     }
 
     private void displayEmployeeRoleNavigation() {

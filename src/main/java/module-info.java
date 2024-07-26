@@ -21,7 +21,9 @@ module com.jomariabejo.motorph {
     exports com.jomariabejo.motorph.model;
     opens com.jomariabejo.motorph.model to org.hibernate.orm.core;
     opens com.jomariabejo.motorph.controller to javafx.fxml;
-    opens com.jomariabejo.motorph.controller.nav to javafx.fxml;
     exports com.jomariabejo.motorph.controller;
+    opens com.jomariabejo.motorph.controller.nav to javafx.fxml;
     exports com.jomariabejo.motorph.controller.nav;
+    opens com.jomariabejo.motorph.controller.role.employee to javafx.fxml;
+    exports com.jomariabejo.motorph.controller.role.employee;
 }

@@ -1,11 +1,15 @@
 package com.jomariabejo.motorph.controller.nav;
 
 import com.jomariabejo.motorph.controller.MainViewController;
+import com.jomariabejo.motorph.controller.role.employee.EmployeeOverview;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -42,6 +46,17 @@ public class EmployeeRoleNavigationController {
     @FXML
     public void overviewOnAction() {
         mainViewController.rewriteLabel("/ Employee / Overview");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/dashboard.fxml"));
+            AnchorPane overviewAnchorPane = loader.load();
+            mainViewController.getMainBorderPane().setCenter(overviewAnchorPane);
+
+            EmployeeOverview employeeOverview= loader.getController();
+            employeeOverview.setEmployeeRoleNavigationController(this);
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
     }
 
     @FXML
