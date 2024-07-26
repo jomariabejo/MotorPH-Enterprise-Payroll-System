@@ -3,7 +3,6 @@ package com.jomariabejo.motorph.repository;
 import com.jomariabejo.motorph.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.hibernate.exception.ConstraintViolationException;
 
 import java.io.Serializable;
 import java.util.List;

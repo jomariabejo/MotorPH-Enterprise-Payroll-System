@@ -2,10 +2,7 @@ package com.jomariabejo.motorph.controller;
 
 import com.jomariabejo.motorph.Launcher;
 import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.TitledPane;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;

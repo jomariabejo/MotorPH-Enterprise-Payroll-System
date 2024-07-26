@@ -12,8 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
-import org.hibernate.annotations.processing.Suppress;
 
 import java.io.IOException;
 import java.util.function.Consumer;

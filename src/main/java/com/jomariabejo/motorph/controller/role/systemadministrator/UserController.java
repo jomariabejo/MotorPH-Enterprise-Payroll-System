@@ -4,10 +4,10 @@ import com.jomariabejo.motorph.controller.nav.SystemAdministratorNavigationContr
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class UserController {
 
-    @Getter
-    @Setter
     private SystemAdministratorNavigationController systemAdministratorNavigationController;
 
     public UserController() {

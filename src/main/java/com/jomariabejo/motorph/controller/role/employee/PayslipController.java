@@ -4,10 +4,10 @@ import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class PayslipController {
 
-    @Getter
-    @Setter
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
     public PayslipController() {

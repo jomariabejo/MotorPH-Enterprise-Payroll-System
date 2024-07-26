@@ -4,10 +4,10 @@ import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigati
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class LeaveRequestController {
 
-    @Getter
-    @Setter
     private HumanResourceAdministratorNavigationController humanResourceAdministratorNavigationController;
 
     public LeaveRequestController() {

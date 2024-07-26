@@ -11,17 +11,14 @@ import lombok.Setter;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+@Setter
+@Getter
 public class HumanResourceAdministratorNavigationController implements _ViewLoader {
-    @Getter
-    @Setter
+
     private MainViewController mainViewController;
 
     public HumanResourceAdministratorNavigationController() {
 
-    }
-
-    public HumanResourceAdministratorNavigationController(MainViewController mainViewController) {
-        this.mainViewController = mainViewController;
     }
 
     public void humanResourceDashboardOnAction() {
@@ -29,8 +26,7 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
 
         loadView("/com/jomariabejo/motorph/role/human-resource/hr-dashboard.fxml", controller -> {
 
-            if (controller instanceof HRDashboardController) {
-                HRDashboardController hrDashboardController = (HRDashboardController) controller;
+            if (controller instanceof HRDashboardController hrDashboardController) {
                 hrDashboardController.setHumanResourceAdministratorNavigationController(this);
             }
         });
@@ -41,8 +37,7 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
 
         loadView("/com/jomariabejo/motorph/role/human-resource/employee.fxml", controller -> {
 
-            if (controller instanceof EmployeeController) {
-                EmployeeController employeeController = (EmployeeController) controller;
+            if (controller instanceof EmployeeController employeeController) {
                 employeeController.setHumanResourceAdministratorNavigationController(this);
             }
         });
@@ -53,8 +48,7 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
 
         loadView("/com/jomariabejo/motorph/role/human-resource/timesheets.fxml", controller -> {
 
-            if (controller instanceof TimesheetController) {
-                TimesheetController timesheetController = (TimesheetController) controller;
+            if (controller instanceof TimesheetController timesheetController) {
                 timesheetController.setHumanResourceAdministratorNavigationController(this);
             }
         });
@@ -65,8 +59,7 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
 
         loadView("/com/jomariabejo/motorph/role/human-resource/leave-requests.fxml", controller -> {
 
-            if (controller instanceof LeaveRequestController) {
-                LeaveRequestController leaveRequestController = (LeaveRequestController) controller;
+            if (controller instanceof LeaveRequestController leaveRequestController) {
                 leaveRequestController.setHumanResourceAdministratorNavigationController(this);
             }
         });
@@ -77,8 +70,7 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
 
         loadView("/com/jomariabejo/motorph/role/human-resource/overtime-requests.fxml", controller -> {
 
-            if (controller instanceof OvertimeRequestsController) {
-                OvertimeRequestsController overtimeRequestController = (OvertimeRequestsController) controller;
+            if (controller instanceof OvertimeRequestsController overtimeRequestController) {
                 overtimeRequestController.setHumanResourceAdministratorNavigationController(this);
             }
         });

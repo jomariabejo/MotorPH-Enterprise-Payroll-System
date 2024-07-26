@@ -1,8 +1,6 @@
 package com.jomariabejo.motorph.service;
 
-import com.jomariabejo.motorph.model.Announcement;
 import com.jomariabejo.motorph.model.ReimbursementTransaction;
-import com.jomariabejo.motorph.repository.AnnouncementRepository;
 import com.jomariabejo.motorph.repository.ReimbursementTransactionRepository;
 
 import java.util.List;

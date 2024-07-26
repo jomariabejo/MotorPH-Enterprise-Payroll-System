@@ -12,10 +12,10 @@ import lombok.Setter;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+@Setter
+@Getter
 public class EmployeeRoleNavigationController implements _ViewLoader {
 
-    @Getter
-    @Setter
     private MainViewController mainViewController;
 
     // Default constructor
@@ -32,8 +32,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ Employee / Contact Support");
 
         loadView("/com/jomariabejo/motorph/role/employee/contact-support.fxml", controller -> {
-            if (controller instanceof ContactSupportController) {
-                ContactSupportController contactSupportController = (ContactSupportController) controller;
+            if (controller instanceof ContactSupportController contactSupportController) {
                 contactSupportController.setEmployeeRoleNavigationController(this);
             }
         });
@@ -44,8 +43,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ Employee / File Leave Request");
 
         loadView("/com/jomariabejo/motorph/role/employee/file-leave-request.fxml", controller -> {
-            if (controller instanceof FileLeaveRequestController) {
-                FileLeaveRequestController fileLeaveRequest = (FileLeaveRequestController) controller;
+            if (controller instanceof FileLeaveRequestController fileLeaveRequest) {
                 fileLeaveRequest.setEmployeeRoleNavigationController(this);
             }
         });
@@ -56,8 +54,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ Employee / Overtime");
 
         loadView("/com/jomariabejo/motorph/role/employee/overtime.fxml", controller -> {
-            if (controller instanceof OvertimeController) {
-                OvertimeController overtimeController = (OvertimeController) controller;
+            if (controller instanceof OvertimeController overtimeController) {
                 overtimeController.setEmployeeRoleNavigationController(this);
             }
         });
@@ -67,8 +64,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
     public void overviewOnAction() {
         mainViewController.rewriteLabel("/ Employee / Overview");
         loadView("/com/jomariabejo/motorph/role/employee/dashboard.fxml", controller -> {
-            if (controller instanceof EmployeeOverviewController) {
-                EmployeeOverviewController employeeOverviewController = (EmployeeOverviewController) controller;
+            if (controller instanceof EmployeeOverviewController employeeOverviewController) {
                 employeeOverviewController.setEmployeeRoleNavigationController(this);
             }
         });
@@ -79,8 +75,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ Employee / Payslip");
 
         loadView("/com/jomariabejo/motorph/role/employee/payslip.fxml", controller -> {
-            if (controller instanceof PayslipController) {
-                PayslipController payslipController = (PayslipController) controller;
+            if (controller instanceof PayslipController payslipController) {
                 payslipController.setEmployeeRoleNavigationController(this);
             }
         });
@@ -91,8 +86,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ Employee / Submit Timesheet");
 
         loadView("/com/jomariabejo/motorph/role/employee/payslip.fxml", controller -> {
-            if (controller instanceof PayslipController) {
-                PayslipController payslipController = (PayslipController) controller;
+            if (controller instanceof PayslipController payslipController) {
                 payslipController.setEmployeeRoleNavigationController(this);
             }
         });
@@ -104,8 +98,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/employee/view-leave-balance.fxml", controller -> {
 
-            if (controller instanceof ViewLeaveBalanceController) {
-                ViewLeaveBalanceController viewLeaveBalance = (ViewLeaveBalanceController) controller;
+            if (controller instanceof ViewLeaveBalanceController viewLeaveBalance) {
                 viewLeaveBalance.setEmployeeRoleNavigationController(this);
             }
         });
@@ -117,8 +110,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/employee/view-leave-history.fxml", controller -> {
 
-            if (controller instanceof ViewLeaveHistoryController) {
-                ViewLeaveHistoryController viewLeaveHistory = (ViewLeaveHistoryController) controller;
+            if (controller instanceof ViewLeaveHistoryController viewLeaveHistory) {
                 viewLeaveHistory.setEmployeeRoleNavigationController(this);
             }
         });
@@ -130,8 +122,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/employee/view-timesheet.fxml", controller -> {
 
-            if (controller instanceof ViewTimesheetController) {
-                ViewTimesheetController viewTimesheetController = (ViewTimesheetController) controller;
+            if (controller instanceof ViewTimesheetController viewTimesheetController) {
                 viewTimesheetController.setEmployeeRoleNavigationController(this);
             }
         });
@@ -142,8 +133,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/employee/reimbursement.fxml", controller -> {
 
-            if (controller instanceof ReimbursementController) {
-                ReimbursementController reimbursementController = (ReimbursementController) controller;
+            if (controller instanceof ReimbursementController reimbursementController) {
                 reimbursementController.setEmployeeRoleNavigationController(this);
             }
         });

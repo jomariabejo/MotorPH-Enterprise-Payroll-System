@@ -4,9 +4,10 @@ import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class ViewLeaveHistoryController {
-    @Getter
-    @Setter
+
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
     public ViewLeaveHistoryController() {

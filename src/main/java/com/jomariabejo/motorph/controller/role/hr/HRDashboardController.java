@@ -4,10 +4,10 @@ import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigati
 import lombok.Getter;
 import lombok.Setter;
 
+@Getter
+@Setter
 public class HRDashboardController {
 
-    @Getter
-    @Setter
     private HumanResourceAdministratorNavigationController humanResourceAdministratorNavigationController;
 
     public HRDashboardController() {

@@ -13,10 +13,10 @@ import lombok.Setter;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+@Setter
+@Getter
 public class SystemAdministratorNavigationController implements _ViewLoader {
 
-    @Getter
-    @Setter
     @FXML
     private MainViewController mainViewController;
 
@@ -24,17 +24,12 @@ public class SystemAdministratorNavigationController implements _ViewLoader {
 
     }
 
-    public SystemAdministratorNavigationController(MainViewController mainViewController) {
-        this.mainViewController = mainViewController;
-    }
-
     @FXML
     public void dashboard() {
         mainViewController.rewriteLabel("/ System Administrator / Dashboard");
 
         loadView("/com/jomariabejo/motorph/role/systemadmin/dashboard.fxml", controller -> {
-            if (controller instanceof DashboardController) {
-                DashboardController dashboardController = (DashboardController) controller;
+            if (controller instanceof DashboardController dashboardController) {
                 dashboardController.setSystemAdministratorNavigationController(this);
             }
         });
@@ -45,8 +40,7 @@ public class SystemAdministratorNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ System Administrator / Logs");
 
         loadView("/com/jomariabejo/motorph/role/systemadmin/logs.fxml", controller -> {
-            if (controller instanceof UserLogsController) {
-                UserLogsController userLogController = (UserLogsController) controller;
+            if (controller instanceof UserLogsController userLogController) {
                 userLogController.setSystemAdministratorNavigationController(this);
             }
         });
@@ -57,8 +51,7 @@ public class SystemAdministratorNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ System Administrator / Permissions");
 
         loadView("/com/jomariabejo/motorph/role/systemadmin/permissions.fxml", controller -> {
-            if (controller instanceof PermissionController) {
-                PermissionController permissionController = (PermissionController) controller;
+            if (controller instanceof PermissionController permissionController) {
                 permissionController.setSystemAdministratorNavigationController(this);
             }
         });
@@ -69,8 +62,7 @@ public class SystemAdministratorNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ System Administrator / Role-Permission");
 
         loadView("/com/jomariabejo/motorph/role/systemadmin/role.fxml", controller -> {
-            if (controller instanceof RoleController) {
-                RoleController roleController = (RoleController) controller;
+            if (controller instanceof RoleController roleController) {
                 roleController.setSystemAdministratorNavigationController(this);
             }
         });
@@ -81,8 +73,7 @@ public class SystemAdministratorNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ System Administrator / Roles");
 
         loadView("/com/jomariabejo/motorph/role/systemadmin/role-permission.fxml", controller -> {
-            if (controller instanceof RolePermissionController) {
-                RolePermissionController rolePermissionController = (RolePermissionController) controller;
+            if (controller instanceof RolePermissionController rolePermissionController) {
                 rolePermissionController.setSystemAdministratorNavigationController(this);
             }
         });
@@ -93,8 +84,7 @@ public class SystemAdministratorNavigationController implements _ViewLoader {
         mainViewController.rewriteLabel("/ System Administrator / Users");
 
         loadView("/com/jomariabejo/motorph/role/systemadmin/user.fxml", controller -> {
-            if (controller instanceof UserController) {
-                UserController userController = (UserController) controller;
+            if (controller instanceof UserController userController) {
                 userController.setSystemAdministratorNavigationController(this);
             }
         });

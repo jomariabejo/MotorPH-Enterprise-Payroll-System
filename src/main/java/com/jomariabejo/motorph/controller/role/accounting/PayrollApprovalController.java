@@ -4,10 +4,10 @@ import com.jomariabejo.motorph.controller.nav.PayrollAdministratorNavigationCont
 import lombok.Getter;
 import lombok.Setter;
 
+@Setter
+@Getter
 public class PayrollApprovalController {
 
-    @Getter
-    @Setter
     private PayrollAdministratorNavigationController payrollAdministratorNavigationController;
 
     public PayrollApprovalController() {

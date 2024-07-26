@@ -3,8 +3,6 @@ package com.jomariabejo.motorph.controller.nav;
 import com.jomariabejo.motorph.controller.MainViewController;
 import com.jomariabejo.motorph.controller._ViewLoader;
 import com.jomariabejo.motorph.controller.role.accounting.*;
-import com.jomariabejo.motorph.controller.role.employee.ReimbursementController;
-import com.jomariabejo.motorph.model.PayrollApproval;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
@@ -13,10 +11,10 @@ import lombok.Setter;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+@Setter
+@Getter
 public class PayrollAdministratorNavigationController implements _ViewLoader {
 
-    @Getter
-    @Setter
     private MainViewController mainViewController;
 
     public PayrollAdministratorNavigationController() {
@@ -27,8 +25,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/accounting/accounting-dashboard.fxml", controller -> {
 
-            if (controller instanceof AccountingDashboard) {
-                AccountingDashboard accountingDashboard = (AccountingDashboard) controller;
+            if (controller instanceof AccountingDashboard accountingDashboard) {
                 accountingDashboard.setPayrollAdministratorNavigationController(this);
             }
         });
@@ -39,8 +36,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/accounting/payroll.fxml", controller -> {
 
-            if (controller instanceof PayrollController) {
-                PayrollController payrollController = (PayrollController) controller;
+            if (controller instanceof PayrollController payrollController) {
                 payrollController.setPayrollAdministratorNavigationController(this);
             }
         });
@@ -51,8 +47,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/accounting/payroll-approval.fxml", controller -> {
 
-            if (controller instanceof PayrollApprovalController) {
-                PayrollApprovalController payrollApprovalController = (PayrollApprovalController) controller;
+            if (controller instanceof PayrollApprovalController payrollApprovalController) {
                 payrollApprovalController.setPayrollAdministratorNavigationController(this);
             }
         });
@@ -63,8 +58,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/accounting/payroll-transaction.fxml", controller -> {
 
-            if (controller instanceof PayrollTransactionController) {
-                PayrollTransactionController payrollTransactionController = (PayrollTransactionController) controller;
+            if (controller instanceof PayrollTransactionController payrollTransactionController) {
                 payrollTransactionController.setPayrollAdministratorNavigationController(this);
             }
         });
@@ -75,8 +69,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/accounting/overtime-approval.fxml", controller -> {
 
-            if (controller instanceof OvertimeApprovalController) {
-                OvertimeApprovalController overtimeApprovalController = (OvertimeApprovalController) controller;
+            if (controller instanceof OvertimeApprovalController overtimeApprovalController) {
                 overtimeApprovalController.setPayrollAdministratorNavigationController(this);
             }
         });
@@ -87,8 +80,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/accounting/payslip.fxml", controller -> {
 
-            if (controller instanceof PayslipController) {
-                PayslipController payslipController = (PayslipController) controller;
+            if (controller instanceof PayslipController payslipController) {
                 payslipController.setPayrollAdministratorNavigationController(this);
             }
         });
@@ -99,8 +91,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/accounting/payslip-history.fxml", controller -> {
 
-            if (controller instanceof PayslipHistoryController) {
-                PayslipHistoryController payslipHistoryController = (PayslipHistoryController) controller;
+            if (controller instanceof PayslipHistoryController payslipHistoryController) {
                 payslipHistoryController.setPayrollAdministratorNavigationController(this);
             }
         });
