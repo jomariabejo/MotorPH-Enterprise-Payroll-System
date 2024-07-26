@@ -16,8 +16,9 @@ import lombok.SneakyThrows;
 import org.hibernate.annotations.processing.Suppress;
 
 import java.io.IOException;
+import java.util.function.Consumer;
 
-public class MainViewController {
+public class MainViewController implements _ViewLoader {
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
     private HumanResourceAdministratorNavigationController humanResourceAdministratorNavigationController;
@@ -33,9 +34,6 @@ public class MainViewController {
     @FXML
     private Label selectedButtonLabel;
 
-    public void rewriteLabel(String string) {
-        selectedButtonLabel.setText(string);
-    }
 
     public MainViewController() {
         employeeRoleNavigationController = new EmployeeRoleNavigationController();
@@ -44,76 +42,53 @@ public class MainViewController {
         systemAdministratorNavigationController = new SystemAdministratorNavigationController();
     }
 
+    public void rewriteLabel(String string) {
+        selectedButtonLabel.setText(string);
+    }
+
     public void initializeUserNavigation(String username) {
         displayEmployeeRoleNavigation();
     }
 
-
-
     private void displayHumanResourceNavigation() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/nav/role-human-resource.fxml"));
-
-            // Load the UI (AnchorPane)
-            AnchorPane humanResourceRoleNavigation = loader.load();
-            mainBorderPane.setLeft(humanResourceRoleNavigation);
-
-            // Load the controller separately
-            humanResourceAdministratorNavigationController = loader.getController();
-            humanResourceAdministratorNavigationController.setMainViewController(this);
-            humanResourceAdministratorNavigationController.humanResourceDashboardOnAction();
-        } catch (IOException ioException) {
-            throw new RuntimeException(ioException);
-        }
+        loadView("/com/jomariabejo/motorph/nav/role-human-resource.fxml", controller -> {
+            if (controller instanceof HumanResourceAdministratorNavigationController) {
+                HumanResourceAdministratorNavigationController humanResourceController = (HumanResourceAdministratorNavigationController) controller;
+                humanResourceController.setMainViewController(this);
+                humanResourceController.humanResourceDashboardOnAction();
+            }
+        });
     }
 
 
     private void displayAccountingNavigation() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/nav/role-accounting.fxml"));
-
-            // Load the UI (AnchorPane)
-            AnchorPane humanResourceRoleNavigation = loader.load();
-            mainBorderPane.setLeft(humanResourceRoleNavigation);
-
-            // Load the controller separately
-            payrollAdministratorNavigationController = loader.getController();
-            payrollAdministratorNavigationController.setMainViewController(this);
-            payrollAdministratorNavigationController.dashboardOnActtion();
-        } catch (IOException ioException) {
-            throw new RuntimeException(ioException);
-        }
+        loadView("/com/jomariabejo/motorph/nav/role-accounting.fxml", controller -> {
+            if (controller instanceof PayrollAdministratorNavigationController) {
+                PayrollAdministratorNavigationController accountingController = (PayrollAdministratorNavigationController) controller;
+                accountingController.setMainViewController(this);
+                accountingController.dashboardOnActtion();
+            }
+        });
     }
 
     private void displaySystemAdminNavigation() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/nav/role-system-administrator.fxml"));
-
-            // Load the UI (AnchorPane)
-            AnchorPane humanResourceRoleNavigation = loader.load();
-            mainBorderPane.setLeft(humanResourceRoleNavigation);
-
-            // Load the controller separately
-            systemAdministratorNavigationController = loader.getController();
-            systemAdministratorNavigationController.setMainViewController(this);
-            systemAdministratorNavigationController.dashboard();
-        } catch (IOException ioException) {
-            throw new RuntimeException(ioException);
-        }
+        loadView("/com/jomariabejo/motorph/nav/role-system-administrator.fxml", controller -> {
+            if (controller instanceof SystemAdministratorNavigationController) {
+                SystemAdministratorNavigationController systemAdminController = (SystemAdministratorNavigationController) controller;
+                systemAdminController.setMainViewController(this);
+                systemAdminController.dashboard();
+            }
+        });
     }
 
     private void displayEmployeeRoleNavigation() {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/nav/role-employee.fxml"));
-            AnchorPane employeeRoleNavigation = loader.load();
-            mainBorderPane.setLeft(employeeRoleNavigation);
-
-            employeeRoleNavigationController = loader.getController();
-            employeeRoleNavigationController.setMainViewController(this);
-            employeeRoleNavigationController.overviewOnAction();
-        } catch (IOException ioException) {
-            throw new RuntimeException(ioException);
-        }
+        loadView("/com/jomariabejo/motorph/nav/role-employee.fxml", controller -> {
+            if (controller instanceof EmployeeRoleNavigationController) {
+                EmployeeRoleNavigationController employeeController = (EmployeeRoleNavigationController) controller;
+                employeeController.setMainViewController(this);
+                employeeController.overviewOnAction();
+            }
+        });
     }
 
     /**
@@ -133,5 +108,23 @@ public class MainViewController {
 
     public void menuISystemAdminOnAction(ActionEvent actionEvent) {
         displaySystemAdminNavigation();
+    }
+
+    @Override
+    public <T> void loadView(String fxmlPath, Consumer<T> controllerInitializer) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+
+            // Load the UI (AnchorPane)
+            AnchorPane pane = loader.load();
+            // Depending on the context, you might want to set this in different areas of the BorderPane
+            mainBorderPane.setLeft(pane);
+
+            // Initialize the controller
+            T controller = loader.getController();
+            controllerInitializer.accept(controller);
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
+        }
     }
 }

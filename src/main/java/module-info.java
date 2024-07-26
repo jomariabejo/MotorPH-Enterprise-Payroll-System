@@ -26,4 +26,10 @@ module com.jomariabejo.motorph {
     exports com.jomariabejo.motorph.controller.nav;
     opens com.jomariabejo.motorph.controller.role.employee to javafx.fxml;
     exports com.jomariabejo.motorph.controller.role.employee;
+    opens com.jomariabejo.motorph.controller.role.systemadministrator to javafx.fxml;
+    exports com.jomariabejo.motorph.controller.role.systemadministrator;
+    opens com.jomariabejo.motorph.controller.role.hr to javafx.fxml;
+    exports com.jomariabejo.motorph.controller.role.hr;
+    opens com.jomariabejo.motorph.controller.role.accounting to javafx.fxml;
+    exports com.jomariabejo.motorph.controller.role.accounting;
 }

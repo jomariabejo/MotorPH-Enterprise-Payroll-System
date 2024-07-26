@@ -4,13 +4,12 @@ import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import lombok.Getter;
 import lombok.Setter;
 
-public class EmployeeOverview {
+public class SubmitTimesheetController {
 
     @Getter
     @Setter
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
-    public EmployeeOverview() {
-
+    public SubmitTimesheetController() {
     }
 }
