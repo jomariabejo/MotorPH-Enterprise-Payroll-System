@@ -132,12 +132,12 @@
       </HBox>
       <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="487.0" spacing="24.0">
          <children>
-            <Label alignment="CENTER" text="Department / Positon">
+            <Label alignment="CENTER" text="Department">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tf" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfDepartment" alignment="CENTER" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -149,6 +149,46 @@
          <VBox.margin>
             <Insets right="240.0" />
          </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="400.0" spacing="24.0">
+         <children>
+            <Label alignment="CENTER" text="Position">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfPosition" alignment="CENTER" prefWidth="500.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <padding>
+            <Insets right="240.0" />
+         </padding>
+      </HBox>
+      <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="400.0" spacing="24.0">
+         <children>
+            <Label alignment="CENTER" text="Status">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfEmployeeStatus" alignment="CENTER" prefWidth="500.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </TextField>
+         </children>
+         <padding>
+            <Insets right="240.0" />
+         </padding>
       </HBox>
    </children>
 </VBox>

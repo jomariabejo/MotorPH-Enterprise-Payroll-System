@@ -12,16 +12,19 @@ public class PersonalInformationController {
     private MoreInfoController moreInfoController;
 
     @FXML
-    private TextField tf;
-
-    @FXML
     private TextField tfAddress;
 
     @FXML
     private TextField tfDateOfBirth;
 
     @FXML
+    private TextField tfDepartment;
+
+    @FXML
     private TextField tfEmployeeNumber;
+
+    @FXML
+    private TextField tfEmployeeStatus;
 
     @FXML
     private TextField tfFirstName;
@@ -31,6 +34,9 @@ public class PersonalInformationController {
 
     @FXML
     private TextField tfPhoneNumber;
+
+    @FXML
+    private TextField tfPosition;
 
     public PersonalInformationController() {
     }
