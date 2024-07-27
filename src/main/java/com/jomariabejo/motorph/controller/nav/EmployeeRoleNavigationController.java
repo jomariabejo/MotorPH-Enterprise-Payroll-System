@@ -45,6 +45,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         loadView("/com/jomariabejo/motorph/role/employee/file-leave-request.fxml", controller -> {
             if (controller instanceof FileLeaveRequestController fileLeaveRequest) {
                 fileLeaveRequest.setEmployeeRoleNavigationController(this);
+                fileLeaveRequest.configDatePicker();
             }
         });
     }
