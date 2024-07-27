@@ -11,14 +11,10 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Getter
 @Setter
 public class EmployeeProfileController {
-
-    private static final Logger LOGGER = Logger.getLogger(EmployeeProfileController.class.getName());
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
@@ -32,7 +28,7 @@ public class EmployeeProfileController {
     private Button changePasswordButton;
 
     @FXML
-    Button lastButton;
+    private Button lastButton;
 
     @FXML
     private Label address;
@@ -70,7 +66,7 @@ public class EmployeeProfileController {
             EmployeeProfileTopPane profileTopPane = fxmlLoader.getController();
             profileTopPane.setEmployeeProfileController(this);
         } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to load VBox: " + fxmlPath, e);
+            throw new RuntimeException(e);
         }
     }
 }
