@@ -6,10 +6,10 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ViewTimesheetController {
+public class TimesheetController {
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
-    public ViewTimesheetController() {
+    public TimesheetController() {
     }
 }

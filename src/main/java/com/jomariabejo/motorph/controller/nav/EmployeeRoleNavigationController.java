@@ -101,7 +101,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/employee/view-leave-balance.fxml", controller -> {
 
-            if (controller instanceof ViewLeaveBalanceController viewLeaveBalance) {
+            if (controller instanceof LeaveBalanceController viewLeaveBalance) {
                 viewLeaveBalance.setEmployeeRoleNavigationController(this);
                 viewLeaveBalance.populatePieChartWithSampleData();
             }
@@ -114,7 +114,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/employee/view-leave-history.fxml", controller -> {
 
-            if (controller instanceof ViewLeaveHistoryController viewLeaveHistory) {
+            if (controller instanceof LeaveHistoryController viewLeaveHistory) {
                 viewLeaveHistory.setEmployeeRoleNavigationController(this);
             }
         });
@@ -126,7 +126,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
         loadView("/com/jomariabejo/motorph/role/employee/view-timesheet.fxml", controller -> {
 
-            if (controller instanceof ViewTimesheetController viewTimesheetController) {
+            if (controller instanceof TimesheetController viewTimesheetController) {
                 viewTimesheetController.setEmployeeRoleNavigationController(this);
             }
         });

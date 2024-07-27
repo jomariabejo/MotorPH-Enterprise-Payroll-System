@@ -22,7 +22,6 @@ public class HibernateUtil {
                 MetadataSources sources = new MetadataSources(registry);
                 Metadata metadata = sources.getMetadataBuilder().build();
                 sessionFactory = metadata.getSessionFactoryBuilder().build();
-
             } catch (Exception e) {
                 if (registry != null) {
                     StandardServiceRegistryBuilder.destroy(registry);
@@ -37,6 +36,9 @@ public class HibernateUtil {
      * Shutdown the Hibernate SessionFactory.
      */
     public static void shutdown() {
+        if (sessionFactory != null) {
+            sessionFactory.close();
+        }
         if (registry != null) {
             StandardServiceRegistryBuilder.destroy(registry);
         }
