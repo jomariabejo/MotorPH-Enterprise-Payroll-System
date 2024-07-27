@@ -60,7 +60,8 @@ public class FileLeaveRequestController {
     }
 
     public void configDatePicker() {
-        dpStartLeaveDate.setDayCellFactory(picker -> new DateCell() {
+        // Disable natin yung mga nakaraang days :>
+        dpStartLeaveDate.setDayCellFactory(datePicker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
@@ -138,5 +139,9 @@ public class FileLeaveRequestController {
     private void makeVisibleEndOfLeaveDate() {
         endOfLeave.setVisible(true);
         endOfLeave.setManaged(true);
+    }
+
+    public void setSingleLeave() {
+        singleLeaveClicked();
     }
 }

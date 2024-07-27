@@ -46,6 +46,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
             if (controller instanceof FileLeaveRequestController fileLeaveRequest) {
                 fileLeaveRequest.setEmployeeRoleNavigationController(this);
                 fileLeaveRequest.configDatePicker();
+                fileLeaveRequest.setSingleLeave();
             }
         });
     }
@@ -102,6 +103,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
             if (controller instanceof ViewLeaveBalanceController viewLeaveBalance) {
                 viewLeaveBalance.setEmployeeRoleNavigationController(this);
+                viewLeaveBalance.populatePieChartWithSampleData();
             }
         });
     }

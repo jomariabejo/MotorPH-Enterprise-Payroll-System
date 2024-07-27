@@ -13,13 +13,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="897.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.employee.FileLeaveRequestController">
     <children>
-        <VBox alignment="CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="TOP_CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label fx:id="lblLeaveApplicationName" text="Single leave application">
                     <font>
-                        <Font name="Serif Regular" size="51.0" />
+                        <Font size="48.0" />
                     </font>
                 </Label>
             <HBox alignment="CENTER" spacing="48.0">
@@ -40,10 +42,20 @@
                     <children>
                         <Label text="Leave Type">
                             <font>
-                                <Font size="24.0" />
+                                <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <ComboBox fx:id="cbLeaveTypes" onAction="#vbLeaveTypeSelected" prefHeight="54.0" prefWidth="600.0" />
+                        <ComboBox fx:id="cbLeaveTypes" onAction="#vbLeaveTypeSelected" prefHeight="54.0" prefWidth="600.0" promptText="Select leave type" style="-fx-font-size: 24;">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Sick Leave" />
+                                    <String fx:value="Casual Leave" />
+                                    <String fx:value="Annual Leave" />
+                                    <String fx:value="Maternity Leave" />
+                                    <String fx:value="Paternity Leave" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
                     </children>
                     <padding>
                         <Insets right="320.0" />
@@ -56,7 +68,7 @@
                     <children>
                         <Label fx:id="lblStartLeaveDate" text="Start Leave Date">
                             <font>
-                                <Font size="24.0" />
+                                <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
                         <DatePicker fx:id="dpStartLeaveDate" prefHeight="54.0" prefWidth="600.0" promptText="Start of leave" style="-fx-font-size: 24" />
@@ -69,7 +81,7 @@
                     <children>
                         <Label text="End Leave Date">
                             <font>
-                                <Font size="24.0" />
+                                <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
                         <DatePicker fx:id="dpEndLeaveDate" prefHeight="54.0" prefWidth="600.0" promptText="end of leave ..." style="-fx-font-size: 24" />
@@ -82,7 +94,7 @@
                     <children>
                         <Label text="Reason">
                             <font>
-                                <Font size="24.0" />
+                                <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
                         <TextArea fx:id="taReason" prefHeight="267.0" prefWidth="581.0" promptText="Please provide reason of leaving...">
@@ -119,6 +131,9 @@
                     </padding>
                 </ButtonBar>
             </children>
+         <padding>
+            <Insets top="48.0" />
+         </padding>
         </VBox>
     </children>
 </AnchorPane>
