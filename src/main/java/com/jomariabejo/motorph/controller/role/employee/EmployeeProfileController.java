@@ -67,7 +67,7 @@ public class EmployeeProfileController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(fxmlPath));
             VBox vBox = fxmlLoader.load();
             employeeProfileBorderPane.setTop(vBox);
-            ProfileTopPane profileTopPane = fxmlLoader.getController();
+            EmployeeProfileTopPane profileTopPane = fxmlLoader.getController();
             profileTopPane.setEmployeeProfileController(this);
         } catch (IOException e) {
             LOGGER.log(Level.SEVERE, "Failed to load VBox: " + fxmlPath, e);
