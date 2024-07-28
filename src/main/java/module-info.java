@@ -16,6 +16,9 @@ module com.jomariabejo.motorph {
     requires org.hibernate.orm.core;
     requires atlantafx.base;
     requires jdk.compiler;
+    requires java.desktop;
+    requires org.kordamp.ikonli.material;
+    requires org.kordamp.ikonli.fontawesome5;
     opens com.jomariabejo.motorph to javafx.fxml;
     exports com.jomariabejo.motorph;
     exports com.jomariabejo.motorph.model;

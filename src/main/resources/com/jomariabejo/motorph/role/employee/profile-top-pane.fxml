@@ -11,13 +11,13 @@
    <children>
       <HBox alignment="CENTER_LEFT" spacing="12.0">
          <children>
-            <Region prefHeight="51.0" prefWidth="823.0" />
-            <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#changePasswordClicked" text="Change Password">
+            <Region prefHeight="51.0" prefWidth="751.0" />
+            <Button fx:id="changePasswordButton" mnemonicParsing="false" onAction="#changePasswordClicked" prefWidth="270.0" text="Change Password">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button fx:id="lastButton" mnemonicParsing="false" onAction="#moreInfoClicked" text="More Info">
+            <Button fx:id="lastButton" mnemonicParsing="false" onAction="#moreInfoClicked" prefWidth="160.0" text="More Info">
                <font>
                   <Font size="24.0" />
                </font>

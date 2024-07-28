@@ -1,5 +1,6 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
+import atlantafx.base.controls.ModalPane;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

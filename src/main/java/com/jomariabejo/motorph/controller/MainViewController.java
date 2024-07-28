@@ -19,15 +19,21 @@ import lombok.Setter;
 import java.io.IOException;
 import java.util.function.Consumer;
 
+@Getter
+@Setter
 public class MainViewController implements _ViewLoader {
 
-    @Getter
-    @Setter
     @FXML
     private BorderPane mainBorderPane;
 
     @FXML
     private Label selectedButtonLabel;
+
+    @FXML
+    private Label lblEmployeeName;
+
+    @FXML
+    private Label lblRoleName;
 
     public MainViewController() {
     }
