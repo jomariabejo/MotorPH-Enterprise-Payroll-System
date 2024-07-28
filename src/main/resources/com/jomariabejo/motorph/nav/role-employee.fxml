@@ -125,29 +125,6 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="308.0" mnemonicParsing="false" onAction="#submitTimesheetOnAction" prefHeight="50.0" prefWidth="250.0">
-               <graphic>
-                  <HBox alignment="CENTER_LEFT" spacing="10">
-                     <children>
-                        <StackPane prefHeight="24.0" prefWidth="24.0">
-                           <children>
-                              <Circle fill="#ffffff" radius="18.0" />
-                              <ImageView fitHeight="24.0" fitWidth="24.0">
-                                 <image>
-                                    <Image url="@../assets/icons/tomorrow.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </StackPane>
-                        <Label text="Submit timesheet">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </graphic>
-            </Button>
             <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="670.0" mnemonicParsing="false" onAction="#viewTimesheetOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
@@ -162,7 +139,7 @@
                               </ImageView>
                            </children>
                         </StackPane>
-                        <Label text="View timesheet">
+                        <Label text="Timesheet">
                            <font>
                               <Font size="18.0" />
                            </font>

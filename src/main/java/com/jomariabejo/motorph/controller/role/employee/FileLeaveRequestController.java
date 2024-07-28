@@ -110,7 +110,8 @@ public class FileLeaveRequestController {
 
     @FXML
     void multiDayLeaveClicked() {
-        lblLeaveApplicationName.setText("Multi day leave application");
+        this.getEmployeeRoleNavigationController().getMainViewController().rewriteLabel("/ Employee / File Leave Request / Multi-Day Leave Application");
+        lblLeaveApplicationName.setText("Multi-Day Leave Application");
         lblStartLeaveDate.setText("Start Leave Date");
         radioMultiDayLeave.setSelected(true);
         radioSingleLeave.setSelected(false);
@@ -119,7 +120,8 @@ public class FileLeaveRequestController {
 
     @FXML
     void singleLeaveClicked() {
-        lblLeaveApplicationName.setText("Single leave application");
+        this.getEmployeeRoleNavigationController().getMainViewController().rewriteLabel("/ Employee / File Leave Request / Single-Day Leave Application");
+        lblLeaveApplicationName.setText("Single-Day Leave Application");
         lblStartLeaveDate.setText("Leave Date");
         radioSingleLeave.setSelected(true);
         radioMultiDayLeave.setSelected(false);

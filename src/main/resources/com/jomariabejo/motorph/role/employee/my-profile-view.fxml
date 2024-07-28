@@ -17,7 +17,7 @@
          <center>
             <ScrollPane>
                <content>
-                  <VBox alignment="CENTER">
+                  <VBox alignment="CENTER" prefWidth="1300.0">
                      <children>
                         <GridPane prefHeight="400.0" prefWidth="1300.0">
                           <columnConstraints>
@@ -36,7 +36,7 @@
                            <children>
                               <Label text="Employee No.">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="24.0" />
                                  </font>
                                  <padding>
                                     <Insets left="48.0" />
@@ -49,7 +49,7 @@
                               </Label>
                               <Label text="First Name" GridPane.rowIndex="1">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="24.0" />
                                  </font>
                                  <padding>
                                     <Insets left="48.0" />
@@ -62,7 +62,7 @@
                               </Label>
                               <Label text="Last Name" GridPane.rowIndex="2">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="24.0" />
                                  </font>
                                  <padding>
                                     <Insets left="48.0" />
@@ -75,7 +75,7 @@
                               </Label>
                               <Label text="DOB here" GridPane.rowIndex="3">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="24.0" />
                                  </font>
                                  <padding>
                                     <Insets left="48.0" />
@@ -83,7 +83,7 @@
                               </Label>
                               <Label text="Address" GridPane.rowIndex="4">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="24.0" />
                                  </font>
                                  <padding>
                                     <Insets left="48.0" />
@@ -101,7 +101,7 @@
                               </Label>
                               <Label text="Position" GridPane.rowIndex="5">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="24.0" />
                                  </font>
                                  <padding>
                                     <Insets left="48.0" />
@@ -114,7 +114,7 @@
                               </Label>
                               <Label text="Department" GridPane.rowIndex="6">
                                  <font>
-                                    <Font size="24.0" />
+                                    <Font name="System Bold" size="24.0" />
                                  </font>
                                  <padding>
                                     <Insets left="48.0" />
@@ -128,6 +128,9 @@
                            </children>
                         </GridPane>
                      </children>
+                     <padding>
+                        <Insets left="240.0" top="72.0" />
+                     </padding>
                   </VBox>
                </content>
             </ScrollPane>

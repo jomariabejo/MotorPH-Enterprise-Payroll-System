@@ -65,7 +65,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
     @FXML
     public void overviewOnAction() {
         mainViewController.rewriteLabel("/ Employee / Overview");
-        loadView("/com/jomariabejo/motorph/role/employee/dashboard.fxml", controller -> {
+        loadView("/com/jomariabejo/motorph/role/employee/my-profile-view.fxml", controller -> {
             if (controller instanceof EmployeeProfileController employeeOverviewController) {
                 employeeOverviewController.setEmployeeRoleNavigationController(this);
                 employeeOverviewController.setupBorderTopPane();
@@ -84,22 +84,12 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         });
     }
 
-    @FXML
-    public void submitTimesheetOnAction() {
-        mainViewController.rewriteLabel("/ Employee / Submit Timesheet");
-
-        loadView("/com/jomariabejo/motorph/role/employee/payslip.fxml", controller -> {
-            if (controller instanceof PayslipController payslipController) {
-                payslipController.setEmployeeRoleNavigationController(this);
-            }
-        });
-    }
 
     @FXML
     public void viewLeaveBalanceOnAction() {
         mainViewController.rewriteLabel("/ Employee / View Leave Balance");
 
-        loadView("/com/jomariabejo/motorph/role/employee/view-leave-balance.fxml", controller -> {
+        loadView("/com/jomariabejo/motorph/role/employee/leave-balance-view.fxml", controller -> {
 
             if (controller instanceof LeaveBalanceController viewLeaveBalance) {
                 viewLeaveBalance.setEmployeeRoleNavigationController(this);
@@ -112,7 +102,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
     public void viewLeaveHistoryOnAction() {
         this.mainViewController.rewriteLabel("/ Employee / View Leave History");
 
-        loadView("/com/jomariabejo/motorph/role/employee/view-leave-history.fxml", controller -> {
+        loadView("/com/jomariabejo/motorph/role/employee/leave-history-view.fxml", controller -> {
 
             if (controller instanceof LeaveHistoryController viewLeaveHistory) {
                 viewLeaveHistory.setEmployeeRoleNavigationController(this);
@@ -124,7 +114,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
     public void viewTimesheetOnAction() {
         this.mainViewController.rewriteLabel("/ Employee / View Timesheet");
 
-        loadView("/com/jomariabejo/motorph/role/employee/view-timesheet.fxml", controller -> {
+        loadView("/com/jomariabejo/motorph/role/employee/timesheet-view.fxml", controller -> {
 
             if (controller instanceof TimesheetController viewTimesheetController) {
                 viewTimesheetController.setEmployeeRoleNavigationController(this);

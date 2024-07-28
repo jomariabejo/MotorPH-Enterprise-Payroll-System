@@ -10,8 +10,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Getter
 @Setter
@@ -39,7 +37,7 @@ public class EmployeeProfileTopPane {
         switch (this.lastButton.getText()) {
             case "Profile":
                 try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/dashboard.fxml"));
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/my-profile-view.fxml"));
                     AnchorPane anchorPane = fxmlLoader.load();
                     this.getEmployeeProfileController().getEmployeeProfileBorderPane().setCenter(anchorPane);
                     lastButton.setText("More Info");
