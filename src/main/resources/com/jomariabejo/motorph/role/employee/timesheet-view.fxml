@@ -17,9 +17,9 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="12.0">
                <children>
-                  <ComboBox fx:id="cbMonth" onAction="#cbMonthClicked" prefHeight="50.0" prefWidth="163.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
-                  <ComboBox fx:id="cbYear" layoutX="1027.0" layoutY="25.0" onAction="#cbYearClicked" prefHeight="50.0" prefWidth="163.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
-                  <Button mnemonicParsing="false" onAction="#cbClockInClicked" prefHeight="50.0" prefWidth="160.0" text="Clock In">
+                  <ComboBox fx:id="cbMonth" onAction="#cbMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
+                  <ComboBox fx:id="cbYear" layoutX="1027.0" layoutY="25.0" onAction="#cbYearClicked" prefHeight="50.0" prefWidth="155.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
+                  <Button mnemonicParsing="false" onAction="#cbClockInClicked" prefHeight="50.0" prefWidth="155.0" text="Clock In">
                      <font>
                         <Font size="24.0" />
                      </font>

@@ -15,17 +15,17 @@
          <children>
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="12.0">
                <children>
-                  <ComboBox fx:id="cbMonth" layoutX="890.0" layoutY="43.0" onAction="#comboboxMonthClicked" prefHeight="50.0" prefWidth="158.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
+                  <ComboBox fx:id="cbMonth" layoutX="890.0" layoutY="43.0" onAction="#comboboxMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
                   <ComboBox fx:id="cbYear" layoutX="1040.0" layoutY="43.0" onAction="#comboBoxYearClicked" prefHeight="50.0" prefWidth="150.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
-                  <ComboBox fx:id="cbStatus" layoutX="1004.0" layoutY="36.0" onAction="#comboBoxStatusClicked" prefHeight="50.0" prefWidth="160.0" promptText="Status" stylesheets="@../../css/combo-box.css" />
-                  <ComboBox fx:id="cbLeaveType" layoutX="1064.0" layoutY="40.0" onAction="#comboBoxLeaveTypeClicked" prefHeight="50.0" prefWidth="208.0" promptText="Leave Type" stylesheets="@../../css/combo-box.css">
+                  <ComboBox fx:id="cbStatus" layoutX="1004.0" layoutY="36.0" onAction="#comboBoxStatusClicked" prefHeight="50.0" prefWidth="150.0" promptText="Status" stylesheets="@../../css/combo-box.css" />
+                  <ComboBox fx:id="cbLeaveType" layoutX="1064.0" layoutY="40.0" onAction="#comboBoxLeaveTypeClicked" prefHeight="50.0" prefWidth="205.0" promptText="Leave Type" stylesheets="@../../css/combo-box.css">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                   </ComboBox>
                </children>
                <VBox.margin>
-                  <Insets right="24.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
             <TableView fx:id="tvLeaveRequests" prefHeight="650.0">
