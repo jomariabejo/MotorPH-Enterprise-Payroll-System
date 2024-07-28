@@ -26,7 +26,7 @@
                     <menus>
                       <Menu mnemonicParsing="false" text="File">
                         <items>
-                          <MenuItem mnemonicParsing="false" text="Close" />
+                          <MenuItem mnemonicParsing="false" onAction="#closeClicked" text="Close" />
                         </items>
                       </Menu>
                       <Menu fx:id="menuRoles" mnemonicParsing="false" text="Switch Role">
@@ -40,6 +40,13 @@
                       <Menu mnemonicParsing="false" text="Help">
                         <items>
                           <MenuItem mnemonicParsing="false" text="Documentation" />
+                              <MenuItem mnemonicParsing="false" onAction="#lightModeClicked" text="Light Mode" />
+                              <MenuItem mnemonicParsing="false" onAction="#darkModeClicked" text="Dark Mode" />
+                              <MenuItem mnemonicParsing="false" onAction="#nordLightClicked" text="Nord Light" />
+                              <MenuItem mnemonicParsing="false" onAction="#nordDarkClicked" text="Nord Dark" />
+                              <MenuItem mnemonicParsing="false" onAction="#cupertinoLightClicked" text="Cupertino Light" />
+                              <MenuItem mnemonicParsing="false" onAction="#cupertinoDarkLight" text="Cupertino Dark" />
+                              <MenuItem mnemonicParsing="false" onAction="#draculaClicked" text="Dracula" />
                         </items>
                       </Menu>
                     </menus>
@@ -135,7 +142,7 @@
                         <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="639.0" BorderPane.alignment="CENTER">
                            <children>
                               <Region prefHeight="75.0" prefWidth="128.0" />
-                              <Label fx:id="selectedButtonLabel" text="/ Employee / Overview">
+                              <Label fx:id="selectedButtonLabel" text="/ Employee / My Profile">
                                  <font>
                                     <Font size="24.0" />
                                  </font>

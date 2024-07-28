@@ -31,7 +31,7 @@
                   </Button>
                </children>
                <VBox.margin>
-                  <Insets right="24.0" />
+                  <Insets />
                </VBox.margin>
             </HBox>
             <TableView fx:id="tvLeaveRequests" prefHeight="650.0">

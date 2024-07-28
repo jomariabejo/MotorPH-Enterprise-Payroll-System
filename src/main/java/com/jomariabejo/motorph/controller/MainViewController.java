@@ -1,9 +1,12 @@
 package com.jomariabejo.motorph.controller;
 
+import atlantafx.base.theme.*;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
 import com.jomariabejo.motorph.controller.nav.PayrollAdministratorNavigationController;
 import com.jomariabejo.motorph.controller.nav.SystemAdministratorNavigationController;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,12 +21,6 @@ import java.util.function.Consumer;
 
 public class MainViewController implements _ViewLoader {
 
-    private EmployeeRoleNavigationController employeeRoleNavigationController;
-    private HumanResourceAdministratorNavigationController humanResourceAdministratorNavigationController;
-    private PayrollAdministratorNavigationController payrollAdministratorNavigationController;
-    private SystemAdministratorNavigationController systemAdministratorNavigationController;
-
-
     @Getter
     @Setter
     @FXML
@@ -32,12 +29,7 @@ public class MainViewController implements _ViewLoader {
     @FXML
     private Label selectedButtonLabel;
 
-
     public MainViewController() {
-        employeeRoleNavigationController = new EmployeeRoleNavigationController();
-        humanResourceAdministratorNavigationController = new HumanResourceAdministratorNavigationController();
-        payrollAdministratorNavigationController = new PayrollAdministratorNavigationController();
-        systemAdministratorNavigationController = new SystemAdministratorNavigationController();
     }
 
     public void rewriteLabel(String string) {
@@ -124,5 +116,37 @@ public class MainViewController implements _ViewLoader {
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
         }
+    }
+
+    public void closeClicked(ActionEvent actionEvent) {
+        Platform.exit();
+    }
+
+    public void lightModeClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
+    }
+
+    public void darkModeClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
+    }
+
+    public void nordLightClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new NordLight().getUserAgentStylesheet());
+    }
+
+    public void nordDarkClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
+    }
+
+    public void cupertinoLightClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    }
+
+    public void cupertinoDarkLight(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    }
+
+    public void draculaClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
     }
 }

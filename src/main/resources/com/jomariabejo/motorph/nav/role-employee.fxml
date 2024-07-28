@@ -47,7 +47,7 @@
                               </ImageView>
                            </children>
                         </StackPane>
-                        <Label styleClass="lato-bold" text="Overview">
+                        <Label styleClass="lato-bold" text="My Profile">
                            <font>
                               <Font size="18.0" />
                            </font>

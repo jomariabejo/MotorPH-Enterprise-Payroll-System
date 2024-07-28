@@ -64,7 +64,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
     @FXML
     public void overviewOnAction() {
-        mainViewController.rewriteLabel("/ Employee / Overview");
+        mainViewController.rewriteLabel("/ Employee / My Profile");
         loadView("/com/jomariabejo/motorph/role/employee/my-profile-view.fxml", controller -> {
             if (controller instanceof EmployeeProfileController employeeOverviewController) {
                 employeeOverviewController.setEmployeeRoleNavigationController(this);
