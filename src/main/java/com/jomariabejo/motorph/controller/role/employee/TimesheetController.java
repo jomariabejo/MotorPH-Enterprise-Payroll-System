@@ -1,8 +1,10 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
+import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
@@ -14,10 +16,20 @@ public class TimesheetController {
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
+    @FXML
+    private Button clockInBtn;
 
+    @FXML
+    private Button clockOutBtn;
 
     @FXML
     private TableView<?> tvLeaveRequests;
+
+    @FXML
+    private void initialize() {
+        clockInBtn.getStyleClass().add(Styles.SUCCESS);
+        clockOutBtn.getStyleClass().add(Styles.DANGER);
+    }
 
     @FXML
     void clockInClicked(ActionEvent event) {
