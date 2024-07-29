@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import lombok.Getter;
@@ -32,25 +33,25 @@ public class EmployeeProfileController {
     private Button lastButton;
 
     @FXML
-    private Label address;
+    private TextField address;
 
     @FXML
-    private Label dateOfBirth;
+    private TextField dateOfBirth;
 
     @FXML
-    private Label department;
+    private TextField department;
 
     @FXML
-    private Label employeeNumber;
+    private TextField employeeNumber;
 
     @FXML
-    private Label firstName;
+    private TextField firstName;
 
     @FXML
-    private Label lastName;
+    private TextField lastName;
 
     @FXML
-    private Label position;
+    private TextField position;
 
     public EmployeeProfileController() {
     }

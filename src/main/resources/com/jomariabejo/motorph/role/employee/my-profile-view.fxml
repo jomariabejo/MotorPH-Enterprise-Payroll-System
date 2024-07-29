@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import atlantafx.base.controls.ModalPane?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -15,120 +13,173 @@
    <children>
       <BorderPane fx:id="employeeProfileBorderPane" layoutX="401.0" layoutY="168.0" prefHeight="897.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <VBox alignment="CENTER" BorderPane.alignment="TOP_CENTER">
+            <VBox alignment="CENTER" spacing="12.0" BorderPane.alignment="TOP_CENTER">
                <children>
-                  <GridPane alignment="CENTER" prefHeight="400.0" prefWidth="1204.0">
-                    <columnConstraints>
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="660.0" minWidth="10.0" prefWidth="491.0" />
-                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="1031.0" minWidth="10.0" prefWidth="809.0" />
-                    </columnConstraints>
-                    <rowConstraints>
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                    </rowConstraints>
+                  <HBox alignment="CENTER_RIGHT" spacing="24.0">
                      <children>
-                        <Label text="Employee No.">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <padding>
-                              <Insets left="48.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="employeeNumber" text="Employee number here" GridPane.columnIndex="1">
+                        <Label fx:id="lblEmployeeNumber" alignment="CENTER" text="Employee No.">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label text="First Name" GridPane.rowIndex="1">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <padding>
-                              <Insets left="48.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="firstName" text="First Name here" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TextField fx:id="tfEmployeeNumber" prefWidth="500.0">
                            <font>
                               <Font size="24.0" />
                            </font>
-                        </Label>
-                        <Label text="Last Name" GridPane.rowIndex="2">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <padding>
-                              <Insets left="48.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="lastName" text="Last Name here" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label text="DOB here" GridPane.rowIndex="3">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <padding>
-                              <Insets left="48.0" />
-                           </padding>
-                        </Label>
-                        <Label text="Address" GridPane.rowIndex="4">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <padding>
-                              <Insets left="48.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="address" text="Address here" GridPane.columnIndex="1" GridPane.rowIndex="4">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="dateOfBirth" text="DOB" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label text="Position" GridPane.rowIndex="5">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <padding>
-                              <Insets left="48.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="position" text="Position here" GridPane.columnIndex="1" GridPane.rowIndex="5">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label text="Department" GridPane.rowIndex="6">
-                           <font>
-                              <Font name="System Bold" size="24.0" />
-                           </font>
-                           <padding>
-                              <Insets left="48.0" />
-                           </padding>
-                        </Label>
-                        <Label fx:id="department" text="Department Here" GridPane.columnIndex="1" GridPane.rowIndex="6">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="288.0" left="248.0" right="48.0" />
+                        <Insets />
                      </VBox.margin>
-                  </GridPane>
+                     <padding>
+                        <Insets right="260.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="777.0" spacing="24.0">
+                     <children>
+                        <Label fx:id="lblEmployeeNumber1" alignment="CENTER" text="First Name">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="firstName" prefWidth="500.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets right="260.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="803.0" spacing="24.0">
+                     <children>
+                        <Label fx:id="lblEmployeeNumber11" alignment="CENTER" text="Last Name">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="lastName" prefWidth="500.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets right="260.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="828.0" spacing="24.0">
+                     <children>
+                        <Label fx:id="lblEmployeeNumber111" alignment="CENTER" text="DOB">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="dateOfBirth" prefWidth="500.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets right="260.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="854.0" spacing="24.0">
+                     <children>
+                        <Label fx:id="lblEmployeeNumber1111" alignment="CENTER" text="Address">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="address" prefWidth="500.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets right="260.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="735.0" spacing="24.0">
+                     <children>
+                        <Label fx:id="lblEmployeeNumber11111" alignment="CENTER" text="Position">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="position" prefWidth="500.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets right="260.0" />
+                     </padding>
+                  </HBox>
+                  <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="761.0" spacing="24.0">
+                     <children>
+                        <Label fx:id="lblEmployeeNumber111111" alignment="CENTER" text="Department">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="department" prefWidth="500.0">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </TextField>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="240.0" />
+                     </VBox.margin>
+                     <padding>
+                        <Insets right="260.0" />
+                     </padding>
+                  </HBox>
                </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
             </VBox>
          </center>
       </BorderPane>

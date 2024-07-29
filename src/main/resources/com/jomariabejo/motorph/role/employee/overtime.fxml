@@ -20,7 +20,7 @@
                   <ComboBox fx:id="cbMonth" onAction="#cbMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
                   <ComboBox fx:id="cbYear" layoutX="1027.0" layoutY="25.0" onAction="#cbYearClicked" prefHeight="50.0" prefWidth="155.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
                   <ComboBox layoutX="177.0" layoutY="26.0" onAction="#cbStatusChanged" prefHeight="50.0" prefWidth="155.0" promptText="Status" stylesheets="@../../css/combo-box.css" />
-                  <Button mnemonicParsing="false" onAction="#fileOvertimeRequestClicked" prefHeight="50.0" prefWidth="310.0" text="File Overtime Request">
+                  <Button fx:id="overtimeRequestBtn" mnemonicParsing="false" onAction="#fileOvertimeRequestClicked" prefHeight="50.0" prefWidth="310.0" text="File Overtime Request">
                      <font>
                         <Font size="24.0" />
                      </font>

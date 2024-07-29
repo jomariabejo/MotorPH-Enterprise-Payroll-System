@@ -24,9 +24,6 @@ public class PayslipController {
     public void cbStatusChanged(ActionEvent actionEvent) {
     }
 
-    public void fileOvertimeRequestClicked(ActionEvent actionEvent) {
-    }
-
     public void paginationOnDragDetected(MouseEvent mouseEvent) {
     }
 }

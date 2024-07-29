@@ -17,7 +17,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfTaxPayerIdentificationNumber" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfTaxPayerIdentificationNumber" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfSSSNumber" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfSSSNumber" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -57,7 +57,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfPhilhealthNumber" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfPhilhealthNumber" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -77,7 +77,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfPagibigNumber" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfPagibigNumber" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>

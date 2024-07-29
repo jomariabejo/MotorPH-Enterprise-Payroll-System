@@ -19,12 +19,12 @@
                <children>
                   <ComboBox fx:id="cbMonth" onAction="#cbMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
                   <ComboBox fx:id="cbYear" layoutX="1027.0" layoutY="25.0" onAction="#cbYearClicked" prefHeight="50.0" prefWidth="155.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
-                  <Button fx:id="clockInBtn" mnemonicParsing="false" onAction="#cbClockInClicked" prefHeight="50.0" prefWidth="155.0" text="Clock In">
+                  <Button fx:id="clockInBtn" mnemonicParsing="false" onAction="#clockInClicked" prefHeight="50.0" prefWidth="155.0" text="Clock In">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Button>
-                  <Button fx:id="clockOutBtn" mnemonicParsing="false" onAction="#cbClockOutClicked" prefHeight="50.0" prefWidth="160.0" text="Clock Out">
+                  <Button fx:id="clockOutBtn" mnemonicParsing="false" onAction="#clockOutClicked" prefHeight="50.0" prefWidth="160.0" text="Clock Out">
                      <font>
                         <Font size="24.0" />
                      </font>

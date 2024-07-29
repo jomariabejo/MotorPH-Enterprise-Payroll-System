@@ -17,7 +17,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfRiceSubsidy" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfRiceSubsidy" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfClothingAllowance" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfClothingAllowance" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -57,7 +57,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfPhoneAllowance" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfPhoneAllowance" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>

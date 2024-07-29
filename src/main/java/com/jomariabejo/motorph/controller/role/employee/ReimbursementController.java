@@ -12,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import lombok.Getter;
 import lombok.Setter;
+import org.kordamp.ikonli.fontawesome5.FontAwesomeRegular;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material.Material;
 
@@ -34,18 +35,18 @@ public class ReimbursementController {
     private TableView<OvertimeRequest> tvOvertimeRequests;
 
     @FXML
-    private Button fileOvertimeRequestBtn;
+    private Button fileReimbursement;
 
     @FXML
     private void initialize() {
         addIconToFileOvertimeRequestBtn();
-        fileOvertimeRequestBtn.getStyleClass().add(Styles.SUCCESS);
+        fileReimbursement.getStyleClass().add(Styles.SUCCESS);
     }
 
     private void addIconToFileOvertimeRequestBtn() {
         FontIcon icon = new FontIcon(Material.ADD_CIRCLE);
         icon.setIconSize(24);
-        fileOvertimeRequestBtn.setGraphic(icon);
+        fileReimbursement.setGraphic(icon);
     }
 
     public ReimbursementController() {
