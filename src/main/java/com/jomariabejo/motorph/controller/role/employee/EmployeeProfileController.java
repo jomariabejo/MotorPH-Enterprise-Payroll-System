@@ -33,27 +33,31 @@ public class EmployeeProfileController {
     private Button lastButton;
 
     @FXML
-    private TextField address;
+    private TextField tfAddress;
 
     @FXML
-    private TextField dateOfBirth;
+    private TextField tfDOB;
 
     @FXML
-    private TextField department;
+    private TextField tfDepartment;
 
     @FXML
-    private TextField employeeNumber;
+    private TextField tfEmployeeNumber;
 
     @FXML
-    private TextField firstName;
+    private TextField tfFirstName;
 
     @FXML
-    private TextField lastName;
+    private TextField tfLastName;
 
     @FXML
-    private TextField position;
+    private TextField tfPosition;
 
     public EmployeeProfileController() {
+    }
+
+    @FXML
+    private void initialize()  {
     }
 
     public void setupBorderTopPane() {
@@ -70,5 +74,35 @@ public class EmployeeProfileController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void rewriteTextField() {
+        tfAddress.setText(
+                this.employeeRoleNavigationController.getMainViewController().getEmployee().getAddress()
+        );
+
+        tfDOB.setText(
+                this.employeeRoleNavigationController.getMainViewController().getEmployee().getBirthday().toString()
+        );
+
+        tfPosition.setText(
+                this.employeeRoleNavigationController.getMainViewController().getEmployee().getPositionID().getPositionName()
+        );
+
+        tfLastName.setText(
+                this.employeeRoleNavigationController.getMainViewController().getEmployee().getLastName()
+        );
+
+        tfFirstName.setText(
+                this.employeeRoleNavigationController.getMainViewController().getEmployee().getFirstName()
+        );
+
+        tfEmployeeNumber.setText(
+                this.employeeRoleNavigationController.getMainViewController().getEmployee().getId().toString()
+        );
+
+        tfDepartment.setText(
+                this.employeeRoleNavigationController.getMainViewController().getEmployee().getPositionID().getDepartmentID().getDepartmentName()
+        );
     }
 }

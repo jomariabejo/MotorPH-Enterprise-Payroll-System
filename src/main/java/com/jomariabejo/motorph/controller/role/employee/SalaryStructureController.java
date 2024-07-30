@@ -20,4 +20,33 @@ public class SalaryStructureController {
     @FXML
     private TextField tfHourlyRate;
 
+    public void rewriteTextfields() {
+        tfBasicSalary.setText(
+                this.moreInfoController
+                        .getEmployeeProfileController()
+                        .getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getEmployee()
+                        .getBasicSalary()
+                        .toString()
+        );
+        tfGrossSemiMonthlyRate.setText(
+                this.moreInfoController
+                        .getEmployeeProfileController()
+                        .getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getEmployee()
+                        .getGrossSemiMonthlyRate()
+                        .toString()
+        );
+        tfHourlyRate.setText(
+                this.moreInfoController
+                        .getEmployeeProfileController()
+                        .getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getEmployee()
+                        .getHourlyRate()
+                        .toString()
+        );
+    }
 }

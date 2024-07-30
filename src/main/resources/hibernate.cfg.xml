@@ -13,6 +13,7 @@
         <!-- Echo all executed SQL to console -->
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
 
         <!-- Automatically create/update the database schema -->
         <property name="hibernate.hbm2ddl.auto">update</property>

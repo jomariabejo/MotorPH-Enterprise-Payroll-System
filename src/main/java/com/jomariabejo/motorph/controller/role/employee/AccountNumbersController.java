@@ -25,4 +25,40 @@ public class AccountNumbersController {
 
     public AccountNumbersController() {
     }
+
+    public void rewriteTextfields() {
+        tfPagibigNumber.setText(
+                this.moreInfoController
+                        .getEmployeeProfileController()
+                        .getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getEmployee()
+                        .getPagibigNumber()
+        );
+
+        tfPhilhealthNumber.setText(
+                this.moreInfoController
+                        .getEmployeeProfileController()
+                        .getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getEmployee()
+                        .getPhilhealthNumber()
+        );
+        tfSSSNumber.setText(
+                this.moreInfoController
+                        .getEmployeeProfileController()
+                        .getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getEmployee()
+                        .getSSSNumber()
+        );
+        tfTaxPayerIdentificationNumber.setText(
+                this.moreInfoController
+                        .getEmployeeProfileController()
+                        .getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getEmployee()
+                        .getTINNumber()
+        );
+    }
 }

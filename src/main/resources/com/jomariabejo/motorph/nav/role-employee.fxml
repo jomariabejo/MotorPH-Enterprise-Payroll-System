@@ -33,7 +33,7 @@
                   <Insets bottom="24.0" />
                </VBox.margin>
             </VBox>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#overviewOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#myProfileOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>

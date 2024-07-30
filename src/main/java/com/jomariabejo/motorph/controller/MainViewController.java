@@ -5,6 +5,8 @@ import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
 import com.jomariabejo.motorph.controller.nav.PayrollAdministratorNavigationController;
 import com.jomariabejo.motorph.controller.nav.SystemAdministratorNavigationController;
+import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.model.User;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -35,6 +37,10 @@ public class MainViewController implements _ViewLoader {
     @FXML
     private Label lblRoleName;
 
+
+    private Employee employee;
+    private User user;
+
     public MainViewController() {
     }
 
@@ -42,7 +48,7 @@ public class MainViewController implements _ViewLoader {
         selectedButtonLabel.setText(string);
     }
 
-    public void initializeUserNavigation(String username) {
+    public void initializeUserNavigation() {
         displayEmployeeRoleNavigation();
     }
 
@@ -82,7 +88,7 @@ public class MainViewController implements _ViewLoader {
             if (controller instanceof EmployeeRoleNavigationController) {
                 EmployeeRoleNavigationController employeeController = (EmployeeRoleNavigationController) controller;
                 employeeController.setMainViewController(this);
-                employeeController.overviewOnAction();
+                employeeController.myProfileOnAction();
             }
         });
     }
@@ -154,5 +160,11 @@ public class MainViewController implements _ViewLoader {
 
     public void draculaClicked(ActionEvent actionEvent) {
         Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+    }
+
+    public void displayEmployeeName() {
+        this.lblEmployeeName.setText(
+                employee.getFirstName() + " " + employee.getLastName()
+        );
     }
 }

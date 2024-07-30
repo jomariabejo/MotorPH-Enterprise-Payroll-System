@@ -19,4 +19,18 @@ public class AllowanceStructureController {
 
     @FXML
     private TextField tfRiceSubsidy;
+
+    public void rewriteTextfields() {
+        tfClothingAllowance.setText(
+                this.getMoreInfoController().getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().getEmployee().getClothingAllowance().toString()
+        );
+
+        tfPhoneAllowance.setText(
+                this.getMoreInfoController().getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().getEmployee().getPhoneAllowance().toString()
+        );
+
+        tfRiceSubsidy.setText(
+                this.getMoreInfoController().getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().getEmployee().getRiceSubsidy().toString()
+        );
+    }
 }

@@ -39,6 +39,7 @@ public class MoreInfoController {
 
             AllowanceStructureController allowanceStructureController = fxmlLoader.getController();
             allowanceStructureController.setMoreInfoController(this);
+            allowanceStructureController.rewriteTextfields();
         }
         catch (IOException ioException) {
             ioException.printStackTrace();
@@ -57,6 +58,7 @@ public class MoreInfoController {
 
         PersonalInformationController personalInformationController = fxmlLoader.getController();
         personalInformationController.setMoreInfoController(this);
+        personalInformationController.rewriteTextfields();
     }
 
     @FXML
@@ -71,6 +73,7 @@ public class MoreInfoController {
 
             SalaryStructureController salaryStructureController = fxmlLoader.getController();
             salaryStructureController.setMoreInfoController(this);
+            salaryStructureController.rewriteTextfields();
         }
         catch (IOException ioException) {
             ioException.printStackTrace();
@@ -88,6 +91,7 @@ public class MoreInfoController {
 
             AccountNumbersController accountNumbersController = fxmlLoader.getController();
             accountNumbersController.setMoreInfoController(this);
+            accountNumbersController.rewriteTextfields();
         }
         catch (IOException ioException) {
             ioException.printStackTrace();

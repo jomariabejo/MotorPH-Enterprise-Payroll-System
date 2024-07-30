@@ -12,6 +12,12 @@ import org.hibernate.annotations.ColumnDefault;
         @UniqueConstraint(name = "idx_username", columnNames = {"Username"}),
         @UniqueConstraint(name = "idx_email", columnNames = {"Email"})
 })
+@NamedQueries({
+        @NamedQuery(
+                name = "findUser",
+                query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password"
+        )
+})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +44,7 @@ public class User {
     @Column(name = "Status", nullable = false)
     private String status;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "EmployeeId", nullable = false)
     private Employee employee;
 

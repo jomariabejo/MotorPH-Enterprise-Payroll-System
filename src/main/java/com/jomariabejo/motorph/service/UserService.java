@@ -4,6 +4,7 @@ import com.jomariabejo.motorph.model.User;
 import com.jomariabejo.motorph.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
 
@@ -31,5 +32,9 @@ public class UserService {
 
     public void deleteUser(User user) {
         userRepository.delete(user);
+    }
+
+    public Optional<User> fetchUser(String username, String password) {
+        return userRepository.findUser(username,password);
     }
 }

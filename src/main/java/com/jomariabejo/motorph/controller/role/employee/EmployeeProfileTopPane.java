@@ -143,6 +143,7 @@ public class EmployeeProfileTopPane {
                             rewriteLabel("/ Employee / Profile / ");
                     EmployeeProfileController employeeProfileController = fxmlLoader.getController();
                     employeeProfileController.setEmployeeRoleNavigationController(this.getEmployeeProfileController().getEmployeeRoleNavigationController());
+                    employeeProfileController.rewriteTextField();
                     lastButton.setGraphic(new FontIcon(Material.PERSON));
                 } catch (IOException ioException) {
                     ioException.printStackTrace();

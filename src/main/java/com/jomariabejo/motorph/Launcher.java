@@ -3,6 +3,8 @@ package com.jomariabejo.motorph;
 import atlantafx.base.theme.PrimerDark;
 import com.jomariabejo.motorph.controller.LoginViewController;
 import com.jomariabejo.motorph.controller.MainViewController;
+import com.jomariabejo.motorph.model.User;
+import com.jomariabejo.motorph.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +24,9 @@ public class Launcher extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         primaryStage = stage; // Store the primary stage for later use
+
+        // Initialize Hibernate
+        HibernateUtil.getSessionFactory();
 
         // Set the default stylesheet for the application
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
@@ -45,7 +50,7 @@ public class Launcher extends Application {
         stage.show();
     }
 
-    public static void switchToMainView(String username) {
+    public static void switchToMainView(User user) {
         // Load the main view FXML file
         FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("/com/jomariabejo/motorph/main-view.fxml"));
         Parent root;
@@ -57,7 +62,9 @@ public class Launcher extends Application {
 
         // Pass parameters to the main view controller if necessary
         MainViewController controller = loader.getController();
-        controller.initializeUserNavigation(username); // Example method to initialize data
+        controller.setEmployee(user.getEmployee());
+        controller.initializeUserNavigation();
+        controller.displayEmployeeName();
 
         // Create a new scene with the loaded FXML file
         Scene scene = new Scene(root);
