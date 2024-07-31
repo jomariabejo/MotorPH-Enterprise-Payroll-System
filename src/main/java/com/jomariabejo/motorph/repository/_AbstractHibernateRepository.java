@@ -90,4 +90,13 @@ public abstract class _AbstractHibernateRepository<T, ID extends Serializable> i
             session.close();
         }
     }
+
+    protected List<?> runQuery(String hql, Class<?> resultClass) {
+        Session session = HibernateUtil.openSession();
+        try {
+            return session.createQuery(hql, resultClass).list();
+        } finally {
+            session.close();
+        }
+    }
 }

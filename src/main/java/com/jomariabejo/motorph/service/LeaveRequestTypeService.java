@@ -32,4 +32,8 @@ public class LeaveRequestTypeService {
     public void deleteLeaveRequestType(LeaveRequestType leaveRequestType) {
         leaveRequestTypeRepository.delete(leaveRequestType);
     }
+
+    public List<String> fetchAllLeaveTypesName() {
+        return leaveRequestTypeRepository.findAllLeaveTypeNames();
+    }
 }

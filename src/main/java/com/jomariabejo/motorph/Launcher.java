@@ -62,6 +62,7 @@ public class Launcher extends Application {
 
         // Pass parameters to the main view controller if necessary
         MainViewController controller = loader.getController();
+        controller.setUser(user);
         controller.setEmployee(user.getEmployee());
         controller.initializeUserNavigation();
         controller.displayEmployeeName();

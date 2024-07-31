@@ -14,6 +14,16 @@ import java.math.BigDecimal;
         @Index(name = "idx_employee_leave_balance", columnList = "EmployeeID"),
         @Index(name = "idx_leave_type_balance", columnList = "LeaveTypeID")
 })
+@NamedQueries({
+        @NamedQuery(
+                name = "findEmployeeLeaveBalanceByLeaveTypeName",
+                query = "SELECT lb FROM LeaveBalance lb WHERE lb.employeeID = :employeeId AND lb.leaveTypeID.leaveTypeName = :leaveTypeName"
+        ),
+        @NamedQuery(
+                name = "findAllEmployeeLeaveBalance",
+                query = "SELECT lb FROM LeaveBalance lb WHERE lb.employeeID = :employeeId"
+        )
+})
 public class LeaveBalance {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

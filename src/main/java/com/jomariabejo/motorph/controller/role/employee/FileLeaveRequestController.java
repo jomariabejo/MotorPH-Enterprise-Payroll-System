@@ -1,6 +1,15 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
+import com.jomariabejo.motorph.model.LeaveBalance;
+import com.jomariabejo.motorph.model.LeaveRequestType;
+import com.jomariabejo.motorph.repository.LeaveBalanceRepository;
+import com.jomariabejo.motorph.repository.LeaveRequestTypeRepository;
+import com.jomariabejo.motorph.service.EmployeeService;
+import com.jomariabejo.motorph.service.LeaveBalanceService;
+import com.jomariabejo.motorph.service.LeaveRequestTypeService;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -9,14 +18,18 @@ import lombok.Setter;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 public class FileLeaveRequestController {
 
+    private LeaveBalanceService leaveBalanceService = new LeaveBalanceService(new LeaveBalanceRepository());
+    private LeaveRequestTypeService leaveRequestTypeService =  new LeaveRequestTypeService(new LeaveRequestTypeRepository());
 
     @FXML
-    private ComboBox<?> cbLeaveTypes;
+    private ComboBox<String> cbLeaveTypes;
 
     @FXML
     private DatePicker dpEndLeaveDate;
@@ -145,5 +158,16 @@ public class FileLeaveRequestController {
 
     public void setSingleLeave() {
         singleLeaveClicked();
+    }
+
+    private void setupComboBox() {
+        List<String> leaveTypesList = leaveRequestTypeService.fetchAllLeaveTypesName();
+        ObservableList<String> observableLeaveTypesList = FXCollections.observableArrayList(leaveTypesList);
+        cbLeaveTypes.setItems(observableLeaveTypesList);
+    }
+
+    @FXML
+    private void initialize() {
+        setupComboBox();
     }
 }

@@ -1,6 +1,9 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
 import atlantafx.base.theme.Styles;
+import com.jomariabejo.motorph.model.User;
+import com.jomariabejo.motorph.repository.UserRepository;
+import com.jomariabejo.motorph.service.UserService;
 import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -16,6 +19,8 @@ import java.util.Optional;
 public class EmployeeChangePasswordController {
 
     private EmployeeProfileTopPane employeeProfileTopPane;
+
+    private UserService userService = new UserService(new UserRepository());
 
     @FXML
     private Button cancelBtn;
@@ -43,17 +48,34 @@ public class EmployeeChangePasswordController {
     @FXML
     public void saveClicked() {
         CustomAlert customAlert = new CustomAlert(
-                Alert.AlertType.INFORMATION,
+                Alert.AlertType.CONFIRMATION,
                 "Save new password",
                 "Are you sure you want to save this new password ?"
         );
         Optional<ButtonType> userAction = customAlert.showAndWait();
 
         if (userAction.isPresent() && userAction.get() == ButtonType.OK) {
-            // TODO 1 verify if the current password is correct
-            //      2 process the change password
-        }
-        else if (userAction.get() == ButtonType.CANCEL) {
+            String currentPassword = this.getEmployeeProfileTopPane().getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().getUser().getPassword();
+            if (currentPassword.equals(tfCurrentPassword.getText())) {
+                // The user that logged in
+                User user = this.getEmployeeProfileTopPane().getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().getUser();
+                user.setPassword(tfConfirmNewPassword.getText());
+                userService.updateUser(user);
+                CustomAlert successAlert = new CustomAlert(
+                        Alert.AlertType.INFORMATION,
+                        "Password changed",
+                        "Password saved successfully."
+                );
+                successAlert.showAndWait();
+            } else {
+                CustomAlert failedAlert = new CustomAlert(
+                        Alert.AlertType.ERROR,
+                        "Change password failed",
+                        "Incorrect password. Please try again."
+                );
+                failedAlert.showAndWait();
+            }
+        } else if (userAction.get() == ButtonType.CANCEL) {
             getLblChangePassword().getScene().getWindow().hide();
         }
     }
