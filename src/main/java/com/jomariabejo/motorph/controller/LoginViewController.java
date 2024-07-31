@@ -3,9 +3,14 @@ package com.jomariabejo.motorph.controller;
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.Launcher;
 import com.jomariabejo.motorph.model.User;
+import com.jomariabejo.motorph.model.UserLog;
+import com.jomariabejo.motorph.repository.UserLogRepository;
 import com.jomariabejo.motorph.repository.UserRepository;
+import com.jomariabejo.motorph.service.UserLogService;
 import com.jomariabejo.motorph.service.UserService;
 import com.jomariabejo.motorph.utility.CustomAlert;
+import com.jomariabejo.motorph.utility.DateTimeUtil;
+import com.jomariabejo.motorph.utility.NetworkUtils;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,9 +22,12 @@ import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.net.URL;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Optional;
-import java.util.ResourceBundle;
+
 
 @Setter
 @Getter
@@ -47,6 +55,7 @@ public class LoginViewController {
         Optional<User> userOptional = verifyUser();
 
         if (userOptional.isPresent()) {
+            saveUserLog(userOptional.get());
             Launcher.switchToMainView(userOptional.get());
         } else {
             CustomAlert customAlert = new CustomAlert(
@@ -64,4 +73,16 @@ public class LoginViewController {
         String password = inputPassword.getText();
         return userService.fetchUser(username, password);
     }
+
+    private void saveUserLog(User user) {
+        UserLogService userLogService = new UserLogService(new UserLogRepository());
+
+        UserLog userLog = new UserLog();
+        userLog.setUserID(user);
+        userLog.setAction("User logged in");
+        userLog.setIPAddress(NetworkUtils.getLocalIPAddress());
+
+        userLogService.saveUserLog(userLog);
+    }
+
 }

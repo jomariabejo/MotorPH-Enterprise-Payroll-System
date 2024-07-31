@@ -17,7 +17,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfEmployeeNumber" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfEmployeeNumber" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfFirstName" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfFirstName" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -57,7 +57,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfLastName" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfLastName" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -77,7 +77,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfDateOfBirth" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfDateOfBirth" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -97,7 +97,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfAddress" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfAddress" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -117,7 +117,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfPhoneNumber" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfPhoneNumber" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -137,7 +137,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfDepartment" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfDepartment" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -157,7 +157,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfPosition" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfPosition" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -177,7 +177,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfEmployeeStatus" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfEmployeeStatus" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>

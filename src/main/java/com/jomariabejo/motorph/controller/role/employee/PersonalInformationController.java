@@ -86,7 +86,7 @@ public class PersonalInformationController {
                         .getEmployeeRoleNavigationController()
                         .getMainViewController()
                         .getEmployee()
-                        .getLastName()
+                        .getFirstName()
         );
         tfLastName.setText(
                 this.getMoreInfoController()

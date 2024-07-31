@@ -35,6 +35,6 @@ public class UserService {
     }
 
     public Optional<User> fetchUser(String username, String password) {
-        return userRepository.findUser(username,password);
+        return userRepository.findUserByUsernameAndPassword(username,password);
     }
 }

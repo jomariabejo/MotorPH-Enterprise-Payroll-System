@@ -17,7 +17,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfBasicSalary" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfBasicSalary" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -37,7 +37,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfGrossSemiMonthlyRate" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfGrossSemiMonthlyRate" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -57,7 +57,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <TextField fx:id="tfHourlyRate" alignment="CENTER" prefWidth="500.0">
+            <TextField fx:id="tfHourlyRate" prefWidth="500.0">
                <font>
                   <Font size="24.0" />
                </font>

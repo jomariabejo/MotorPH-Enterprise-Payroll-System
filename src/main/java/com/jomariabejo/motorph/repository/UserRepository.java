@@ -13,7 +13,7 @@ public class UserRepository extends _AbstractHibernateRepository<User, Integer> 
         super(User.class);
     }
 
-    public Optional<User> findUser(String username, String password) {
+    public Optional<User> findUserByUsernameAndPassword(String username, String password) {
         Session session = null;
         try {
             session = HibernateUtil.openSession();
@@ -24,10 +24,8 @@ public class UserRepository extends _AbstractHibernateRepository<User, Integer> 
             User user = query.getSingleResult();
             return Optional.of(user);
         } catch (NoResultException e) {
-            // No user found with given credentials
             return Optional.empty();
         } catch (Exception e) {
-            // Handle other exceptions, such as database errors
             e.printStackTrace(); // Logging can be enhanced
             return Optional.empty();
         } finally {

@@ -1,5 +1,6 @@
 package com.jomariabejo.motorph.model;
 
+import com.jomariabejo.motorph.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,7 +8,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,6 +17,7 @@ import java.time.Instant;
         @Index(name = "idx_user_log_user", columnList = "UserID")
 })
 public class UserLog {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "LogID", nullable = false)
@@ -32,8 +34,13 @@ public class UserLog {
     @Column(name = "IPAddress", length = 50)
     private String iPAddress;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "LogDateTime", nullable = false)
-    private Instant logDateTime;
+    @Column(name = "LogDateTime", nullable = false, updatable = false)
+    private LocalDateTime logDateTime;
 
+    @PrePersist
+    protected void onCreate() {
+        if (logDateTime == null) {
+            logDateTime = LocalDateTime.now();
+        }
+    }
 }

@@ -1,6 +1,5 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
-import atlantafx.base.controls.ModalPane;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -57,7 +56,7 @@ public class EmployeeProfileController {
     }
 
     @FXML
-    private void initialize()  {
+    private void initialize() {
     }
 
     public void setupBorderTopPane() {
@@ -78,31 +77,56 @@ public class EmployeeProfileController {
 
     public void rewriteTextField() {
         tfAddress.setText(
-                this.employeeRoleNavigationController.getMainViewController().getEmployee().getAddress()
+                this.employeeRoleNavigationController
+                        .getMainViewController()
+                        .getEmployee()
+                        .getAddress()
         );
 
         tfDOB.setText(
-                this.employeeRoleNavigationController.getMainViewController().getEmployee().getBirthday().toString()
+                this.employeeRoleNavigationController
+                        .getMainViewController()
+                        .getEmployee()
+                        .getBirthday()
+                        .toString()
         );
 
         tfPosition.setText(
-                this.employeeRoleNavigationController.getMainViewController().getEmployee().getPositionID().getPositionName()
+                this.employeeRoleNavigationController
+                        .getMainViewController()
+                        .getEmployee()
+                        .getPositionID()
+                        .getPositionName()
         );
 
         tfLastName.setText(
-                this.employeeRoleNavigationController.getMainViewController().getEmployee().getLastName()
+                this.employeeRoleNavigationController
+                        .getMainViewController()
+                        .getEmployee()
+                        .getLastName()
         );
 
         tfFirstName.setText(
-                this.employeeRoleNavigationController.getMainViewController().getEmployee().getFirstName()
+                this.employeeRoleNavigationController
+                        .getMainViewController()
+                        .getEmployee()
+                        .getFirstName()
         );
 
         tfEmployeeNumber.setText(
-                this.employeeRoleNavigationController.getMainViewController().getEmployee().getId().toString()
+                this.employeeRoleNavigationController
+                        .getMainViewController()
+                        .getEmployee()
+                        .getId()
+                        .toString()
         );
 
         tfDepartment.setText(
-                this.employeeRoleNavigationController.getMainViewController().getEmployee().getPositionID().getDepartmentID().getDepartmentName()
+                this.employeeRoleNavigationController
+                        .getMainViewController()
+                        .getEmployee()
+                        .getPositionID()
+                        .getDepartmentID().getDepartmentName()
         );
     }
 }
