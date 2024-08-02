@@ -1,6 +1,7 @@
 package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.HibernateUtil;
+import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.LeaveBalance;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
@@ -13,20 +14,22 @@ public class LeaveBalanceRepository extends _AbstractHibernateRepository<LeaveBa
         super(LeaveBalance.class);
     }
 
-    public Optional<LeaveBalance> findLeaveBalanceByEmployeeIdAndLeaveTypeName(String employeeId, String leaveTypeName) {
+    public Optional<Integer> getEmployeeRemainingLeaveBalanceByLeaveType(Employee employee, String leaveTypeName) {
         Session session = null;
         try {
             session = HibernateUtil.openSession();
-            Query<LeaveBalance> query = session.createNamedQuery("findEmployeeLeaveBalanceByLeaveTypeName", LeaveBalance.class);
-            query.setParameter("employeeId", employeeId);
+            Query<Integer> query = session.createNamedQuery("LeaveBalance.findBalanceByEmployeeAndLeaveType", Integer.class);
+
+            query.setParameter("employeeId", employee.getId());
             query.setParameter("leaveTypeName", leaveTypeName);
 
-            LeaveBalance leaveBalance = query.getSingleResult();
-            return Optional.of(leaveBalance);
+            Integer leaveBalance = query.getSingleResult();
+            return Optional.ofNullable(leaveBalance);
         } catch (NoResultException e) {
+            e.printStackTrace();
             return Optional.empty();
         } catch (Exception e) {
-            e.printStackTrace(); // Logging can be enhanced
+            e.printStackTrace(); // Consider using a logging framework
             return Optional.empty();
         } finally {
             if (session != null && session.isOpen()) {

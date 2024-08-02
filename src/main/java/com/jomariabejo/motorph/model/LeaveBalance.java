@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.math.BigDecimal;
-
 @Getter
 @Setter
 @Entity
@@ -16,12 +14,11 @@ import java.math.BigDecimal;
 })
 @NamedQueries({
         @NamedQuery(
-                name = "findEmployeeLeaveBalanceByLeaveTypeName",
-                query = "SELECT lb FROM LeaveBalance lb WHERE lb.employeeID = :employeeId AND lb.leaveTypeID.leaveTypeName = :leaveTypeName"
-        ),
-        @NamedQuery(
-                name = "findAllEmployeeLeaveBalance",
-                query = "SELECT lb FROM LeaveBalance lb WHERE lb.employeeID = :employeeId"
+                name = "LeaveBalance.findBalanceByEmployeeAndLeaveType",
+                query = "SELECT lb.balance " +
+                        "FROM LeaveBalance lb " +
+                        "JOIN lb.leaveTypeID lrt " +
+                        "WHERE lb.employee.id = :employeeId AND lrt.leaveTypeName = :leaveTypeName"
         )
 })
 public class LeaveBalance {
@@ -32,14 +29,14 @@ public class LeaveBalance {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "EmployeeID", nullable = false)
-    private Employee employeeID;
+    private Employee employee;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "LeaveTypeID", nullable = false)
     private LeaveRequestType leaveTypeID;
 
-    @ColumnDefault("0.00")
-    @Column(name = "Balance", nullable = false, precision = 8, scale = 2)
-    private BigDecimal balance;
+    @ColumnDefault("0")
+    @Column(name = "Balance", nullable = false)
+    private Integer balance;
 
 }

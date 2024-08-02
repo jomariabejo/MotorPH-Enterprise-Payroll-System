@@ -45,7 +45,7 @@
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <ComboBox fx:id="cbLeaveTypes" onAction="#vbLeaveTypeSelected" prefHeight="54.0" prefWidth="600.0" promptText="Select leave type" style="-fx-font-size: 24;">
+                        <ComboBox fx:id="cbLeaveTypes" onAction="#cbLeaveTypeSelected" prefHeight="54.0" prefWidth="600.0" promptText="Select leave type" style="-fx-font-size: 24;">
                             <items>
                                 <FXCollections fx:factory="observableArrayList">
                                     <String fx:value="Sick Leave" />
@@ -64,14 +64,31 @@
                   <Insets top="48.0" />
                </VBox.margin>
                 </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="320.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
+               <children>
+                  <Label text="Leave Days Left">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblLeaveDaysLeft" prefHeight="35.0" prefWidth="595.0" text="Remaining Leave Balance Of Selected Leave Type">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="320.0" />
+               </padding>
+            </HBox>
                 <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="488.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
                     <children>
-                        <Label fx:id="lblStartLeaveDate" text="Start Leave Date">
+                        <Label fx:id="lblStartLeaveDate" text="Leave From">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <DatePicker fx:id="dpStartLeaveDate" prefHeight="54.0" prefWidth="600.0" promptText="Start of leave" style="-fx-font-size: 24" />
+                        <DatePicker fx:id="dpLeaveFrom" onAction="#datePickerLeaveFromClicked" prefHeight="54.0" prefWidth="600.0" promptText="Leave From" style="-fx-font-size: 24" />
                     </children>
                     <padding>
                         <Insets right="320.0" />
@@ -79,17 +96,34 @@
                 </HBox>
                 <HBox fx:id="endOfLeave" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="524.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
                     <children>
-                        <Label text="End Leave Date">
+                        <Label text="Leave To">
                             <font>
                                 <Font name="System Bold" size="24.0" />
                             </font>
                         </Label>
-                        <DatePicker fx:id="dpEndLeaveDate" prefHeight="54.0" prefWidth="600.0" promptText="end of leave ..." style="-fx-font-size: 24" />
+                        <DatePicker fx:id="dpLeaveTo" disable="true" onAction="#leaveToChanged" prefHeight="54.0" prefWidth="600.0" promptText="Leave To" style="-fx-font-size: 24" />
                     </children>
                     <padding>
                         <Insets right="320.0" />
                     </padding>
                 </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="310.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
+               <children>
+                  <Label text="Leave Duration (Days)">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblLeaveDuration" prefHeight="35.0" prefWidth="595.0" text="Label">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="320.0" />
+               </padding>
+            </HBox>
                 <HBox alignment="TOP_CENTER" prefHeight="267.0" prefWidth="1300.0" spacing="24.0">
                     <children>
                         <Label text="Reason">

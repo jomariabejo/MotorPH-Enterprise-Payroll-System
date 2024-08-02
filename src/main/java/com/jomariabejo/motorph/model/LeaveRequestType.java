@@ -10,6 +10,12 @@ import java.math.BigDecimal;
 @Setter
 @Entity
 @Table(name = "leave_request_type", schema = "payroll_system")
+@NamedQueries(
+        @NamedQuery(
+                name = "findMaxCreditsByLeaveTypeName",
+                query = "SELECT lrt.maxCredits FROM LeaveRequestType lrt WHERE lrt.leaveTypeName = :leaveTypeName"
+        )
+)
 public class LeaveRequestType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,7 +25,7 @@ public class LeaveRequestType {
     @Column(name = "LeaveTypeName", length = 50)
     private String leaveTypeName;
 
-    @Column(name = "MaxCredits", precision = 8, scale = 2)
-    private BigDecimal maxCredits;
+    @Column(name = "MaxCredits")
+    private Integer maxCredits;
 
 }

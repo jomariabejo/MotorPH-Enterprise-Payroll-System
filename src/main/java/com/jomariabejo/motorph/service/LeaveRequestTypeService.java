@@ -4,6 +4,7 @@ import com.jomariabejo.motorph.model.LeaveRequestType;
 import com.jomariabejo.motorph.repository.LeaveRequestTypeRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class LeaveRequestTypeService {
 
@@ -35,5 +36,9 @@ public class LeaveRequestTypeService {
 
     public List<String> fetchAllLeaveTypesName() {
         return leaveRequestTypeRepository.findAllLeaveTypeNames();
+    }
+
+    public Optional<Integer> getLeaveRequestTypeMaxCreditsByName(String leaveTypeName) {
+        return leaveRequestTypeRepository.fetchMaxCredits(leaveTypeName);
     }
 }

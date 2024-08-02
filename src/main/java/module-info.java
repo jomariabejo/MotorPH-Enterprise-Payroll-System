@@ -21,8 +21,12 @@ module com.jomariabejo.motorph {
     requires org.kordamp.ikonli.fontawesome5;
     opens com.jomariabejo.motorph to javafx.fxml;
     exports com.jomariabejo.motorph;
-    exports com.jomariabejo.motorph.model;
     opens com.jomariabejo.motorph.model to org.hibernate.orm.core;
+    exports com.jomariabejo.motorph.model;
+    opens com.jomariabejo.motorph.repository to org.hibernate.orm.core;
+    exports com.jomariabejo.motorph.repository;
+    opens com.jomariabejo.motorph.service to org.hibernate.orm.core;
+    exports com.jomariabejo.motorph.service;
     opens com.jomariabejo.motorph.controller to javafx.fxml;
     exports com.jomariabejo.motorph.controller;
     opens com.jomariabejo.motorph.controller.nav to javafx.fxml;
