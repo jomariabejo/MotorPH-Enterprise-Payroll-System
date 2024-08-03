@@ -14,10 +14,6 @@ public class LeaveRequestTypeService {
         this.leaveRequestTypeRepository = leaveRequestTypeRepository;
     }
 
-    public LeaveRequestType getLeaveRequestTypeById(Integer id) {
-        return leaveRequestTypeRepository.findById(id);
-    }
-
     public List<LeaveRequestType> getAllLeaveRequestTypes() {
         return leaveRequestTypeRepository.findAll();
     }
@@ -32,10 +28,6 @@ public class LeaveRequestTypeService {
 
     public void deleteLeaveRequestType(LeaveRequestType leaveRequestType) {
         leaveRequestTypeRepository.delete(leaveRequestType);
-    }
-
-    public List<String> fetchAllLeaveTypesName() {
-        return leaveRequestTypeRepository.findAllLeaveTypeNames();
     }
 
     public Optional<Integer> getLeaveRequestTypeMaxCreditsByName(String leaveTypeName) {

@@ -1,10 +1,14 @@
 package com.jomariabejo.motorph.model;
 
+import com.jomariabejo.motorph.utility.NetworkUtils;
+import com.jomariabejo.motorph.utility.TimestampUtils;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 
@@ -29,14 +33,13 @@ public class LeaveRequest {
     @JoinColumn(name = "LeaveTypeID", nullable = false)
     private LeaveRequestType leaveTypeID;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
-    @Column(name = "DateRequested", nullable = false)
-    private Instant dateRequested;
+    @Column(name = "DateRequested")
+    private Timestamp dateRequested;
 
-    @Column(name = "StartDate", nullable = false)
+    @Column(name = "StartDate")
     private LocalDate startDate;
 
-    @Column(name = "EndDate", nullable = false)
+    @Column(name = "EndDate")
     private LocalDate endDate;
 
     @Lob
@@ -50,4 +53,7 @@ public class LeaveRequest {
     @Column(name = "AdminApprovalDate")
     private Instant adminApprovalDate;
 
+    @Lob
+    @Column(name = "Description", nullable = false)
+    private String description;
 }

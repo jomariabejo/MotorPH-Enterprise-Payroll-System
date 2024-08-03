@@ -15,11 +15,6 @@ public class LeaveRequestTypeRepository extends _AbstractHibernateRepository<Lea
         super(LeaveRequestType.class);
     }
 
-    public List<String> findAllLeaveTypeNames() {
-        String hql = "SELECT leaveTypeName FROM LeaveRequestType";
-        return (List<String>) runQuery(hql, String.class);
-    }
-
     public Optional<Integer> fetchMaxCredits(String leaveTypeName) {
         Session session = null;
         try {

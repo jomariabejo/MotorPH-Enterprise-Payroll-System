@@ -28,4 +28,8 @@ public class LeaveRequestType {
     @Column(name = "MaxCredits")
     private Integer maxCredits;
 
+    @Override
+    public String toString() {
+        return leaveTypeName;
+    }
 }

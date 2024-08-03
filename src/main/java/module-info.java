@@ -39,4 +39,6 @@ module com.jomariabejo.motorph {
     exports com.jomariabejo.motorph.controller.role.hr;
     opens com.jomariabejo.motorph.controller.role.accounting to javafx.fxml;
     exports com.jomariabejo.motorph.controller.role.accounting;
+    exports com.jomariabejo.motorph.sampler;
+    opens com.jomariabejo.motorph.sampler to javafx.fxml;
 }

@@ -2,13 +2,18 @@ package com.jomariabejo.motorph.controller.role.employee;
 
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.model.LeaveRequest;
+import com.jomariabejo.motorph.model.LeaveRequestType;
+import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -16,11 +21,11 @@ import javafx.scene.layout.HBox;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.DayOfWeek;
-import java.time.LocalDate;
+import java.sql.Timestamp;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 
 @Getter
 @Setter
@@ -29,7 +34,7 @@ public class FileLeaveRequestController {
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
     @FXML
-    private ComboBox<String> cbLeaveTypes;
+    private ComboBox<LeaveRequestType> cbLeaveTypes;
 
     @FXML
     private DatePicker dpLeaveTo;
@@ -67,10 +72,67 @@ public class FileLeaveRequestController {
 
     }
 
+    Dialog dialog = new Dialog();
+
     @FXML
     void submitButtonClicked() {
+        if (hasRemainingLeaveBalance()) {
+            if (validateFields()) {
+                try {
+                    CustomAlert customAlert = new CustomAlert(
+                            Alert.AlertType.INFORMATION,
+                            "Save leave request", "Saving now..."
+                    );
+                    LeaveRequest leaveRequest = new LeaveRequest();
+                    leaveRequest.setLeaveTypeID(cbLeaveTypes.getSelectionModel().getSelectedItem());
+                    leaveRequest.setStartDate(dpLeaveFrom.getValue());
+                    leaveRequest.setEndDate(dpLeaveTo.getValue());
+                    leaveRequest.setStatus("Pending");
+                    leaveRequest.setEmployeeID(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee());
+                    leaveRequest.setDateRequested(Timestamp.from(Instant.now()));
+                    leaveRequest.setDescription(taReason.getText());
 
-    };
+                    customAlert.showAndWait();
+                    this
+                            .getEmployeeRoleNavigationController()
+                            .getMainViewController()
+                            .getLeaveRequestService()
+                            .saveLeaveRequest(leaveRequest);
+                    System.out.println("Saved successfully");
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                CustomAlert alert = new CustomAlert(
+                        Alert.AlertType.ERROR,
+                        "Field blank",
+                        "Please ensure that all fields are filled out.");
+                alert.showAndWait();
+            }
+        } else {
+            displaySorryYouDontHaveRemainingLeaveBalanceLeft();
+        }
+    }
+
+    private void displaySorryYouDontHaveRemainingLeaveBalanceLeft() {
+        CustomAlert customAlert = new CustomAlert(
+                Alert.AlertType.INFORMATION,
+                "Depleted Remaining Leave Balance.",
+                "You don't have enough leave days left.");
+        customAlert.showAndWait();
+    }
+
+    private boolean hasRemainingLeaveBalance() {
+        int remainingLeaveDaysLeft = Integer.parseInt(lblLeaveDaysLeft.getText());
+        int leaveDuration = Integer.parseInt(lblLeaveDuration.getText());
+        return remainingLeaveDaysLeft >= leaveDuration;
+    }
+
+
+    private boolean validateFields() {
+        return (dpLeaveFrom.getValue() != null || dpLeaveTo.getValue() != null
+                || !taReason.getText().isEmpty());
+    }
 
     public FileLeaveRequestController() {
     }
@@ -148,8 +210,7 @@ public class FileLeaveRequestController {
 
         if (radioSingleLeave.isSelected()) {
             return 1;
-        }
-        else {
+        } else {
             LocalDate startDate = dpLeaveFrom.getValue();
             LocalDate endDate = dpLeaveTo.getValue();
 
@@ -167,11 +228,12 @@ public class FileLeaveRequestController {
         makeInvisibleEndOfLeaveDate();
 
         cbLeaveTypeSelected();
+        dpLeaveTo.setValue(dpLeaveFrom.getValue());
     }
 
     @FXML
     void cbLeaveTypeSelected() {
-        String leaveTypeName = cbLeaveTypes.getSelectionModel().getSelectedItem();
+        String leaveTypeName = cbLeaveTypes.getSelectionModel().getSelectedItem().getLeaveTypeName();
         Employee employee = this.getEmployeeRoleNavigationController().getMainViewController().getEmployee();
         String leaveBalanceLeft = this.getEmployeeRoleNavigationController()
                 .getMainViewController()
@@ -203,59 +265,14 @@ public class FileLeaveRequestController {
     }
 
     public void setupComboBox() {
-        List<String> leaveTypesList = this.getEmployeeRoleNavigationController()
+        List<LeaveRequestType> leaveTypesList = this.getEmployeeRoleNavigationController()
                 .getMainViewController()
                 .getLeaveRequestTypeService()
-                .fetchAllLeaveTypesName();
-        ObservableList<String> observableLeaveTypesList = FXCollections.observableArrayList(leaveTypesList);
+                .getAllLeaveRequestTypes();
+        ObservableList<LeaveRequestType> observableLeaveTypesList = FXCollections.observableArrayList(leaveTypesList);
         cbLeaveTypes.setItems(observableLeaveTypesList);
-
         // assume that the employee selected the first item
         cbLeaveTypes.getSelectionModel().selectFirst();
-    }
-
-    private boolean hasRemainingLeaveBalance() {
-        Employee employee = this.getEmployeeRoleNavigationController().getMainViewController().getEmployee();
-        Integer employeeId = employee.getId();
-        String leaveTypeName = cbLeaveTypes.getSelectionModel().getSelectedItem();
-
-        Optional<Integer> remainingLeaveBalanceOfSelectedLeaveType =  this.getEmployeeRoleNavigationController()
-                .getMainViewController()
-                .getLeaveBalanceService()
-                .fetchRemainingLeaveBalanceByLeaveTypeName(
-                        employee,
-                        leaveTypeName
-                );
-        return remainingLeaveBalanceOfSelectedLeaveType.isPresent()
-                ? remainingLeaveBalanceOfSelectedLeaveType.get() > 0
-                : false;
-    }
-
-    private Integer maxCredits() {
-        String leaveTypeName = cbLeaveTypes.getSelectionModel().getSelectedItem();
-        return this.getEmployeeRoleNavigationController()
-                .getMainViewController()
-                .getLeaveRequestTypeService()
-                .getLeaveRequestTypeMaxCreditsByName(
-                        leaveTypeName
-                ).get();
-    }
-
-    private Integer leaveDurationInDays() {
-
-        // This one is for single leave application
-        if (radioSingleLeave.isSelected()) {
-            return 1;
-        }
-        // This one is for multi leave application
-        else {
-            LocalDate leaveFrom = dpLeaveFrom.getValue();
-            LocalDate leaveTo = dpLeaveTo.getValue();
-
-            long daysBetween = ChronoUnit.DAYS.between(leaveFrom, leaveTo);
-
-            return (int) daysBetween;
-        }
     }
 
 
@@ -264,9 +281,7 @@ public class FileLeaveRequestController {
 
         if (dpLeaveFrom.getValue() == null) {
             dpLeaveTo.setDisable(true);
-        }
-
-        else {
+        } else {
             // add one day sa ating (leave-to) gamit ang ating (leave-from)
             dpLeaveTo.setValue(
                     dpLeaveFrom.getValue().plusDays(1)
@@ -274,8 +289,8 @@ public class FileLeaveRequestController {
             // ma eenable ang ating datepicker for (leave to) kung mayroon na tayong (leave from)
             dpLeaveTo.setDisable(false);
 
-           disablePreviousDaysOfLeaveEndDatePicker();
-           lblLeaveDuration.setText(String.valueOf(calculateDifference()));
+            disablePreviousDaysOfLeaveEndDatePicker();
+            lblLeaveDuration.setText(String.valueOf(calculateDifference()));
         }
     }
 
