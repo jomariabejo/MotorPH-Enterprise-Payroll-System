@@ -13,7 +13,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
@@ -21,9 +20,7 @@ import javafx.scene.layout.HBox;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.sql.Timestamp;
 import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
@@ -66,52 +63,71 @@ public class FileLeaveRequestController {
     @FXML
     private Label lblLeaveDaysLeft;
 
-
-    @FXML
-    void cancelButtonClicked() {
-
-    }
-
-    Dialog dialog = new Dialog();
-
     @FXML
     void submitButtonClicked() {
         if (hasRemainingLeaveBalance()) {
             if (validateFields()) {
-                try {
-                    CustomAlert customAlert = new CustomAlert(
-                            Alert.AlertType.INFORMATION,
-                            "Save leave request", "Saving now..."
-                    );
-                    LeaveRequest leaveRequest = new LeaveRequest();
-                    leaveRequest.setLeaveTypeID(cbLeaveTypes.getSelectionModel().getSelectedItem());
-                    leaveRequest.setStartDate(dpLeaveFrom.getValue());
-                    leaveRequest.setEndDate(dpLeaveTo.getValue());
-                    leaveRequest.setStatus("Pending");
-                    leaveRequest.setEmployeeID(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee());
-                    leaveRequest.setDateRequested(Timestamp.from(Instant.now()));
-                    leaveRequest.setDescription(taReason.getText());
-
-                    customAlert.showAndWait();
-                    this
-                            .getEmployeeRoleNavigationController()
-                            .getMainViewController()
-                            .getLeaveRequestService()
-                            .saveLeaveRequest(leaveRequest);
-                    System.out.println("Saved successfully");
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (!hasOverlappingLeaveDates()) {
+                    displayLeaveRequestSavedSuccessfully();
+                    saveLeaveRequest(getLeaveRequest());
+                } else {
+                    displayLeaveRequestDateOverlap();
                 }
             } else {
-                CustomAlert alert = new CustomAlert(
-                        Alert.AlertType.ERROR,
-                        "Field blank",
-                        "Please ensure that all fields are filled out.");
-                alert.showAndWait();
+                displayFieldBlank();
             }
         } else {
             displaySorryYouDontHaveRemainingLeaveBalanceLeft();
         }
+    }
+
+    private void displayLeaveRequestSavedSuccessfully() {
+        CustomAlert customAlert = new CustomAlert(
+                Alert.AlertType.INFORMATION,
+                "Saved successfully.", "Your leave request has been submitted."
+        );
+        customAlert.showAndWait();
+    }
+
+    private void saveLeaveRequest(LeaveRequest leaveRequest) {
+        this
+                .getEmployeeRoleNavigationController()
+                .getMainViewController()
+                .getLeaveRequestService()
+                .saveLeaveRequest(leaveRequest);
+    }
+
+    private void displayLeaveRequestDateOverlap() {
+        CustomAlert customAlert = new CustomAlert(
+                Alert.AlertType.ERROR,
+                "Overlap Leave Request Date", "Leave request submission failed, you have overlap dates, please try again."
+        );
+        customAlert.showAndWait();
+    }
+
+    private void displayFieldBlank() {
+        CustomAlert customAlert = new CustomAlert(
+                Alert.AlertType.ERROR,
+                "Field blank", "Please fill all fields"
+        );
+        customAlert.showAndWait();
+    }
+
+    private LeaveRequest getLeaveRequest() {
+        LeaveRequest leaveRequest = new LeaveRequest();
+        leaveRequest.setLeaveTypeID(cbLeaveTypes.getSelectionModel().getSelectedItem());
+        leaveRequest.setStartDate(dpLeaveFrom.getValue());
+        leaveRequest.setEndDate(dpLeaveTo.getValue());
+        leaveRequest.setStatus("Pending");
+        leaveRequest.setEmployeeID(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee());
+        leaveRequest.setDescription(taReason.getText());
+        return leaveRequest;
+    }
+
+    private boolean hasOverlappingLeaveDates() {
+        return this.getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestService().
+                isEmployeeHasOverlapLeaveDates(
+                        this.getEmployeeRoleNavigationController().getMainViewController().getEmployee().getId(), dpLeaveFrom.getValue(), dpLeaveTo.getValue());
     }
 
     private void displaySorryYouDontHaveRemainingLeaveBalanceLeft() {
@@ -130,59 +146,43 @@ public class FileLeaveRequestController {
 
 
     private boolean validateFields() {
-        return (dpLeaveFrom.getValue() != null || dpLeaveTo.getValue() != null
+        boolean isValidatedFields = (dpLeaveFrom.getValue() != null || dpLeaveTo.getValue() != null
                 || !taReason.getText().isEmpty());
+
+        if (isValidatedFields) {
+            return true;
+        } else {
+            displayFieldBlank();
+            return false;
+        }
     }
 
     public FileLeaveRequestController() {
     }
 
     public void configDatePicker() {
-        // Disable natin yung mga nakaraang days :>
-        dpLeaveFrom.setDayCellFactory(datePicker -> new DateCell() {
+        configureDatePicker(dpLeaveFrom);
+        configureDatePicker(dpLeaveTo);
+    }
+
+    private void configureDatePicker(DatePicker datePicker) {
+        datePicker.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                if (empty || date == null) {
-                    setDisable(true);
-                } else {
-                    // Disable previous days
-                    setDisable(date.isBefore(LocalDate.now()));
+                setDisable(empty || date == null || isPastDate(date) || isWeekend(date));
+            }
 
-                    // Disable weekends (Saturday and Sunday)
-                    DayOfWeek dayOfWeek = date.getDayOfWeek();
-                    if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-                        setDisable(true);
-                    }
-                }
+            private boolean isPastDate(LocalDate date) {
+                return date.isBefore(LocalDate.now());
+            }
+
+            private boolean isWeekend(LocalDate date) {
+                DayOfWeek dayOfWeek = date.getDayOfWeek();
+                return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
             }
         });
-
-        // Optional: Set initial date to today or later
-        dpLeaveFrom.setValue(LocalDate.now());
-
-
-        dpLeaveTo.setDayCellFactory(picker -> new DateCell() {
-            @Override
-            public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                if (empty || date == null) {
-                    setDisable(true);
-                } else {
-                    // Disable previous days
-                    setDisable(date.isBefore(LocalDate.now()));
-
-                    // Disable weekends (Saturday and Sunday)
-                    DayOfWeek dayOfWeek = date.getDayOfWeek();
-                    if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
-                        setDisable(true);
-                    }
-                }
-            }
-        });
-
-        // Optional: Set initial date to today or later
-        dpLeaveTo.setValue(LocalDate.now());
+        datePicker.setValue(LocalDate.now());
     }
 
 
@@ -195,7 +195,6 @@ public class FileLeaveRequestController {
         radioSingleLeave.setSelected(false);
         makeVisibleEndOfLeaveDate();
         dpLeaveTo.setDisable(false);
-        // add one day to the (leave-to datepicker)
         dpLeaveTo.setValue(
                 dpLeaveFrom.getValue().plusDays(1)
         );
@@ -243,10 +242,6 @@ public class FileLeaveRequestController {
                         leaveTypeName
                 ).get().toString();
         lblLeaveDaysLeft.setText(leaveBalanceLeft);
-
-        System.out.println("The leaveTypeName is " + leaveTypeName);
-        System.out.println("The Employee is : " + employee.getId());
-        System.out.println("leaveBalanceLeft: " + leaveBalanceLeft);
     }
 
     private void makeInvisibleEndOfLeaveDate() {
@@ -271,7 +266,6 @@ public class FileLeaveRequestController {
                 .getAllLeaveRequestTypes();
         ObservableList<LeaveRequestType> observableLeaveTypesList = FXCollections.observableArrayList(leaveTypesList);
         cbLeaveTypes.setItems(observableLeaveTypesList);
-        // assume that the employee selected the first item
         cbLeaveTypes.getSelectionModel().selectFirst();
     }
 
@@ -282,11 +276,9 @@ public class FileLeaveRequestController {
         if (dpLeaveFrom.getValue() == null) {
             dpLeaveTo.setDisable(true);
         } else {
-            // add one day sa ating (leave-to) gamit ang ating (leave-from)
             dpLeaveTo.setValue(
                     dpLeaveFrom.getValue().plusDays(1)
             );
-            // ma eenable ang ating datepicker for (leave to) kung mayroon na tayong (leave from)
             dpLeaveTo.setDisable(false);
 
             disablePreviousDaysOfLeaveEndDatePicker();
@@ -295,17 +287,15 @@ public class FileLeaveRequestController {
     }
 
     private void disablePreviousDaysOfLeaveEndDatePicker() {
-        dpLeaveTo.setDayCellFactory(picker -> new DateCell() {
+        dpLeaveTo.setDayCellFactory(_ -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 if (empty || date == null) {
                     setDisable(true);
                 } else {
-                    // Disable previous days
                     setDisable(date.isBefore(dpLeaveFrom.getValue()));
 
-                    // Disable weekends (Saturday and Sunday)
                     DayOfWeek dayOfWeek = date.getDayOfWeek();
                     if (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY) {
                         setDisable(true);

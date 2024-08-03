@@ -3,6 +3,7 @@ package com.jomariabejo.motorph.service;
 import com.jomariabejo.motorph.model.LeaveRequest;
 import com.jomariabejo.motorph.repository.LeaveRequestRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class LeaveRequestService {
@@ -31,5 +32,9 @@ public class LeaveRequestService {
 
     public void deleteLeaveRequest(LeaveRequest leaveRequest) {
         leaveRequestRepository.delete(leaveRequest);
+    }
+
+    public boolean isEmployeeHasOverlapLeaveDates(Integer employeeId, LocalDate leaveFrom, LocalDate leaveTo) {
+        return leaveRequestRepository.isEmployeeHasOverlapLeaveDates(employeeId,leaveFrom, leaveTo);
     }
 }

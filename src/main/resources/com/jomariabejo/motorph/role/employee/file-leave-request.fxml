@@ -146,11 +146,11 @@
                 </HBox>
                 <ButtonBar prefHeight="40.0" prefWidth="200.0">
                     <buttons>
-                        <Button mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                        </Button>
+<!--                        <Button mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel">-->
+<!--                            <font>-->
+<!--                                <Font size="24.0" />-->
+<!--                            </font>-->
+<!--                        </Button>-->
                         <Button layoutX="1235.0" layoutY="18.0" mnemonicParsing="false" onAction="#submitButtonClicked" text="Submit">
                             <font>
                                 <Font size="24.0" />
