@@ -63,6 +63,8 @@ public class FileLeaveRequestController {
     @FXML
     private Label lblLeaveDaysLeft;
 
+    private CustomAlert customAlert;
+
     @FXML
     void submitButtonClicked() {
         if (hasRemainingLeaveBalance()) {
