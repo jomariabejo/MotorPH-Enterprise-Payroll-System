@@ -1,6 +1,19 @@
 package com.jomariabejo.motorph.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Index;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,7 +37,25 @@ import java.time.LocalDateTime;
                         "FROM LeaveRequest lrt " +
                         "WHERE lrt.employeeID.id = :employeeId " +
                         "AND (lrt.startDate <= :endDate AND lrt.endDate >= :startDate)"
-        )
+        ),
+        @NamedQuery(
+                name = "getYearsOfLeaveRequest",
+                query = "SELECT DISTINCT YEAR(lr.dateRequested) AS Year\n" +
+                        "FROM LeaveRequest lr\n" +
+                        "WHERE lr.employeeID = :employeeID\n " +
+                        "ORDER BY Year(lr.dateRequested) DESC"
+        ),
+        @NamedQuery(
+                name = "fetchLeaveRequestForEmployee",
+                query = "SELECT lr\n" +
+                        "FROM LeaveRequest lr\n" +
+                        "JOIN LeaveRequestType lt ON lt.id = lr.leaveTypeID.id\n" +
+                        "WHERE lr.employeeID = :employee\n" +
+                        "  AND MONTHNAME(lr.dateRequested) = :month\n" +
+                        "  AND YEAR(lr.dateRequested) = :year\n" +
+                        "  AND lr.status = :status\n" +
+                        "  AND lt.leaveTypeName = :leaveTypeName\n" +
+                        "ORDER BY lr.dateRequested DESC\n"        )
 })
 
 public class LeaveRequest {

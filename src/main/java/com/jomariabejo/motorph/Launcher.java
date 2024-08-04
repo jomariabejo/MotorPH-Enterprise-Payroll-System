@@ -4,7 +4,6 @@ import atlantafx.base.theme.PrimerDark;
 import com.jomariabejo.motorph.controller.LoginViewController;
 import com.jomariabejo.motorph.controller.MainViewController;
 import com.jomariabejo.motorph.model.User;
-import com.jomariabejo.motorph.HibernateUtil;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

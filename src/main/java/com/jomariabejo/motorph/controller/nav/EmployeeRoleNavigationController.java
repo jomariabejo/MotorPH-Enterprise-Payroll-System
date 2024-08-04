@@ -109,6 +109,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
             if (controller instanceof LeaveHistoryController viewLeaveHistory) {
                 viewLeaveHistory.setEmployeeRoleNavigationController(this);
+                viewLeaveHistory.setup();
             }
         });
     }
