@@ -17,12 +17,4 @@ public class NetworkUtils {
             return "Unable to determine IP address";
         }
     }
-
-    public static Instant getCurrentInstant() {
-        return LocalDateTime.now(ZoneId.of("Asia/Manila")).toInstant(ZoneId.of("Asia/Manila").getRules().getOffset(LocalDateTime.now()));
-    }
-
-    public static void main(String[] args) {
-        System.out.println(TimestampUtils.getCurrentTimestamp());
-    }
 }

@@ -312,4 +312,26 @@ public class FileLeaveRequestController {
                 String.valueOf(calculateDifference())
         );
     }
+
+    public void mapLeaveRequest(LeaveRequest selectedLeaveRequest) {
+        taReason.setText(selectedLeaveRequest.getDescription());
+        dpLeaveTo.setValue(selectedLeaveRequest.getEndDate());
+        dpLeaveTo.setValue(selectedLeaveRequest.getStartDate());
+        cbLeaveTypes.getSelectionModel().select(selectedLeaveRequest.getLeaveTypeID());
+        lblLeaveDuration.setText(String.valueOf(calculateDifference()));
+
+        cbLeaveTypeSelected();
+
+        if (dpLeaveTo.getValue().isBefore(dpLeaveFrom.getValue())) {
+            lblStartLeaveDate.setText("Leave Date");
+            radioSingleLeave.setSelected(true);
+            radioMultiDayLeave.setSelected(false);
+        }
+        else {
+            radioSingleLeave.setSelected(false);
+            lblStartLeaveDate.setText("Start Leave Date");
+            radioMultiDayLeave.setSelected(true);
+        }
+
+    }
 }

@@ -1,26 +1,33 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
+import atlantafx.base.controls.Notification;
 import atlantafx.base.theme.Styles;
+import atlantafx.base.util.Animations;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.LeaveRequest;
 import com.jomariabejo.motorph.model.LeaveRequestType;
+import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
-import org.controlsfx.glyphfont.FontAwesome;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -52,8 +59,6 @@ public class LeaveHistoryController {
 
     private ObservableList<LeaveRequest> leaveRequestList;
 
-
-
     @FXML
     public void comboboxMonthClicked(ActionEvent actionEvent) {
         populateLeaveRequests();
@@ -83,20 +88,7 @@ public class LeaveHistoryController {
     }
 
     public void populateMonths() {
-        ArrayList<Month> months = new ArrayList<>();
-        months.add(Month.JANUARY);
-        months.add(Month.FEBRUARY);
-        months.add(Month.MARCH);
-        months.add(Month.APRIL);
-        months.add(Month.MAY);
-        months.add(Month.JUNE);
-        months.add(Month.JULY);
-        months.add(Month.AUGUST);
-        months.add(Month.SEPTEMBER);
-        months.add(Month.OCTOBER);
-        months.add(Month.NOVEMBER);
-        months.add(Month.DECEMBER);
-        cbRequestedMonth.setItems(FXCollections.observableList(months));
+        cbRequestedMonth.setItems(FXCollections.observableArrayList(Month.values()));
     }
 
     public void populateYears() {
@@ -125,10 +117,9 @@ public class LeaveHistoryController {
         int pageCount = (int) Math.ceil((double) leaveRequestList.size() / itemsPerPage);
         paginationLeaveRequests.setPageCount(pageCount);
 
-        // Set the page factory
         paginationLeaveRequests.setPageFactory(pageIndex -> {
             updateTableView(pageIndex, itemsPerPage);
-            return new StackPane(); 
+            return new StackPane();
         });
     }
 
@@ -147,8 +138,7 @@ public class LeaveHistoryController {
 
     public void setupComboBox() {
         LocalDate today = LocalDate.now();
-        Month month = today.getMonth();
-        cbRequestedMonth.getSelectionModel().select(month);
+        cbRequestedMonth.getSelectionModel().select(today.getMonth());
         cbRequestedYear.getSelectionModel().selectFirst();
         cbStatus.getSelectionModel().select("Approved");
         cbLeaveType.getSelectionModel().selectFirst();
@@ -161,20 +151,15 @@ public class LeaveHistoryController {
 
     private TableColumn<LeaveRequest, Void> createActionsColumn() {
         TableColumn<LeaveRequest, Void> actionsColumn = new TableColumn<>("Actions");
-        actionsColumn.setPrefWidth(200); // Adjusted width to accommodate both buttons
-        actionsColumn.setCellFactory(param -> createActionsCell());
-        return actionsColumn;
-    }
-
-    private TableCell<LeaveRequest, Void> createActionsCell() {
-        return new TableCell<>() {
-            private final Button viewButton = createUpdateButton();
+        actionsColumn.setPrefWidth(200);
+        actionsColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button updateButton = createUpdateButton();
             private final Button deleteButton = createDeleteButton();
-            private final HBox actionsBox = createActionsBox();
+            private final HBox actionsBox = new HBox(updateButton, deleteButton);
 
             {
-                actionsBox.setAlignment(Pos.CENTER); // Align HBox content to center
-                actionsBox.setSpacing(10); // Set spacing between buttons
+                actionsBox.setAlignment(Pos.CENTER);
+                actionsBox.setSpacing(10);
             }
 
             @Override
@@ -182,7 +167,8 @@ public class LeaveHistoryController {
                 super.updateItem(item, empty);
                 setGraphic(empty ? null : actionsBox);
             }
-        };
+        });
+        return actionsColumn;
     }
 
     private Button createUpdateButton() {
@@ -190,9 +176,47 @@ public class LeaveHistoryController {
         updateButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_CIRCLE);
 
         updateButton.setOnAction(event -> {
-            // Your update logic here
+            // Get the current TableCell
+            TableCell<LeaveRequest, Void> cell = (TableCell<LeaveRequest, Void>) ((Button) event.getSource()).getParent().getParent();
+            int selectedIndex = cell.getIndex(); // Get the index of the row
+            LeaveRequest selectedLeaveRequest = tvLeaveRequests.getSelectionModel().select(); // Get the LeaveRequest from the row
+
+            if (selectedLeaveRequest != null) {
+                tvLeaveRequests.getSelectionModel().select(selectedIndex); // Select the row
+                if (selectedLeaveRequest.getStatus().equals("Pending")) {
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/file-leave-request.fxml"));
+                        Parent root = fxmlLoader.load();
+
+                        Stage stage = new Stage();
+                        stage.setTitle("Edit Leave Request");
+                        stage.setScene(new Scene(root));
+                        stage.show();
+
+                        FileLeaveRequestController fileLeaveRequestController = fxmlLoader.getController();
+                        fileLeaveRequestController.mapLeaveRequest(selectedLeaveRequest);
+                        fileLeaveRequestController.setEmployeeRoleNavigationController(this.getEmployeeRoleNavigationController());
+                    } catch (IOException ioException) {
+                        ioException.printStackTrace();
+                    }
+                } else {
+                    errorPendingLeaveRequestOnly();
+                }
+            } else {
+                CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Leave request not found", "Please select leave request.");
+                customAlert.showAndWait();
+            }
         });
+
         return updateButton;
+    }
+
+
+    private void errorPendingLeaveRequestOnly() {
+        CustomAlert customAlert = new CustomAlert(
+                Alert.AlertType.ERROR, "Leave request can't modify", "Leave request already processed"
+        );
+        customAlert.showAndWait();
     }
 
     private Button createDeleteButton() {
@@ -200,35 +224,36 @@ public class LeaveHistoryController {
         deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_CIRCLE);
         deleteButton.setOnAction(event -> {
             // Your delete logic here
+            deleteButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_CIRCLE);
+
+            var noBtn = new Button("No");
+            noBtn.setDefaultButton(true);
+            var yesBtn = new Button("YES");
+
+            Notification notification = new Notification("Are you sure you want to delete this leave request?", new FontIcon(Feather.TRASH_2));
+            notification.getStyleClass().addAll(Styles.ELEVATED_4, Styles.ACCENT);
+            notification.setOnClose(e -> {
+                Animations.flash(notification).playFromStart();
+            });
+            notification.setPrimaryActions(yesBtn, noBtn);
+            notification.setSecondaryActions(new MenuItem("Item 1"), new MenuItem("Item 2"));
+
+            yesBtn.setOnAction(y -> {
+                System.out.println("Yes clicked");
+                Animations.flash(notification).playFromStart();
+            });
+
+            noBtn.setOnAction(n -> {
+                System.out.println("No clicked");
+                Animations.flash(notification).playFromStart();
+            });
         });
 
         return deleteButton;
     }
 
-    private HBox createActionsBox() {
-        HBox actionsBox = new HBox(createUpdateButton(), createDeleteButton());
-        actionsBox.setAlignment(Pos.CENTER);
-        actionsBox.setSpacing(10); // Adjust spacing if needed
-        return actionsBox;
-    }
-
-    private ImageView createImageView(String imagePath, double width, double height) {
-        Image image = loadImage(imagePath);
-        ImageView imageView = new ImageView(image);
-        imageView.setFitWidth(width);
-        imageView.setFitHeight(height);
-        return imageView;
-    }
-
-    private Image loadImage(String imagePath) {
-        return new Image(getClass().getResourceAsStream(imagePath));
-    }
-
-
-
     @FXML
     private void initialize() {
         setUpTableView();
     }
-
 }
