@@ -12,7 +12,7 @@
 
 /* Style for TableColumn cells */
 .table-view .table-cell {
-    -fx-font-size: 14px; /* Font size for table cells */
+    -fx-font-size: 24px; /* Font size for table cells */
 }
 
 /* Style for TableColumn headers and cells */

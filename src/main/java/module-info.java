@@ -19,6 +19,7 @@ module com.jomariabejo.motorph {
     requires java.desktop;
     requires org.kordamp.ikonli.material;
     requires org.kordamp.ikonli.fontawesome5;
+    requires org.kordamp.ikonli.feather;
     opens com.jomariabejo.motorph to javafx.fxml;
     exports com.jomariabejo.motorph;
     opens com.jomariabejo.motorph.model to org.hibernate.orm.core;

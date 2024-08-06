@@ -1,21 +1,25 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
+import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.LeaveRequest;
 import com.jomariabejo.motorph.model.LeaveRequestType;
-import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
-import javafx.util.Callback;
 import lombok.Getter;
 import lombok.Setter;
+import org.controlsfx.glyphfont.FontAwesome;
+import org.kordamp.ikonli.feather.Feather;
+import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -76,7 +80,6 @@ public class LeaveHistoryController {
         populateLeaveTypes();
         setupComboBox();
         populateLeaveRequests();
-        addActionButtonsColumn();
     }
 
     public void populateMonths() {
@@ -125,7 +128,7 @@ public class LeaveHistoryController {
         // Set the page factory
         paginationLeaveRequests.setPageFactory(pageIndex -> {
             updateTableView(pageIndex, itemsPerPage);
-            return new StackPane(); // Return a StackPane but it's not used, only required to satisfy PageFactory
+            return new StackPane(); 
         });
     }
 
@@ -151,64 +154,81 @@ public class LeaveHistoryController {
         cbLeaveType.getSelectionModel().selectFirst();
     }
 
-    public void paginationClicked(MouseEvent mouseEvent) {
+    private void setUpTableView() {
+        TableColumn<LeaveRequest, Void> actionsColumn = createActionsColumn();
+        this.tvLeaveRequests.getColumns().add(actionsColumn);
     }
 
-    private void addActionButtonsColumn() {
-        TableColumn<LeaveRequest, LeaveRequest> actionsColumn = new TableColumn<>("Actions");
-        actionsColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue()));
-
-        actionsColumn.setCellFactory(createActionButtonsCellFactory());
-
-        tvLeaveRequests.getColumns().add(actionsColumn);
+    private TableColumn<LeaveRequest, Void> createActionsColumn() {
+        TableColumn<LeaveRequest, Void> actionsColumn = new TableColumn<>("Actions");
+        actionsColumn.setPrefWidth(200); // Adjusted width to accommodate both buttons
+        actionsColumn.setCellFactory(param -> createActionsCell());
+        return actionsColumn;
     }
 
-    private Callback<TableColumn<LeaveRequest, LeaveRequest>, TableCell<LeaveRequest, LeaveRequest>> createActionButtonsCellFactory() {
-        return column -> new TableCell<LeaveRequest, LeaveRequest>() {
-
-            private final Button viewButton = new Button("View");
-            private final Button updateButton = new Button("Update");
-            private final Button deleteButton = new Button("Delete");
+    private TableCell<LeaveRequest, Void> createActionsCell() {
+        return new TableCell<>() {
+            private final Button viewButton = createUpdateButton();
+            private final Button deleteButton = createDeleteButton();
+            private final HBox actionsBox = createActionsBox();
 
             {
-                viewButton.setOnAction(event -> {
-                    LeaveRequest leaveRequest = getTableView().getItems().get(getIndex());
-                    handleViewAction(leaveRequest);
-                });
-
-                updateButton.setOnAction(event -> {
-                    LeaveRequest leaveRequest = getTableView().getItems().get(getIndex());
-                    handleUpdateAction(leaveRequest);
-                });
-
-                deleteButton.setOnAction(event -> {
-                    LeaveRequest leaveRequest = getTableView().getItems().get(getIndex());
-                    handleDeleteAction(leaveRequest);
-                });
-
-                HBox hbox = new HBox(viewButton, updateButton, deleteButton);
-                hbox.setSpacing(5);
-                hbox.setPrefWidth(200);
-                setGraphic(hbox);
+                actionsBox.setAlignment(Pos.CENTER); // Align HBox content to center
+                actionsBox.setSpacing(10); // Set spacing between buttons
             }
 
             @Override
-            protected void updateItem(LeaveRequest item, boolean empty) {
+            protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : getGraphic());
+                setGraphic(empty ? null : actionsBox);
             }
         };
     }
 
-    private void handleDeleteAction(LeaveRequest leaveRequest) {
+    private Button createUpdateButton() {
+        Button updateButton = new Button(null, new FontIcon(Feather.PEN_TOOL));
+        updateButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_CIRCLE);
+
+        updateButton.setOnAction(event -> {
+            // Your update logic here
+        });
+        return updateButton;
     }
 
-    private void handleUpdateAction(LeaveRequest leaveRequest) {
+    private Button createDeleteButton() {
+        Button deleteButton = new Button(null, new FontIcon(Feather.TRASH_2));
+        deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_CIRCLE);
+        deleteButton.setOnAction(event -> {
+            // Your delete logic here
+        });
 
+        return deleteButton;
     }
 
-    private void handleViewAction(LeaveRequest leaveRequest) {
+    private HBox createActionsBox() {
+        HBox actionsBox = new HBox(createUpdateButton(), createDeleteButton());
+        actionsBox.setAlignment(Pos.CENTER);
+        actionsBox.setSpacing(10); // Adjust spacing if needed
+        return actionsBox;
+    }
 
+    private ImageView createImageView(String imagePath, double width, double height) {
+        Image image = loadImage(imagePath);
+        ImageView imageView = new ImageView(image);
+        imageView.setFitWidth(width);
+        imageView.setFitHeight(height);
+        return imageView;
+    }
+
+    private Image loadImage(String imagePath) {
+        return new Image(getClass().getResourceAsStream(imagePath));
+    }
+
+
+
+    @FXML
+    private void initialize() {
+        setUpTableView();
     }
 
 }
