@@ -56,17 +56,6 @@ public class LeaveRequestRepository extends _AbstractHibernateRepository<LeaveRe
 
     public List<LeaveRequest> fetchLeaveRequestsForEmployee(Employee employee, String monthName, int year, String status, String leaveTypeName) {
         Session session = null;
-        System.out.println("-----------------------------");
-        System.out.println("-----------------------------");
-        System.out.println("-----------------------------");
-        System.out.println(employee.toString());
-        System.out.println(monthName);
-        System.out.println(year);
-        System.out.println(status);
-        System.out.println(leaveTypeName);
-        System.out.println("-----------------------------");
-        System.out.println("-----------------------------");
-        System.out.println("-----------------------------");
         try {
             session = HibernateUtil.openSession();
             Query<LeaveRequest> query = session.createNamedQuery("fetchLeaveRequestForEmployee", LeaveRequest.class);

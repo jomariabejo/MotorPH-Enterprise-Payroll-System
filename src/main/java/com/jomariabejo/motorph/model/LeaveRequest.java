@@ -102,4 +102,20 @@ public class LeaveRequest {
             dateRequested = LocalDateTime.now();
         }
     }
+
+    @Override
+    public String toString() {
+        return "LeaveRequest{" +
+                "id=" + id +
+                ", employeeID=" + employeeID +
+                ", leaveTypeID=" + leaveTypeID +
+                ", dateRequested=" + dateRequested +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", status='" + status + '\'' +
+                ", adminApprovalEmployeeID=" + adminApprovalEmployeeID +
+                ", adminApprovalDate=" + adminApprovalDate +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
