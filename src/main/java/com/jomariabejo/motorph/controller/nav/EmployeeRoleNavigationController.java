@@ -96,7 +96,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
             if (controller instanceof LeaveBalanceController viewLeaveBalance) {
                 viewLeaveBalance.setEmployeeRoleNavigationController(this);
-                viewLeaveBalance.populatePieChartWithSampleData();
+                viewLeaveBalance.populatePieChart();
             }
         });
     }

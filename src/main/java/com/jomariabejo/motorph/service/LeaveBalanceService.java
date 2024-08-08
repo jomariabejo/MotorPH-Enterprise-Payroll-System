@@ -2,9 +2,9 @@ package com.jomariabejo.motorph.service;
 
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.LeaveBalance;
-import com.jomariabejo.motorph.model.LeaveRequestType;
 import com.jomariabejo.motorph.repository.LeaveBalanceRepository;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,4 +39,9 @@ public class LeaveBalanceService {
     public Optional<Integer> fetchRemainingLeaveBalanceByLeaveTypeName(Employee employee, String leaveTypeName) {
         return leaveBalanceRepository.getEmployeeRemainingLeaveBalanceByLeaveType(employee, leaveTypeName);
     }
+
+    public Optional<List<LeaveBalance>> fetchEmployeeRemainingLeaveBalances(Employee employee) {
+        return leaveBalanceRepository.getEmployeeRemainingLeaveBalance(employee);
+    }
+
 }

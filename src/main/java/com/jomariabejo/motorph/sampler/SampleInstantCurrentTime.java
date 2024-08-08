@@ -3,8 +3,10 @@ package com.jomariabejo.motorph.sampler;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.LeaveRequest;
 import com.jomariabejo.motorph.repository.EmployeeRepository;
+import com.jomariabejo.motorph.repository.LeaveBalanceRepository;
 import com.jomariabejo.motorph.repository.LeaveRequestRepository;
 import com.jomariabejo.motorph.service.EmployeeService;
+import com.jomariabejo.motorph.service.LeaveBalanceService;
 import com.jomariabejo.motorph.service.LeaveRequestService;
 
 import java.sql.Time;
@@ -25,5 +27,12 @@ public class SampleInstantCurrentTime {
         );
 
         System.out.println(leaveRequestList.size());
+
+
+        LeaveBalanceService leaveBalanceService = new LeaveBalanceService((new LeaveBalanceRepository()));
+        int size = leaveBalanceService.fetchEmployeeRemainingLeaveBalances(employee).get().size();
+        System.out.println("The size is ");
+        System.out.println(size);
+
     }
 }
