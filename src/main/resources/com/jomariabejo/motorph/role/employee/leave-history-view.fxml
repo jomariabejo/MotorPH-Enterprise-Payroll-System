@@ -41,6 +41,11 @@
                 </HBox>
                 <TableView fx:id="tvLeaveRequests" prefHeight="650.0">
                     <columns>
+                        <TableColumn prefWidth="150.0" text="Leave Request Id" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="id" />
+                            </cellValueFactory>
+                        </TableColumn>
                         <TableColumn prefWidth="150.0" text="Leave Type">
                             <cellValueFactory>
                                 <PropertyValueFactory property="leaveTypeID" />

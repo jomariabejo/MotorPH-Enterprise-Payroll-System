@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="897.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.employee.ModifyLeaveRequestController">
+    <children>
+        <VBox alignment="TOP_CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label fx:id="lblLeaveApplicationName" text="Single-Day Leave Application">
+                    <font>
+                        <Font size="48.0" />
+                    </font>
+                </Label>
+            <HBox alignment="CENTER" spacing="48.0">
+               <children>
+                  <RadioButton fx:id="radioSingleLeave" mnemonicParsing="false" onAction="#singleLeaveClicked" text="Single-Day">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </RadioButton>
+                  <RadioButton fx:id="radioMultiDayLeave" mnemonicParsing="false" onAction="#multiDayLeaveClicked" text="Multi-Day">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </RadioButton>
+               </children>
+            </HBox>
+                <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="378.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
+                    <children>
+                        <Label text="Leave Type">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <ComboBox fx:id="cbLeaveTypes" onAction="#cbLeaveTypeSelected" prefHeight="54.0" prefWidth="600.0" promptText="Select leave type" style="-fx-font-size: 24;">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Sick Leave" />
+                                    <String fx:value="Casual Leave" />
+                                    <String fx:value="Annual Leave" />
+                                    <String fx:value="Maternity Leave" />
+                                    <String fx:value="Paternity Leave" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                    </children>
+                    <padding>
+                        <Insets right="320.0" />
+                    </padding>
+               <VBox.margin>
+                  <Insets top="48.0" />
+               </VBox.margin>
+                </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="320.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
+               <children>
+                  <Label text="Leave Days Left">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblLeaveDaysLeft" prefHeight="35.0" prefWidth="595.0" text="Remaining Leave Balance Of Selected Leave Type">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="320.0" />
+               </padding>
+            </HBox>
+                <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="488.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
+                    <children>
+                        <Label fx:id="lblStartLeaveDate" text="Leave From">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <DatePicker fx:id="dpLeaveFrom" onAction="#datePickerLeaveFromClicked" prefHeight="54.0" prefWidth="600.0" promptText="Leave From" style="-fx-font-size: 24" />
+                    </children>
+                    <padding>
+                        <Insets right="320.0" />
+                    </padding>
+                </HBox>
+                <HBox fx:id="endOfLeave" alignment="CENTER_RIGHT" layoutX="10.0" layoutY="524.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
+                    <children>
+                        <Label text="Leave To">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <DatePicker fx:id="dpLeaveTo" disable="true" onAction="#leaveToChanged" prefHeight="54.0" prefWidth="600.0" promptText="Leave To" style="-fx-font-size: 24" />
+                    </children>
+                    <padding>
+                        <Insets right="320.0" />
+                    </padding>
+                </HBox>
+            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="310.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
+               <children>
+                  <Label text="Leave Duration (Days)">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblLeaveDuration" prefHeight="35.0" prefWidth="595.0" text="Label">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets right="320.0" />
+               </padding>
+            </HBox>
+                <HBox alignment="TOP_CENTER" prefHeight="267.0" prefWidth="1300.0" spacing="24.0">
+                    <children>
+                        <Label text="Reason">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                        <TextArea fx:id="taReason" prefHeight="267.0" prefWidth="581.0" promptText="Please provide reason of leaving..." wrapText="true">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </TextArea>
+                    </children>
+                    <padding>
+                        <Insets right="60.0" />
+                    </padding>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <ButtonBar prefHeight="40.0" prefWidth="200.0">
+                    <buttons>
+<!--                        <Button mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel">-->
+<!--                            <font>-->
+<!--                                <Font size="24.0" />-->
+<!--                            </font>-->
+<!--                        </Button>-->
+                        <Button layoutX="1235.0" layoutY="18.0" mnemonicParsing="false" onAction="#submitButtonClicked" text="Submit">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Button>
+                    </buttons>
+                    <VBox.margin>
+                        <Insets left="96.0" right="96.0" />
+                    </VBox.margin>
+                    <padding>
+                        <Insets top="48.0" />
+                    </padding>
+                </ButtonBar>
+            </children>
+         <padding>
+            <Insets top="48.0" />
+         </padding>
+        </VBox>
+    </children>
+</AnchorPane>

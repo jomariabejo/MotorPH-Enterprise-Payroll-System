@@ -96,6 +96,10 @@ public class LeaveRequest {
     @Column(name = "Description", nullable = false)
     private String description;
 
+    public LeaveRequest() {
+
+    }
+
     @PrePersist
     protected void onCreate() {
         if (dateRequested == null) {

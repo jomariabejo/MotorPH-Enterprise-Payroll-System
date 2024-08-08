@@ -1,6 +1,5 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
-import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.LeaveRequest;
 import com.jomariabejo.motorph.model.LeaveRequestType;
@@ -9,26 +8,24 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DateCell;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.*;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Getter
 @Setter
-public class FileLeaveRequestController {
+public class ModifyLeaveRequestController {
 
-    private EmployeeRoleNavigationController employeeRoleNavigationController;
+    private LeaveHistoryController leaveHistoryController;
+    private LeaveRequest leaveRequest;
+    private LeaveRequest modifiedLeaveRequest;
+    private int tableViewIndex;
 
     @FXML
     private ComboBox<LeaveRequestType> cbLeaveTypes;
@@ -63,15 +60,24 @@ public class FileLeaveRequestController {
     @FXML
     private Label lblLeaveDaysLeft;
 
-    private CustomAlert customAlert;
+    // required by javafx
+    public ModifyLeaveRequestController() {
+    }
 
     @FXML
     void submitButtonClicked() {
         if (hasRemainingLeaveBalance()) {
             if (validateFields()) {
-                if (!hasOverlappingLeaveDates()) {
-                    displayLeaveRequestSavedSuccessfully();
-                    saveLeaveRequest(getLeaveRequest());
+                modifiedLeaveRequest = leaveRequest;
+                modifiedLeaveRequest.setStartDate(dpLeaveFrom.getValue());
+                modifiedLeaveRequest.setEndDate(dpLeaveTo.getValue());
+                modifiedLeaveRequest.setLeaveTypeID(cbLeaveTypes.getSelectionModel().getSelectedItem());
+                modifiedLeaveRequest.setDescription(taReason.getText());
+                if (!hasOverlappingLeaveDates() || negateOverlappingIfLeaveDatesIsNotModified()) {
+                    saveLeaveRequestModification(leaveRequest);
+                    displayLeaveRequestModifiedSuccessfully();
+
+                    updateModifiedLeaveRequest();
                 } else {
                     displayLeaveRequestDateOverlap();
                 }
@@ -83,53 +89,40 @@ public class FileLeaveRequestController {
         }
     }
 
-    private void displayLeaveRequestSavedSuccessfully() {
-        CustomAlert customAlert = new CustomAlert(
-                Alert.AlertType.INFORMATION,
-                "Saved successfully.", "Your leave request has been submitted."
-        );
-        customAlert.showAndWait();
+    private void updateModifiedLeaveRequest() {
+        this.getLeaveHistoryController().getTvLeaveRequests().getItems().set(tableViewIndex, modifiedLeaveRequest);
     }
 
-    private void saveLeaveRequest(LeaveRequest leaveRequest) {
-        this
-                .getEmployeeRoleNavigationController()
-                .getMainViewController()
-                .getLeaveRequestService()
-                .saveLeaveRequest(leaveRequest);
+    // Negate the overlapping if the leave dates are still the same
+    private boolean negateOverlappingIfLeaveDatesIsNotModified() {
+        return (modifiedLeaveRequest.getStartDate().isEqual(leaveRequest.getStartDate()))
+                &&
+                (modifiedLeaveRequest.getEndDate().isEqual(leaveRequest.getEndDate()));
+    }
+
+    private void displayLeaveRequestModifiedSuccessfully() {
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.INFORMATION, "Leave request modified successfully", "Your leave request has been modified successfully.");
+        customAlert.showAndWait();
+        taReason.getScene().getWindow().hide();
+    }
+
+    private void saveLeaveRequestModification(LeaveRequest leaveRequest) {
+        this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestService().updateLeaveRequest(leaveRequest);
     }
 
     private void displayLeaveRequestDateOverlap() {
-        CustomAlert customAlert = new CustomAlert(
-                Alert.AlertType.ERROR,
-                "Overlap Leave Request Date", "Leave request submission failed, you have overlap dates, please try again."
-        );
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Overlap Leave Request Date", "Leave request submission failed, you have overlap dates, please try again.");
         customAlert.showAndWait();
     }
 
-    private void displayFieldBlank() {
-        CustomAlert customAlert = new CustomAlert(
-                Alert.AlertType.ERROR,
-                "Field blank", "Please fill all fields"
-        );
+    private void displayFieldBlank() {CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR,"Field blank", "Please fill all fields");
         customAlert.showAndWait();
-    }
-
-    private LeaveRequest getLeaveRequest() {
-        LeaveRequest leaveRequest = new LeaveRequest();
-        leaveRequest.setLeaveTypeID(cbLeaveTypes.getSelectionModel().getSelectedItem());
-        leaveRequest.setStartDate(dpLeaveFrom.getValue());
-        leaveRequest.setEndDate(dpLeaveTo.getValue());
-        leaveRequest.setStatus("Pending");
-        leaveRequest.setEmployeeID(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee());
-        leaveRequest.setDescription(taReason.getText());
-        return leaveRequest;
     }
 
     private boolean hasOverlappingLeaveDates() {
-        return this.getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestService().
+        return this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestService().
                 isEmployeeHasOverlapLeaveDates(
-                        this.getEmployeeRoleNavigationController().getMainViewController().getEmployee().getId(), dpLeaveFrom.getValue(), dpLeaveTo.getValue());
+                        this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getEmployee().getId(), dpLeaveFrom.getValue(), dpLeaveTo.getValue());
     }
 
     private void displaySorryYouDontHaveRemainingLeaveBalanceLeft() {
@@ -157,9 +150,6 @@ public class FileLeaveRequestController {
             displayFieldBlank();
             return false;
         }
-    }
-
-    public FileLeaveRequestController() {
     }
 
     public void configDatePicker() {
@@ -190,7 +180,7 @@ public class FileLeaveRequestController {
 
     @FXML
     void multiDayLeaveClicked() {
-        this.getEmployeeRoleNavigationController().getMainViewController().rewriteLabel("/ Employee / File Leave Request / Multi-Day Leave Application");
+        this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().rewriteLabel("/ Employee / File Leave Request / Multi-Day Leave Application");
         lblLeaveApplicationName.setText("Multi-Day Leave Application");
         lblStartLeaveDate.setText("Start Leave Date");
         radioMultiDayLeave.setSelected(true);
@@ -222,7 +212,7 @@ public class FileLeaveRequestController {
 
     @FXML
     void singleLeaveClicked() {
-        this.getEmployeeRoleNavigationController().getMainViewController().rewriteLabel("/ Employee / File Leave Request / Single-Day Leave Application");
+        this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().rewriteLabel("/ Employee / File Leave Request / Single-Day Leave Application");
         lblLeaveApplicationName.setText("Single-Day Leave Application");
         lblStartLeaveDate.setText("Leave Date");
         radioSingleLeave.setSelected(true);
@@ -236,9 +226,9 @@ public class FileLeaveRequestController {
     @FXML
     void cbLeaveTypeSelected() {
         String leaveTypeName = cbLeaveTypes.getSelectionModel().getSelectedItem().getLeaveTypeName();
-        Employee employee = getEmployeeRoleNavigationController().getMainViewController().getEmployee();
-        String leaveBalanceLeft = getEmployeeRoleNavigationController()
-                .getMainViewController()
+        Employee employee = getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getEmployee();
+        String leaveBalanceLeft = getLeaveHistoryController()
+                .getEmployeeRoleNavigationController().getMainViewController()
                 .getLeaveBalanceService()
                 .fetchRemainingLeaveBalanceByLeaveTypeName(
                         employee,
@@ -262,14 +252,13 @@ public class FileLeaveRequestController {
         lblLeaveDuration.setText("1");
     }
 
-    public void setupLeaveTypesComboBox() {
-        List<LeaveRequestType> leaveTypesList = this.getEmployeeRoleNavigationController()
-                .getMainViewController()
+    public void setupComboBoxLeaveTypes() {
+        List<LeaveRequestType> leaveTypesList = this.getLeaveHistoryController()
+                .getEmployeeRoleNavigationController().getMainViewController()
                 .getLeaveRequestTypeService()
                 .getAllLeaveRequestTypes();
         ObservableList<LeaveRequestType> observableLeaveTypesList = FXCollections.observableArrayList(leaveTypesList);
         cbLeaveTypes.setItems(observableLeaveTypesList);
-        cbLeaveTypes.getSelectionModel().selectFirst();
     }
 
 
@@ -308,5 +297,50 @@ public class FileLeaveRequestController {
 
     public void leaveToChanged(ActionEvent actionEvent) {
         lblLeaveDuration.setText(String.valueOf(calculateDifference()));
+    }
+
+    public void setupComponents() {
+        setupComboBoxLeaveTypes();
+        setupRadio();
+        setupLeaveDuration();
+        configDatePicker();
+        mapLeaveRequest();
+    }
+
+    private void setupLeaveDuration() {
+        lblLeaveDuration.setText(String.valueOf(calculateDifference()));
+    }
+
+    public void setupRadio() {
+        if (leaveRequest.getEndDate().isEqual(leaveRequest.getEndDate())) {
+            radioSingleLeave.setSelected(true);
+            radioMultiDayLeave.setSelected(false);
+            lblStartLeaveDate.setText("Leave Date");
+            endOfLeave.setVisible(false);
+            endOfLeave.setManaged(false);
+        }
+        else {
+            radioSingleLeave.setSelected(false);
+            radioMultiDayLeave.setSelected(true);
+            lblStartLeaveDate.setText("Start Leave Date");
+            endOfLeave.setVisible(true);
+            endOfLeave.setManaged(true);
+        }
+    }
+
+    public void mapLeaveRequest() {
+        taReason.setText(leaveRequest.getDescription());
+        dpLeaveFrom.setValue(leaveRequest.getStartDate());
+        dpLeaveTo.setValue(leaveRequest.getEndDate());
+
+        String targetLeaveTypeName = leaveRequest.getLeaveTypeID().getLeaveTypeName();
+        ObservableList<LeaveRequestType> leaveTypes = cbLeaveTypes.getItems();
+
+        for (LeaveRequestType leaveType : leaveTypes) {
+            if (leaveType.getLeaveTypeName().equals(targetLeaveTypeName)) {
+                cbLeaveTypes.getSelectionModel().select(leaveType);
+                break;
+            }
+        }
     }
 }

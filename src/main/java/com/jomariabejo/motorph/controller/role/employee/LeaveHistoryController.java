@@ -1,9 +1,6 @@
 package com.jomariabejo.motorph.controller.role.employee;
 
-import atlantafx.base.controls.Message;
-import atlantafx.base.controls.Notification;
 import atlantafx.base.theme.Styles;
-import atlantafx.base.util.Animations;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.LeaveRequest;
@@ -18,8 +15,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
@@ -27,17 +22,19 @@ import lombok.Getter;
 import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
-import org.kordamp.ikonli.material.Material;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
 public class LeaveHistoryController {
+
+    public LeaveHistoryController() {
+    }
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
 
@@ -165,51 +162,54 @@ public class LeaveHistoryController {
                 /**
                  * Create Update On Action
                  */
+
                 updateButton.setOnAction(event -> {
-                            LeaveRequest selectedLeaveRequest = getTableView().getItems().get(getIndex());
-                            if (selectedLeaveRequest != null) {
-                                if (selectedLeaveRequest.getStatus().equals("Pending")) {
-                                    System.out.println("Selected Leave Request is = " + selectedLeaveRequest.toString());
-                                    try {
-                                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/file-leave-request.fxml"));
-                                        Parent root = fxmlLoader.load();
+                    LeaveRequest selectedLeaveRequest = getTableView().getItems().get(getIndex());
+                    if (selectedLeaveRequest != null) {
+                        if (selectedLeaveRequest.getStatus().equals("Pending")) {
+                            System.out.println("Selected Leave Request is = " + selectedLeaveRequest.toString());
+                            try {
+                                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/update-leave-request.fxml"));
+                                Parent root = fxmlLoader.load();
 
-                                        Stage stage = new Stage();
-                                        stage.setTitle("Edit Leave Request");
-                                        stage.setScene(new Scene(root));
-                                        stage.show();
+                                Stage stage = new Stage();
+                                stage.setTitle("Edit Leave Request");
+                                stage.setScene(new Scene(root));
+                                stage.show();
 
-                                        FileLeaveRequestController fileLeaveRequestController = fxmlLoader.getController();
-                                        fileLeaveRequestController.mapLeaveRequest(selectedLeaveRequest);
-                                        fileLeaveRequestController.setEmployeeRoleNavigationController(employeeRoleNavigationController);
-                                        fileLeaveRequestController.setLeaveRequestId(selectedLeaveRequest.getId());
-                                        fileLeaveRequestController.setUpdatingLeaveRequest(true);
-                                    } catch (IOException ioException) {
-                                        ioException.printStackTrace();
-                                    }
-                                } else {
-                                    errorPendingLeaveRequestOnly();
-                                }
+                                ModifyLeaveRequestController fileLeaveRequestController = fxmlLoader.getController();
+                                fileLeaveRequestController.setLeaveHistoryController(LeaveHistoryController.this);
+                                fileLeaveRequestController.setLeaveRequest(selectedLeaveRequest);
+                                fileLeaveRequestController.setupComponents();
+                                fileLeaveRequestController.setTableViewIndex(getIndex());
+
+                            } catch (IOException ioException) {
+                                ioException.printStackTrace();
                             }
+                        } else {
+                            errorPendingLeaveRequestOnly();
                         }
-                );
+                    }
+                });
+
 
                 deleteButton.setOnAction(event -> {
-                    // Your delete logic here
-                    deleteButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
 
                     LeaveRequest selectedLeaveRequest = getTableView().getItems().get(getIndex());
                     if (selectedLeaveRequest.getStatus().equals("Pending")) {
                         CustomAlert customAlert = new CustomAlert(Alert.AlertType.CONFIRMATION, "Delete leave request", "Are you sure you want to delete this leave request?");
-                        ObservableList<ButtonType> type = customAlert.getButtonTypes();
-                        customAlert.showAndWait();
-
-                        if (type.equals(ButtonType.YES)) {
-                            System.out.println("Delete process here....");
+                        Optional<ButtonType> result = customAlert.showAndWait();
+                        if (result.isPresent() && result.get() == ButtonType.OK) {
+                            employeeRoleNavigationController
+                                    .getMainViewController()
+                                    .getLeaveRequestService()
+                                    .deleteLeaveRequest(selectedLeaveRequest);
+                            tvLeaveRequests.getItems().remove(selectedLeaveRequest);
                         }
 
+
                     } else {
-                        CustomAlert customAlert = new CustomAlert(Alert.AlertType.CONFIRMATION, "Leave request can't be deleted", "Leave request is already processed.");
+                        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Leave request can't be deleted", "Leave request is already processed.");
                         customAlert.showAndWait();
                     }
                 });
@@ -240,7 +240,7 @@ public class LeaveHistoryController {
 
     private Button createDeleteButton() {
         Button deleteButton = new Button(null, new FontIcon(Feather.TRASH_2));
-        deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_CIRCLE);
+        deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
         return deleteButton;
     }
 
@@ -248,4 +248,6 @@ public class LeaveHistoryController {
     private void initialize() {
         setUpTableView();
     }
+
+
 }
