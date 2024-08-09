@@ -29,25 +29,27 @@ public class OvertimeController {
     }
 
     public void cbMonthClicked(ActionEvent actionEvent) {
+        populateOvertimeTableView();
     }
 
     public void cbYearClicked(ActionEvent actionEvent) {
-    }
-
-    public void cbClockInClicked(ActionEvent actionEvent) {
-    }
-
-    public void cbClockOutClicked(ActionEvent actionEvent) {
-    }
-
-    public void paginationOnDragDetected(MouseEvent mouseEvent) {
+        populateOvertimeTableView();
     }
 
     public void cbStatusChanged(ActionEvent actionEvent) {
+        populateOvertimeTableView();
     }
 
     public void fileOvertimeRequestClicked(ActionEvent actionEvent) {
-
+        /**
+         * TODO: Display the overtime application form
+         * 1. Create overtime application form FXML
+         * 2. Name the controller of the form to (FileOvertimeRequestController)
+         * 3. Create functionality of the form
+         * 4. Make sure the required fields is visible
+         * 5. You can only submit one overtime request daily.
+         *
+         */
     }
 
     public void enhanceOvertimeBtn() {
@@ -55,5 +57,8 @@ public class OvertimeController {
         overtimeRequestBtn.getStyleClass().addAll(
                 Styles.SUCCESS
         );
+    }
+
+    private void populateOvertimeTableView() {
     }
 }

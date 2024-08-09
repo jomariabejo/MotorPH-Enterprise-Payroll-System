@@ -78,16 +78,12 @@ public class TimesheetController {
     }
 
     private void displayYourTimeInAlreadyExist() {
-        CustomAlert customAlert = new CustomAlert(
-                Alert.AlertType.ERROR, "Time out Already Exists", "You have already recorded time in for today."
-        );
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Time out Already Exists", "You have already recorded time in for today.");
         customAlert.showAndWait();
     }
 
     private void displayTimeOutAlreadyExist() {
-        CustomAlert customAlert = new CustomAlert(
-                Alert.AlertType.ERROR, "Time in Already Exists", "You have already recorded time out for today."
-        );
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Time in Already Exists", "You have already recorded time out for today.");
         customAlert.showAndWait();
     }
 
@@ -131,13 +127,8 @@ public class TimesheetController {
     }
 
     private boolean AreYouSureYouWantToTimeOutToday() {
-        CustomAlert customAlert = new CustomAlert(
-                Alert.AlertType.CONFIRMATION, "Save Time Out Confirmation",
-                "Are you sure you want to time out today?"
-        );
-
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.CONFIRMATION, "Save Time Out Confirmation", "Are you sure you want to time out today?");
         Optional<ButtonType> userAction = customAlert.showAndWait();
-
         return userAction.get().equals(ButtonType.OK);
     }
 
@@ -170,11 +161,8 @@ public class TimesheetController {
     }
 
     private void enhanceButtonStyle() {
-        clockInBtn.getStyleClass().addAll(
-                Styles.SUCCESS
-        );
-        clockOutBtn.getStyleClass().addAll(
-                Styles.DANGER);
+        clockInBtn.getStyleClass().addAll(Styles.SUCCESS);
+        clockOutBtn.getStyleClass().addAll(Styles.DANGER);
         clockInBtn.setGraphic(new FontIcon(FontAwesomeRegular.CALENDAR_CHECK));
         clockOutBtn.setGraphic(new FontIcon(FontAwesomeRegular.CALENDAR_MINUS));
     }
@@ -190,16 +178,13 @@ public class TimesheetController {
     }
 
     public void populateYears() {
-        cbYear.setItems(FXCollections.observableList(
-                this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().getYearsOfLeaveRequestOfEmployee(
-                        this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()
-                ).get()
-        ));
+        cbYear.setItems(FXCollections.observableList(this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().getYearsOfLeaveRequestOfEmployee(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()).get()));
         selectCurrentYear();
     }
 
     private void selectCurrentYear() {
         LocalDate localDate = LocalDate.now();
+        // Kung wala tayong current year, lalagyan natin ito at saka itutuk natin sa year na yan🔫
         if (!cbYear.getItems().contains(localDate.getYear())) {
             cbYear.getItems().add(0, localDate.getYear());
             cbYear.getSelectionModel().select(0);
@@ -211,11 +196,8 @@ public class TimesheetController {
     public void populateTableview() {
         try {
             setTimesheetObservableList(FXCollections.observableArrayList(
-                    this.getEmployeeRoleNavigationController()
-                            .getMainViewController()
-                            .getTimesheetService()
-                            .getTimesheetsByEmployeeAndDate(
-                                    this.getEmployeeRoleNavigationController().getMainViewController().getEmployee(),
+                    this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().getTimesheetsByEmployeeAndDate(
+                            this.getEmployeeRoleNavigationController().getMainViewController().getEmployee(),
                                     Year.of(cbYear.getSelectionModel().getSelectedItem()),
                                     cbMonth.getSelectionModel().getSelectedItem()
                             ).get()
@@ -243,11 +225,7 @@ public class TimesheetController {
     }
 
     private void displayYouDontHaveTimesheetForThisPeriod() {
-        CustomAlert customAlert = new CustomAlert(
-                Alert.AlertType.ERROR,
-                "No timesheet found",
-                "You dont have any timesheet for this period."
-        );
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "No timesheet found", "You dont have any timesheet for this period("+ cbMonth.getSelectionModel().getSelectedItem() + " " + cbYear.getSelectionModel().getSelectedItem()+").");
         customAlert.showAndWait();
     }
 }
