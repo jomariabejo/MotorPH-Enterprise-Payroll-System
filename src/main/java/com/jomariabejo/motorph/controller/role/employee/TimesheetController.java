@@ -2,14 +2,17 @@ package com.jomariabejo.motorph.controller.role.employee;
 
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
+import com.jomariabejo.motorph.model.LeaveRequest;
 import com.jomariabejo.motorph.model.Timesheet;
 import com.jomariabejo.motorph.utility.CustomAlert;
 import com.jomariabejo.motorph.utility.TimeUtils;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 import lombok.Getter;
 import lombok.Setter;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeRegular;
@@ -20,6 +23,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 import java.time.Year;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -28,6 +32,7 @@ import java.util.Optional;
 public class TimesheetController {
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
+    private ObservableList<Timesheet> timesheetObservableList;
 
     @FXML
     private Button clockInBtn;
@@ -205,7 +210,7 @@ public class TimesheetController {
 
     public void populateTableview() {
         try {
-            tvTimesheets.setItems(FXCollections.observableList(
+            setTimesheetObservableList(FXCollections.observableArrayList(
                     this.getEmployeeRoleNavigationController()
                             .getMainViewController()
                             .getTimesheetService()
@@ -215,10 +220,26 @@ public class TimesheetController {
                                     cbMonth.getSelectionModel().getSelectedItem()
                             ).get()
             ));
+
+            int itemsPerPage = 25;
+            int pageCount = (int) Math.ceil((double) timesheetObservableList.size() / itemsPerPage);
+            pagination.setPageCount(pageCount);
+
+            pagination.setPageFactory(pageIndex -> {
+                updateTableView(pageIndex, itemsPerPage);
+                return new StackPane();
+            });
         }
         catch (NoSuchElementException noSuchElementException) {
             displayYouDontHaveTimesheetForThisPeriod();
         }
+    }
+
+    private void updateTableView(int pageIndex, int itemsPerPage) {
+        int fromIndex = pageIndex * itemsPerPage;
+        int toIndex = Math.min(fromIndex + itemsPerPage, timesheetObservableList.size());
+        List<Timesheet> pageData = timesheetObservableList.subList(fromIndex, toIndex);
+        tvTimesheets.setItems(FXCollections.observableList(pageData));
     }
 
     private void displayYouDontHaveTimesheetForThisPeriod() {
