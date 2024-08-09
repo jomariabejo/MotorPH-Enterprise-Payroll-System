@@ -122,6 +122,9 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
             if (controller instanceof TimesheetController viewTimesheetController) {
                 viewTimesheetController.setEmployeeRoleNavigationController(this);
+                viewTimesheetController.populateMonths();
+                viewTimesheetController.populateYears();
+                viewTimesheetController.populateTableview();
             }
         });
     }

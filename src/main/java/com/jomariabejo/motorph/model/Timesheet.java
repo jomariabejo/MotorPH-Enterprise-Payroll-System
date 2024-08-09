@@ -1,11 +1,22 @@
 package com.jomariabejo.motorph.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.NamedQueries;
+import jakarta.persistence.NamedQuery;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,6 +24,23 @@ import java.time.LocalTime;
 @Setter
 @Entity
 @Table(name = "timesheet", schema = "payroll_system")
+@NamedQueries({
+        @NamedQuery(
+                name = "getYearsOfTimesheet",
+                query = "SELECT DISTINCT FUNCTION('YEAR', ts.date) AS Year FROM Timesheet ts WHERE ts.employeeID = :employee ORDER BY Year DESC"
+        ),
+        @NamedQuery(
+                name = "fetchTimesheetByEmployeeAndDate",
+                query = "SELECT ts FROM Timesheet ts WHERE ts.employeeID = :employee AND ts.date = :date"
+        ),
+        @NamedQuery(
+                name = "fetchEmployeeTimesheetsByMonthAndYear",
+                query = "SELECT TS FROM Timesheet TS WHERE TS.employeeID = :EMPLOYEE " +
+                        "AND FUNCTION('YEAR', TS.date) = :YEAR " +
+                        "AND FUNCTION('MONTH', TS.date) = :MONTH " +
+                        "ORDER BY TS.date DESC"
+        )
+})
 public class Timesheet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,19 +55,18 @@ public class Timesheet {
     private LocalDate date;
 
     @Column(name = "TimeIn", nullable = false)
-    private LocalTime timeIn;
+    private Time timeIn;
 
     @Column(name = "TimeOut")
-    private LocalTime timeOut;
-
-    @ColumnDefault("(case when ((`TimeOut` is not null) and (`TimeIn` is not null)) then (time_to_sec(timediff(least(`TimeOut`,_utf8mb4'17:00:00'),greatest(`TimeIn`,_utf8mb4'08:00:00'))) / 3600.0) else NULL end)")
-    @Column(name = "HoursWorked", precision = 8, scale = 2)
-    private BigDecimal hoursWorked;
+    private Time timeOut;
 
     @Column(name = "Remarks")
     private String remarks;
 
-    @ColumnDefault("'Not Submitted'")
+    @Column(name = "HoursWorked", nullable = false)
+    private Float hoursWorked;
+
+    @ColumnDefault("'Submitted'")
     @Column(name = "Status", nullable = false, length = 20)
     private String status;
 
