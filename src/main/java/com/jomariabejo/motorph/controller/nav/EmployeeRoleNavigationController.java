@@ -60,6 +60,9 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         loadView("/com/jomariabejo/motorph/role/employee/overtime.fxml", controller -> {
             if (controller instanceof OvertimeController overtimeController) {
                 overtimeController.setEmployeeRoleNavigationController(this);
+                overtimeController.populateMonths();
+                overtimeController.populateYears();
+                overtimeController.populateOvertimeTableView();
             }
         });
     }

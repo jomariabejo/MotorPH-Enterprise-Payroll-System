@@ -6,8 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDate;
+import java.sql.Date;
 
 @Getter
 @Setter
@@ -15,6 +14,12 @@ import java.time.LocalDate;
 @Table(name = "overtime_request", schema = "payroll_system", indexes = {
         @Index(name = "idx_employee_overtime", columnList = "EmployeeID")
 })
+@NamedQueries(
+        @NamedQuery(
+                name = "isEmployeeAlreadyHaveRequest",
+                query = "SELECT ovt_req FROM OvertimeRequest ovt_req WHERE ovt_req.employeeID = :employee AND ovt_req.overtimeDate = :date"
+        )
+)
 public class OvertimeRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,12 +30,11 @@ public class OvertimeRequest {
     @JoinColumn(name = "EmployeeID", nullable = false)
     private Employee employeeID;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "DateRequested", nullable = false)
-    private Instant dateRequested;
+    private Date dateRequested;
 
-    @Column(name = "Date", nullable = false)
-    private LocalDate date;
+    @Column(name = "OvertimeDate", nullable = false)
+    private Date overtimeDate;
 
     @Column(name = "HoursRequested", nullable = false, precision = 8, scale = 4)
     private BigDecimal hoursRequested;

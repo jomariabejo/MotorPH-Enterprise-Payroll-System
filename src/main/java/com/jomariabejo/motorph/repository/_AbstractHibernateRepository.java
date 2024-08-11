@@ -10,7 +10,7 @@ import java.util.List;
 public abstract class _AbstractHibernateRepository<T, ID extends Serializable> implements _GenericRepository<T, ID> {
 
     private final Class<T> entityClass;
-    private HibernateUtil hibernateUtil;
+    private final HibernateUtil hibernateUtil;
 
     public _AbstractHibernateRepository(Class<T> entityClass) {
         this.entityClass = entityClass;
