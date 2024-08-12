@@ -73,7 +73,7 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
                     </columnResizePolicy>
                 </TableView>
-                <Pagination prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css"/>
+                <Pagination fx:id="paginationOvertimeRequest" prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css"/>
             </children>
         </VBox>
     </children>

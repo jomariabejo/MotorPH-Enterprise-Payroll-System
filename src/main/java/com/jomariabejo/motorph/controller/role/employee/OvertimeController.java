@@ -5,15 +5,16 @@ import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.OvertimeRequest;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Pagination;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,16 +22,17 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material.Material;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.Month;
+import java.util.List;
 
 @Getter
 @Setter
 public class OvertimeController {
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
+
+    private ObservableList<OvertimeRequest> overtimeRequests;
 
     @FXML
     private TableView<OvertimeRequest> tvOvertime;
@@ -48,6 +50,9 @@ public class OvertimeController {
     private ComboBox<String> cbStatus;
 
     @FXML
+    private Pagination paginationOvertimeRequest;
+
+    @FXML
     private void initialize() {
         enhanceOvertimeBtn();
         cbStatus.getItems().addAll("Requested", "Accepted", "Rejected");
@@ -57,29 +62,19 @@ public class OvertimeController {
     public OvertimeController() {
     }
 
-    public void cbMonthClicked(ActionEvent actionEvent) {
+    public void cbMonthClicked() {
         populateOvertimeTableView();
     }
 
-    public void cbYearClicked(ActionEvent actionEvent) {
+    public void cbYearClicked() {
         populateOvertimeTableView();
     }
 
-    public void cbStatusChanged(ActionEvent actionEvent) {
+    public void cbStatusChanged() {
         populateOvertimeTableView();
     }
 
-    public void fileOvertimeRequestClicked(ActionEvent actionEvent) throws IOException {
-        /**
-         * TODO: Display the overtime application form
-         * 1. Create overtime application form FXML
-         * 2. Name the controller of the form to (FileOvertimeRequestController)
-         * 3. Create functionality of the form
-         * 4. Make sure the required fields is visible
-         * 5. You can only submit one overtime request daily.
-         *
-         */
-
+    public void fileOvertimeRequestClicked() throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/file-overtime-request.fxml"));
         AnchorPane formPane = loader.load();
         Stage formStage = new Stage();
@@ -104,20 +99,29 @@ public class OvertimeController {
         Integer year = this.cbYear.getSelectionModel().getSelectedItem();
         String status = this.cbStatus.getSelectionModel().getSelectedItem();
 
-        tvOvertime.setItems(FXCollections.observableList(
-                this
-                    .getEmployeeRoleNavigationController()
-                    .getMainViewController()
-                    .getOvertimeRequestService()
-                    .getOvertimeRequestsByEmployeeId(
-                            employee, month, year, status
-                    )
-        ));
+        overtimeRequests = FXCollections.observableList(
+                this.getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getOvertimeRequestService()
+                        .getOvertimeRequestsByEmployeeId(
+                                employee, month, year, status
+                        )
+        );
+
+        // Add pagination functionality
+
+        int itemsPerPage = 25;
+        int pageCount = (int) Math.ceil((double) overtimeRequests.size() / itemsPerPage);
+        paginationOvertimeRequest.setPageCount(pageCount);
+
+        paginationOvertimeRequest.setPageFactory(pageIndex -> {
+            updateTableView(pageIndex, itemsPerPage);
+            return new StackPane();
+        });
     }
 
     public void populateMonths() {
         this.cbMonth.setItems(FXCollections.observableArrayList(Month.values()));
-        // select current month
         LocalDateTime localDateTime = LocalDateTime.now();
         this.cbMonth.getSelectionModel().select(localDateTime.getMonth());
     }
@@ -130,5 +134,12 @@ public class OvertimeController {
         ));
         // select current year
         cbYear.getSelectionModel().selectFirst();
+    }
+
+    private void updateTableView(int pageIndex, int itemsPerPage) {
+        int fromIndex = pageIndex * itemsPerPage;
+        int toIndex = Math.min(fromIndex + itemsPerPage, overtimeRequests.size());
+        List<OvertimeRequest> pageData = overtimeRequests.subList(fromIndex, toIndex);
+        tvOvertime.setItems(FXCollections.observableList(pageData));
     }
 }

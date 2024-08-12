@@ -19,10 +19,8 @@ import org.kordamp.ikonli.fontawesome5.FontAwesomeRegular;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.time.Year;
+import java.time.*;
+import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -116,14 +114,26 @@ public class TimesheetController {
         if (timesheet.isPresent()) {
             if (timesheet.get().getTimeOut() == null) {
                 timesheet.get().setTimeOut(Time.valueOf(LocalTime.now()));
-                timesheet.get().setHoursWorked(TimeUtils.calculateTimeDifference(
-                        timesheet.get().getTimeIn().toLocalTime(),
-                        timesheet.get().getTimeOut().toLocalTime()
-                ));
+                timesheet.get().setHoursWorked((
+                        calculateHoursWorked(
+                                timesheet.get()
+                        )));
                 this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().updateTimesheet(timesheet.get());
             }
         }
+    }
 
+    private static float calculateHoursWorked(Timesheet timesheet) {
+        LocalTime startTime = timesheet.getTimeIn().toLocalTime();
+        LocalTime endTime = timesheet.getTimeOut().toLocalTime();
+
+        if (endTime.isBefore(startTime)) {
+            endTime = endTime.plusHours(24);
+        }
+
+        Duration duration = Duration.between(startTime, endTime);
+
+        return (float) duration.toMinutes() / 60;
     }
 
     private boolean AreYouSureYouWantToTimeOutToday() {
