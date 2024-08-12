@@ -62,6 +62,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
                 overtimeController.setEmployeeRoleNavigationController(this);
                 overtimeController.populateMonths();
                 overtimeController.populateYears();
+                overtimeController.setupOvertimeTableView();
                 overtimeController.populateOvertimeTableView();
             }
         });
