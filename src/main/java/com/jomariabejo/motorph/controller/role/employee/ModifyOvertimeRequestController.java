@@ -106,6 +106,7 @@ public class ModifyOvertimeRequestController {
         return this.getOvertimeController()
                 .getEmployeeRoleNavigationController()
                 .getMainViewController()
+                .getServiceFactory()
                 .getOvertimeRequestService()
                 .hasOvertimeRequestForDate
                         (
@@ -126,7 +127,12 @@ public class ModifyOvertimeRequestController {
 
 
     private void saveOvertimeRequestModification() {
-        this.getOvertimeController().getEmployeeRoleNavigationController().getMainViewController().getOvertimeRequestService().saveOvertimeRequest(overtimeRequest);
+        this.getOvertimeController()
+                .getEmployeeRoleNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getOvertimeRequestService()
+                .saveOvertimeRequest(overtimeRequest);
         updateOvertimeRequestToTableView(overtimeRequest);
         hideWindow();
     }

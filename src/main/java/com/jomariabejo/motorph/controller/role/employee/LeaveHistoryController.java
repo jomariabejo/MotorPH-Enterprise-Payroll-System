@@ -99,7 +99,7 @@ public class LeaveHistoryController {
 
     public void populateYears() {
         cbRequestedYear.setItems(FXCollections.observableList(
-                this.getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestService().getYearsOfLeaveRequestOfEmployee(
+                this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getLeaveRequestService().getYearsOfLeaveRequestOfEmployee(
                         this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()
                 ).get()
         ));
@@ -114,6 +114,7 @@ public class LeaveHistoryController {
 
         List<LeaveRequest> allLeaveRequests = this.getEmployeeRoleNavigationController()
                 .getMainViewController()
+                .getServiceFactory()
                 .getLeaveRequestService()
                 .fetchLeaveRequestsForEmployee(employee, month, year, status, leaveType);
 
@@ -138,7 +139,7 @@ public class LeaveHistoryController {
 
     public void populateLeaveTypes() {
         cbLeaveType.setItems(FXCollections.observableList(
-                this.getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestTypeService().getAllLeaveRequestTypes()
+                this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getLeaveRequestTypeService().getAllLeaveRequestTypes()
         ));
     }
 
@@ -209,6 +210,7 @@ public class LeaveHistoryController {
                         if (result.isPresent() && result.get() == ButtonType.OK) {
                             employeeRoleNavigationController
                                     .getMainViewController()
+                                    .getServiceFactory()
                                     .getLeaveRequestService()
                                     .deleteLeaveRequest(selectedLeaveRequest);
                             tvLeaveRequests.getItems().remove(selectedLeaveRequest);

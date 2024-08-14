@@ -30,7 +30,7 @@ public class LeaveBalanceController {
 
     public void populatePieChart() {
         Employee employee = this.getEmployeeRoleNavigationController().getMainViewController().getEmployee();
-        Optional<List<LeaveBalance>> leaveBalanceOpt = this.getEmployeeRoleNavigationController().getMainViewController().getLeaveBalanceService().fetchEmployeeRemainingLeaveBalances(employee);
+        Optional<List<LeaveBalance>> leaveBalanceOpt = this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getLeaveBalanceService().fetchEmployeeRemainingLeaveBalances(employee);
 
         if (leaveBalanceOpt.isPresent()) {
             try {

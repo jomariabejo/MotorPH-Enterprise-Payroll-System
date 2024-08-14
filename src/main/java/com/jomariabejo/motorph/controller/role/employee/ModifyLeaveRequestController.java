@@ -107,7 +107,7 @@ public class ModifyLeaveRequestController {
     }
 
     private void saveLeaveRequestModification(LeaveRequest leaveRequest) {
-        this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestService().updateLeaveRequest(leaveRequest);
+        this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getLeaveRequestService().updateLeaveRequest(leaveRequest);
     }
 
     private void displayLeaveRequestDateOverlap() {
@@ -120,7 +120,7 @@ public class ModifyLeaveRequestController {
     }
 
     private boolean hasOverlappingLeaveDates() {
-        return this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestService().
+        return this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getLeaveRequestService().
                 isEmployeeHasOverlapLeaveDates(
                         this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getEmployee().getId(), dpLeaveFrom.getValue(), dpLeaveTo.getValue());
     }
@@ -229,6 +229,7 @@ public class ModifyLeaveRequestController {
         Employee employee = getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getEmployee();
         String leaveBalanceLeft = getLeaveHistoryController()
                 .getEmployeeRoleNavigationController().getMainViewController()
+                .getServiceFactory()
                 .getLeaveBalanceService()
                 .fetchRemainingLeaveBalanceByLeaveTypeName(
                         employee,
@@ -255,6 +256,7 @@ public class ModifyLeaveRequestController {
     public void setupComboBoxLeaveTypes() {
         List<LeaveRequestType> leaveTypesList = this.getLeaveHistoryController()
                 .getEmployeeRoleNavigationController().getMainViewController()
+                .getServiceFactory()
                 .getLeaveRequestTypeService()
                 .getAllLeaveRequestTypes();
         ObservableList<LeaveRequestType> observableLeaveTypesList = FXCollections.observableArrayList(leaveTypesList);

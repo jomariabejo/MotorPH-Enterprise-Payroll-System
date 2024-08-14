@@ -87,6 +87,7 @@ public class FileOvertimeRequestController {
         return this.getOvertimeController()
                 .getEmployeeRoleNavigationController()
                 .getMainViewController()
+                .getServiceFactory()
                 .getOvertimeRequestService()
                 .hasOvertimeRequestForDate
                         (
@@ -105,7 +106,6 @@ public class FileOvertimeRequestController {
     }
 
 
-
     private void saveOvertimeRequest() {
         OvertimeRequest overtimeRequest = new OvertimeRequest();
         overtimeRequest.setEmployeeID(this.getOvertimeController().getEmployeeRoleNavigationController().getMainViewController().getEmployee());
@@ -113,7 +113,12 @@ public class FileOvertimeRequestController {
         overtimeRequest.setOvertimeDate(Date.valueOf(dpDateOfRequestedOvertime.getValue()));
         overtimeRequest.setHoursRequested(new BigDecimal(tfHoursRequested.getText()).setScale(2, RoundingMode.HALF_UP));
         overtimeRequest.setStatus("Requested");
-        this.getOvertimeController().getEmployeeRoleNavigationController().getMainViewController().getOvertimeRequestService().saveOvertimeRequest(overtimeRequest);
+        this.getOvertimeController()
+                .getEmployeeRoleNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getOvertimeRequestService()
+                .saveOvertimeRequest(overtimeRequest);
         addOvertimeRequestToTableView(overtimeRequest);
         hideWindow();
     }

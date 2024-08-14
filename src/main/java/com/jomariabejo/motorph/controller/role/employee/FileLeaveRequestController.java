@@ -95,6 +95,7 @@ public class FileLeaveRequestController {
         this
                 .getEmployeeRoleNavigationController()
                 .getMainViewController()
+                .getServiceFactory()
                 .getLeaveRequestService()
                 .saveLeaveRequest(leaveRequest);
     }
@@ -127,7 +128,7 @@ public class FileLeaveRequestController {
     }
 
     private boolean hasOverlappingLeaveDates() {
-        return this.getEmployeeRoleNavigationController().getMainViewController().getLeaveRequestService().
+        return this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getLeaveRequestService().
                 isEmployeeHasOverlapLeaveDates(
                         this.getEmployeeRoleNavigationController().getMainViewController().getEmployee().getId(), dpLeaveFrom.getValue(), dpLeaveTo.getValue());
     }
@@ -239,6 +240,7 @@ public class FileLeaveRequestController {
         Employee employee = getEmployeeRoleNavigationController().getMainViewController().getEmployee();
         String leaveBalanceLeft = getEmployeeRoleNavigationController()
                 .getMainViewController()
+                .getServiceFactory()
                 .getLeaveBalanceService()
                 .fetchRemainingLeaveBalanceByLeaveTypeName(
                         employee,
@@ -265,6 +267,7 @@ public class FileLeaveRequestController {
     public void setupLeaveTypesComboBox() {
         List<LeaveRequestType> leaveTypesList = this.getEmployeeRoleNavigationController()
                 .getMainViewController()
+                .getServiceFactory()
                 .getLeaveRequestTypeService()
                 .getAllLeaveRequestTypes();
         ObservableList<LeaveRequestType> observableLeaveTypesList = FXCollections.observableArrayList(leaveTypesList);

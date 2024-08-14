@@ -71,7 +71,7 @@ public class TimesheetController {
         timesheet.setTimeIn(Time.valueOf(LocalTime.now()));
         timesheet.setHoursWorked(0.00f);
         timesheet.setStatus("Not Submitted");
-        this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().saveTimesheet(timesheet);
+        this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().saveTimesheet(timesheet);
         tvTimesheets.getItems().add(timesheet);
     }
 
@@ -87,7 +87,7 @@ public class TimesheetController {
 
 
     private boolean YouHaveTimeInToday() {
-        Optional<Timesheet> timesheet = this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().getTimesheetByEmployeeAndDate(
+        Optional<Timesheet> timesheet = this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().getTimesheetByEmployeeAndDate(
                 this.getEmployeeRoleNavigationController().getMainViewController().getEmployee(),
                 LocalDate.now()
         );
@@ -107,7 +107,7 @@ public class TimesheetController {
     }
 
     private void modifyYourTimeOut() {
-        Optional<Timesheet> timesheet = this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().getTimesheetByEmployeeAndDate(
+        Optional<Timesheet> timesheet = this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().getTimesheetByEmployeeAndDate(
                 this.getEmployeeRoleNavigationController().getMainViewController().getEmployee(),
                 LocalDate.now()
         );
@@ -118,7 +118,7 @@ public class TimesheetController {
                         calculateHoursWorked(
                                 timesheet.get()
                         )));
-                this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().updateTimesheet(timesheet.get());
+                this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().updateTimesheet(timesheet.get());
             }
         }
     }
@@ -144,10 +144,16 @@ public class TimesheetController {
 
 
     private boolean youHaveTimeOutToday() {
-        Optional<Timesheet> timesheet = this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().getTimesheetByEmployeeAndDate(
-                this.getEmployeeRoleNavigationController().getMainViewController().getEmployee(),
-                LocalDate.now()
-        );
+        Optional<Timesheet> timesheet = this.getEmployeeRoleNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getTimesheetService()
+                .getTimesheetByEmployeeAndDate(
+                        this.getEmployeeRoleNavigationController()
+                                .getMainViewController()
+                                .getEmployee(),
+                        LocalDate.now()
+                );
         return timesheet.get().getTimeOut() != null;
     }
 
@@ -188,7 +194,7 @@ public class TimesheetController {
     }
 
     public void populateYears() {
-        cbYear.setItems(FXCollections.observableList(this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().getYearsOfLeaveRequestOfEmployee(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()).get()));
+        cbYear.setItems(FXCollections.observableList(this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().getYearsOfLeaveRequestOfEmployee(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()).get()));
         selectCurrentYear();
     }
 
@@ -206,11 +212,11 @@ public class TimesheetController {
     public void populateTableview() {
         try {
             setTimesheetObservableList(FXCollections.observableArrayList(
-                    this.getEmployeeRoleNavigationController().getMainViewController().getTimesheetService().getTimesheetsByEmployeeAndDate(
+                    this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().getTimesheetsByEmployeeAndDate(
                             this.getEmployeeRoleNavigationController().getMainViewController().getEmployee(),
-                                    Year.of(cbYear.getSelectionModel().getSelectedItem()),
-                                    cbMonth.getSelectionModel().getSelectedItem()
-                            ).get()
+                            Year.of(cbYear.getSelectionModel().getSelectedItem()),
+                            cbMonth.getSelectionModel().getSelectedItem()
+                    ).get()
             ));
 
             int itemsPerPage = 25;
@@ -221,8 +227,7 @@ public class TimesheetController {
                 updateTableView(pageIndex, itemsPerPage);
                 return new StackPane();
             });
-        }
-        catch (NoSuchElementException noSuchElementException) {
+        } catch (NoSuchElementException noSuchElementException) {
             displayYouDontHaveTimesheetForThisPeriod();
         }
     }
@@ -235,7 +240,7 @@ public class TimesheetController {
     }
 
     private void displayYouDontHaveTimesheetForThisPeriod() {
-        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "No timesheet found", "You dont have any timesheet for this period("+ cbMonth.getSelectionModel().getSelectedItem() + " " + cbYear.getSelectionModel().getSelectedItem()+").");
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "No timesheet found", "You dont have any timesheet for this period(" + cbMonth.getSelectionModel().getSelectedItem() + " " + cbYear.getSelectionModel().getSelectedItem() + ").");
         customAlert.showAndWait();
     }
 }

@@ -40,8 +40,7 @@ public class MoreInfoController {
             AllowanceStructureController allowanceStructureController = fxmlLoader.getController();
             allowanceStructureController.setMoreInfoController(this);
             allowanceStructureController.rewriteTextfields();
-        }
-        catch (IOException ioException) {
+        } catch (IOException ioException) {
             ioException.printStackTrace();
         }
 
@@ -74,8 +73,7 @@ public class MoreInfoController {
             SalaryStructureController salaryStructureController = fxmlLoader.getController();
             salaryStructureController.setMoreInfoController(this);
             salaryStructureController.rewriteTextfields();
-        }
-        catch (IOException ioException) {
+        } catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
@@ -92,15 +90,13 @@ public class MoreInfoController {
             AccountNumbersController accountNumbersController = fxmlLoader.getController();
             accountNumbersController.setMoreInfoController(this);
             accountNumbersController.rewriteTextfields();
-        }
-        catch (IOException ioException) {
+        } catch (IOException ioException) {
             ioException.printStackTrace();
         }
     }
 
     public void otherInfoClicked(ActionEvent actionEvent) {
         this.getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().rewriteLabel("/ Employee / Profile / Other Info /");
-
 
 
     }

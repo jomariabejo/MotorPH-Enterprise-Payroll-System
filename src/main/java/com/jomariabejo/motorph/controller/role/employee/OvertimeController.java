@@ -106,6 +106,7 @@ public class OvertimeController {
         overtimeRequests = FXCollections.observableList(
                 this.getEmployeeRoleNavigationController()
                         .getMainViewController()
+                        .getServiceFactory()
                         .getOvertimeRequestService()
                         .getOvertimeRequestsByEmployeeId(
                                 employee, month, year, status
@@ -132,9 +133,13 @@ public class OvertimeController {
 
     public void populateYears() {
         this.cbYear.setItems(FXCollections.observableArrayList(
-                this.getEmployeeRoleNavigationController().getMainViewController().getOvertimeRequestService().getOvertimeRequestYears(
-                        this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()
-                )
+                this.getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getServiceFactory()
+                        .getOvertimeRequestService()
+                        .getOvertimeRequestYears(
+                                this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()
+                        )
         ));
         // select current year
         cbYear.getSelectionModel().selectFirst();
@@ -204,6 +209,7 @@ public class OvertimeController {
                         if (result.isPresent() && result.get() == ButtonType.OK) {
                             employeeRoleNavigationController
                                     .getMainViewController()
+                                    .getServiceFactory()
                                     .getOvertimeRequestService()
                                     .deleteOvertimeRequest(selectedLeaveRequest);
                             tvOvertime.getItems().remove(selectedLeaveRequest);
