@@ -18,12 +18,12 @@
          <children>
             <VBox alignment="CENTER">
                <children>
-                  <Label styleClass="lato-regular" text="Welcome back!">
+                  <Label fx:id="lblWelcome" styleClass="lato-regular" text="Welcome back!">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="10.0" layoutY="10.0" styleClass="lato-bold" text="First name!">
+                  <Label fx:id="lblFirstName" layoutX="10.0" layoutY="10.0" styleClass="lato-bold" text="First name!">
                      <font>
                         <Font name="Arial Black" size="18.0" />
                      </font>

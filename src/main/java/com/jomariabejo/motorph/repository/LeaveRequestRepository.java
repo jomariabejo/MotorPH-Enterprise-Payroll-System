@@ -43,7 +43,7 @@ public class LeaveRequestRepository extends _AbstractHibernateRepository<LeaveRe
             Query<Integer> query = session.createNamedQuery("getYearsOfLeaveRequest", Integer.class);
             query.setParameter("employeeID", employee);
             List<Integer> resultList = query.getResultList();
-            return Optional.of(resultList);
+            return Optional.of(resultList).get().size() > 0 ? Optional.of(resultList) : Optional.of(List.of(LocalDate.now().getYear()));
         } catch (NoResultException e) {
             return Optional.empty();
         } finally {

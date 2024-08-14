@@ -17,6 +17,7 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -73,7 +74,7 @@ public class LeaveRequest {
     private LeaveRequestType leaveTypeID;
 
     @Column(name = "DateRequested", nullable = false, updatable = false)
-    private LocalDateTime dateRequested;
+    private Date dateRequested;
 
     @Column(name = "StartDate")
     private LocalDate startDate;
@@ -103,7 +104,7 @@ public class LeaveRequest {
     @PrePersist
     protected void onCreate() {
         if (dateRequested == null) {
-            dateRequested = LocalDateTime.now();
+            dateRequested = Date.valueOf(LocalDate.now());
         }
     }
 

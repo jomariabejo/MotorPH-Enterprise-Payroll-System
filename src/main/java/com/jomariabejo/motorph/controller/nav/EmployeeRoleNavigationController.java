@@ -5,6 +5,7 @@ import com.jomariabejo.motorph.controller._ViewLoader;
 import com.jomariabejo.motorph.controller.role.employee.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,12 @@ import java.util.function.Consumer;
 public class EmployeeRoleNavigationController implements _ViewLoader {
 
     private MainViewController mainViewController;
+
+    @FXML
+    private Label lblWelcome;
+
+    @FXML
+    private Label lblFirstName;
 
     // Default constructor
     public EmployeeRoleNavigationController() {
@@ -160,5 +167,13 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
         }
+    }
+
+    public void displayWelcome() {
+        String[] welcomeMessage = {"Hi 👋","Hello 🙌","Welcome Back ❤"};
+
+
+        lblWelcome.setText(welcomeMessage[(int) (Math.random() * welcomeMessage.length)]);
+        lblFirstName.setText(mainViewController.getEmployee().getFirstName());
     }
 }

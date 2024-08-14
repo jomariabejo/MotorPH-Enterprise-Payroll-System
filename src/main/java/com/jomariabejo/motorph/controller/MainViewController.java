@@ -54,6 +54,11 @@ public class MainViewController implements _ViewLoader {
 
     public void initializeUserNavigation() {
         displayEmployeeRoleNavigation();
+        displayRoleName();
+    }
+
+    private void displayRoleName() {
+        lblRoleName.setText(employee.getPositionID().getPositionName());
     }
 
     private void displayHumanResourceNavigation() {
@@ -93,6 +98,7 @@ public class MainViewController implements _ViewLoader {
                 EmployeeRoleNavigationController employeeController = (EmployeeRoleNavigationController) controller;
                 employeeController.setMainViewController(this);
                 employeeController.myProfileOnAction();
+                employeeController.displayWelcome();
             }
         });
     }
