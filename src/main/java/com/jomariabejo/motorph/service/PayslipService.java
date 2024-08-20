@@ -1,9 +1,11 @@
 package com.jomariabejo.motorph.service;
 
+import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Payslip;
 import com.jomariabejo.motorph.repository.PayslipRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PayslipService {
 
@@ -31,5 +33,13 @@ public class PayslipService {
 
     public void deletePayslip(Payslip payslip) {
         payslipRepository.delete(payslip);
+    }
+
+    public Optional<List<Integer>> getEmployeeYearsOfPayslip(Employee employee) {
+        return payslipRepository.findEmployeeYearsOfPayslip(employee);
+    }
+
+    public Optional<List<Payslip>> getPayslipByEmployeeIdAndYear(Employee employee, Integer year) {
+        return payslipRepository.findPayslipByEmployeeAndYear(employee,year);
     }
 }

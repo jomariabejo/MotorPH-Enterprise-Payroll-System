@@ -26,7 +26,7 @@
                     <menus>
                       <Menu mnemonicParsing="false" text="File">
                         <items>
-                          <MenuItem mnemonicParsing="false" onAction="#closeClicked" text="Close" />
+                          <MenuItem mnemonicParsing="false" onAction="#logoutClicked" text="Logout" />
                         </items>
                       </Menu>
                       <Menu fx:id="menuRoles" mnemonicParsing="false" text="Switch Role">

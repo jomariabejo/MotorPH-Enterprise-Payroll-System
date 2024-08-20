@@ -57,16 +57,12 @@ public class EmployeeChangePasswordController {
         if (userAction.isPresent() && userAction.get() == ButtonType.OK) {
             String currentPassword = this.getEmployeeProfileTopPane().getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().getUser().getPassword();
             if (currentPassword.equals(tfCurrentPassword.getText())) {
-                // The user that logged in
-                User user = this.getEmployeeProfileTopPane().getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().getUser();
-                user.setPassword(tfConfirmNewPassword.getText());
-                userService.updateUser(user);
-                CustomAlert successAlert = new CustomAlert(
-                        Alert.AlertType.INFORMATION,
-                        "Password changed",
-                        "Password saved successfully."
-                );
-                successAlert.showAndWait();
+                if (tfNewPassword.getText().equals(tfConfirmNewPassword.getText())) {
+                    displayPasswordChangedSuccessfully();
+                }
+                else {
+                    displayPasswordNotMatched();
+                }
             } else {
                 CustomAlert failedAlert = new CustomAlert(
                         Alert.AlertType.ERROR,
@@ -78,6 +74,28 @@ public class EmployeeChangePasswordController {
         } else if (userAction.get() == ButtonType.CANCEL) {
             getLblChangePassword().getScene().getWindow().hide();
         }
+    }
+
+    private void displayPasswordNotMatched() {
+        CustomAlert successAlert = new CustomAlert(
+                Alert.AlertType.ERROR,
+                "Password not equal",
+                "Password change failed."
+        );
+        successAlert.showAndWait();
+    }
+
+    private void displayPasswordChangedSuccessfully() {
+        // The user that logged in
+        User user = this.getEmployeeProfileTopPane().getEmployeeProfileController().getEmployeeRoleNavigationController().getMainViewController().getUser();
+        user.setPassword(tfConfirmNewPassword.getText());
+        userService.updateUser(user);
+        CustomAlert successAlert = new CustomAlert(
+                Alert.AlertType.INFORMATION,
+                "Password changed",
+                "Password saved successfully."
+        );
+        successAlert.showAndWait();
     }
 
     public void addIcons() {

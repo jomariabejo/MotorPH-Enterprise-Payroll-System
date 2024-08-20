@@ -119,6 +119,7 @@ public class TimesheetController {
                                 timesheet.get()
                         )));
                 this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().updateTimesheet(timesheet.get());
+                populateTableview();
             }
         }
     }

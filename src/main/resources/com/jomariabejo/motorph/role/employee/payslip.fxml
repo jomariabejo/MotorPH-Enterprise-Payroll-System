@@ -5,43 +5,70 @@
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="897.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.employee.PayslipController">
-   <children>
-      <VBox alignment="BOTTOM_CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="12.0">
-               <children>
-                  <ComboBox fx:id="cbMonth" onAction="#cbMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
-                  <ComboBox fx:id="cbYear" layoutX="1027.0" layoutY="25.0" onAction="#cbYearClicked" prefHeight="50.0" prefWidth="155.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
-                  <ComboBox layoutX="177.0" layoutY="26.0" onAction="#cbStatusChanged" prefHeight="50.0" prefWidth="155.0" promptText="Status" stylesheets="@../../css/combo-box.css" />
-               </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <TableView fx:id="tvPayslip" prefHeight="650.0">
-               <columns>
-                  <TableColumn prefWidth="150.0" text="Payslip Id" />
-                  <TableColumn prefWidth="150.0" text="Period Start Date" />
-                  <TableColumn prefWidth="150.0" text="Period End Date" />
-                  <TableColumn prefWidth="150.0" text="Gross Income" />
-                  <TableColumn prefWidth="150.0" text="Benefits" />
-                  <TableColumn prefWidth="150.0" text="Deductions" />
-                  <TableColumn prefWidth="150.0" text="Net Income" />
-               </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <Pagination onDragDetected="#paginationOnDragDetected" prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css" />
-         </children>
-      </VBox>
-   </children>
-   <padding>
-      <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
-   </padding>
+    <children>
+        <VBox alignment="BOTTOM_CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="12.0">
+                    <children>
+                        <ComboBox fx:id="cbYear" layoutX="177.0" layoutY="26.0"  onAction="#cbYearChanged" prefHeight="50.0" prefWidth="155.0" promptText="Year" stylesheets="@../../css/combo-box.css"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <TableView fx:id="tvPayslip" prefHeight="650.0">
+                    <columns>
+                        <TableColumn prefWidth="150.0" text="Payslip Id">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="id" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Period Start Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="periodStartDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Period End Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="periodEndDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Gross Income">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="grossIncome" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Benefits">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="totalBenefits" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Deductions">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="totalDeductions" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Net Income">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="netPay" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+                <Pagination fx:id="pagination" disable="true" onDragDetected="#paginationOnDragDetected" prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css" visible="false" />
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
+    </padding>
 </AnchorPane>

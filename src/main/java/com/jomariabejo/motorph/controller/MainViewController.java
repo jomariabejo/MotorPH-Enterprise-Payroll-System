@@ -6,8 +6,8 @@ import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigati
 import com.jomariabejo.motorph.controller.nav.PayrollAdministratorNavigationController;
 import com.jomariabejo.motorph.controller.nav.SystemAdministratorNavigationController;
 import com.jomariabejo.motorph.model.*;
-import com.jomariabejo.motorph.repository.*;
 import com.jomariabejo.motorph.service.*;
+import com.sun.tools.javac.Main;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -140,7 +140,7 @@ public class MainViewController implements _ViewLoader {
         }
     }
 
-    public void closeClicked(ActionEvent actionEvent) {
+    public void logoutClicked(ActionEvent actionEvent) {
         Platform.exit();
     }
 

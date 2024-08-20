@@ -94,6 +94,8 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
         loadView("/com/jomariabejo/motorph/role/employee/payslip.fxml", controller -> {
             if (controller instanceof PayslipController payslipController) {
                 payslipController.setEmployeeRoleNavigationController(this);
+                payslipController.populateYears();
+                payslipController.populatePayslipTableView();
             }
         });
     }

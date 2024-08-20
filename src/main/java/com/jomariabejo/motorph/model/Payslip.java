@@ -8,13 +8,28 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.LocalDate;
+import java.sql.Date;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "payslip", schema = "payroll_system")
+@NamedQueries(
+        {
+                @NamedQuery(
+                        name = "fetchPayslipByEmployeeAndYear",
+                        query = "SELECT ps FROM Payslip ps WHERE " +
+                                "ps.employeeID = :employeeId AND " +
+                                "FUNCTION('YEAR', ps.payrollRunDate) = :year " +
+                                "ORDER BY FUNCTION('MONTH', ps.payrollRunDate) DESC"
+                ),
+                @NamedQuery(
+                        name = "fetchEmployeeYearsOfPayslip",
+                        query = "SELECT DISTINCT YEAR(PS.payrollRunDate) AS Years FROM Payslip PS WHERE PS.employeeID = :employeeId ORDER BY YEAR(PS.payrollRunDate) DESC"
+                )
+        }
+)
 public class Payslip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,29 +41,26 @@ public class Payslip {
     @JoinColumn(name = "PayrollID", nullable = false)
     private Payroll payrollID;
 
-    @Column(name = "PayslipNumber", nullable = false, length = 20)
-    private String payslipNumber;
-
-    @Column(name = "EmployeeID", nullable = false)
-    private Integer employeeID;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "EmployeeID", nullable = false)
+    private Employee employeeID;
 
     @Column(name = "PeriodStartDate", nullable = false)
-    private LocalDate periodStartDate;
+    private Date periodStartDate;
 
     @Column(name = "PeriodEndDate", nullable = false)
-    private LocalDate periodEndDate;
+    private Date periodEndDate;
 
-    @Column(name = "EmployeeName", nullable = false, length = 100)
-    private String employeeName;
-
-    @Column(name = "EmployeePosition", nullable = false, length = 100)
-    private String employeePosition;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ColumnDefault("0")
+    @JoinColumn(name = "EmployeePosition", nullable = false)
+    private Position employeePosition;
 
     @Column(name = "MonthlyRate", nullable = false, precision = 18, scale = 4)
     private BigDecimal monthlyRate;
 
-    @Column(name = "DailyRate", nullable = false, precision = 18, scale = 4)
-    private BigDecimal dailyRate;
+    @Column(name = "HourlyRate", nullable = false, precision = 18, scale = 4)
+    private BigDecimal hourlyRate;
 
     @Column(name = "DaysWorked", nullable = false)
     private Integer daysWorked;
@@ -97,19 +109,21 @@ public class Payslip {
     private String companyName;
 
     @Column(name = "PayrollRunDate")
-    private LocalDate payrollRunDate;
+    private Date payrollRunDate;
 
     @Column(name = "PaymentDate")
-    private LocalDate paymentDate;
+    private Date paymentDate;
 
     @Column(name = "PaymentMethod", length = 50)
     private String paymentMethod;
 
-    @Column(name = "EmployeeDepartment", length = 100)
-    private String employeeDepartment;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "EmployeeDepartment")
+    private Department employeeDepartment;
 
-    @Column(name = "EmployeeManager", length = 100)
-    private String employeeManager;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "EmployeeManager")
+    private Employee employeeManager;
 
     @Column(name = "LeaveDays")
     private Integer leaveDays;
@@ -129,16 +143,23 @@ public class Payslip {
     @Column(name = "OtherDeductions", precision = 18, scale = 4)
     private BigDecimal otherDeductions;
 
-    @Column(name = "CreatedBy", length = 100)
-    private String createdBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CreatedBy")
+    private Employee createdBy;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "CreatedDate")
-    private Instant createdDate;
+    private Timestamp createdDate;
 
-    @Column(name = "LastModifiedBy", length = 100)
-    private String lastModifiedBy;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "LastModifiedBy")
+    private Employee lastModifiedBy;
 
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "LastModifiedDate")
-    private Instant lastModifiedDate;
+    private Timestamp lastModifiedDate;
+
+    @Column(name = "PayslipNumber", nullable = false, length = 20)
+    private String payslipNumber;
 
 }

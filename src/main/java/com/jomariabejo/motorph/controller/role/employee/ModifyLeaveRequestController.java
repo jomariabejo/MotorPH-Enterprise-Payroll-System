@@ -305,8 +305,8 @@ public class ModifyLeaveRequestController {
         setupComboBoxLeaveTypes();
         setupRadio();
         setupLeaveDuration();
-        configDatePicker();
         mapLeaveRequest();
+        configDatePicker();
     }
 
     private void setupLeaveDuration() {

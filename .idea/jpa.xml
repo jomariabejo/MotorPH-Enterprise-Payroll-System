@@ -3,6 +3,6 @@
   <component name="JpaBuddyIdeaProjectConfig" migrateIndexesAndConstraints="true" reUseTableSchema="true">
     <option name="migrateIndexesAndConstraints" value="true" />
     <option name="reLastEntityCreationPackage" value="src/main/java/com/jomariabejo/motorph/model" />
-    <option name="reverseEngineeringLastDbConnectionId" value="e955d199-97cd-4730-a130-b20af26c68ed__payroll_system" />
+    <option name="reverseEngineeringLastDbConnectionId" value="7aecf8b5-1f47-4c22-bc74-1745dbfb9e35__payroll_system" />
   </component>
 </project>
