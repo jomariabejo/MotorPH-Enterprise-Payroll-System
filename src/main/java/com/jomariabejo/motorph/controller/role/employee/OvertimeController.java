@@ -86,6 +86,7 @@ public class OvertimeController {
 
         FileOvertimeRequestController fileOvertimeRequestController = loader.getController();
         fileOvertimeRequestController.setOvertimeController(this);
+        fileOvertimeRequestController.disableFutureDates();
 
         formStage.showAndWait();
     }

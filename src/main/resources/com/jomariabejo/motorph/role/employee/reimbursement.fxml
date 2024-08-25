@@ -19,7 +19,7 @@
                <children>
                   <ComboBox fx:id="cbMonth" onAction="#cbMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
                   <ComboBox fx:id="cbYear" layoutX="1027.0" layoutY="25.0" onAction="#cbYearClicked" prefHeight="50.0" prefWidth="155.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
-                  <Button fx:id="fileReimbursement" mnemonicParsing="false" onAction="#fileOvertimeRequestClicked" prefHeight="50.0" prefWidth="320.0" text="File Reimbursement">
+                  <Button fx:id="fileReimbursement" mnemonicParsing="false" onAction="#fileReimbursementRequest" prefHeight="50.0" prefWidth="320.0" text="File Reimbursement">
                      <font>
                         <Font size="24.0" />
                      </font>
@@ -41,7 +41,7 @@
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>
             </TableView>
-            <Pagination fx:id="pagination" onDragDetected="#paginationOnDragDetected" prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css" />
+            <Pagination managed="false" visible="false" fx:id="pagination" onDragDetected="#paginationOnDragDetected" prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css" />
          </children>
       </VBox>
    </children>

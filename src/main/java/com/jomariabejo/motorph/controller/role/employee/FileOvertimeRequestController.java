@@ -137,11 +137,9 @@ public class FileOvertimeRequestController {
         cancelBtn.setGraphic(new FontIcon(Material.CANCEL));
         submitBtn.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
         submitBtn.setGraphic(new FontIcon(Material.ADD));
-
-        disableFutureDates();
     }
 
-    private void disableFutureDates() {
+    public void disableFutureDates() {
         dpDateOfRequestedOvertime.setDayCellFactory(new Callback<DatePicker, DateCell>() {
             @Override
             public DateCell call(DatePicker datePicker) {

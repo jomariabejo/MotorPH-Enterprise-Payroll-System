@@ -162,4 +162,7 @@ public class Payslip {
     @Column(name = "PayslipNumber", nullable = false, length = 20)
     private String payslipNumber;
 
+    public void toPayslipFormat() {
+
+    }
 }

@@ -58,13 +58,17 @@ public class LoginViewController {
             saveUserLog(userOptional.get());
             Launcher.switchToMainView(userOptional.get());
         } else {
-            CustomAlert customAlert = new CustomAlert(
-                    Alert.AlertType.ERROR,
-                    "Invalid username/password",
-                    "The email or mobile number you entered isn’t connected to an account."
-            );
-            customAlert.showAndWait();
+            displayInvalidCredentials();
         }
+    }
+
+    private void displayInvalidCredentials() {
+        CustomAlert customAlert = new CustomAlert(
+                Alert.AlertType.ERROR,
+                "Invalid username/password",
+                "The email or mobile number you entered isn’t connected to an account."
+        );
+        customAlert.showAndWait();
     }
 
     private Optional<User> verifyUser() {

@@ -8,7 +8,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Pagination;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import lombok.Getter;
@@ -16,6 +21,7 @@ import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.awt.*;
 import java.util.List;
 
 @Getter
@@ -43,6 +49,7 @@ public class PayslipController {
 
     @FXML
     private void initialize() {
+        setupPayslipTableView();
     }
 
 
@@ -86,7 +93,7 @@ public class PayslipController {
         tvPayslip.setItems(FXCollections.observableList(pageData));
     }
 
-    public void setupOvertimeTableView() {
+    public void setupPayslipTableView() {
         TableColumn<Payslip, Void> actionsColumn = createActionsColumn();
         this.tvPayslip.getColumns().add(actionsColumn);
     }
@@ -101,18 +108,36 @@ public class PayslipController {
             {
                 actionsBox.setAlignment(Pos.CENTER);
                 actionsBox.setSpacing(10);
-                /**
-                 * Create Download On Action
-                 */
+                setGraphic(actionsBox);
 
+                updateButton.setOnAction(event -> {
+                    System.out.println("I'm clicked");
+                });
             }
 
-            private Button createDownloadButton() {
-                Button updateButton = new Button(null, new FontIcon(Feather.DOWNLOAD));
-                updateButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
-                return updateButton;
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : actionsBox);
             }
         });
         return actionsColumn;
+    }
+
+
+    private Button createDownloadButton() {
+        FontIcon fontIcon = new FontIcon(Feather.DOWNLOAD);
+        Button updateButton = new Button(null, fontIcon);
+        updateButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
+        updateButton.setOnAction(event -> handleDownloadButtonClicked());
+        return updateButton;
+    }
+
+    /**
+     * TODO:
+     * Add download button functionality 8/21/2024
+     */
+    private void handleDownloadButtonClicked() {
+
     }
 }
