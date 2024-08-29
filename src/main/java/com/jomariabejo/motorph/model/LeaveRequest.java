@@ -56,7 +56,16 @@ import java.time.LocalDateTime;
                         "  AND YEAR(lr.dateRequested) = :year\n" +
                         "  AND lr.status = :status\n" +
                         "  AND lt.leaveTypeName = :leaveTypeName\n" +
-                        "ORDER BY lr.dateRequested DESC\n"        )
+                        "ORDER BY lr.dateRequested DESC\n"),
+        @NamedQuery(
+                name = "countTotalPaidLeaveDaysByEmployeeAndPeriod",
+                query = "SELECT SUM(LEAST(DATEDIFF(COALESCE(lr.endDate, :payslipEndPeriod), GREATEST(lr.startDate, :payslipStartPeriod)) + 1, DATEDIFF(:payslipEndPeriod, :payslipStartPeriod) + 1)) " +
+                        "FROM LeaveRequest lr " +
+                        "WHERE lr.employeeID = :employee " +
+                        "AND lr.isPaid = true " +
+                        "AND (lr.startDate <= :payslipEndPeriod AND lr.endDate >= :payslipStartPeriod)"
+        )
+
 })
 
 public class LeaveRequest {
@@ -96,6 +105,9 @@ public class LeaveRequest {
     @Lob
     @Column(name = "Description", nullable = false)
     private String description;
+
+    @Column(name = "isPaid", columnDefinition = "boolean default false")
+    private boolean isPaid;
 
     public LeaveRequest() {
 

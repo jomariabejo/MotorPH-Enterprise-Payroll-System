@@ -16,6 +16,10 @@ import org.hibernate.annotations.ColumnDefault;
         @NamedQuery(
                 name = "findUser",
                 query = "SELECT u FROM User u WHERE u.username = :username AND u.password = :password"
+        ),
+        @NamedQuery(
+                name = "findEmployeeEmail",
+                query = "SELECT u FROM User u WHERE u.employee = :employee"
         )
 })
 public class User {

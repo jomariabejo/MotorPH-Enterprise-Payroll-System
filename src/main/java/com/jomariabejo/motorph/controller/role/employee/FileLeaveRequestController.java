@@ -210,16 +210,16 @@ public class FileLeaveRequestController {
         LocalDate endDate = dpLeaveTo.getValue();
 
         if (startDate == null || endDate == null) {
-            return 0; // Or handle this case as appropriate for your application
+            return 0;
         }
 
         if (radioSingleLeave.isSelected()) {
             return 1;
         } else {
-            return (int) ChronoUnit.DAYS.between(startDate, endDate);
+            long daysBetween = ChronoUnit.DAYS.between(startDate, endDate);
+            return (int) (daysBetween + 1);
         }
     }
-
 
     @FXML
     void singleLeaveClicked() {

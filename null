@@ -21,115 +21,93 @@
     <div id="scope">
         <div class="scope-entry">
             <div class="title">PAYROLL RUN</div>
-            <div class="value">Mar 15, 2024</div>
+            <div class="value">2024-08-20</div>
         </div>
         <div class="scope-entry">
             <div class="title">PAY PERIOD</div>
-            <div class="value">Mar 1 - Mar 15, 2024</div>
+            <div class="value">2024-08-20 to 2024-08-20</div>
         </div>
     </div>
     <div class="content">
         <div class="left-panel">
             <div id="employee">
                 <div id="name">
-                    Employee Name
+                    Bianca Sofia Aquino
                 </div>
                 <div id="email">
-                    employeeemail@gmail.com
-                </div>
+biancake@gmail.com                </div>
             </div>
             <div class="details">
                 <div class="entry">
                     <div class="label">Employee ID</div>
-                    <div class="value">EMPLOYEE_#_VALUE</div>
+                    <div class="value">4</div>
                 </div>
                 <div class="entry">
                     <div class="label">Hourly Rate</div>
-                    <div class="value">HOURLY_RATE_VALUE</div>
+                    <div class="value">₱357.1400</div>
                 </div>
                 <div class="entry">
                     <div class="label">Date Hired</div>
-                    <div class="value">DATE_HIRED_VALUE</div>
+                    <div class="value">2024-08-29</div>
                 </div>
                 <div class="entry">
                     <div class="label">Position</div>
-                    <div class="value">POSITION_VALUE</div>
+                    <div class="value">Chief Finance Officer</div>
                 </div>
                 <div class="entry">
                     <div class="label">Department</div>
-                    <div class="value">DEPARTMENT_VALUE</div>
+                    <div class="value">Finance</div>
                 </div>
                 <div class="entry">
                     <div class="label">Payroll Cycle</div>
-                    <div class="value">PAYROLL_CYCLE_VALUE</div>
+                    <div class="value">Monthly</div>
                 </div>
                 <div class="entry">
                     <div class="label">TIN</div>
-                    <div class="value">TIN_#_VALUE</div>
+                    <div class="value">971-711-280-000</div>
                 </div>
                 <div class="entry">
                     <div class="label">SSS</div>
-                    <div class="value">SSS_#_VALUE</div>
+                    <div class="value">30-8870406-2</div>
                 </div>
                 <div class="entry">
                     <div class="label">Philhealth</div>
-                    <div class="value">PHILHEALTH_#_VALUE</div>
+                    <div class="value">177451189665</div>
                 </div>
                 <div class="entry">
                     <div class="label">Pagibig</div>
-                    <div class="value">PAGIBIG_#_VALUE</div>
+                    <div class="value">171519773969</div>
                 </div>
                 <div class="entry">
                     <div class="label">Prepared by</div>
-                    <div class="value">PREPARE_BY_VALUE</div>
-
+                    <div class="value">Isabella Isabella</div>
                 </div>
             </div>
 
-            <div class="contributions">
-                <div class="title">Employer Contribution</div>
-                <div class="entry">
-                    <div class="label">SSS</div>
-                    <div class="value">EMP_SSS</div>
-                </div>
-                <div class="entry">
-                    <div class="label">PHILHEALTH</div>
-                    <div class="value">EMP_PHILHEALTH</div>
-                </div>
-                <div class="entry">
-                    <div class="label">TIN</div>
-                    <div class="value">EMP_TIN</div>
-                </div>
-                <div class="entry">
-                    <div class="label">PAGIBIG</div>
-                    <div class="value">EMP_PAGIBIG</div>
-                </div>
-            </div>
-            <div class="ytd">
-                <div class="title">Year To Date Figures</div>
+    <div class="title">Year To Date Figures</div>
                 <div class="entry">
                     <div class="label">Taxable Income</div>
-                    <div class="value">YTD_TAXABLE_INCOME</div>
+                    <div class="value">₱1,235.0000</div>
                 </div>
                 <div class="entry">
                     <div class="label">Withholding Tax</div>
-                    <div class="value">YTD_WITHOLDING_TAX</div>
+                    <div class="value">₱1,234.0000</div>
                 </div>
                 <div class="entry">
                     <div class="label">Net Pay</div>
-                    <div class="value">YTD_NET_PAY</div>
+                    <div class="value">₱1,234.0000</div>
                 </div>
                 <div class="entry">
-                    <div class="label">Allowance</div>
-                    <div class="value">YTD_ALLOWANCE</div>
+                    <div class="label">Benefits</div>
+                    <div class="value">₱1,234.0000</div>
                 </div>
                 <div class="entry">
                     <div class="label">Bonus</div>
-                    <div class="value">YTD_BONUS</div>
+                    <div class="value">₱5.0000</div>
                 </div>
                 <div class="entry">
                     <div class="label">Deduction</div>
-                    <div class="value">YTD_DEDUCTION</div>
+                    <div class="value">₱1,234.0000</div>
                 </div>
             </div>
         </div>
@@ -146,41 +124,34 @@
                         <div class="entry">
                             <div class="label"></div>
                             <div class="detail">Basic Pay</div>
-                            <div class="rate">BASIC_PAY/Month</div>
-                            <div class="amount">BASIC_PAY_VALUE</div>
+                            <div class="rate">60000.0000/Month</div>
+                            <div class="amount">₱60,000.0000</div>
                         </div>
                     </div>
                     <div class="entry">
                         <div class="label"></div>
                         <div class="detail">Hours Worked</div>
-                        <div class="rate">HW_VALUE</div>
-                        <div class="amount">HW_AMOUNT</div>
+                        <div class="rate">2345.00/hr</div>
+                        <div class="amount">₱837,493.3000</div>
                     </div>
                     <div class="entry">
                         <div class="label"></div>
                         <div class="detail">Overtime</div>
-                        <div class="rate">OT_HR_VAL</div>
-                        <div class="amount">OT_HR_AMT</div>
+                        <div class="rate">0.0000/hr</div>
+                        <div class="amount">₱8.0000</div>
                     </div>
                     <div class="entry">
                         <div class="label"></div>
                         <div class="detail">Taxable Bonus</div>
-                        <div class="rate">BONUS_NAME</div>
-                        <div class="amount">BONUS_VALUE</div>
+                        <div class="rate"></div>
+                        <div class="amount">₱5.0000</div>
                     </div>
-                    <div class="entry">
-                        <div class="label"></div>
-                        <div class="detail">Paid Leave</div>
-                        <div class="rate">TOTAL_HR*HR_RATE</div>
-                        <div class="amount">PD_VALUE</div>
-                    </div>
-
                     <div class="nti">
                         <div class="entry">
                             <div class="label"></div>
                             <div class="detail">GROSS PAY</div>
                             <div class="rate"></div>
-                            <div class="amount">GROSS_VALUE</div>
+                            <div class="amount">₱2,345.0000</div>
                         </div>
                     </div>
                 </div>
@@ -189,32 +160,32 @@
                         <div class="label">Benefits</div>
                         <div class="detail"></div>
                         <div class="rate"></div>
-                        <div class="amount"></div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
                     <div class="entry paid">
                         <div class="label"></div>
                         <div class="detail">Rice Subsidy</div>
                         <div class="rate"></div>
-                        <div class="amount">RICE_SUBSIDY_VALUE</div>
+                        <div class="amount">₱2,345.0000</div>
                     </div>
                     <div class="entry unpaid">
                         <div class="label"></div>
                         <div class="detail">Clothing</div>
                         <div class="rate"></div>
-                        <div class="amount">CLOTHING_VALUE</div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
-                    <div class="entry unpaid">
+                    <div class="entry ">
                         <div class="label"></div>
                         <div class="detail">Phone</div>
                         <div class="rate"></div>
-                        <div class="amount">PHONE_ALLOWANCE_VALUE</div>
+                        <div class="amount">₱2,345.0000</div>
                     </div>
                     <div class="nti">
                         <div class="entry">
                             <div class="label"></div>
                             <div class="detail">TOTAL BENEFITS</div>
                             <div class="rate"></div>
-                            <div class="amount">BENIFITS_VALUE</div>
+                            <div class="amount">₱1,234.0000</div>
                         </div>
                     </div>
                 </div>
@@ -231,32 +202,32 @@
                         <div class="label"></div>
                         <div class="detail">SSS</div>
                         <div class="rate"></div>
-                        <div class="amount">DEDUCTION_SSS</div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
                     <div class="entry">
                         <div class="label"></div>
                         <div class="detail">PhilHealth</div>
                         <div class="rate"></div>
-                        <div class="amount">DEDUCTION_PHILHEALTH</div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
                     <div class="entry">
                         <div class="label"></div>
                         <div class="detail">Pagibig</div>
                         <div class="rate"></div>
-                        <div class="amount">DEDUCTION_PAGIBIG</div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
                     <div class="entry">
                         <div class="label"></div>
                         <div class="detail">Witholding-Tax</div>
                         <div class="rate"></div>
-                        <div class="amount">DEDUCTION_WT</div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
                     <div class="nti">
                         <div class="entry">
                             <div class="label"></div>
                             <div class="detail">TOTAL DEDUCTIONS</div>
                             <div class="rate"></div>
-                            <div class="amount">TOTAL_DEDUCTIONS_VALUE</div>
+                            <div class="amount">₱1,234.0000</div>
                         </div>
                     </div>
                     <div class="entry">
@@ -269,19 +240,19 @@
                         <div class="label"></div>
                         <div class="detail">Gross Income</div>
                         <div class="rate"></div>
-                        <div class="amount">GROSS_INCOME_VALUE</div>
+                        <div class="amount">₱2,345.0000</div>
                     </div>
                     <div class="entry">
                         <div class="label"></div>
                         <div class="detail">Deductions</div>
                         <div class="rate"></div>
-                        <div class="amount">TOTAL_DEDUCTION_VALUE</div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
                     <div class="entry">
                         <div class="label"></div>
                         <div class="detail">Benefits</div>
                         <div class="rate"></div>
-                        <div class="amount">TOTAL_BENEFITS_VALUE</div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
                 </div>
 
@@ -291,7 +262,7 @@
                         <div class="label"></div>
                         <div class="detail">NET PAY</div>
                         <div class="rate"></div>
-                        <div class="amount">TOTAL_NET_PAY</div>
+                        <div class="amount">₱1,234.0000</div>
                     </div>
                 </div>
             </div>

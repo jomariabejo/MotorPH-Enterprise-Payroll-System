@@ -27,6 +27,18 @@ import java.sql.Timestamp;
                 @NamedQuery(
                         name = "fetchEmployeeYearsOfPayslip",
                         query = "SELECT DISTINCT YEAR(PS.payrollRunDate) AS Years FROM Payslip PS WHERE PS.employeeID = :employeeId ORDER BY YEAR(PS.payrollRunDate) DESC"
+                ),
+                @NamedQuery(
+                        name = "fetchYearToDateFigures",
+                        query = "SELECT new com.jomariabejo.motorph.model.YearToDateFigures(" +
+                                "SUM(PS.grossIncome), " +
+                                "SUM(PS.totalBenefits), " +
+                                "SUM(PS.bonus), " +
+                                "SUM(PS.taxableIncome), " +
+                                "SUM(PS.withholdingTax), " +
+                                "SUM(PS.totalDeductions), " +
+                                "SUM(PS.netPay)) " +
+                                "FROM Payslip PS WHERE PS.employeeID = :employeeId AND YEAR(PS.payrollRunDate) = :year"
                 )
         }
 )
@@ -62,8 +74,8 @@ public class Payslip {
     @Column(name = "HourlyRate", nullable = false, precision = 18, scale = 4)
     private BigDecimal hourlyRate;
 
-    @Column(name = "DaysWorked", nullable = false)
-    private Integer daysWorked;
+    @Column(name = "TotalHoursWorked", nullable = false)
+    private BigDecimal totalHoursWorked;
 
     @ColumnDefault("0.0000")
     @Column(name = "OvertimeHours", nullable = false, precision = 8, scale = 4)

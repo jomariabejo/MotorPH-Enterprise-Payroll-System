@@ -2,8 +2,10 @@ package com.jomariabejo.motorph.service;
 
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Payslip;
+import com.jomariabejo.motorph.model.YearToDateFigures;
 import com.jomariabejo.motorph.repository.PayslipRepository;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,5 +43,9 @@ public class PayslipService {
 
     public Optional<List<Payslip>> getPayslipByEmployeeIdAndYear(Employee employee, Integer year) {
         return payslipRepository.findPayslipByEmployeeAndYear(employee,year);
+    }
+
+    public Optional<YearToDateFigures> getYearToDateFigures(Employee employee, Year year) {
+        return payslipRepository.findYearToDateFiguresByEmployee(employee,year);
     }
 }

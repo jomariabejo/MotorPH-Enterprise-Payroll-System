@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.sql.Date;
 import java.time.Instant;
 import java.time.LocalDate;
 
@@ -18,13 +19,13 @@ public class Payroll {
     private Integer id;
 
     @Column(name = "PayrollRunDate", nullable = false)
-    private LocalDate payrollRunDate;
+    private Date payrollRunDate;
 
     @Column(name = "PeriodStartDate", nullable = false)
-    private LocalDate periodStartDate;
+    private Date periodStartDate;
 
     @Column(name = "PeriodEndDate", nullable = false)
-    private LocalDate periodEndDate;
+    private Date periodEndDate;
 
     @Column(name = "Status", nullable = false, length = 50)
     private String status;

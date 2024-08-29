@@ -3,11 +3,14 @@ package com.jomariabejo.motorph.repository;
 import com.jomariabejo.motorph.HibernateUtil;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Payslip;
+import com.jomariabejo.motorph.model.YearToDateFigures;
 import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.Year;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -57,4 +60,27 @@ public class PayslipRepository extends _AbstractHibernateRepository<Payslip, Int
             }
         }
     }
+
+    public Optional<YearToDateFigures> findYearToDateFiguresByEmployee(Employee employee, Year year) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            Query<YearToDateFigures> query = session.createNamedQuery("fetchYearToDateFigures", YearToDateFigures.class);
+            query.setParameter("employeeId", employee);
+            query.setParameter("year", year.getValue());
+
+            // Assuming there could be no result; handle accordingly
+            YearToDateFigures result = query.getSingleResult();
+            return Optional.ofNullable(result);
+
+        } catch (NoResultException e) {
+            // Log or handle the exception if needed
+            return Optional.empty();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
 }

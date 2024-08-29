@@ -1,5 +1,6 @@
 package com.jomariabejo.motorph.service;
 
+import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.User;
 import com.jomariabejo.motorph.repository.UserRepository;
 
@@ -36,5 +37,9 @@ public class UserService {
 
     public Optional<User> fetchUser(String username, String password) {
         return userRepository.findUserByUsernameAndPassword(username,password);
+    }
+
+    public Optional<User> fetchEmailByEmployeeId(Employee employeeID) {
+        return userRepository.findEmailByEmployeeId(employeeID);
     }
 }

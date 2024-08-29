@@ -6,6 +6,7 @@ import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
 
 @Getter
@@ -32,7 +33,10 @@ public class Employee {
     private String firstName;
 
     @Column(name = "Birthday", nullable = false)
-    private LocalDate birthday;
+    private Date birthday;
+
+    @Column(name = "DateHired", nullable = false)
+    private Date dateHired;
 
     @Column(name = "Address", nullable = false)
     private String address;
