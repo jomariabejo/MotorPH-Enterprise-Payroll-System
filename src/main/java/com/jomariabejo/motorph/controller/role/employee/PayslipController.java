@@ -21,7 +21,6 @@ import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-import java.awt.*;
 import java.util.List;
 
 @Getter
@@ -102,16 +101,21 @@ public class PayslipController {
         TableColumn<Payslip, Void> actionsColumn = new TableColumn<>("Actions");
         actionsColumn.setPrefWidth(200);
         actionsColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button updateButton = createDownloadButton();
-            private final HBox actionsBox = new HBox(updateButton);
+            private final Button downloadBtn = createDownloadButton();
+            private final HBox actionsBox = new HBox(downloadBtn);
 
             {
                 actionsBox.setAlignment(Pos.CENTER);
                 actionsBox.setSpacing(10);
                 setGraphic(actionsBox);
 
-                updateButton.setOnAction(event -> {
-                    System.out.println("I'm clicked");
+                downloadBtn.setOnAction(event -> {
+                    /**
+                     * TODO:
+                     * Main Objective:
+                     * Gusto ko ma download ang payslip ng employee in pdf format.
+                     * Flow chart
+                     */
                 });
             }
 
