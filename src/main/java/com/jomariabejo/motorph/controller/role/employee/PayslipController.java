@@ -135,6 +135,9 @@ public class PayslipController {
                      */
 
                     Payslip payslip = getTableView().getItems().get(getIndex());
+
+                    // Create new service class that we will be using to fetch data.
+
                     UserService userService = new UserService(new UserRepository());
                     PayslipService payslipService = new PayslipService(new PayslipRepository());
 
@@ -253,7 +256,6 @@ public class PayslipController {
                             "                    <div class=\"value\">"+PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTotalDeductions()))+"</div>\n" +
                             "                </div>\n" +
                             "            </div>\n" +
-                            "        </div>\n" +
                             "        <div class=\"right-panel\">\n" +
                             "            <div class=\"details\">\n" +
                             "                <div class=\"salary\">\n" +
@@ -409,6 +411,7 @@ public class PayslipController {
                             "                    </div>\n" +
                             "                </div>\n" +
                             "            </div>\n" +
+                            "        </div>\n" +
                             "        </div>\n" +
                             "    </div>\n" +
                             "</div>\n" +
@@ -572,14 +575,33 @@ public class PayslipController {
                             "\n" +
                             "</html>";
 
+                    // Define the path to the directory and the file name
+                    String directoryPath = "C:\\Users\\lrjab\\Documents\\GitHub\\payroll\\src\\main\\resources\\downloads";
+                    String fileName = payslip.getPayrollID().getPayrollRunDate().toString().toUpperCase()+"_"+payslip.getEmployeeID().getLastName().toUpperCase()+payslip.getEmployeeID().getFirstName().toUpperCase()+"fileName.html";
 
-                    List<String> lines = Arrays.asList(strPayslipHTMLSourceCodeByXinTaroAndModifiedByJomariAbejo);
-                    FileChooser fileChooser = new FileChooser();
-                    File filepath = fileChooser.showOpenDialog(getTableView().getScene().getWindow()).getAbsoluteFile();
-                    try {
-                        writeSmallTextFile(lines, String.valueOf(filepath));
+                    // Create a File object for the directory
+                    File directory = new File(directoryPath);
+
+                    // Ensure the directory exists
+                    if (!directory.exists()) {
+                        // Create the directory if it does not exist
+                        if (directory.mkdirs()) {
+                            System.out.println("Directory created successfully.");
+                        } else {
+                            System.out.println("Failed to create directory.");
+                            return; // Exit the method if directory creation fails
+                        }
+                    }
+
+                    // Create a File object for the file
+                    File file = new File(directory, fileName);
+
+                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                        writer.write(strPayslipHTMLSourceCodeByXinTaroAndModifiedByJomariAbejo);
+                        // No need for writer.newLine() in HTML files
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace(); // Print stack trace for debugging
+                        // Optionally, you can handle specific exception cases or log them
                     }
                 });
             }
@@ -591,11 +613,6 @@ public class PayslipController {
             }
         });
         return actionsColumn;
-    }
-
-    private static void writeSmallTextFile(List<String> aLines, String aFileName) throws IOException {
-        Path path = Paths.get(aFileName);
-        Files.write(path, aLines, StandardCharsets.UTF_8);
     }
 
     private Button createDownloadButton() {
