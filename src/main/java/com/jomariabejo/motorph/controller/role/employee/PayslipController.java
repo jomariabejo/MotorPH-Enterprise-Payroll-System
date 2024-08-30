@@ -29,16 +29,10 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.time.Month;
 import java.time.Year;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Getter
 @Setter
@@ -144,6 +138,21 @@ public class PayslipController {
 
                     Optional<YearToDateFigures> yearToDateFigures = payslipService.getYearToDateFigures(payslip.getEmployeeID(), Year.now());
 
+                    // TODO: Change the period start ui: it should display like this: August 01-31,2024
+                    SimpleDateFormat sdf = new SimpleDateFormat();
+                    sdf.applyPattern("MMM dd");
+
+                    String payStartPeriod = sdf.format(payslip.getPeriodStartDate());
+                    String payEndPeriod = sdf.format(payslip.getPeriodEndDate());
+
+                    sdf.applyPattern("yyyy");
+                    String year = sdf.format(payslip.getPayrollRunDate());
+
+                    String lblPayPeriod = payStartPeriod + " - " + payEndPeriod + ", " + year;
+
+                    sdf.applyPattern("MMMM dd,yyyy");
+                    String payRun = sdf.format(payslip.getPayrollRunDate());
+
                     String strPayslipHTMLSourceCodeByXinTaroAndModifiedByJomariAbejo = "<!--Source code: https://codepen.io/xintaro/pen/bRVYjM -->\n" +
                             "<!DOCTYPE html>\n" +
                             "<html>\n" +
@@ -167,11 +176,11 @@ public class PayslipController {
                             "    <div id=\"scope\">\n" +
                             "        <div class=\"scope-entry\">\n" +
                             "            <div class=\"title\">PAYROLL RUN</div>\n" +
-                            "            <div class=\"value\">" + payslip.getPayrollID().getPayrollRunDate() + "</div>\n" +
+                            "            <div class=\"value\">" + payRun + "</div>\n" +
                             "        </div>\n" +
                             "        <div class=\"scope-entry\">\n" +
                             "            <div class=\"title\">PAY PERIOD</div>\n" +
-                            "            <div class=\"value\">" + payslip.getPeriodStartDate() + " to " + payslip.getPeriodEndDate() + "</div>\n" +
+                            "            <div class=\"value\">" + lblPayPeriod +"</div>\n" +
                             "        </div>\n" +
                             "    </div>\n" +
                             "    <div class=\"content\">\n" +
@@ -210,51 +219,37 @@ public class PayslipController {
                             "                    <div class=\"value\">Monthly</div>\n" + // this system is designed for monthly basis
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">TIN</div>\n" +
-                            "                    <div class=\"value\">" + payslip.getEmployeeID().getTINNumber() + "</div>\n" +
-                            "                </div>\n" +
-                            "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">SSS</div>\n" +
-                            "                    <div class=\"value\">" + payslip.getEmployeeID().getSSSNumber() + "</div>\n" +
-                            "                </div>\n" +
-                            "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">Philhealth</div>\n" +
-                            "                    <div class=\"value\">" + payslip.getEmployeeID().getPhilhealthNumber() + "</div>\n" +
-                            "                </div>\n" +
-                            "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">Pagibig</div>\n" +
-                            "                    <div class=\"value\">" + payslip.getEmployeeID().getPagibigNumber() + "</div>\n" +
-                            "                </div>\n" +
-                            "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Prepared by</div>\n" +
-                            "                    <div class=\"value\">" + payslip.getCreatedBy().getFirstName() + " " + payslip.getCreatedBy().getFirstName() + "</div>\n" +
+                            "                    <div class=\"value\">" + payslip.getCreatedBy().getFirstName() + " " + payslip.getCreatedBy().getLastName() + "</div>\n" +
                             "                </div>\n" +
                             "            </div>\n" +
-                            "\n" + "    <div class=\"title\">Year To Date Figures</div>\n" +
+            "                <div class=\"ytd\">\n" +
+                            "    <div class=\"title\">Year To Date Figures</div>\n" +
                             "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">Taxable Income</div>\n" +
-                            "                    <div class=\"value\">"+PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTaxableIncome()))+"</div>\n" +
-                            "                </div>\n" +
-                            "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">Withholding Tax</div>\n" +
-                            "                    <div class=\"value\">"+PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdWitholdingTax()))+"</div>\n" +
-                            "                </div>\n" +
-                            "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">Net Pay</div>\n" +
-                            "                    <div class=\"value\">"+PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdNetPay()))+"</div>\n" +
-                            "                </div>\n" +
-                            "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">Benefits</div>\n" +
-                            "                    <div class=\"value\">"+PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTotalBenefits()))+"</div>\n" +
-                            "                </div>\n" +
-                            "                <div class=\"entry\">\n" +
-                            "                    <div class=\"label\">Bonus</div>\n" +
-                            "                    <div class=\"value\">"+PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdBonus()))+"</div>\n" +
+                            "                    <div class=\"label\">Gross Income</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdGrossIncome())) + "</div>\n" +
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Deduction</div>\n" +
-                            "                    <div class=\"value\">"+PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTotalDeductions()))+"</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTotalDeductions())) + "</div>\n" +
                             "                </div>\n" +
+                            "                <div class=\"entry\">\n" +
+                            "                    <div class=\"label\">Taxable Income</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTaxableIncome())) + "</div>\n" +
+                            "                </div>\n" +
+                            "                <div class=\"entry\">\n" +
+                            "                    <div class=\"label\">Withholding Tax</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdWitholdingTax())) + "</div>\n" +
+                            "                </div>\n" +
+                            "                <div class=\"entry\">\n" +
+                            "                    <div class=\"label\">Benefits</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTotalBenefits())) + "</div>\n" +
+                            "                </div>\n" +
+                            "                <div class=\"entry\">\n" +
+                            "                    <div class=\"label\">Net Pay</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdNetPay())) + "</div>\n" +
+                            "                </div>\n" +
+                            "            </div>\n" +
                             "            </div>\n" +
                             "        <div class=\"right-panel\">\n" +
                             "            <div class=\"details\">\n" +
@@ -269,34 +264,34 @@ public class PayslipController {
                             "                        <div class=\"entry\">\n" +
                             "                            <div class=\"label\"></div>\n" +
                             "                            <div class=\"detail\">Basic Pay</div>\n" +
-                            "                            <div class=\"rate\">"+payslip.getEmployeeID().getBasicSalary()+"/Month</div>\n" +
-                            "                            <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getEmployeeID().getBasicSalary()))+"</div>\n" +
+                            "                            <div class=\"rate\">" + payslip.getEmployeeID().getBasicSalary() + "/MM</div>\n" +
+                            "                            <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getEmployeeID().getBasicSalary())) + "</div>\n" +
                             "                        </div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Hours Worked</div>\n" +
-                            "                        <div class=\"rate\">"+payslip.getTotalHoursWorked()+"/hr</div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getTotalHoursWorked().multiply(payslip.getEmployeeID().getHourlyRate())))+"</div>\n" +
+                            "                        <div class=\"rate\">" + payslip.getTotalHoursWorked() + "hr</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getTotalHoursWorked().multiply(payslip.getEmployeeID().getHourlyRate()))) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Overtime</div>\n" +
-                            "                        <div class=\"rate\">"+payslip.getOvertimeHours()+"/hr</div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getOvertimeHours().multiply(payslip.getEmployeeID().getHourlyRate())))+"</div>\n" +
+                            "                        <div class=\"rate\">" + payslip.getOvertimeHours() + "hr</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getOvertimeHours().multiply(payslip.getEmployeeID().getHourlyRate()))) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Taxable Bonus</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getBonus()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getBonus())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"nti\">\n" +
                             "                        <div class=\"entry\">\n" +
                             "                            <div class=\"label\"></div>\n" +
                             "                            <div class=\"detail\">GROSS PAY</div>\n" +
                             "                            <div class=\"rate\"></div>\n" +
-                            "                            <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getGrossIncome()))+"</div>\n" +
+                            "                            <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getGrossIncome())) + "</div>\n" +
                             "                        </div>\n" +
                             "                    </div>\n" +
                             "                </div>\n" +
@@ -305,32 +300,32 @@ public class PayslipController {
                             "                        <div class=\"label\">Benefits</div>\n" +
                             "                        <div class=\"detail\"></div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getTotalBenefits()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getTotalBenefits())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry paid\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Rice Subsidy</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getRiceSubsidy()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getRiceSubsidy())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry unpaid\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Clothing</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getClothingAllowance()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getClothingAllowance())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry \">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Phone</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getPhoneAllowance()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getPhoneAllowance())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"nti\">\n" +
                             "                        <div class=\"entry\">\n" +
                             "                            <div class=\"label\"></div>\n" +
                             "                            <div class=\"detail\">TOTAL BENEFITS</div>\n" +
                             "                            <div class=\"rate\"></div>\n" +
-                            "                            <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getTotalBenefits()))+"</div>\n" +
+                            "                            <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getTotalBenefits())) + "</div>\n" +
                             "                        </div>\n" +
                             "                    </div>\n" +
                             "                </div>\n" +
@@ -347,32 +342,32 @@ public class PayslipController {
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">SSS</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getSss()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getSss())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">PhilHealth</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getPhilhealth()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getPhilhealth())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Pagibig</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getPagIbig()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getPagIbig())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Witholding-Tax</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getWithholdingTax()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getWithholdingTax())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"nti\">\n" +
                             "                        <div class=\"entry\">\n" +
                             "                            <div class=\"label\"></div>\n" +
                             "                            <div class=\"detail\">TOTAL DEDUCTIONS</div>\n" +
                             "                            <div class=\"rate\"></div>\n" +
-                            "                            <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getTotalDeductions()))+"</div>\n" +
+                            "                            <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getTotalDeductions())) + "</div>\n" +
                             "                        </div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
@@ -385,19 +380,19 @@ public class PayslipController {
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Gross Income</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getGrossIncome()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getGrossIncome())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Deductions</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getTotalDeductions()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getTotalDeductions())) + "</div>\n" +
                             "                    </div>\n" +
                             "                    <div class=\"entry\">\n" +
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">Benefits</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+PesoUtility.formatToPeso(String.valueOf(payslip.getTotalBenefits()))+"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getTotalBenefits())) + "</div>\n" +
                             "                    </div>\n" +
                             "                </div>\n" +
                             "\n" +
@@ -407,7 +402,7 @@ public class PayslipController {
                             "                        <div class=\"label\"></div>\n" +
                             "                        <div class=\"detail\">NET PAY</div>\n" +
                             "                        <div class=\"rate\"></div>\n" +
-                            "                        <div class=\"amount\">"+ PesoUtility.formatToPeso(String.valueOf(payslip.getNetPay())) +"</div>\n" +
+                            "                        <div class=\"amount\">" + PesoUtility.formatToPeso(String.valueOf(payslip.getNetPay())) + "</div>\n" +
                             "                    </div>\n" +
                             "                </div>\n" +
                             "            </div>\n" +
@@ -577,7 +572,7 @@ public class PayslipController {
 
                     // Define the path to the directory and the file name
                     String directoryPath = "C:\\Users\\lrjab\\Documents\\GitHub\\payroll\\src\\main\\resources\\downloads";
-                    String fileName = payslip.getPayrollID().getPayrollRunDate().toString().toUpperCase()+"_"+payslip.getEmployeeID().getLastName().toUpperCase()+payslip.getEmployeeID().getFirstName().toUpperCase()+"fileName.html";
+                    String fileName = payslip.getPayrollID().getPayrollRunDate().toString().toUpperCase() + "_" + payslip.getEmployeeID().getLastName().toUpperCase() + payslip.getEmployeeID().getFirstName().toUpperCase() + "fileName.html";
 
                     // Create a File object for the directory
                     File directory = new File(directoryPath);
