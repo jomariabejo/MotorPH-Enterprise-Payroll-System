@@ -121,12 +121,6 @@ public class PayslipController {
                 setGraphic(actionsBox);
 
                 downloadBtn.setOnAction(event -> {
-                    /**
-                     * TODO:
-                     * Main Objective:
-                     * Gusto ko ma download ang payslip ng employee in pdf format.
-                     * Flow chart
-                     */
 
                     Payslip payslip = getTableView().getItems().get(getIndex());
 
@@ -138,7 +132,6 @@ public class PayslipController {
 
                     Optional<YearToDateFigures> yearToDateFigures = payslipService.getYearToDateFigures(payslip.getEmployeeID(), Year.now());
 
-                    // TODO: Change the period start ui: it should display like this: August 01-31,2024
                     SimpleDateFormat sdf = new SimpleDateFormat();
                     sdf.applyPattern("MMM dd");
 
@@ -153,6 +146,7 @@ public class PayslipController {
                     sdf.applyPattern("MMMM dd,yyyy");
                     String payRun = sdf.format(payslip.getPayrollRunDate());
 
+                    String dateHired = sdf.format(payslip.getEmployeeID().getDateHired());
                     String strPayslipHTMLSourceCodeByXinTaroAndModifiedByJomariAbejo = "<!--Source code: https://codepen.io/xintaro/pen/bRVYjM -->\n" +
                             "<!DOCTYPE html>\n" +
                             "<html>\n" +
@@ -204,7 +198,7 @@ public class PayslipController {
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Date Hired</div>\n" +
-                            "                    <div class=\"value\">" + payslip.getEmployeeID().getDateHired() + "</div>\n" +
+                            "                    <div class=\"value\">" + dateHired + "</div>\n" +
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Position</div>\n" +
@@ -572,7 +566,8 @@ public class PayslipController {
 
                     // Define the path to the directory and the file name
                     String directoryPath = "C:\\Users\\lrjab\\Documents\\GitHub\\payroll\\src\\main\\resources\\downloads";
-                    String fileName = payslip.getPayrollID().getPayrollRunDate().toString().toUpperCase() + "_" + payslip.getEmployeeID().getLastName().toUpperCase() + payslip.getEmployeeID().getFirstName().toUpperCase() + "fileName.html";
+                    String employeeName = payslip.getEmployeeID().getLastName().toUpperCase() + "_" + payslip.getEmployeeID().getFirstName().toUpperCase();
+                    String fileName = "PaySlip#"+payslip.getId()+employeeName+".html";
 
                     // Create a File object for the directory
                     File directory = new File(directoryPath);
