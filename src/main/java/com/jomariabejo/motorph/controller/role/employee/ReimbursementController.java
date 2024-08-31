@@ -2,7 +2,10 @@ package com.jomariabejo.motorph.controller.role.employee;
 
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
-import com.jomariabejo.motorph.model.OvertimeRequest;
+import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.model.ReimbursementRequest;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +23,9 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material.Material;
 
 import java.io.IOException;
+import java.time.Year;
+import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -31,16 +37,18 @@ public class ReimbursementController {
     private ComboBox<?> cbMonth;
 
     @FXML
-    private ComboBox<?> cbYear;
+    private ComboBox<Integer> cbYear;
 
     @FXML
     private Pagination pagination;
 
     @FXML
-    private TableView<OvertimeRequest> tvOvertimeRequests;
+    private TableView<ReimbursementRequest> tvReimbursementRequest;
 
     @FXML
     private Button fileReimbursement;
+
+    private ObservableList<ReimbursementRequest> reimbursementRequests;
 
     @FXML
     private void initialize() {
@@ -86,5 +94,44 @@ public class ReimbursementController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    /**
+     * TODO FINISH
+     */
+
+    private void populateTableViewByMyOwnReimbursements() {
+        Employee employee = this.getEmployeeRoleNavigationController().getMainViewController().getEmployee();
+        Integer year = this.cbYear.getSelectionModel().getSelectedItem();
+
+        reimbursementRequests = FXCollections.observableList(
+                this.getEmployeeRoleNavigationController()
+                        .getMainViewController()
+                        .getServiceFactory()
+                        .getReimbursementRequestService()
+                        .fetchReimbursementByEmployeeIdAndYear(
+                                employee, year
+                        ).get()
+        );
+        tvReimbursementRequest.setItems(reimbursementRequests);
+    }
+
+    private void populateYears() {
+        Employee employee = this.getEmployeeRoleNavigationController().getMainViewController().getEmployee();
+        Optional<List<Integer>> years = this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getReimbursementRequestService().fetchEmployeeYearsOfReimbursements(employee);
+        boolean notEmpty = !years.get().isEmpty();
+        if (years.isPresent() && notEmpty) {
+            cbYear.setItems(FXCollections.observableList(years.get()));
+        }
+        else {
+            cbYear.getItems().add(Integer.valueOf(String.valueOf(Year.now()))); // ginbutangan ko osa na year bas cool
+        }
+        cbYear.getSelectionModel().selectFirst();
+    }
+
+    private void setup() {
+        populateYears();
+        populateTableViewByMyOwnReimbursements();
     }
 }

@@ -565,7 +565,7 @@ public class PayslipController {
                             "</html>";
 
                     // Define the path to the directory and the file name
-                    String directoryPath = "C:\\Users\\lrjab\\Documents\\GitHub\\payroll\\src\\main\\resources\\downloads";
+                    String directoryPath = "src\\main\\resources\\downloads";
                     String employeeName = payslip.getEmployeeID().getLastName().toUpperCase() + "_" + payslip.getEmployeeID().getFirstName().toUpperCase();
                     String fileName = "PaySlip#"+payslip.getId()+employeeName+".html";
 

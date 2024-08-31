@@ -1,9 +1,11 @@
 package com.jomariabejo.motorph.service;
 
+import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.ReimbursementRequest;
 import com.jomariabejo.motorph.repository.ReimbursementRequestRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class ReimbursementRequestService {
 
@@ -31,5 +33,13 @@ public class ReimbursementRequestService {
 
     public void deleteRequest(ReimbursementRequest request) {
         requestRepository.delete(request);
+    }
+
+    public Optional<List<Integer>> fetchEmployeeYearsOfReimbursements(Employee employee) {
+        return requestRepository.findEmployeeYearsOfReimbursement(employee);
+    }
+
+    public Optional<List<ReimbursementRequest>> fetchReimbursementByEmployeeIdAndYear(Employee employee, Integer year) {
+        return requestRepository.findReimbursementByEmployeeAndYear(employee, year);
     }
 }

@@ -11,6 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.Optional;
 
 @Getter
@@ -78,7 +79,7 @@ public class FileReimbursementRequestController {
             reimbursementRequest.setEmployeeNumber(this.getReimbursementController().getEmployeeRoleNavigationController().getMainViewController().getEmployee()); // the employee that files reimbursement request.
             reimbursementRequest.setAmount(new BigDecimal(tfAmount.getText()));
             reimbursementRequest.setDescription(tfDescription.getText());
-            reimbursementRequest.setRequestDate(dpReimbursementDate.getValue());
+            reimbursementRequest.setRequestDate(Date.valueOf(dpReimbursementDate.getValue()));
             reimbursementRequest.setStatus("Submitted");
         }
         catch (Exception e) {
@@ -96,4 +97,8 @@ public class FileReimbursementRequestController {
             }
         });
     }
+
+    /**
+     * 1. When I clicked the reimbursement, it should display submitted reimbursement
+     */
 }

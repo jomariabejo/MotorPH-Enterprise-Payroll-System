@@ -6,46 +6,82 @@
 <?import javafx.scene.control.Pagination?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="897.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.employee.ReimbursementController">
-   <children>
-      <VBox alignment="BOTTOM_CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="12.0">
-               <children>
-                  <ComboBox fx:id="cbMonth" onAction="#cbMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
-                  <ComboBox fx:id="cbYear" layoutX="1027.0" layoutY="25.0" onAction="#cbYearClicked" prefHeight="50.0" prefWidth="155.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
-                  <Button fx:id="fileReimbursement" mnemonicParsing="false" onAction="#fileReimbursementRequest" prefHeight="50.0" prefWidth="320.0" text="File Reimbursement">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-               </children>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-            </HBox>
-            <TableView fx:id="tvOvertimeRequests" prefHeight="650.0">
-               <columns>
-                  <TableColumn prefWidth="150.0" text="Timesheet Id" />
-                  <TableColumn prefWidth="150.0" text="Date" />
-                  <TableColumn prefWidth="150.0" text="Time In" />
-                  <TableColumn prefWidth="150.0" text="Time Out" />
-                  <TableColumn prefWidth="150.0" text="Hours Worked" />
-               </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TableView>
-            <Pagination managed="false" visible="false" fx:id="pagination" onDragDetected="#paginationOnDragDetected" prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css" />
-         </children>
-      </VBox>
-   </children>
-   <padding>
-      <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
-   </padding>
+    <children>
+        <VBox alignment="BOTTOM_CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="12.0">
+                    <children>
+                        <ComboBox fx:id="cbMonth" onAction="#cbMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
+                        <ComboBox fx:id="cbYear" layoutX="1027.0" layoutY="25.0" onAction="#cbYearClicked" prefHeight="50.0" prefWidth="155.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
+                        <Button fx:id="fileReimbursement" mnemonicParsing="false" onAction="#fileReimbursementRequest" prefHeight="50.0" prefWidth="320.0" text="File Reimbursement">
+                            <font>
+                                <Font size="24.0" />
+                            </font>
+                        </Button>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <TableView fx:id="tvReimbursementRequest" prefHeight="650.0">
+                    <columns>
+                        <TableColumn prefWidth="150.0" text="Reimbursement Id">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="id" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Employee Number">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="employeeNumber" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Request Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="requestDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Amount">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="amount" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Description">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="id" />
+                            </cellValueFactory>
+                        </TableColumn>
+                  <TableColumn prefWidth="150.0" text="Status">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="id" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn prefWidth="150.0" text="Processed By">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="id" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn prefWidth="150.0" text="Process Date">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="id" />
+                     </cellValueFactory>
+                  </TableColumn>
+                    </columns>
+                    <columnResizePolicy>
+                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                    </columnResizePolicy>
+                </TableView>
+                <Pagination fx:id="pagination" managed="false" onDragDetected="#paginationOnDragDetected" prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css" visible="false" />
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
+    </padding>
 </AnchorPane>
