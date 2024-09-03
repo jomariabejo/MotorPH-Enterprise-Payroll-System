@@ -7,7 +7,6 @@ import org.hibernate.annotations.ColumnDefault;
 
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -24,7 +23,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "EmployeeNumber", nullable = false)
-    private Integer id;
+    private Integer employeeNumber;
 
     @Column(name = "LastName", nullable = false, length = 100)
     private String lastName;

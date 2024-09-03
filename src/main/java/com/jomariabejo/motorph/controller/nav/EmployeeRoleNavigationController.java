@@ -149,6 +149,7 @@ public class EmployeeRoleNavigationController implements _ViewLoader {
 
             if (controller instanceof ReimbursementController reimbursementController) {
                 reimbursementController.setEmployeeRoleNavigationController(this);
+                reimbursementController.setup();
             }
         });
     }

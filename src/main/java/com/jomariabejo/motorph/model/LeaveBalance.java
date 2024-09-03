@@ -18,11 +18,11 @@ import org.hibernate.annotations.ColumnDefault;
                 query = "SELECT lb.balance " +
                         "FROM LeaveBalance lb " +
                         "JOIN lb.leaveTypeID lrt " +
-                        "WHERE lb.employee.id = :employeeId AND lrt.leaveTypeName = :leaveTypeName"
+                        "WHERE lb.employee.employeeNumber = :employeeId AND lrt.leaveTypeName = :leaveTypeName"
         ),
         @NamedQuery(
                 name = "LeaveBalance.findEmployeeRemainingLeaveBalance",
-                query = "SELECT lb FROM LeaveBalance lb where lb.employee.id = :employeeId"
+                query = "SELECT lb FROM LeaveBalance lb where lb.employee.employeeNumber = :employeeId"
         )
 })
 public class LeaveBalance {

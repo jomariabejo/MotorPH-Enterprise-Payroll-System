@@ -34,7 +34,7 @@
                     <columns>
                         <TableColumn prefWidth="150.0" text="Reimbursement Id">
                             <cellValueFactory>
-                                <PropertyValueFactory property="id" />
+                                <PropertyValueFactory property="reimbursementRequestId" />
                             </cellValueFactory>
                         </TableColumn>
                         <TableColumn prefWidth="150.0" text="Employee Number">
@@ -54,22 +54,22 @@
                         </TableColumn>
                         <TableColumn prefWidth="150.0" text="Description">
                             <cellValueFactory>
-                                <PropertyValueFactory property="id" />
+                                <PropertyValueFactory property="description" />
                             </cellValueFactory>
                         </TableColumn>
                   <TableColumn prefWidth="150.0" text="Status">
                      <cellValueFactory>
-                        <PropertyValueFactory property="id" />
+                        <PropertyValueFactory property="status" />
                      </cellValueFactory>
                   </TableColumn>
                   <TableColumn prefWidth="150.0" text="Processed By">
                      <cellValueFactory>
-                        <PropertyValueFactory property="id" />
+                        <PropertyValueFactory property="processedBy" />
                      </cellValueFactory>
                   </TableColumn>
                   <TableColumn prefWidth="150.0" text="Process Date">
                      <cellValueFactory>
-                        <PropertyValueFactory property="id" />
+                        <PropertyValueFactory property="processedDate" />
                      </cellValueFactory>
                   </TableColumn>
                     </columns>

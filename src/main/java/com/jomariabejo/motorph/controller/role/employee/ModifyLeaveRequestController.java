@@ -122,7 +122,7 @@ public class ModifyLeaveRequestController {
     private boolean hasOverlappingLeaveDates() {
         return this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getLeaveRequestService().
                 isEmployeeHasOverlapLeaveDates(
-                        this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getEmployee().getId(), dpLeaveFrom.getValue(), dpLeaveTo.getValue());
+                        this.getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getEmployee().getEmployeeNumber(), dpLeaveFrom.getValue(), dpLeaveTo.getValue());
     }
 
     private void displaySorryYouDontHaveRemainingLeaveBalanceLeft() {

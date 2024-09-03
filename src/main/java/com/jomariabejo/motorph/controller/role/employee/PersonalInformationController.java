@@ -69,7 +69,7 @@ public class PersonalInformationController {
                         .getEmployeeRoleNavigationController()
                         .getMainViewController()
                         .getEmployee()
-                        .getId()
+                        .getEmployeeNumber()
                         .toString()
         );
         tfEmployeeStatus.setText(

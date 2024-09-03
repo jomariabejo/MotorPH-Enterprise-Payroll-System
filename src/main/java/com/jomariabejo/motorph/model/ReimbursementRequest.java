@@ -29,7 +29,7 @@ public class ReimbursementRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RequestID", nullable = false)
-    private Integer id;
+    private Integer reimbursementRequestId;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
@@ -57,4 +57,8 @@ public class ReimbursementRequest {
     @Column(name = "ProcessedDate")
     private Date processedDate;
 
+    // Custom getter for employee number
+    public Integer getEmployeeNumber() {
+        return employeeNumber != null ? employeeNumber.getEmployeeNumber() : null;
+    }
 }

@@ -7,7 +7,6 @@ import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +21,7 @@ public class LeaveBalanceRepository extends _AbstractHibernateRepository<LeaveBa
             session = HibernateUtil.openSession();
             Query<Integer> query = session.createNamedQuery("LeaveBalance.findBalanceByEmployeeAndLeaveType", Integer.class);
 
-            query.setParameter("employeeId", employee.getId());
+            query.setParameter("employeeId", employee.getEmployeeNumber());
             query.setParameter("leaveTypeName", leaveTypeName);
 
             Integer leaveBalance = query.getSingleResult();
@@ -46,7 +45,7 @@ public class LeaveBalanceRepository extends _AbstractHibernateRepository<LeaveBa
             session = HibernateUtil.openSession();
             Query<LeaveBalance> query = session.createNamedQuery("LeaveBalance.findEmployeeRemainingLeaveBalance", LeaveBalance.class);
 
-            query.setParameter("employeeId", employee.getId());
+            query.setParameter("employeeId", employee.getEmployeeNumber());
 
             return Optional.ofNullable(query.getResultList());
         } catch (NoResultException e) {

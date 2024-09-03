@@ -22,7 +22,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
-import javafx.stage.FileChooser;
 import lombok.Getter;
 import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
@@ -30,7 +29,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.time.Month;
 import java.time.Year;
 import java.util.*;
 
@@ -190,7 +188,7 @@ public class PayslipController {
                             "            <div class=\"details\">\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Employee ID</div>\n" +
-                            "                    <div class=\"value\">" + payslip.getEmployeeID().getId() + "</div>\n" +
+                            "                    <div class=\"value\">" + payslip.getEmployeeID().getEmployeeNumber() + "</div>\n" +
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Hourly Rate</div>\n" +

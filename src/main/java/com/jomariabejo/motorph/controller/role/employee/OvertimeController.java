@@ -27,6 +27,7 @@ import org.kordamp.ikonli.material.Material;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.Month;
+import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 
@@ -142,6 +143,11 @@ public class OvertimeController {
                                 this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()
                         )
         ));
+
+        // kung walang years, e add natin yung current year para may makita si user
+        if (cbYear.getItems().isEmpty()) {
+            cbYear.getItems().add(Integer.valueOf(String.valueOf(Year.now())));
+        }
         // select current year
         cbYear.getSelectionModel().selectFirst();
     }

@@ -36,7 +36,7 @@ import java.time.LocalDateTime;
                         "ELSE FALSE " +
                         "END " +
                         "FROM LeaveRequest lrt " +
-                        "WHERE lrt.employeeID.id = :employeeId " +
+                        "WHERE lrt.employeeID.employeeNumber = :employeeId " +
                         "AND (lrt.startDate <= :endDate AND lrt.endDate >= :startDate)"
         ),
         @NamedQuery(

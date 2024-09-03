@@ -117,7 +117,7 @@ public class EmployeeProfileController {
                 this.employeeRoleNavigationController
                         .getMainViewController()
                         .getEmployee()
-                        .getId()
+                        .getEmployeeNumber()
                         .toString()
         );
 

@@ -1,20 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
-
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="897.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.hr.HRDashboardController">
    <children>
       <VBox alignment="CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Human Resource Dashboard View">
-               <font>
-                  <Font size="96.0" />
-               </font>
-            </Label>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="485.0" minHeight="10.0" prefHeight="365.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="401.0" minHeight="10.0" prefHeight="358.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <LineChart fx:id="lineChartPayrollExpenseTrends" animated="false" title="Payroll Expense Trends">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+                  <BarChart fx:id="barChartPayrollCostByDepartment" animated="false" title="Payroll Cost By Department" GridPane.columnIndex="1">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+                  <PieChart fx:id="pieChartEmployeeBenefitsDistribution" title="Employee Benefits Distribution" GridPane.rowIndex="1" />
+                  <AreaChart fx:id="areaChartCumulativePayrollExpenses" alternativeColumnFillVisible="true" animated="false" title="Cumulative Payroll Expenses" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </AreaChart>
+               </children>
+            </GridPane>
          </children>
       </VBox>
    </children>

@@ -4,16 +4,14 @@ import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.ReimbursementRequest;
+import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Pagination;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -115,6 +113,16 @@ public class ReimbursementController {
                         ).get()
         );
         tvReimbursementRequest.setItems(reimbursementRequests);
+
+        // display empty record if record doesn't exist.
+        if (tvReimbursementRequest.getItems().isEmpty()) {
+            CustomAlert customAlert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Empty Record",
+                    "You don't have any reimbursement request for " + cbYear.getSelectionModel().getSelectedItem().toString() + ". "
+            );
+            customAlert.showAndWait();
+        }
     }
 
     private void populateYears() {
@@ -130,7 +138,7 @@ public class ReimbursementController {
         cbYear.getSelectionModel().selectFirst();
     }
 
-    private void setup() {
+    public void setup() {
         populateYears();
         populateTableViewByMyOwnReimbursements();
     }
