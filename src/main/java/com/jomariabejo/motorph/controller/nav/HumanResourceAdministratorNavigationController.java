@@ -39,6 +39,7 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
 
             if (controller instanceof EmployeeController employeeController) {
                 employeeController.setHumanResourceAdministratorNavigationController(this);
+                employeeController.setup();
             }
         });
     }

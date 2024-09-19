@@ -87,7 +87,7 @@
             </VBox>
             <VBox alignment="BOTTOM_CENTER" layoutX="10.0" layoutY="10.0" prefHeight="200.0" prefWidth="770.0" spacing="12.0">
                <children>
-                  <Label prefHeight="70.0" prefWidth="580.0" styleClass="lato-bold" text=" Login to your account" textAlignment="CENTER">
+                  <Label prefHeight="70.0" prefWidth="580.0" styleClass="lato-bold" text=" Log into your account" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
