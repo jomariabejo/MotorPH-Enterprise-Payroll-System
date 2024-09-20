@@ -2,6 +2,7 @@ package com.jomariabejo.motorph.controller.role.hr;
 
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
+import com.jomariabejo.motorph.controller.role.employee.EmployeeChangePasswordController;
 import com.jomariabejo.motorph.controller.role.employee.LeaveHistoryController;
 import com.jomariabejo.motorph.controller.role.employee.ModifyLeaveRequestController;
 import com.jomariabejo.motorph.model.Employee;
@@ -14,6 +15,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import lombok.Getter;
@@ -54,7 +56,23 @@ public class EmployeeController {
 
     @FXML
     void addNewEmployeeClicked() {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/human-resource/add-employee.fxml"));
+            AnchorPane formPane = loader.load();
+            Stage formStage = new Stage();
+            formStage.setTitle("Add New Employee");
+            formStage.setScene(new Scene(formPane));
 
+            HumanResourceAddNewEmployeeController addNewEmployeeController = loader.getController();
+            addNewEmployeeController.setEmployeeController(this);
+            addNewEmployeeController.addIcons();
+            addNewEmployeeController.addButtonColor();
+            FontIcon fontIcon = new FontIcon(Material.SECURITY);
+            fontIcon.setIconSize(150);
+            formStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void setupTableView() {
