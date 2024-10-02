@@ -2,17 +2,11 @@ package com.jomariabejo.motorph.controller.role.hr;
 
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
-import com.jomariabejo.motorph.controller.role.employee.EmployeeChangePasswordController;
-import com.jomariabejo.motorph.controller.role.employee.LeaveHistoryController;
-import com.jomariabejo.motorph.controller.role.employee.ModifyLeaveRequestController;
 import com.jomariabejo.motorph.model.Employee;
-import com.jomariabejo.motorph.model.LeaveRequest;
-import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
@@ -25,7 +19,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material.Material;
 
 import java.io.IOException;
-import java.util.Optional;
 
 /**
  * TODO:
@@ -60,7 +53,7 @@ public class EmployeeController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/human-resource/add-employee.fxml"));
             AnchorPane formPane = loader.load();
             Stage formStage = new Stage();
-            formStage.setTitle("Add New Employee");
+            formStage.setTitle("Adding New Employee");
             formStage.setScene(new Scene(formPane));
 
             HumanResourceAddNewEmployeeController addNewEmployeeController = loader.getController();

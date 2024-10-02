@@ -4,6 +4,12 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+@NamedQueries(
+        @NamedQuery(
+                name = "fetchPosition",
+                query = "SELECT P FROM Position P WHERE P.positionName = :positionName"
+        )
+)
 @Getter
 @Setter
 @Entity

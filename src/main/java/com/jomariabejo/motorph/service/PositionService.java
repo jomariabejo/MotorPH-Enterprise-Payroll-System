@@ -17,6 +17,10 @@ public class PositionService {
         return positionRepository.findById(id);
     }
 
+    public Position getPositionByName(String positionName) {
+        return positionRepository.findByPositionName(positionName);
+    }
+
     public List<Position> getAllPositions() {
         return positionRepository.findAll();
     }
