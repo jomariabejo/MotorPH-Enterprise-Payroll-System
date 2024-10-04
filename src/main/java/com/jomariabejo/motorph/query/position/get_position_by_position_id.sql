@@ -1,1 +1,0 @@
-SELECT name AS POSITION_NAME FROM position where position_id = ?

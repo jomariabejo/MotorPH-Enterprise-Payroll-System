@@ -1,0 +1,7 @@
+.alert {
+    -fx-font-size: 24px;
+}
+
+.alert .content {
+    -fx-font-size: 24px;
+}

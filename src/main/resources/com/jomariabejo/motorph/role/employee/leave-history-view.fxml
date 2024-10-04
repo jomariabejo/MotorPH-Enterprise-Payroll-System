@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Pagination?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="897.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.employee.LeaveHistoryController">
+    <children>
+        <VBox alignment="BOTTOM_CENTER" layoutX="719.0" layoutY="316.0" prefHeight="701.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="12.0">
+                    <children>
+                        <ComboBox fx:id="cbRequestedMonth" layoutX="890.0" layoutY="43.0" onAction="#comboboxMonthClicked" prefHeight="50.0" prefWidth="155.0" promptText="Month" stylesheets="@../../css/combo-box.css" />
+                        <ComboBox fx:id="cbRequestedYear" layoutX="1040.0" layoutY="43.0" onAction="#comboBoxYearClicked" prefHeight="50.0" prefWidth="150.0" promptText="Year" stylesheets="@../../css/combo-box.css" />
+                        <ComboBox fx:id="cbStatus" layoutX="1004.0" layoutY="36.0" onAction="#comboBoxStatusClicked" prefHeight="50.0" prefWidth="150.0" promptText="Status" stylesheets="@../../css/combo-box.css">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Pending" />
+                                    <String fx:value="Approved" />
+                                    <String fx:value="Disapproved" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                        <ComboBox fx:id="cbLeaveType" layoutX="1064.0" layoutY="40.0" onAction="#comboBoxLeaveTypeClicked" prefHeight="50.0" prefWidth="205.0" promptText="Leave Type" stylesheets="@../../css/combo-box.css">
+                            <HBox.margin>
+                                <Insets />
+                            </HBox.margin>
+                        </ComboBox>
+                    </children>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </HBox>
+                <TableView fx:id="tvLeaveRequests" prefHeight="650.0">
+                    <columns>
+                        <TableColumn prefWidth="150.0" text="Leave Request Id" visible="false">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="id" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Leave Type">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="leaveTypeID" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Date Requested">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="dateRequested" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Start Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="startDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="End Date">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="endDate" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="150.0" text="Status">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="status" />
+                            </cellValueFactory>
+                        </TableColumn>
+                        <TableColumn prefWidth="205.0" text="Description">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="description" />
+                            </cellValueFactory>
+                        </TableColumn>
+                    </columns>
+                    <VBox.margin>
+                        <Insets />
+                    </VBox.margin>
+                </TableView>
+                <Pagination fx:id="paginationLeaveRequests" prefHeight="50.0" prefWidth="1300.0" stylesheets="@../../css/pagination.css" />
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
+    </padding>
+</AnchorPane>

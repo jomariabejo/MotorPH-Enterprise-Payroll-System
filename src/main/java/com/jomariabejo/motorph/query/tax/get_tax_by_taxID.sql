@@ -1,1 +1,0 @@
-SELECT * FROM TAX WHERE tax_id = ?

@@ -1,55 +1,39 @@
 package com.jomariabejo.motorph.service;
 
-import com.jomariabejo.motorph.database.DatabaseConnectionUtility;
-import com.jomariabejo.motorph.entity.Position;
+import com.jomariabejo.motorph.model.Position;
 import com.jomariabejo.motorph.repository.PositionRepository;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 
 public class PositionService {
 
     private final PositionRepository positionRepository;
 
-    public PositionService() throws SQLException {
-        // Establish database connection
-        Connection connection = DatabaseConnectionUtility.getConnection();
-        // Initialize repository with connection
-        this.positionRepository = new PositionRepository(connection);
+    public PositionService(PositionRepository positionRepository) {
+        this.positionRepository = positionRepository;
     }
 
-    // CREATE operation
-    public void createPosition(String name, String description) throws SQLException {
-        Position position = new Position(name, null, description); // Assuming dateCreated will be set automatically
-        positionRepository.create(position);
+    public Position getPositionById(Integer id) {
+        return positionRepository.findById(id);
     }
 
-    // GET operation by ID
-    public Position getPosition(int positionID) throws SQLException {
-        return positionRepository.get(positionID);
+    public Position getPositionByName(String positionName) {
+        return positionRepository.findByPositionName(positionName);
     }
 
-    // GET operation for all positions
-
-    public List<String> getPositionsName() throws SQLException {
-        return positionRepository.getPositionsName();
+    public List<Position> getAllPositions() {
+        return positionRepository.findAll();
     }
 
-    // UPDATE operation
-    public void updatePosition(int positionID, String name, String description) throws SQLException {
-        Position position = positionRepository.get(positionID);
-        if (position != null) {
-            position.setName(name);
-            position.setDescription(description);
-            positionRepository.update(position);
-        } else {
-            System.out.println("Position not found.");
-        }
+    public void savePosition(Position position) {
+        positionRepository.save(position);
     }
 
-    // DELETE operation
-    public void deletePosition(int positionID) throws SQLException {
-        positionRepository.delete(positionID);
+    public void updatePosition(Position position) {
+        positionRepository.update(position);
+    }
+
+    public void deletePosition(Position position) {
+        positionRepository.delete(position);
     }
 }

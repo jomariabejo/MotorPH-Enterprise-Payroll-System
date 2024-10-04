@@ -1,1 +1,0 @@
-SELECT COUNT(LEAVE_REQUEST) WHERE leave_request_category_id = ? AND employee_id = ?

@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.nav.PayrollAdministratorNavigationController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="897.0" prefWidth="300.0" spacing="12.0">
+         <children>
+            <VBox alignment="CENTER">
+               <children>
+                  <Label styleClass="lato-regular" text="Welcome back!">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="10.0" layoutY="10.0" styleClass="lato-bold" text="First name!">
+                     <font>
+                        <Font name="Arial Black" size="18.0" />
+                     </font>
+                  </Label>
+               </children>
+               <VBox.margin>
+                  <Insets bottom="24.0" />
+               </VBox.margin>
+            </VBox>
+            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#dashboardOnActtion" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="23.0" fitWidth="23.0" opacity="0.7">
+                                 <image>
+                                    <Image url="@../assets/icons/overview.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label styleClass="lato-bold" text="Dashboard">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button fx:id="fileLeaveRequestOnAction" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="86.0" mnemonicParsing="false" onAction="#payrollOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="29.0" fitWidth="29.0" opacity="0.7">
+                                 <image>
+                                    <Image url="@../assets/icons/payroll-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Payroll">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#payrollApprovalOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@../assets/icons/payroll-approval-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Payroll Approval">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="522.0" mnemonicParsing="false" onAction="#payrollTransactionOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="32.0" fitWidth="32.0">
+                                 <image>
+                                    <Image url="@../assets/icons/payroll-transaction-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Payroll Transaction">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="308.0" mnemonicParsing="false" onAction="#overtimeOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="27.0" fitWidth="27.0">
+                                 <image>
+                                    <Image url="@../assets/icons/overtime-applicion-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Overtime Approval">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="545.0" mnemonicParsing="false" onAction="#payslipOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@../assets/icons/payslip.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Payslip">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="638.0" mnemonicParsing="false" onAction="#payslipHistoryOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.7">
+                                 <image>
+                                    <Image url="@../assets/icons/payslip-history-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Payslip History">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

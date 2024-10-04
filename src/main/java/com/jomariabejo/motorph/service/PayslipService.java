@@ -1,50 +1,51 @@
 package com.jomariabejo.motorph.service;
 
-import com.jomariabejo.motorph.entity.EmployeePayrollSummaryReport;
-import com.jomariabejo.motorph.entity.Payslip;
+import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.model.Payslip;
+import com.jomariabejo.motorph.model.YearToDateFigures;
 import com.jomariabejo.motorph.repository.PayslipRepository;
-import com.jomariabejo.motorph.utility.AutoIncrementUtility;
-import javafx.collections.ObservableList;
 
-import java.sql.Date;
-import java.util.ArrayList;
+import java.time.Year;
+import java.util.List;
+import java.util.Optional;
 
 public class PayslipService {
+
     private final PayslipRepository payslipRepository;
 
-    public PayslipService() {
-        this.payslipRepository = new PayslipRepository();
+    public PayslipService(PayslipRepository payslipRepository) {
+        this.payslipRepository = payslipRepository;
     }
 
-    public int getNextPrimaryKeyValue() {
-        return AutoIncrementUtility.getNextAutoIncrementValueForPayslip();
+    public Payslip getPayslipById(Integer id) {
+        return payslipRepository.findById(id);
     }
 
-    public void saveGeneratedPayslip(ObservableList<EmployeePayrollSummaryReport> employeePayrollSummaryReports) {
-        payslipRepository.saveMultiplePayslip(employeePayrollSummaryReports);
+    public List<Payslip> getAllPayslips() {
+        return payslipRepository.findAll();
     }
 
-    public ArrayList<Payslip> fetchPayslipByEmployeeId(int employeeId) {
-        return payslipRepository.fetchPayslipByEmployeeId(employeeId);
+    public void savePayslip(Payslip payslip) {
+        payslipRepository.save(payslip);
     }
 
-    public Payslip.PayslipViewer fetchPayslipBreakdown(int payslipId) {
-        return payslipRepository.fetchPayslipBreakdown(payslipId);
+    public void updatePayslip(Payslip payslip) {
+        payslipRepository.update(payslip);
     }
 
-    public ObservableList<Payslip> fetchPayslipSummary() {
-        return payslipRepository.fetchPayslipSummary();
+    public void deletePayslip(Payslip payslip) {
+        payslipRepository.delete(payslip);
     }
 
-    public ObservableList<Payslip> fetchPayslipBetweenPayStartDateAndPayEndDate(java.sql.Date payStartDate, java.sql.Date payEndDate) {
-        return payslipRepository.fetchPayslipBetweenPayStartAndPayEnd(payStartDate, payEndDate);
+    public Optional<List<Integer>> getEmployeeYearsOfPayslip(Employee employee) {
+        return payslipRepository.findEmployeeYearsOfPayslip(employee);
     }
 
-    public boolean canCreatePayslip(Date startPayDate, Date endPayDate) {
-        return payslipRepository.checkIfCanCreatePayslipForPayPeriod(startPayDate, endPayDate);
+    public Optional<List<Payslip>> getPayslipByEmployeeIdAndYear(Employee employee, Integer year) {
+        return payslipRepository.findPayslipByEmployeeAndYear(employee,year);
     }
 
-    public void modifyPayslip(Payslip payslip) {
-        payslipRepository.modifyPayslip(payslip);
+    public Optional<YearToDateFigures> getYearToDateFigures(Employee employee, Year year) {
+        return payslipRepository.findYearToDateFiguresByEmployee(employee,year);
     }
 }

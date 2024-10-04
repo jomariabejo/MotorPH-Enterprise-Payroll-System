@@ -1,116 +1,162 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.String?>
-<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainPane" minHeight="720.0" minWidth="1440.0" stylesheets="@../../../css/custom/main-view-style.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.MainViewController">
-    <left>
-      <ScrollPane hbarPolicy="NEVER" vbarPolicy="NEVER">
-         <content>
-            <AnchorPane fx:id="NAV_ANCHORPANE" prefHeight="616.0" prefWidth="250.0">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.MainViewController">
+   <top>
+      <AnchorPane minWidth="100.0" prefHeight="59.0" prefWidth="1600.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="100.0" prefWidth="1600.0">
                <children>
-                  <VBox alignment="TOP_CENTER" layoutX="116.0" layoutY="48.0" prefHeight="616.0" prefWidth="250.4" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <Label fx:id="lbl_employee_id" opacity="0.0" text="hidden_component_employee_id">
+                  <MenuBar>
+                    <menus>
+                      <Menu mnemonicParsing="false" text="File">
+                        <items>
+                          <MenuItem mnemonicParsing="false" onAction="#logoutClicked" text="Logout" />
+                        </items>
+                      </Menu>
+                      <Menu fx:id="menuRoles" mnemonicParsing="false" text="Switch Role">
+                        <items>
+                          <MenuItem mnemonicParsing="false" onAction="#menuItemEmployeeOnAction" text="Employee" />
+                              <MenuItem mnemonicParsing="false" onAction="#menuItemHumanResourceOnAction" text="Human Resource" />
+                              <MenuItem mnemonicParsing="false" onAction="#menuItemAccountingOnAction" text="Accounting" />
+                              <MenuItem mnemonicParsing="false" onAction="#menuISystemAdminOnAction" text="System Admin" />
+                        </items>
+                      </Menu>
+                      <Menu mnemonicParsing="false" text="Help">
+                        <items>
+                          <MenuItem mnemonicParsing="false" text="Documentation" />
+                              <MenuItem mnemonicParsing="false" onAction="#lightModeClicked" text="Light Mode" />
+                              <MenuItem mnemonicParsing="false" onAction="#darkModeClicked" text="Dark Mode" />
+                              <MenuItem mnemonicParsing="false" onAction="#nordLightClicked" text="Nord Light" />
+                              <MenuItem mnemonicParsing="false" onAction="#nordDarkClicked" text="Nord Dark" />
+                              <MenuItem mnemonicParsing="false" onAction="#cupertinoLightClicked" text="Cupertino Light" />
+                              <MenuItem mnemonicParsing="false" onAction="#cupertinoDarkLight" text="Cupertino Dark" />
+                              <MenuItem mnemonicParsing="false" onAction="#draculaClicked" text="Dracula" />
+                        </items>
+                      </Menu>
+                    </menus>
+                  </MenuBar>
+                  <BorderPane prefHeight="75.0" prefWidth="1390.0">
+                     <right>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="75.0" prefWidth="502.0" spacing="12.0">
+                           <children>
+                              <MenuButton mnemonicParsing="false">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                                  <MenuItem mnemonicParsing="false" text="Action 2" />
+                                </items>
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/icons/notification.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuButton>
+                              <MenuButton layoutX="16.0" layoutY="32.0" mnemonicParsing="false">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Action 1" />
+                                    <MenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/icons/messages.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuButton>
+                              <MenuButton layoutX="205.0" layoutY="32.0" mnemonicParsing="false">
+                                 <items>
+                                    <MenuItem mnemonicParsing="false" text="Action 1" />
+                                    <MenuItem mnemonicParsing="false" text="Action 2" />
+                                 </items>
+                                 <graphic>
+                                    <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@assets/icons/settings.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </MenuButton>
+                              <ButtonBar prefHeight="75.0" prefWidth="226.0">
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                                 <buttons>
+                                    <BorderPane prefHeight="75.0" prefWidth="204.0">
+                                       <left>
+                                          <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
+                                             <image>
+                                                <Image url="@assets/icons/java.png" />
+                                             </image>
+                                          </ImageView>
+                                       </left>
+                                       <center>
+                                          <VBox alignment="CENTER" prefHeight="75.0" prefWidth="102.0" BorderPane.alignment="CENTER">
+                                             <children>
+                                                <Label fx:id="lblEmployeeName" text="Employee Name">
+                                                   <font>
+                                                      <Font size="18.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label fx:id="lblRoleName" layoutX="10.0" layoutY="10.0" text="Role Name" />
+                                             </children>
+                                          </VBox>
+                                       </center>
+                                    </BorderPane>
+                                 </buttons>
+                              </ButtonBar>
+                           </children>
+                           <BorderPane.margin>
+                              <Insets right="24.0" />
+                           </BorderPane.margin>
+                        </HBox>
+                     </right>
+                     <left>
+                        <Label text="MotorPH" BorderPane.alignment="CENTER">
                            <font>
-                              <Font name="Segoe UI Emoji" size="12.0" />
-                           </font></Label>
-                        <Label fx:id="lbl_personal_information" prefWidth="225.0" style="-fx-opacity: 50;" text="Personal Information" textFill="#909090">
-                           <font>
-                              <Font name="Segoe UI Emoji" size="22.0" />
-                           </font></Label>
-                        <Button fx:id="btn_personal_information_profile" alignment="TOP_LEFT" mnemonicParsing="false" onAction="#personalInformationProfileClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Profile" />
-                        <Button fx:id="btn_personal_information_timesheet" alignment="TOP_LEFT" layoutX="58.0" layoutY="10.0" mnemonicParsing="false" onAction="#personalInformationTimesheetClicked" prefHeight="53.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Timesheet" />
-                        <Button fx:id="btn_personal_information_leave_request" alignment="TOP_LEFT" layoutX="58.0" layoutY="63.0" mnemonicParsing="false" onAction="#personalInformationLeaveRequestClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Leave Request" />
-                        <Button fx:id="btn_personal_information_payslip" alignment="TOP_LEFT" layoutX="58.0" layoutY="116.0" mnemonicParsing="false" onAction="#personalInformationPayslipClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payslip" />
-                        <Label fx:id="lbl_human_resource" layoutX="24.0" layoutY="10.0" prefWidth="225.0" text="Human Resource" textFill="#909090">
-                           <font>
-                              <Font name="Segoe UI Emoji" size="22.0" />
-                           </font></Label>
-                        <Button fx:id="btn_human_resource_dashboard" alignment="TOP_LEFT" layoutX="35.0" layoutY="393.0" mnemonicParsing="false" onAction="#humanResourceDashboardClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Dashboard" />
-                        <Button fx:id="btn_human_resource_employees" alignment="TOP_LEFT" layoutX="36.0" layoutY="394.0" mnemonicParsing="false" onAction="#humanResourceEmployeesClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Employees" />
-                        <Button fx:id="btn_human_resource_timesheets" alignment="TOP_LEFT" layoutX="36.0" layoutY="364.0" mnemonicParsing="false" onAction="#humanResourceTimesheetsClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Timesheets" />
-                        <Button fx:id="btn_human_resource_leave_request" alignment="TOP_LEFT" layoutX="36.0" layoutY="429.0" mnemonicParsing="false" onAction="#humanResourceLeaveRequestClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Leave Request" />
-                        <Label fx:id="lbl_finance" layoutX="23.0" layoutY="317.0" prefWidth="225.0" text="Finance" textFill="#909090">
-                           <font>
-                              <Font name="Segoe UI Emoji" size="22.0" />
-                           </font></Label>
-                        <Button fx:id="btn_finance_payslip" alignment="TOP_LEFT" layoutX="35.0" layoutY="700.0" mnemonicParsing="false" onAction="#financePayslipsClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payslips" />
-                        <Button fx:id="btn_finance_payroll" alignment="TOP_LEFT" layoutX="36.0" layoutY="493.0" mnemonicParsing="false" onAction="#financePayrollClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Payroll Dashboard" />
-                        <Button fx:id="btn_finance_generate_payslip" alignment="TOP_LEFT" layoutX="36.0" layoutY="606.0" mnemonicParsing="false" onAction="#financeGeneratePayslipClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Generate Payslip" />
-                        <Label fx:id="lbl_system" layoutX="23.0" layoutY="364.0" prefWidth="225.0" text="System" textFill="#909090">
-                           <font>
-                              <Font name="Segoe UI Emoji" size="22.0" />
-                           </font></Label>
-                        <Button fx:id="btn_system_users" alignment="TOP_LEFT" layoutX="36.0" layoutY="671.0" mnemonicParsing="false" onAction="#systemUsersClicked" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Users" />
-                         <Button fx:id="btn_system_admin_view_change_password_requests" alignment="TOP_LEFT" layoutX="36.0" layoutY="671.0" mnemonicParsing="false" onAction="#systemUsersChangePasswordRequest" prefHeight="26.0" prefWidth="200.0" stylesheets="@../../../css/custom/button.css" text="Change password request" />
-                     </children>
-                  </VBox>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                           <BorderPane.margin>
+                              <Insets left="72.0" />
+                           </BorderPane.margin>
+                        </Label>
+                     </left>
+                     <center>
+                        <HBox alignment="CENTER_LEFT" prefHeight="75.0" prefWidth="639.0" BorderPane.alignment="CENTER">
+                           <children>
+                              <Region prefHeight="75.0" prefWidth="128.0" />
+                              <Label fx:id="selectedButtonLabel" text="/ Employee / My Profile">
+                                 <font>
+                                    <Font size="24.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </center>
+                  </BorderPane>
                </children>
-            </AnchorPane>
-         </content>
-      </ScrollPane>
-    </left>
-    <top>
-        <AnchorPane BorderPane.alignment="CENTER">
-            <children>
-            <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-               <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.6000213623047" minWidth="10.0" prefWidth="249.19998168945312" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="976.8000244140625" minWidth="10.0" prefWidth="939.9999755859375" />
-                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="1088.2000122070312" minWidth="10.0" prefWidth="248.4000244140625" />
-               </columnConstraints>
-               <rowConstraints>
-                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
-               </rowConstraints>
-               <children>
-                      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="1080.0" GridPane.columnIndex="2">
-                          <children>
-                              <ComboBox fx:id="comboBoxSettings" onAction="#dropDownClicked" prefHeight="56.0" prefWidth="188.0" promptText="Settings" style="-fx-font-size: 20;" styleClass="-fx-font-size: 48px;" stylesheets="@../../../css/custom/combobox.css">
-                                  <items>
-                                      <FXCollections fx:factory="observableArrayList">
-                                          <String fx:value="Logout" />
-                                      </FXCollections>
-                                  </items>
-                              </ComboBox>
-
-                          </children>
-                      </HBox>
-                  <Label fx:id="lbl_user_clicked_path" stylesheets="@../../../css/custom/label-large.css" text="/ Dashboard /" GridPane.columnIndex="1">
-                     <font>
-                        <Font size="37.0" />
-                     </font>
-                     <padding>
-                        <Insets left="48.0" />
-                     </padding>
-                  </Label>
-                  <VBox alignment="CENTER">
-                     <children>
-                        <ImageView fitHeight="107.0" fitWidth="200.0">
-                           <image>
-                              <Image url="@../../../img/motor2.png" />
-                           </image>
-                        </ImageView>
-                     </children>
-                  </VBox>
-               </children>
-            </GridPane>
-            </children>
-        </AnchorPane>
-    </top>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </top>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+   </center>
 </BorderPane>

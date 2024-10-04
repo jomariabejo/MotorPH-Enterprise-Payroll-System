@@ -1,1 +1,0 @@
-SELECT basic_salary, hourly_rate FROM employee where employee_id = ?

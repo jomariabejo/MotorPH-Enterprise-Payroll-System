@@ -1,0 +1,28 @@
+/* Style for the TableView */
+.table-view {
+    -fx-font-size: 14px; /* Adjust font size for table content */
+}
+
+/* Style for TableColumn headers */
+.table-view .column-header {
+    -fx-font-size: 24px; /* Font size for column headers */
+    -fx-font-weight: bold; /* Make the font weight bold */
+    -fx-text-fill: #333; /* Text color for column headers */
+}
+
+/* Style for TableColumn cells */
+.table-view .table-cell {
+    -fx-font-size: 24px; /* Font size for table cells */
+}
+
+/* Style for TableColumn headers and cells */
+.table-view .column-header, .table-view .table-cell {
+    -fx-padding: 5px; /* Add padding for better spacing */
+}
+
+/* Ensure columns fit their content automatically */
+.table-view .table-column {
+    -fx-pref-width: auto; /* Automatically adjust width based on content */
+    -fx-max-width: 1.0; /* Allow columns to expand if needed */
+    -fx-min-width: 50px; /* Minimum width to ensure columns are not too narrow */
+}

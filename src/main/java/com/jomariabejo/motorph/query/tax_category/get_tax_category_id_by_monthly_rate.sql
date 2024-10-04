@@ -1,1 +1,0 @@
-SELECT tax_cat_id from tax_category WHERE ? >= minimum_monthly_rate AND ? <= maximum_monthly_rate

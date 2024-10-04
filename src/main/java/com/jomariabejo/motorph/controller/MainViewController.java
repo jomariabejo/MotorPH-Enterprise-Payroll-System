@@ -1,329 +1,180 @@
 package com.jomariabejo.motorph.controller;
 
-
-import com.jomariabejo.motorph.controller.employee.MyLeaveRequestController;
-import com.jomariabejo.motorph.controller.employee.MyPayslipController;
-import com.jomariabejo.motorph.controller.employee.MyProfileController;
-import com.jomariabejo.motorph.controller.employee.MyTimesheetController;
-import com.jomariabejo.motorph.service.LoginManager;
+import atlantafx.base.theme.*;
+import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
+import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
+import com.jomariabejo.motorph.controller.nav.PayrollAdministratorNavigationController;
+import com.jomariabejo.motorph.controller.nav.SystemAdministratorNavigationController;
+import com.jomariabejo.motorph.model.*;
+import com.jomariabejo.motorph.service.*;
+import com.sun.tools.javac.Main;
+import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.io.IOException;
-import java.sql.SQLException;
+import java.util.function.Consumer;
 
-public class MainViewController {
-
-    @FXML
-    private Button btn_finance_generate_payslip;
-
-    @FXML
-    private Button btn_finance_payroll;
+@Getter
+@Setter
+public class MainViewController implements _ViewLoader {
 
     @FXML
-    private Button btn_human_resource_leave_request;
+    private BorderPane mainBorderPane;
 
     @FXML
-    private Button btn_human_resource_timesheets;
+    private Label selectedButtonLabel;
 
     @FXML
-    private Button btn_system_users;
+    private Label lblEmployeeName;
 
     @FXML
-    private ComboBox<?> comboBoxSettings;
+    private Label lblRoleName;
 
-    @FXML
-    private Label lbl_finance;
 
-    @FXML
-    private Label lbl_human_resource;
+    private Employee employee;
+    private User user;
 
-    @FXML
-    private Button btn_human_resource_employees;
+    private ServiceFactory serviceFactory;
 
-    @FXML
-    private Button btn_human_resource_dashboard;
+    public MainViewController() {
+        serviceFactory = new ServiceFactory();
+    }
 
-    @FXML
-    private Label lbl_system;
+    public void rewriteLabel(String string) {
+        selectedButtonLabel.setText(string);
+    }
 
-    @FXML
-    private BorderPane mainPane;
+    public void initializeUserNavigation() {
+        displayEmployeeRoleNavigation();
+        displayRoleName();
+    }
 
-    @FXML
-    private Label lbl_user_clicked_path;
+    private void displayRoleName() {
+        lblRoleName.setText(employee.getPositionID().getPositionName());
+    }
 
-    @FXML
-    private Label lbl_employee_id;
-
-    @FXML
-    private Button btn_finance_payslip;
-
-    @FXML
-    private Button btn_system_admin_view_change_password_requests;
-
-    @FXML
-    void dropDownClicked(ActionEvent event) {
-        if (event.getSource() instanceof ComboBox<?>) {
-            ComboBox<String> comboBox = (ComboBox<String>) event.getSource();
-            String selectedValue = comboBox.getValue();
-
-            switch (selectedValue) {
-                case "About Us":
-                    this.lbl_user_clicked_path.setText("/ Settings / About Us");
-                    break;
-                case "Documentation":
-                    this.lbl_user_clicked_path.setText("/ Settings / Documentation");
-                    break;
-                case "Logout":
-                    this.lbl_user_clicked_path.setText("/ Settings / Logout");
-                    LoginManager loginManager = new LoginManager(comboBoxSettings.getScene().getWindow().getScene());
-                    loginManager.logout();
-                    break;
+    private void displayHumanResourceNavigation() {
+        loadView("/com/jomariabejo/motorph/nav/role-human-resource.fxml", controller -> {
+            if (controller instanceof HumanResourceAdministratorNavigationController) {
+                HumanResourceAdministratorNavigationController humanResourceController = (HumanResourceAdministratorNavigationController) controller;
+                humanResourceController.setMainViewController(this);
+                humanResourceController.humanResourceDashboardOnAction();
             }
-        }
-    }
-
-    @FXML
-    void financeGeneratePayslipClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Finance / Generate Payslip");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/finance-generate-payslip.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-        mainPane.setCenter(anchorPane);
-    }
-
-    @FXML
-    void financePayrollClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Finance / Dashboard");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/payroll-dashboard.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-        mainPane.setCenter(anchorPane);
-    }
-
-    @FXML
-    public void financePayslipsClicked() throws IOException {
-        this.lbl_user_clicked_path.setText("/ Finance / Payslips Summary");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/finance-payslips.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-        mainPane.setCenter(anchorPane);
-    }
-
-    @FXML
-    void humanResourceDashboardClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Human Resource / Dashboard");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/hr-dashboard-copy.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-        mainPane.setCenter(anchorPane);
-    }
-
-    @FXML
-    void humanResourceEmployeesClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Human Resource / Employees");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/hr-home.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-        mainPane.setCenter(anchorPane);
+        });
     }
 
 
-    @FXML
-    void humanResourceLeaveRequestClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Human Resource / Leave Requests");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/hr-leave-request-view.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-        mainPane.setCenter(anchorPane);
+    private void displayAccountingNavigation() {
+        loadView("/com/jomariabejo/motorph/nav/role-accounting.fxml", controller -> {
+            if (controller instanceof PayrollAdministratorNavigationController) {
+                PayrollAdministratorNavigationController accountingController = (PayrollAdministratorNavigationController) controller;
+                accountingController.setMainViewController(this);
+                accountingController.dashboardOnActtion();
+            }
+        });
     }
 
-    @FXML
-    void humanResourceTimesheetsClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Human Resource / Timesheets");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/hr-timesheets-view.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-        mainPane.setCenter(anchorPane);
+    private void displaySystemAdminNavigation() {
+        loadView("/com/jomariabejo/motorph/nav/role-system-administrator.fxml", controller -> {
+            if (controller instanceof SystemAdministratorNavigationController) {
+                SystemAdministratorNavigationController systemAdminController = (SystemAdministratorNavigationController) controller;
+                systemAdminController.setMainViewController(this);
+                systemAdminController.dashboard();
+            }
+        });
     }
 
-    @FXML
-    void personalInformationLeaveRequestClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Leave Request");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-leave-request-view.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-
-        MyLeaveRequestController myLeaveRequestController = fxmlLoader.getController();
-        myLeaveRequestController.setInitData(Integer.valueOf(this.lbl_employee_id.getText())); // inject the employee id
-        mainPane.setCenter(anchorPane);
+    private void displayEmployeeRoleNavigation() {
+        loadView("/com/jomariabejo/motorph/nav/role-employee.fxml", controller -> {
+            if (controller instanceof EmployeeRoleNavigationController) {
+                EmployeeRoleNavigationController employeeController = (EmployeeRoleNavigationController) controller;
+                employeeController.setMainViewController(this);
+                employeeController.myProfileOnAction();
+                employeeController.displayWelcome();
+            }
+        });
     }
 
-    @FXML
-    void personalInformationPayslipClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Payslips");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-payslips-view.fxml"));
-        AnchorPane anchorPane = fxmlLoader.load();
-        mainPane.setCenter(anchorPane);
-
-        MyPayslipController myPayslipController = fxmlLoader.getController();
-        myPayslipController.initData(Integer.valueOf(this.lbl_employee_id.getText()));
+    /**
+     * Menu roles of the main view🫴
+     */
+    public void menuItemEmployeeOnAction(ActionEvent actionEvent) {
+        displayEmployeeRoleNavigation();
     }
 
-    @FXML
-    void personalInformationProfileClicked(ActionEvent event) {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Profile");
+    public void menuItemHumanResourceOnAction(ActionEvent actionEvent) {
+        displayHumanResourceNavigation();
+    }
+
+    public void menuItemAccountingOnAction(ActionEvent actionEvent) {
+        displayAccountingNavigation();
+    }
+
+    public void menuISystemAdminOnAction(ActionEvent actionEvent) {
+        displaySystemAdminNavigation();
+    }
+
+    @Override
+    public <T> void loadView(String fxmlPath, Consumer<T> controllerInitializer) {
         try {
-            displayHomeClicked();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 
-    }
+            // Load the UI (AnchorPane)
+            AnchorPane pane = loader.load();
+            // Depending on the context, you might want to set this in different areas of the BorderPane
+            mainBorderPane.setLeft(pane);
 
-    @FXML
-    void personalInformationTimesheetClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Timesheets");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-timesheet.fxml"));
-        AnchorPane loader = fxmlLoader.load();
-
-        // Get the controller instance from the FXMLLoader
-        MyTimesheetController myTimesheetController = fxmlLoader.getController();
-
-        // Set the necessary data or reference to the controller
-        myTimesheetController.initData(Integer.parseInt(this.lbl_employee_id.getText()));
-
-        // Set the controller for the loaded FXML
-        fxmlLoader.setController(myTimesheetController);
-
-        // Set the loaded content as the center of the main pane
-        mainPane.setCenter(loader);
-    }
-
-
-    @FXML
-    void systemUsersClicked(ActionEvent event) throws IOException {
-        this.lbl_user_clicked_path.setText("/ System / Users");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/system-users.fxml"));
-        AnchorPane loader = fxmlLoader.load();
-        mainPane.setCenter(loader);
-    }
-
-    @FXML
-    public void systemUsersChangePasswordRequest() throws IOException {
-        this.lbl_user_clicked_path.setText("/ System / Change Password Requests");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/system-generated-code.fxml"));
-        AnchorPane loader = fxmlLoader.load();
-        mainPane.setCenter(loader);
-    }
-
-    @FXML
-    private void initialize() {
-        // hide all buttons
-        hideButtons();
-    }
-
-    public void initSessionId(final LoginManager loginManager, int user_id, int employee_id, String role) throws SQLException, IOException {
-        this.lbl_employee_id.setText(String.valueOf(employee_id));
-        switch (role) {
-            case "HR Administrator":
-                showHRAccessButtons();
-                break;
-            case "Payroll Administrator":
-                showPayrollButtons();
-                break;
-            case "System Administrator":
-                showSystemAdminButtons();
-                break;
-            case "Executive":
-                showExecutiveButtons();
-                break;
-        }
-
-        // Display Home
-        displayHomeClicked();
-    }
-
-    public void displayHomeClicked() throws IOException, SQLException {
-        this.lbl_user_clicked_path.setText("/ Personal Information / My Profile");
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/center/my-profile.fxml"));
-        if (fxmlLoader != null) {
-            AnchorPane loader = fxmlLoader.load(); // Load the FXML file
-            mainPane.setCenter(loader); // Set the loaded content as the center of the main pane
-
-            MyProfileController myProfileController = fxmlLoader.getController();
-            myProfileController.initialize(Integer.parseInt(this.lbl_employee_id.getText()));
+            // Initialize the controller
+            T controller = loader.getController();
+            controllerInitializer.accept(controller);
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
         }
     }
 
-    private void showExecutiveButtons() {
-        // all access granted
-        showSystemAdminButtons();
-        showPayrollButtons();
-        showHRAccessButtons();
+    public void logoutClicked(ActionEvent actionEvent) {
+        Platform.exit();
     }
 
-    private void showSystemAdminButtons() {
-        lbl_system.setVisible(true);
-        btn_system_users.setVisible(true);
-        lbl_system.setManaged(true);
-        btn_system_users.setManaged(true);
-        btn_system_admin_view_change_password_requests.setVisible(true);
-        btn_system_admin_view_change_password_requests.setManaged(true);
+    public void lightModeClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new PrimerLight().getUserAgentStylesheet());
     }
 
-    private void showPayrollButtons() {
-        lbl_finance.setVisible(true);
-        btn_finance_generate_payslip.setVisible(true);
-        btn_finance_payroll.setVisible(true);
-        btn_finance_payslip.setVisible(true);
-        lbl_finance.setManaged(true);
-        btn_finance_generate_payslip.setManaged(true);
-        btn_finance_payroll.setManaged(true);
-        btn_finance_payslip.setManaged(true);
+    public void darkModeClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
     }
 
-    private void showHRAccessButtons() {
-        lbl_human_resource.setVisible(true);
-        btn_human_resource_leave_request.setVisible(true);
-        btn_human_resource_timesheets.setVisible(true);
-        lbl_human_resource.setManaged(true);
-        btn_human_resource_leave_request.setManaged(true);
-        btn_human_resource_timesheets.setManaged(true);
-        btn_human_resource_employees.setVisible(true);
-        btn_human_resource_employees.setManaged(true);
-        btn_human_resource_dashboard.setVisible(true);
-        btn_human_resource_dashboard.setManaged(true);
-
+    public void nordLightClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new NordLight().getUserAgentStylesheet());
     }
 
+    public void nordDarkClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new NordDark().getUserAgentStylesheet());
+    }
 
-    private void hideButtons() {
-        btn_finance_generate_payslip.setVisible(false);
-        btn_finance_payroll.setVisible(false);
-        btn_human_resource_leave_request.setVisible(false);
-        btn_human_resource_timesheets.setVisible(false);
-        btn_system_users.setVisible(false);
-        lbl_finance.setVisible(false);
-        lbl_human_resource.setVisible(false);
-        lbl_system.setVisible(false);
-        btn_human_resource_employees.setVisible(false);
-        btn_human_resource_dashboard.setVisible(false);
-        btn_finance_payslip.setVisible(false);
-        btn_system_admin_view_change_password_requests.setVisible(false);
+    public void cupertinoLightClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new CupertinoLight().getUserAgentStylesheet());
+    }
 
-        btn_finance_generate_payslip.setManaged(false);
-        btn_finance_payroll.setManaged(false);
-        btn_human_resource_leave_request.setManaged(false);
-        btn_human_resource_timesheets.setManaged(false);
-        btn_system_users.setManaged(false);
-        lbl_finance.setManaged(false);
-        lbl_human_resource.setManaged(false);
-        lbl_system.setManaged(false);
-        btn_human_resource_employees.setManaged(false);
-        btn_human_resource_dashboard.setManaged(false);
-        btn_finance_payslip.setManaged(false);
-        btn_system_admin_view_change_password_requests.setManaged(false);
+    public void cupertinoDarkLight(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new CupertinoDark().getUserAgentStylesheet());
+    }
+
+    public void draculaClicked(ActionEvent actionEvent) {
+        Application.setUserAgentStylesheet(new Dracula().getUserAgentStylesheet());
+    }
+
+    public void displayEmployeeName() {
+        this.lblEmployeeName.setText(
+                employee.getFirstName() + " " + employee.getLastName()
+        );
     }
 }

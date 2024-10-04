@@ -1,1 +1,0 @@
-INSERT INTO payroll_sys.timesheet (date, time_in, employee_id) VALUES (?,?,?);

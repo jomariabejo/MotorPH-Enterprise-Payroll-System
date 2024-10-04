@@ -1,1 +1,0 @@
-SELECT COUNT(employee_id) AS NumberOfActiveEmployees FROM employee WHERE isActive = 1;

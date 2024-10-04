@@ -1,0 +1,16 @@
+/* Pagination CSS Styling */
+
+/* Style the Pagination control */
+.pagination {
+    -fx-font-size: 18px;
+}
+
+/* Style the page number buttons */
+.pagination .page-button {
+    -fx-font-size: 18px;
+}
+
+/* Style the next and previous buttons */
+.pagination .arrow-button {
+    -fx-font-size: 18px;
+}

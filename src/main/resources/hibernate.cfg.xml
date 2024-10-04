@@ -1,0 +1,55 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    <session-factory>
+        <!-- Database connection settings -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/payroll_system</property>
+        <property name="hibernate.connection.username">root</property>
+        <property name="hibernate.connection.password">admin</property>
+
+        <!-- Echo all executed SQL to console -->
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.enable_lazy_load_no_trans">true</property>
+
+        <!-- Automatically create/update the database schema -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+
+        <mapping class="com.jomariabejo.motorph.model.Announcement"/>
+        <mapping class="com.jomariabejo.motorph.model.Bonus"/>
+        <mapping class="com.jomariabejo.motorph.model.Conversation"/>
+        <mapping class="com.jomariabejo.motorph.model.Department"/>
+        <mapping class="com.jomariabejo.motorph.model.Employee"/>
+        <mapping class="com.jomariabejo.motorph.model.LeaveBalance"/>
+        <mapping class="com.jomariabejo.motorph.model.LeaveRequest"/>
+        <mapping class="com.jomariabejo.motorph.model.LeaveRequestType"/>
+        <mapping class="com.jomariabejo.motorph.model.Message"/>
+        <mapping class="com.jomariabejo.motorph.model.MessageAttachment"/>
+        <mapping class="com.jomariabejo.motorph.model.MessageFolder"/>
+        <mapping class="com.jomariabejo.motorph.model.MessageStatus"/>
+        <mapping class="com.jomariabejo.motorph.model.Notification"/>
+        <mapping class="com.jomariabejo.motorph.model.OvertimeRequest"/>
+        <mapping class="com.jomariabejo.motorph.model.PagibigContributionRate"/>
+        <mapping class="com.jomariabejo.motorph.model.Payroll"/>
+        <mapping class="com.jomariabejo.motorph.model.PayrollApproval"/>
+        <mapping class="com.jomariabejo.motorph.model.PayrollChange"/>
+        <mapping class="com.jomariabejo.motorph.model.PayrollTransaction"/>
+        <mapping class="com.jomariabejo.motorph.model.Payslip"/>
+        <mapping class="com.jomariabejo.motorph.model.PayslipHistory"/>
+        <mapping class="com.jomariabejo.motorph.model.Permission"/>
+        <mapping class="com.jomariabejo.motorph.model.PhilhealthContributionRate"/>
+        <mapping class="com.jomariabejo.motorph.model.ReimbursementRequest"/>
+        <mapping class="com.jomariabejo.motorph.model.ReimbursementTransaction"/>
+        <mapping class="com.jomariabejo.motorph.model.Position"/>
+        <mapping class="com.jomariabejo.motorph.model.Role"/>
+        <mapping class="com.jomariabejo.motorph.model.RolePermission"/>
+        <mapping class="com.jomariabejo.motorph.model.SssContributionRate"/>
+        <mapping class="com.jomariabejo.motorph.model.Timesheet"/>
+        <mapping class="com.jomariabejo.motorph.model.TinCompliance"/>
+        <mapping class="com.jomariabejo.motorph.model.User"/>
+        <mapping class="com.jomariabejo.motorph.model.UserLog"/>
+    </session-factory>
+</hibernate-configuration>

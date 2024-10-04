@@ -1,69 +1,45 @@
 package com.jomariabejo.motorph.service;
 
-import com.jomariabejo.motorph.entity.Role;
-import com.jomariabejo.motorph.entity.User;
+import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.model.User;
 import com.jomariabejo.motorph.repository.UserRepository;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserService {
+
     private final UserRepository userRepository;
 
-    public UserService() {
-        this.userRepository = new UserRepository();
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    public String fetchEmployeeRoleName(int userId) {
-        return userRepository.getRoleOfTheUser(userId);
+    public User getUserById(Integer id) {
+        return userRepository.findById(id);
     }
 
-    public int fetchEmployeeIdByUserId(int userId) {
-        return userRepository.getUserEmployeeId(userId);
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public boolean saveUser(User user) {
-        return userRepository.insertUser(user);
+    public void saveUser(User user) {
+        userRepository.save(user);
     }
 
-    public User fetchUser(int userID) {
-        return userRepository.fetchUser(userID);
+    public void updateUser(User user) {
+        userRepository.update(user);
     }
 
-    public boolean deleteUser(int employeeId) {
-        return userRepository.deleteUserByEmployeeId(employeeId);
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
-    public boolean modifyUser(User user) {
-        return userRepository.modifyUser(user);
+    public Optional<User> fetchUser(String username, String password) {
+        return userRepository.findUserByUsernameAndPassword(username,password);
     }
 
-    public boolean changePassword(int employeeId, String existingPassword, String newPassword) {
-        return userRepository.changePassword(employeeId, existingPassword, newPassword);
-    }
-
-    public boolean changePassword(int userId, String newPassword) {
-        return userRepository.changePassword(userId, newPassword);
-    }
-
-    public boolean saveVerificationCode(String username, int code) {
-        return userRepository.saveVerificationCode(username, code);
-    }
-
-    public boolean isUsernameExist(String username) {
-        return userRepository.isUsernameExist(username);
-    }
-
-    public int fetchUserIdByVerificationCode(int verificationCode) {
-        return userRepository.fetchUserIdByVerificationCode(verificationCode);
-    }
-
-    public void resetVerificationCode(int userId) {
-        userRepository.resetVerificationCode(userId);
-    }
-
-    public ArrayList<User> fetchUserWithVerificationCode() {
-        return userRepository.fetchUserWithVerificationCode();
+    public Optional<User> fetchEmailByEmployeeId(Employee employeeID) {
+        return userRepository.findEmailByEmployeeId(employeeID);
     }
 }
