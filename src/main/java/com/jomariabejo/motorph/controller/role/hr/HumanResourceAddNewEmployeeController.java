@@ -11,6 +11,8 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -27,7 +29,7 @@ public class HumanResourceAddNewEmployeeController {
     private Button submitBtn;
 
     @FXML
-    private DatePicker dpBirthday;
+    private DatePicker birthdayDatePicker;
 
     @FXML
     private TextField tfAddress;
@@ -79,6 +81,11 @@ public class HumanResourceAddNewEmployeeController {
 
     @FXML
     private TextField tfTINNumber;
+
+    @FXML
+    private Pagination pagination;
+
+
 
     @FXML
     void cancelBtnClicked(ActionEvent event) {
@@ -140,7 +147,7 @@ public class HumanResourceAddNewEmployeeController {
         employee.setPhoneAllowance(new BigDecimal(tfPhoneAllowance.getText()));
         employee.setClothingAllowance(new BigDecimal(tfClothingAllowance.getText()));
 
-        employee.setBirthday(Date.valueOf(dpBirthday.getValue()));
+        employee.setBirthday(Date.valueOf(birthdayDatePicker.getValue()));
         return employee;
     }
 
@@ -172,7 +179,7 @@ public class HumanResourceAddNewEmployeeController {
      */
     private boolean fieldsValidated() {
         if (
-                dpBirthday.getValue() == null ||
+                birthdayDatePicker.getValue() == null ||
                         tfAddress.getText().isEmpty() ||
                         tfBasicSalary.getText().isEmpty() ||
                         tfClothingAllowance.getText().isEmpty() ||

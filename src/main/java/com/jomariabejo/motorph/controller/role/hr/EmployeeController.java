@@ -3,7 +3,10 @@ package com.jomariabejo.motorph.controller.role.hr;
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
 import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -19,6 +22,9 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material.Material;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 /**
  * TODO:
@@ -39,6 +45,9 @@ public class EmployeeController {
     }
 
     @FXML
+    private ComboBox<String> cbSorter;
+
+    @FXML
     private Button btnAddNewEmployee;
 
     @FXML
@@ -46,6 +55,12 @@ public class EmployeeController {
 
     @FXML
     private TableView<Employee> tvEmployees;
+
+    @FXML
+    private TextField searchBar;
+
+    @FXML
+    private Button searchBtn;
 
     @FXML
     void addNewEmployeeClicked() {
@@ -92,7 +107,79 @@ public class EmployeeController {
         setupTableView(); // create action columns
         customizeAddNewEmployeeButton(); // add icon to button
         populateEmployees(); // add data to tableview
+        automateSearchBar();
+        sorter(cbSorter.getSelectionModel());
     }
+
+    private void sorter(SingleSelectionModel<String> selectionModel) {
+        String sortBy = (selectionModel.getSelectedItem());
+        switch (sortBy) {
+            case "Last Name":
+                sortByLastName();
+                break;
+            case "Age":
+                sortByAge();
+                break;
+            case "Salary":
+                sortBySalary();
+                break;
+            case "Department":
+                sortByDepartment();
+                break;
+
+        }
+    }
+
+    private void sortByDepartment() {
+        ObservableList<Employee> employeeList = FXCollections.observableArrayList(tvEmployees.getItems());
+
+        ObservableList<Employee> sortedEmployeeByDepartment = FXCollections.observableArrayList(
+                employeeList.stream()
+                        .sorted(Comparator.comparing(
+                                employee ->
+                                        employee.getPositionID().getDepartmentID().getDepartmentName())) // Sorting by department name
+                        .collect(Collectors.toList()) // Collect into a list, then convert to ObservableList
+        );
+
+        tvEmployees.setItems(sortedEmployeeByDepartment); // Set the sorted list to the TableView
+    }
+
+
+    private void sortBySalary() {
+        ObservableList<Employee> employeeList = FXCollections.observableArrayList(tvEmployees.getItems());
+
+        ObservableList<Employee> sortedEmployeeBySalary = FXCollections.observableArrayList(
+                employeeList.stream()
+                        .sorted(Comparator.comparing(Employee::getBasicSalary))
+                        .collect(Collectors.toList())
+        );
+
+        tvEmployees.setItems(sortedEmployeeBySalary);
+    }
+
+    private void sortByAge() {
+        ObservableList<Employee> employeeList = FXCollections.observableArrayList(tvEmployees.getItems());
+
+        // Sort by birthday (oldest to youngest, i.e., the earliest birthday comes first)
+        ObservableList<Employee> sortedAgeList = FXCollections.observableArrayList(
+                employeeList.stream()
+                        .sorted(Comparator.comparing(Employee::getBirthday)) // Sorting by birthday, earliest first
+                        .collect(Collectors.toList()) // Collect into a list, then convert to ObservableList
+        );
+
+        tvEmployees.setItems(sortedAgeList); // Set the sorted list to the TableView
+    }
+
+    private void sortByLastName() {
+        ObservableList<Employee> employeeList = FXCollections.observableArrayList(tvEmployees.getItems());
+        ObservableList<Employee> sortedList = FXCollections.observableArrayList(
+                employeeList.stream()
+                        .sorted(Comparator.comparing(Employee::getLastName))
+                        .collect(Collectors.toList()) // Collect into a list first, then convert to ObservableList
+        );
+        tvEmployees.setItems(sortedList); // Set the sorted list to the TableView
+    }
+
 
     private TableColumn<Employee, Void> createActionsColumn() {
         TableColumn<Employee, Void> actionsColumn = new TableColumn<>("Actions");
@@ -189,4 +276,55 @@ public class EmployeeController {
         this.tvEmployees.getColumns().add(actionsColumn);
     }
 
+    private ObservableList<Employee> getEmployees() {
+        return FXCollections.observableArrayList(
+                this.humanResourceAdministratorNavigationController
+                        .getMainViewController()
+                        .getServiceFactory()
+                        .getEmployeeService()
+                        .getAllEmployees()
+        );
+    }
+
+
+    public void searchBtnClicked(ActionEvent actionEvent) {
+        String searchText = searchBar.getText().toLowerCase(); // Convert search text to lowercase for case-insensitive comparison
+
+        if (searchText.isEmpty()) {
+            displayPleaseProvidesearchInput();
+        } else {
+            applySearchText(searchText);
+        }
+    }
+
+
+    private void applySearchText(String searchedText) {
+        ObservableList<Employee> searchResultNew = FXCollections.observableArrayList(
+                getEmployees().stream()
+                        .filter(employee ->
+                                employee.getFirstName().toLowerCase().contains(searchedText) ||
+                                        employee.getLastName().toLowerCase().contains(searchedText) ||
+                                        String.valueOf(employee.getEmployeeNumber()).contains(searchedText)
+                        )
+                        .collect(Collectors.toList())
+        );
+        tvEmployees.setItems(searchResultNew);
+    }
+
+
+    private void displayPleaseProvidesearchInput() {
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Blank searched text", "Please provide search input");
+        customAlert.showAndWait();
+    }
+
+    public void automateSearchBar() {
+        searchBar.textProperty().addListener((observable, oldValue, newValue) -> {
+            applySearchText(newValue);
+        });
+    }
+
+    @FXML
+    public void sortEvent(ActionEvent actionEvent) {
+        sorter(cbSorter.getSelectionModel());
+    }
 }
