@@ -4,7 +4,6 @@ import com.jomariabejo.motorph.HibernateUtil;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Timesheet;
 import jakarta.persistence.NoResultException;
-import jakarta.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
@@ -64,6 +63,75 @@ public class TimesheetRepository extends _AbstractHibernateRepository<Timesheet,
         query.setParameter("EMPLOYEE", employee);
         query.setParameter("YEAR", yearValue);
         query.setParameter("MONTH", monthValue);
+
+        List<Timesheet> result = query.getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result);
+    }
+
+    public Optional<List<Timesheet>> fetchTimesheetByDate(LocalDate localDate) {
+        Session session = null;
+        session = HibernateUtil.openSession();
+
+        Query<Timesheet> query = session.createNamedQuery("fetchAllTimesheetByCurrentDate", Timesheet.class);
+        query.setParameter("LOCAL_DATE", localDate);
+
+        List<Timesheet> result = query.getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result);
+    }
+
+    public Optional<List<Timesheet>> fetchTimesheetByMonthlyBasis(LocalDate localDate) {
+        Session session = null;
+        session = HibernateUtil.openSession();
+
+        Query<Timesheet> query = session.createNamedQuery("fetchAllTimesheetByMonthAndYear", Timesheet.class);
+        query.setParameter("LOCAL_DATE", localDate);
+
+        List<Timesheet> result = query.getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result);
+    }
+
+    public Optional<List<Timesheet>> fetchTimesheetByYearlyBasis(LocalDate localDate) {
+        Session session = null;
+        session = HibernateUtil.openSession();
+
+        Query<Timesheet> query = session.createNamedQuery("fetchAllTimesheetByYear", Timesheet.class);
+        query.setParameter("LOCAL_DATE", localDate);
+
+        List<Timesheet> result = query.getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result);
+    }
+
+    public Optional<List<Timesheet>> fetchTimesheetByEmployeeNameAndDay(LocalDate theDate, String employeeName) {
+        Session session = null;
+        session = HibernateUtil.openSession();
+
+        Query<Timesheet> query = session.createNamedQuery("fetchEmployeeTimesheetByDate", Timesheet.class);
+        query.setParameter("DATE", theDate);
+        query.setParameter("NAME", employeeName);
+
+        List<Timesheet> result = query.getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result);
+    }
+
+    public Optional<List<Timesheet>> fetchEmployeeTimesheetByMonthAndYear(LocalDate theDate, String employeeName) {
+        Session session = null;
+        session = HibernateUtil.openSession();
+
+        Query<Timesheet> query = session.createNamedQuery("fetchEmployeeTimesheetByByMonth", Timesheet.class);
+        query.setParameter("DATE", theDate);
+        query.setParameter("NAME", employeeName);
+
+        List<Timesheet> result = query.getResultList();
+        return result.isEmpty() ? Optional.empty() : Optional.of(result);
+    }
+
+    public Optional<List<Timesheet>> fetchEmployeeTimesheetByYear(LocalDate theDate, String employeeName) {
+        Session session = null;
+        session = HibernateUtil.openSession();
+
+        Query<Timesheet> query = session.createNamedQuery("fetchEmployeeTimesheetByYear", Timesheet.class);
+        query.setParameter("DATE", theDate);
+        query.setParameter("NAME", employeeName);
 
         List<Timesheet> result = query.getResultList();
         return result.isEmpty() ? Optional.empty() : Optional.of(result);

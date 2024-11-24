@@ -47,10 +47,11 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
     public void timesheetsOnAction() {
         mainViewController.rewriteLabel("/ Human Resource / Timesheets");
 
-        loadView("/com/jomariabejo/motorph/role/human-resource/timesheets.fxml", controller -> {
+        loadView("/com/jomariabejo/motorph/role/human-resource/timesheets-new.fxml", controller -> {
 
             if (controller instanceof TimesheetController timesheetController) {
                 timesheetController.setHumanResourceAdministratorNavigationController(this);
+                timesheetController.setup();
             }
         });
     }

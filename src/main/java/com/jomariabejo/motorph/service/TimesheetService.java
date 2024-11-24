@@ -4,7 +4,6 @@ import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Timesheet;
 import com.jomariabejo.motorph.repository.TimesheetRepository;
 
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
@@ -50,4 +49,33 @@ public class TimesheetService {
     public Optional<List<Timesheet>> getTimesheetsByEmployeeAndDate(Employee employee, Year year, Month month) {
         return timesheetRepository.fetchEmployeeTimesheetsByYearAndMonth(employee, year, month);
     }
+
+    public Optional<List<Timesheet>> getAllTimesheetsToday(LocalDate localDate) {
+        return timesheetRepository.fetchTimesheetByDate(localDate);
+    }
+
+    public Optional<List<Timesheet>> getAllTimesheetsByMonthlyBasis(LocalDate localDate) {
+        return timesheetRepository.fetchTimesheetByMonthlyBasis(localDate);
+    }
+
+    public Optional<List<Timesheet>> getAllTimesheetsByYear(LocalDate localDate) {
+        return timesheetRepository.fetchTimesheetByYearlyBasis(localDate);
+    }
+
+    public Optional<List<Timesheet>> getAllTimesheetsTodayByEmployeeName(LocalDate theDate, String employeeName) {
+        return timesheetRepository.fetchTimesheetByEmployeeNameAndDay(theDate,employeeName);
+    }
+
+    public Optional<List<Timesheet>> getTimesheetByEmployeeNameAndDay(LocalDate theDate, String employeeName) {
+        return timesheetRepository.fetchTimesheetByEmployeeNameAndDay(theDate,employeeName);
+    }
+
+    public Optional<List<Timesheet>> getEmployeeTimesheetsByYearAndMonth(LocalDate theDate, String employeeName) {
+        return timesheetRepository.fetchEmployeeTimesheetByMonthAndYear(theDate,employeeName);
+    }
+
+    public Optional<List<Timesheet>> getTimesheetByEmployeeNameAndYear(LocalDate theDate, String employeeName) {
+        return timesheetRepository.fetchEmployeeTimesheetByYear(theDate,employeeName);
+    }
+
 }

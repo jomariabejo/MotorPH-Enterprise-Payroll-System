@@ -32,4 +32,8 @@ public class EmployeeService {
     public void deleteEmployee(Employee employee) {
         employeeRepository.delete(employee);
     }
+
+    public boolean isEmployeeNameExist(String employeeName) {
+        return employeeRepository.verifyEmployeeName(employeeName);
+    }
 }

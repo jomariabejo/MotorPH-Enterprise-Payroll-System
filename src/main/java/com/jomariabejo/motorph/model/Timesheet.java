@@ -39,6 +39,38 @@ import java.time.LocalTime;
                         "AND FUNCTION('YEAR', TS.date) = :YEAR " +
                         "AND FUNCTION('MONTH', TS.date) = :MONTH " +
                         "ORDER BY TS.date DESC"
+        ),
+        @NamedQuery(
+                name = "fetchAllTimesheetByCurrentDate",
+                query = "SELECT TS FROM Timesheet TS WHERE \n" +
+                        "TS.date = :LOCAL_DATE"
+        ),
+        @NamedQuery(
+                name = "fetchAllTimesheetByMonthAndYear",
+                query = "SELECT TS FROM Timesheet TS WHERE " +
+                        "YEAR(TS.date) = YEAR(:LOCAL_DATE) AND " +
+                        "MONTH(TS.date) = MONTH(:LOCAL_DATE)"
+        ),
+        @NamedQuery(
+                name = "fetchAllTimesheetByYear",
+                query = "SELECT TS FROM Timesheet TS WHERE " +
+                        "YEAR(TS.date) = YEAR(:LOCAL_DATE)"
+        ),
+        @NamedQuery(
+                name = "fetchEmployeeTimesheetByDate",
+                query = "SELECT TS FROM Timesheet TS WHERE TS.date = :DATE AND CONCAT(TS.employeeID.firstName, ' ', TS.employeeID.lastName) = :NAME"
+        ),
+        @NamedQuery(
+                name = "fetchEmployeeTimesheetByByMonth",
+                query = "SELECT TS FROM Timesheet TS WHERE " +
+                        "MONTH(TS.date) = MONTH(:DATE)" +
+                        "AND YEAR(TS.date) = YEAR (:DATE)" +
+                        "AND CONCAT(TS.employeeID.firstName, ' ', TS.employeeID.lastName) = :NAME"
+        ),
+        @NamedQuery(
+                name = "fetchEmployeeTimesheetByYear",
+                query = "SELECT TS FROM Timesheet TS WHERE YEAR(TS.date) = YEAR(:DATE) " +
+                        "AND CONCAT(TS.employeeID.firstName, ' ', TS.employeeID.lastName) = :NAME"
         )
 })
 public class Timesheet {
@@ -73,5 +105,13 @@ public class Timesheet {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "Approver")
     private Employee approver;
+
+
+    public String getEmployeeName() {
+        if (employeeID != null) {
+            return employeeID.getFirstName() + " " + employeeID.getLastName();
+        }
+        return "";
+    }
 
 }

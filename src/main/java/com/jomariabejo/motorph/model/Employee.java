@@ -19,6 +19,14 @@ import java.sql.Date;
         @UniqueConstraint(name = "TINNumber", columnNames = {"TINNumber"}),
         @UniqueConstraint(name = "PagibigNumber", columnNames = {"PagibigNumber"})
 })
+@NamedQueries(
+        {
+                @NamedQuery(
+                        name = "findEmployeeName",
+                        query = "FROM Employee e WHERE CONCAT(e.firstName, ' ', e.lastName) = :NAME"
+                )
+        }
+)
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
