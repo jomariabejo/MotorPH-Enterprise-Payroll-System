@@ -72,7 +72,7 @@ public class TimesheetRepository extends _AbstractHibernateRepository<Timesheet,
         Session session = null;
         session = HibernateUtil.openSession();
 
-        Query<Timesheet> query = session.createNamedQuery("fetchAllTimesheetByCurrentDate", Timesheet.class);
+        Query<Timesheet> query = session.createNamedQuery("findTimesheetBySpecifiedDate", Timesheet.class);
         query.setParameter("LOCAL_DATE", localDate);
 
         List<Timesheet> result = query.getResultList();
@@ -83,7 +83,7 @@ public class TimesheetRepository extends _AbstractHibernateRepository<Timesheet,
         Session session = null;
         session = HibernateUtil.openSession();
 
-        Query<Timesheet> query = session.createNamedQuery("fetchAllTimesheetByMonthAndYear", Timesheet.class);
+        Query<Timesheet> query = session.createNamedQuery("findTimesheetByMonthAndYear", Timesheet.class);
         query.setParameter("LOCAL_DATE", localDate);
 
         List<Timesheet> result = query.getResultList();
@@ -94,7 +94,7 @@ public class TimesheetRepository extends _AbstractHibernateRepository<Timesheet,
         Session session = null;
         session = HibernateUtil.openSession();
 
-        Query<Timesheet> query = session.createNamedQuery("fetchAllTimesheetByYear", Timesheet.class);
+        Query<Timesheet> query = session.createNamedQuery("findAllTimesheetByYear", Timesheet.class);
         query.setParameter("LOCAL_DATE", localDate);
 
         List<Timesheet> result = query.getResultList();
@@ -105,7 +105,7 @@ public class TimesheetRepository extends _AbstractHibernateRepository<Timesheet,
         Session session = null;
         session = HibernateUtil.openSession();
 
-        Query<Timesheet> query = session.createNamedQuery("fetchEmployeeTimesheetByDate", Timesheet.class);
+        Query<Timesheet> query = session.createNamedQuery("findTimesheetByEmployeeAndDate", Timesheet.class);
         query.setParameter("DATE", theDate);
         query.setParameter("NAME", employeeName);
 
@@ -117,7 +117,7 @@ public class TimesheetRepository extends _AbstractHibernateRepository<Timesheet,
         Session session = null;
         session = HibernateUtil.openSession();
 
-        Query<Timesheet> query = session.createNamedQuery("fetchEmployeeTimesheetByByMonth", Timesheet.class);
+        Query<Timesheet> query = session.createNamedQuery("findTimesheetByEmployeeAndMonth", Timesheet.class);
         query.setParameter("DATE", theDate);
         query.setParameter("NAME", employeeName);
 
@@ -129,7 +129,7 @@ public class TimesheetRepository extends _AbstractHibernateRepository<Timesheet,
         Session session = null;
         session = HibernateUtil.openSession();
 
-        Query<Timesheet> query = session.createNamedQuery("fetchEmployeeTimesheetByYear", Timesheet.class);
+        Query<Timesheet> query = session.createNamedQuery("findTimesheetByEmployeeAndYear", Timesheet.class);
         query.setParameter("DATE", theDate);
         query.setParameter("NAME", employeeName);
 

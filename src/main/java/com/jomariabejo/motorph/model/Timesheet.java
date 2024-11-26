@@ -15,10 +15,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
-import java.math.BigDecimal;
 import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -41,34 +39,34 @@ import java.time.LocalTime;
                         "ORDER BY TS.date DESC"
         ),
         @NamedQuery(
-                name = "fetchAllTimesheetByCurrentDate",
+                name = "findTimesheetBySpecifiedDate",
                 query = "SELECT TS FROM Timesheet TS WHERE \n" +
                         "TS.date = :LOCAL_DATE"
         ),
         @NamedQuery(
-                name = "fetchAllTimesheetByMonthAndYear",
+                name = "findTimesheetByMonthAndYear",
                 query = "SELECT TS FROM Timesheet TS WHERE " +
                         "YEAR(TS.date) = YEAR(:LOCAL_DATE) AND " +
                         "MONTH(TS.date) = MONTH(:LOCAL_DATE)"
         ),
         @NamedQuery(
-                name = "fetchAllTimesheetByYear",
+                name = "findAllTimesheetByYear",
                 query = "SELECT TS FROM Timesheet TS WHERE " +
                         "YEAR(TS.date) = YEAR(:LOCAL_DATE)"
         ),
         @NamedQuery(
-                name = "fetchEmployeeTimesheetByDate",
+                name = "findTimesheetByEmployeeAndDate",
                 query = "SELECT TS FROM Timesheet TS WHERE TS.date = :DATE AND CONCAT(TS.employeeID.firstName, ' ', TS.employeeID.lastName) = :NAME"
         ),
         @NamedQuery(
-                name = "fetchEmployeeTimesheetByByMonth",
+                name = "findTimesheetByEmployeeAndMonth",
                 query = "SELECT TS FROM Timesheet TS WHERE " +
                         "MONTH(TS.date) = MONTH(:DATE)" +
                         "AND YEAR(TS.date) = YEAR (:DATE)" +
                         "AND CONCAT(TS.employeeID.firstName, ' ', TS.employeeID.lastName) = :NAME"
         ),
         @NamedQuery(
-                name = "fetchEmployeeTimesheetByYear",
+                name = "findTimesheetByEmployeeAndYear",
                 query = "SELECT TS FROM Timesheet TS WHERE YEAR(TS.date) = YEAR(:DATE) " +
                         "AND CONCAT(TS.employeeID.firstName, ' ', TS.employeeID.lastName) = :NAME"
         )

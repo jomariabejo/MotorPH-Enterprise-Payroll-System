@@ -118,6 +118,7 @@ public class TimesheetController {
                         calculateHoursWorked(
                                 timesheet.get()
                         )));
+                timesheet.get().setStatus("Submitted");
                 this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().updateTimesheet(timesheet.get());
                 populateTableview();
             }

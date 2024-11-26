@@ -1,19 +1,31 @@
 package com.jomariabejo.motorph.controller.role.hr;
 
+import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
 import com.jomariabejo.motorph.model.Timesheet;
 import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.Getter;
 import lombok.Setter;
+import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.fontawesome5.FontAwesomeRegular;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.NoSuchElementException;
 
 @Getter
 @Setter
@@ -49,6 +61,9 @@ public class TimesheetController {
     private TableView<Timesheet> tvTimesheets;
 
     @FXML
+    private TextField tfApprover;
+
+    @FXML
     void clockOutClicked(ActionEvent event) {
 
     }
@@ -80,18 +95,18 @@ public class TimesheetController {
 
     private void populateTableViewByDatePickerSelectedDay() {
         LocalDate theDate = timesheetDatePicker.getValue();
-        tvTimesheets.setItems(
-                FXCollections.observableList(
-                        this.
-                                getHumanResourceAdministratorNavigationController()
-                                .getMainViewController()
-                                .getServiceFactory()
-                                .getTimesheetService()
-                                .getAllTimesheetsToday(theDate).get()
-                )
-        );
-
-        if (timesheetTableViewEmpty()) {
+        try {
+            tvTimesheets.setItems(
+                    FXCollections.observableList(
+                            this.
+                                    getHumanResourceAdministratorNavigationController()
+                                    .getMainViewController()
+                                    .getServiceFactory()
+                                    .getTimesheetService()
+                                    .getAllTimesheetsToday(theDate).get()
+                    )
+            );
+        } catch (NoSuchElementException noSuchElementException) {
             alertUserTableIsEmpty();
         }
     }
@@ -147,17 +162,117 @@ public class TimesheetController {
 
     public void timesheetDateFilterChanged(ActionEvent actionEvent) {
         String fetchType = dateFilter.getSelectionModel().getSelectedItem().toString();
+        String employeeName = searchBar.getText();
+        boolean isSearchBarEmpty = searchBar.getText().isEmpty();
 
-        switch (fetchType) {
-            case "Daily":
-                displayTimesheetsByDatePickerSelectedDay();
-                break;
-            case "Monthly":
-                displayTimesheetsByDatePickerSelectedMonth();
-                break;
-            case "Yearly":
-                displayTimesheetsByDatePickerSelectedYear();
-                break;
+        if (isSearchBarEmpty) {
+            switch (fetchType) {
+                case "Daily":
+                    displayTimesheetsByDatePickerSelectedDay();
+                    break;
+                case "Monthly":
+                    displayTimesheetsByDatePickerSelectedMonth();
+                    break;
+                case "Yearly":
+                    displayTimesheetsByDatePickerSelectedYear();
+                    break;
+            }
+        } else {
+            boolean isEmployeeNameExist = isEmployeeNameExist(searchBar.getText());
+
+            if (isEmployeeNameExist) {
+                switch (fetchType) {
+                    case "Daily":
+                        displayTimesheetsByDatePickerSelectedDayAndEmployeeName();
+                        break;
+                    case "Monthly":
+                        displayTimesheetsByDatePickerSelectedMonthAndEmployeeName();
+                        break;
+                    case "Yearly":
+                        displayTimesheetsByDatePickerSelectedYearAndEmployeeName();
+                        break;
+                }
+            } else {
+                displayEmployeeNameDoesNotExist();
+            }
+        }
+    }
+
+    private void displayEmployeeNameDoesNotExist() {
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.INFORMATION,
+                "Employee not found.", "Employee name doesn't exist");
+        customAlert.showAndWait();
+    }
+
+    private void displayTimesheetsByDatePickerSelectedYearAndEmployeeName() {
+        populateTableViewByDatePickerSelectedYearAndEmployeeName();
+    }
+
+    private void populateTableViewByDatePickerSelectedYearAndEmployeeName() {
+        try {
+            tvTimesheets.setItems(
+                    FXCollections.observableList(
+                            this.getHumanResourceAdministratorNavigationController()
+                                    .getMainViewController()
+                                    .getServiceFactory()
+                                    .getTimesheetService()
+                                    .getTimesheetByEmployeeNameAndYear(
+                                            timesheetDatePicker.getValue(),
+                                            searchBar.getText()
+                                    ).get()
+                    )
+            );
+        } catch (NoSuchElementException noSuchElementException) {
+            CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "No timesheet found", STR."No timesheet found for \{searchBar.getText()}");
+            customAlert.showAndWait();
+        }
+    }
+
+    private void displayTimesheetsByDatePickerSelectedMonthAndEmployeeName() {
+        populateTableViewByDatePickerSelectedMonthAndEmployeeName();
+    }
+
+    private void populateTableViewByDatePickerSelectedMonthAndEmployeeName() {
+        try {
+            tvTimesheets.setItems(
+                    FXCollections.observableList(
+                            this.getHumanResourceAdministratorNavigationController()
+                                    .getMainViewController()
+                                    .getServiceFactory()
+                                    .getTimesheetService()
+                                    .getEmployeeTimesheetsByYearAndMonth(
+                                            timesheetDatePicker.getValue(),
+                                            searchBar.getText()
+                                    ).get()
+                    )
+            );
+        } catch (NoSuchElementException noSuchElementException) {
+            CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "No timesheet found", STR."No timesheet found for \{searchBar.getText()}");
+            customAlert.showAndWait();
+        }
+    }
+
+    private void displayTimesheetsByDatePickerSelectedDayAndEmployeeName() {
+        populateTableViewByDatePickerSelectedDayAndEmployeeName();
+    }
+
+    private void populateTableViewByDatePickerSelectedDayAndEmployeeName() {
+        try {
+            tvTimesheets.setItems(
+                    FXCollections.observableList(
+                            this.getHumanResourceAdministratorNavigationController()
+                                    .getMainViewController()
+                                    .getServiceFactory()
+                                    .getTimesheetService()
+                                    .getTimesheetByEmployeeNameAndDay(
+                                            timesheetDatePicker.getValue(),
+                                            searchBar.getText()
+                                    ).get()
+                    )
+            );
+        } catch (NoSuchElementException noSuchElementException) {
+            CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "No timesheet found", STR."No timesheet found for \{searchBar.getText()}");
+            customAlert.showAndWait();
         }
     }
 
@@ -174,7 +289,7 @@ public class TimesheetController {
     }
 
     public void searchBarChanged(ActionEvent actionEvent) {
-
+        applySearchText(searchBar.getText());
     }
 
     private void automateSearchBar() {
@@ -186,22 +301,21 @@ public class TimesheetController {
     private void applySearchText(String employeeName) {
         if (isEmployeeNameExist(employeeName)) {
             String fetchType = dateFilter.getSelectionModel().getSelectedItem().toString();
-
             switch (fetchType) {
                 case "Daily":
-                    displayEmployeeTimesheetsByDatePickerSelectedDay(employeeName);
+                    displayEmployeeTimesheetsBySelectedDay(employeeName);
                     break;
                 case "Monthly":
-                    displayEmployeeTimesheetsByDatePickerSelectedMonth(employeeName);
+                    displayEmployeeTimesheetsBySelectedMonth(employeeName);
                     break;
                 case "Yearly":
-                    displayEmployeeTimesheetsByDatePickerSelectedYear(employeeName);
+                    displayEmployeeTimesheetsBySelectedYear(employeeName);
                     break;
             }
         }
     }
 
-    private void displayEmployeeTimesheetsByDatePickerSelectedYear(String employeeName) {
+    private void displayEmployeeTimesheetsBySelectedYear(String employeeName) {
         LocalDate theDate = timesheetDatePicker.getValue();
         tvTimesheets.setItems(
                 FXCollections.observableList(
@@ -219,7 +333,7 @@ public class TimesheetController {
         }
     }
 
-    private void displayEmployeeTimesheetsByDatePickerSelectedMonth(String employeeName) {
+    private void displayEmployeeTimesheetsBySelectedMonth(String employeeName) {
         LocalDate theDate = timesheetDatePicker.getValue();
         tvTimesheets.setItems(
                 FXCollections.observableList(
@@ -237,7 +351,7 @@ public class TimesheetController {
         }
     }
 
-    private void displayEmployeeTimesheetsByDatePickerSelectedDay(String employeeName) {
+    private void displayEmployeeTimesheetsBySelectedDay(String employeeName) {
         LocalDate theDate = timesheetDatePicker.getValue();
         tvTimesheets.setItems(
                 FXCollections.observableList(
@@ -258,4 +372,88 @@ public class TimesheetController {
     private boolean isEmployeeNameExist(String employeeName) {
         return this.getHumanResourceAdministratorNavigationController().getMainViewController().getServiceFactory().getEmployeeService().isEmployeeNameExist(employeeName);
     }
+
+    private TableColumn<Timesheet, Void> createActionsColumn() {
+        TableColumn<Timesheet, Void> actionsColumn = new TableColumn<>("Actions");
+        actionsColumn.setPrefWidth(200);
+        actionsColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button modifydBtn = createModifyBtn();
+
+            private Button createModifyBtn() {
+                FontIcon fontIcon = new FontIcon(Feather.EDIT);
+                Button updateButton = new Button(null, fontIcon);
+                updateButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
+                return updateButton;
+            }
+
+
+            private Button createDeleteBtn() {
+                FontIcon fontIcon = new FontIcon(Feather.TRASH_2);
+                Button deleteButton = new Button(null, fontIcon);
+                deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
+                return deleteButton;
+            }
+
+            private final Button deleteBtn = createDeleteBtn();
+
+
+            private final HBox actionsBox = new HBox(modifydBtn, deleteBtn);
+
+            {
+                actionsBox.setAlignment(Pos.CENTER);
+                actionsBox.setSpacing(10);
+                setGraphic(actionsBox);
+
+                // Create timesheet form wherein we can modify employee timesheets
+                modifydBtn.setOnAction(event -> {
+                    try {
+                        Timesheet selectedTimesheet = getTableView().getItems().get(getIndex());
+
+                        try {
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
+                                    ("/com/jomariabejo/motorph/role/human-resource/timesheet-viewer.fxml"));
+
+                            Parent root = fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.initStyle(StageStyle.DECORATED);
+                            stage.setTitle("Viewing employee timesheet.");
+                            stage.setScene(new Scene(root));
+                            stage.show();
+
+                            TimesheetModifier timesheetViewForm = fxmlLoader.getController();
+                            timesheetViewForm.injectTimesheet(selectedTimesheet);
+                            timesheetViewForm.setTimesheetController(TimesheetController.this);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    } catch (RuntimeException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                deleteBtn.setOnAction(event -> {
+
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : actionsBox);
+            }
+        });
+        return actionsColumn;
+    }
+
+    @FXML
+    private void initialize() {
+        setupTableViewOnAction();
+    }
+
+    private void setupTableViewOnAction() {
+        TableColumn<Timesheet, Void> actionsColumn = createActionsColumn();
+        this.tvTimesheets.getColumns().add(actionsColumn);
+    }
+
 }
