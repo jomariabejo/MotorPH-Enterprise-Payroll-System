@@ -93,7 +93,7 @@ public class Timesheet {
     @Column(name = "Remarks")
     private String remarks;
 
-    @Column(name = "HoursWorked", nullable = false)
+    @Column(name = "HoursWorked")
     private Float hoursWorked;
 
     @ColumnDefault("'Submitted'")

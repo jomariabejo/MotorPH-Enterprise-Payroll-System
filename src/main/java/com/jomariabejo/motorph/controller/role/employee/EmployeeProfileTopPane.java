@@ -54,12 +54,21 @@ public class EmployeeProfileTopPane {
             FontIcon fontIcon = new FontIcon(Material.SECURITY);
             fontIcon.setIconSize(150);
             employeeChangePasswordController.getLblChangePassword().setGraphic(fontIcon);
+            disableChangePasswordButton();
 
             formStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    private void disableChangePasswordButton() {
+        changePasswordButton.setDisable(true);
+    }
+    public void enableChangePasswordButton() {
+        changePasswordButton.setDisable(false);
+    }
+
 
     @FXML
     void moreInfoClicked() {

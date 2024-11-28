@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -162,7 +163,6 @@ public class TimesheetController {
 
     public void timesheetDateFilterChanged(ActionEvent actionEvent) {
         String fetchType = dateFilter.getSelectionModel().getSelectedItem().toString();
-        String employeeName = searchBar.getText();
         boolean isSearchBarEmpty = searchBar.getText().isEmpty();
 
         if (isSearchBarEmpty) {
@@ -433,7 +433,17 @@ public class TimesheetController {
                 });
 
                 deleteBtn.setOnAction(event -> {
+                    Timesheet selectedTimesheet = getTableView().getItems().get(getIndex());
 
+                    CustomAlert customAlert = new CustomAlert(Alert.AlertType.CONFIRMATION, "Timesheet removal confirmation","Are you sure you want to delete this timesheet?");
+                    Optional<ButtonType> result = customAlert.showAndWait();
+                    if (result.isPresent() && result.get() == ButtonType.OK) {
+                        this.getTableView().getItems().remove(selectedTimesheet);
+                        this.getTableView().refresh();
+                        humanResourceAdministratorNavigationController.getMainViewController().getServiceFactory().getTimesheetService().deleteTimesheet(selectedTimesheet);
+                        CustomAlert alertSuccess = new CustomAlert(Alert.AlertType.INFORMATION, "Timesheet successfully removed.", "Employee timesheet has been removed.");
+                        alertSuccess.showAndWait();
+                    }
                 });
             }
 
@@ -456,4 +466,7 @@ public class TimesheetController {
         this.tvTimesheets.getColumns().add(actionsColumn);
     }
 
+    public void timesheetDateChanged(ActionEvent actionEvent) {
+        timesheetDateFilterChanged(actionEvent);
+    }
 }

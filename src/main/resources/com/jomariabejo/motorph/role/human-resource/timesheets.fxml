@@ -40,7 +40,7 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <DatePicker fx:id="timesheetDatePicker" style="-fx-font-size: 24px;" />
+                  <DatePicker fx:id="timesheetDatePicker" onAction="#timesheetDateChanged" style="-fx-font-size: 24px;" />
                   <Region layoutX="1020.0" layoutY="10.0" prefHeight="82.0" prefWidth="103.0" />
                   <ComboBox fx:id="dateFilter" onAction="#timesheetDateFilterChanged" prefHeight="51.0" prefWidth="125.0" style="-fx-font-size: 24;" value="Daily">
                       <items>
