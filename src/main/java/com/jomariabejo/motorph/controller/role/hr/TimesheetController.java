@@ -46,8 +46,6 @@ public class TimesheetController {
     @FXML
     private Pagination paginationTimesheets;
 
-    @FXML
-    private Button printBtn;
 
     @FXML
     private TextField searchBar;
@@ -74,19 +72,10 @@ public class TimesheetController {
 
     }
 
-    private void addPrintIcon() {
-        printBtn.setGraphic(new FontIcon(FontAwesomeRegular.CALENDAR_CHECK));
-        printBtn.setMaxSize(36, 36);
-    }
-
-    public void enhanceUI() {
-        addPrintIcon();
-    }
 
     public void setup() {
         setDatePickerToCurrentDate();
         populateTableViewByDatePickerSelectedDay();
-        enhanceUI();
         automateSearchBar();
     }
 
@@ -424,6 +413,7 @@ public class TimesheetController {
                             TimesheetModifier timesheetViewForm = fxmlLoader.getController();
                             timesheetViewForm.injectTimesheet(selectedTimesheet);
                             timesheetViewForm.setTimesheetController(TimesheetController.this);
+                            timesheetViewForm.setSelectedIndex(getIndex());
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

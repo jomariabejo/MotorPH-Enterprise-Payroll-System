@@ -13,8 +13,12 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material.Material;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Time;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @Setter
@@ -87,8 +91,43 @@ public class TimesheetModifier {
         timesheet.setTimeIn(Time.valueOf(tfTimeIn.getText()));
         timesheet.setStatus(timesheet.getStatus());
         timesheet.setEmployeeID(this.getTimesheetController().getHumanResourceAdministratorNavigationController().getMainViewController().getServiceFactory().getEmployeeService().getEmployeeById(Integer.valueOf(tfEmployeeId.getText())));
+
+        // Convert java.sql.Time to LocalTime
+        LocalTime timeIn = timesheet.getTimeIn().toLocalTime();
+        LocalTime timeOut = timesheet.getTimeOut().toLocalTime();
+
+        // Calculate the duration between TimeIn and TimeOut
+        Duration duration = Duration.between(timeIn, timeOut);
+
+        // Convert the duration to hours
+        double hoursWorked = duration.toMillis() / 3600000.0; // Convert milliseconds to hours
+
+        // Round to 4 decimal places and ensure it's positive
+        hoursWorked = Math.abs(hoursWorked); // Ensure positive value
+        BigDecimal roundedHours = new BigDecimal(hoursWorked).setScale(4, RoundingMode.HALF_UP); // 4 decimal places rounding
+
+        // Set the hours worked in the timesheet
+        timesheet.setHoursWorked(roundedHours.floatValue()); // Set the rounded value as a float
+
+        // Update the timesheet using the service
         this.getTimesheetController().getHumanResourceAdministratorNavigationController().getMainViewController()
                 .getServiceFactory().getTimesheetService().updateTimesheet(timesheet);
+
+        // Hide tableview
+        tfEmployeeId.getScene().getWindow().hide();
+        // Update the tableview
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().select(timesheet);
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setId(timesheet.getId());
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setDate(timesheet.getDate());
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setRemarks(timesheet.getRemarks());
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setStatus(timesheet.getStatus());
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setApprover(timesheet.getApprover());
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setHoursWorked(timesheet.getHoursWorked());
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setTimeOut(timesheet.getTimeOut());
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setTimeIn(timesheet.getTimeIn());
+        this.getTimesheetController().getTvTimesheets().getSelectionModel().getSelectedItem().setEmployeeID(timesheet.getEmployeeID());
+        this.getTimesheetController().getTvTimesheets().refresh();
+
     }
 
     private void enableTextfields() {
@@ -154,4 +193,8 @@ public class TimesheetModifier {
         displayCancelIcon();
         displaySaveIcon();
     }
+
+    @FXML
+    private int selectedIndex;
+
 }
