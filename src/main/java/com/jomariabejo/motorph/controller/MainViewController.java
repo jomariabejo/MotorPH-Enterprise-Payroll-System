@@ -67,6 +67,7 @@ public class MainViewController implements _ViewLoader {
                 HumanResourceAdministratorNavigationController humanResourceController = (HumanResourceAdministratorNavigationController) controller;
                 humanResourceController.setMainViewController(this);
                 humanResourceController.humanResourceDashboardOnAction();
+                humanResourceController.displayGreetings();
             }
         });
     }

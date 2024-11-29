@@ -3,6 +3,7 @@ package com.jomariabejo.motorph.controller.role.hr;
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
 import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.model.Timesheet;
 import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -10,11 +11,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import lombok.Getter;
 import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
@@ -24,6 +28,7 @@ import org.kordamp.ikonli.material.Material;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -180,97 +185,6 @@ public class EmployeeController {
         tvEmployees.setItems(sortedList); // Set the sorted list to the TableView
     }
 
-
-    private TableColumn<Employee, Void> createActionsColumn() {
-        TableColumn<Employee, Void> actionsColumn = new TableColumn<>("Actions");
-        actionsColumn.setPrefWidth(200);
-        actionsColumn.setCellFactory(param -> new TableCell<>() {
-            private final Button updateButton = createUpdateButton();
-            private final Button deleteButton = createDeleteButton();
-
-            private Button createUpdateButton() {
-                Button updateButton = new Button(null, new FontIcon(Feather.PEN_TOOL));
-                updateButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
-                return updateButton;
-            }
-
-            private Button createDeleteButton() {
-                Button updateButton = new Button(null, new FontIcon(Feather.USER_MINUS));
-                updateButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
-                return updateButton;
-            }
-
-            private final HBox actionsBox = new HBox(updateButton, deleteButton);
-
-            {
-                actionsBox.setAlignment(Pos.CENTER);
-                actionsBox.setSpacing(10);
-                /**
-                 * Create Update On Action
-                 */
-
-                updateButton.setOnAction(event -> {
-//                    LeaveRequest selectedLeaveRequest = getTableView().getItems().get(getIndex());
-//                    if (selectedLeaveRequest != null) {
-//                        if (selectedLeaveRequest.getStatus().equals("Pending")) {
-//                            System.out.println("Selected Leave Request is = " + selectedLeaveRequest.toString());
-//                            try {
-//                                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/update-leave-request.fxml"));
-//                                Parent root = fxmlLoader.load();
-//
-//                                Stage stage = new Stage();
-//                                stage.setTitle("Edit Leave Request");
-//                                stage.setScene(new Scene(root));
-//                                stage.show();
-//
-//                                ModifyLeaveRequestController fileLeaveRequestController = fxmlLoader.getController();
-//                                fileLeaveRequestController.setLeaveHistoryController(LeaveHistoryController.this);
-//                                fileLeaveRequestController.setLeaveRequest(selectedLeaveRequest);
-//                                fileLeaveRequestController.setupComponents();
-//                                fileLeaveRequestController.setTableViewIndex(getIndex());
-//
-//                            } catch (IOException ioException) {
-//                                ioException.printStackTrace();
-//                            }
-//                        } else {
-//                            errorPendingLeaveRequestOnly();
-//                        }
-//                    }
-                });
-
-
-                deleteButton.setOnAction(event -> {
-
-//                    LeaveRequest selectedLeaveRequest = getTableView().getItems().get(getIndex());
-//                    if (selectedLeaveRequest.getStatus().equals("Pending")) {
-//                        CustomAlert customAlert = new CustomAlert(Alert.AlertType.CONFIRMATION, "Delete leave request", "Are you sure you want to delete this leave request?");
-//                        Optional<ButtonType> result = customAlert.showAndWait();
-//                        if (result.isPresent() && result.get() == ButtonType.OK) {
-//                            employeeRoleNavigationController
-//                                    .getMainViewController()
-//                                    .getServiceFactory()
-//                                    .getLeaveRequestService()
-//                                    .deleteLeaveRequest(selectedLeaveRequest);
-//                            tvLeaveRequests.getItems().remove(selectedLeaveRequest);
-//                        }
-//
-//
-//                    } else {
-//                        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Leave request can't be deleted", "Leave request is already processed.");
-//                        customAlert.showAndWait();
-//                    }
-                });
-            }
-
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                setGraphic(empty ? null : actionsBox);
-            }
-        });
-        return actionsColumn;
-    }
-
     private void setUpTableView() {
         TableColumn<Employee, Void> actionsColumn = createActionsColumn();
         this.tvEmployees.getColumns().add(actionsColumn);
@@ -327,4 +241,98 @@ public class EmployeeController {
     public void sortEvent(ActionEvent actionEvent) {
         sorter(cbSorter.getSelectionModel());
     }
+
+    @FXML
+    private void initialize() {
+        setupTableViewOnAction();
+    }
+
+    private void setupTableViewOnAction() {
+        TableColumn<Employee, Void> actionsColumn = createActionsColumn();
+        this.tvEmployees.getColumns().add(actionsColumn);
+    }
+
+    private TableColumn<Employee, Void> createActionsColumn() {
+        TableColumn<Employee, Void> actionsColumn = new TableColumn<>("Actions");
+        actionsColumn.setPrefWidth(200);
+        actionsColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button modifydBtn = createModifyBtn();
+
+            private Button createModifyBtn() {
+                FontIcon fontIcon = new FontIcon(Feather.EDIT);
+                Button updateButton = new Button(null, fontIcon);
+                updateButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
+                return updateButton;
+            }
+
+
+            private Button createDeleteBtn() {
+                FontIcon fontIcon = new FontIcon(Feather.TRASH_2);
+                Button deleteButton = new Button(null, fontIcon);
+                deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
+                return deleteButton;
+            }
+
+//            private final Button deleteBtn = createDeleteBtn();
+
+
+            private final HBox actionsBox = new HBox(modifydBtn
+//                    ,deleteBtn
+            );
+
+            {
+                actionsBox.setAlignment(Pos.CENTER);
+                actionsBox.setSpacing(10);
+                setGraphic(actionsBox);
+
+                modifydBtn.setOnAction(event -> {
+                    try {
+                        Employee selectedEmployee = getTableView().getItems().get(getIndex());
+
+                        System.out.println("Include modify employee form");
+                            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource
+                                    ("/com/jomariabejo/motorph/role/human-resource/modify-employee.fxml"));
+
+                            Parent root = fxmlLoader.load();
+                            Stage stage = new Stage();
+                            stage.initModality(Modality.APPLICATION_MODAL);
+                            stage.initStyle(StageStyle.DECORATED);
+                            stage.setTitle("Modify Employee.");
+                            stage.setScene(new Scene(root));
+                            stage.show();
+
+                            HumanResourceModifyEmployeeController humanResourceModifyEmployeeController = fxmlLoader.getController();
+                            humanResourceModifyEmployeeController.injectEmployee(selectedEmployee);
+                            humanResourceModifyEmployeeController.setEmployeeController(EmployeeController.this);
+                    } catch (RuntimeException e) {
+                        throw new RuntimeException(e);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+//                deleteBtn.setOnAction(event -> {
+//                    Employee selectedEmployee = getTableView().getItems().get(getIndex());
+//
+//                    CustomAlert customAlert = new CustomAlert(Alert.AlertType.CONFIRMATION, "Employee removal confirmation","Are you sure you want to delete this employee?");
+//                    Optional<ButtonType> result = customAlert.showAndWait();
+//                    if (result.isPresent() && result.get() == ButtonType.OK) {
+//                        this.getTableView().getItems().remove(selectedEmployee);
+//                        this.getTableView().refresh();
+//                        humanResourceAdministratorNavigationController.getMainViewController().getServiceFactory().getEmployeeService().deleteEmployee(selectedEmployee);
+//                        CustomAlert alertSuccess = new CustomAlert(Alert.AlertType.INFORMATION, "Employee successfully removed.", "Employee record has been removed.");
+//                        alertSuccess.showAndWait();
+//                    }
+//                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : actionsBox);
+            }
+        });
+        return actionsColumn;
+    }
+
 }

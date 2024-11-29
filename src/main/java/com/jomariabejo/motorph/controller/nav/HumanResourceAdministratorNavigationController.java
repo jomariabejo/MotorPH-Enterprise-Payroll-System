@@ -4,6 +4,7 @@ import com.jomariabejo.motorph.controller.MainViewController;
 import com.jomariabejo.motorph.controller._ViewLoader;
 import com.jomariabejo.motorph.controller.role.hr.*;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ import java.util.function.Consumer;
 @Getter
 public class HumanResourceAdministratorNavigationController implements _ViewLoader {
 
+    public Label lblFirstName;
     private MainViewController mainViewController;
 
     public HumanResourceAdministratorNavigationController() {
@@ -93,5 +95,11 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
         }
+    }
+
+    public void displayGreetings() {
+        lblFirstName.setText(
+                STR."\{this.getMainViewController().getEmployee().getFirstName()} \{this.getMainViewController().getEmployee().getLastName()}"
+        );
     }
 }
