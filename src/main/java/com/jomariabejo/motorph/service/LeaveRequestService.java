@@ -49,4 +49,11 @@ public class LeaveRequestService {
     }
 
 
+    public List<LeaveRequest> fetchLeaveRequestsByStatus(String status) {
+        return leaveRequestRepository.fetchLeaveRequestsByStatus(status);
+    }
+
+    public List<LeaveRequest> findLeaveRequestsByEmployeeNameOrEmployeeNumber(String searchedText) {
+        return leaveRequestRepository.fetchLeaveRequestsByEmployeeNameOrEmployeeNumber(searchedText);
+    }
 }

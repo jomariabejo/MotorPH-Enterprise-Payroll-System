@@ -75,4 +75,59 @@ public class LeaveRequestRepository extends _AbstractHibernateRepository<LeaveRe
     }
 
 
+    public List<LeaveRequest> fetchLeaveRequestsByStatus(String status) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            Query<LeaveRequest> query = session.createNamedQuery("findLeaveRequestsByStatus", LeaveRequest.class);
+            query.setParameter("status", status);
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return List.of();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public List<LeaveRequest> fetchLeaveRequestsByEmployeeNameOrEmployeeNumber(String searchedText) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+
+            // Split the search text into first and last name (if there's a space)
+            String[] nameParts = searchedText.split("\\s+");
+            String firstNamePart = nameParts.length > 0 ? nameParts[0].toLowerCase() : "";
+            String lastNamePart = nameParts.length > 1 ? nameParts[1].toLowerCase() : "";
+
+            // Create the query using both first name and last name search parts
+            Query<LeaveRequest> query = session.createNamedQuery("findLeaveRequestsByEmployeeNameOrEmployeeNumber", LeaveRequest.class);
+
+            // Update the query parameters to handle both first and last names
+            if (!firstNamePart.isEmpty() && !lastNamePart.isEmpty()) {
+                query.setParameter("firstName", "%" + firstNamePart + "%");
+                query.setParameter("lastName", "%" + lastNamePart + "%");
+            } else if (!firstNamePart.isEmpty()) {
+                query.setParameter("firstName", "%" + firstNamePart + "%");
+                query.setParameter("lastName", "");
+            } else if (!lastNamePart.isEmpty()) {
+                query.setParameter("firstName", "");
+                query.setParameter("lastName", "%" + lastNamePart + "%");
+            }
+
+            // Optionally add the employee number check
+            query.setParameter("searchedText", "%" + searchedText.toLowerCase() + "%");
+
+            return query.getResultList();
+        } catch (NoResultException e) {
+            return List.of();  // Return an empty list if no results found
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();  // Close the session after use
+            }
+        }
+    }
+
+
 }

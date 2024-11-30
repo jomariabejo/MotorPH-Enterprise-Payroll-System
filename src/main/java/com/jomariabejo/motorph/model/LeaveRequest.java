@@ -57,13 +57,27 @@ import java.time.LocalDateTime;
                         "  AND lr.status = :status\n" +
                         "  AND lt.leaveTypeName = :leaveTypeName\n" +
                         "ORDER BY lr.dateRequested DESC\n"),
+//        @NamedQuery(
+//                name = "countTotalPaidLeaveDaysByEmployeeAndPeriod",
+//                query = "SELECT SUM(LEAST(DATEDIFF(COALESCE(lr.endDate, :payslipEndPeriod), " +
+//                        "GREATEST(lr.startDate, :payslipStartPeriod)) + 1, " +
+//                        "DATEDIFF(:payslipEndPeriod, :payslipStartPeriod) + 1)) " +
+//                        "FROM LeaveRequest lr " +
+//                        "WHERE lr.employeeID = :employee " +
+//                        "AND lr.isPaid = true " +
+//                        "AND (lr.startDate <= :payslipEndPeriod AND lr.endDate >= :payslipStartPeriod)"
+//        ),
         @NamedQuery(
-                name = "countTotalPaidLeaveDaysByEmployeeAndPeriod",
-                query = "SELECT SUM(LEAST(DATEDIFF(COALESCE(lr.endDate, :payslipEndPeriod), GREATEST(lr.startDate, :payslipStartPeriod)) + 1, DATEDIFF(:payslipEndPeriod, :payslipStartPeriod) + 1)) " +
-                        "FROM LeaveRequest lr " +
-                        "WHERE lr.employeeID = :employee " +
-                        "AND lr.isPaid = true " +
-                        "AND (lr.startDate <= :payslipEndPeriod AND lr.endDate >= :payslipStartPeriod)"
+                name = "findLeaveRequestsByStatus",
+                query = "SELECT lr FROM LeaveRequest lr WHERE lr.status = :status ORDER BY lr.dateRequested"
+        ),
+        @NamedQuery(
+                name = "findLeaveRequestsByEmployeeNameOrEmployeeNumber",
+                query = "SELECT lr FROM LeaveRequest lr " +
+                        "JOIN lr.employeeID e " +
+                        "WHERE (LOWER(e.firstName) LIKE LOWER(CONCAT('%', :firstName, '%')) " +
+                        "AND LOWER(e.lastName) LIKE LOWER(CONCAT('%', :lastName, '%'))) " +
+                        "OR CAST(e.employeeNumber AS string) LIKE LOWER(CONCAT('%', :searchedText, '%'))"
         )
 
 })
@@ -107,7 +121,7 @@ public class LeaveRequest {
     private String description;
 
     @Column(name = "isPaid", columnDefinition = "boolean default false")
-    private boolean isPaid;
+    private Boolean isPaid;
 
     public LeaveRequest() {
 
@@ -134,5 +148,19 @@ public class LeaveRequest {
                 ", adminApprovalDate=" + adminApprovalDate +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    public String getEmployeeName() {
+        if (leaveTypeID != null) {
+            return employeeID.getFirstName() + " " + employeeID.getLastName();
+        }
+        return "";
+    }
+
+    public String getLeaveType() {
+        if (leaveTypeID != null) {
+            return leaveTypeID.getLeaveTypeName();
+        }
+        return "";
     }
 }

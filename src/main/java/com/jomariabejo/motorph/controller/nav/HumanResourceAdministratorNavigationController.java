@@ -61,10 +61,11 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
     public void leaveRequestsOnAction() {
         mainViewController.rewriteLabel("/ Human Resource / Leave Requests");
 
-        loadView("/com/jomariabejo/motorph/role/human-resource/leave-requests.fxml", controller -> {
+        loadView("/com/jomariabejo/motorph/role/human-resource/leave-requests-latest.fxml", controller -> {
 
             if (controller instanceof LeaveRequestController leaveRequestController) {
                 leaveRequestController.setHumanResourceAdministratorNavigationController(this);
+                leaveRequestController.setup();
             }
         });
     }

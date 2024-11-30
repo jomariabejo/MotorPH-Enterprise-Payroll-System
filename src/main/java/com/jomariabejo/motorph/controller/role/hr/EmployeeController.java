@@ -109,7 +109,6 @@ public class EmployeeController {
     }
 
     public void setup() {
-        setupTableView(); // create action columns
         customizeAddNewEmployeeButton(); // add icon to button
         populateEmployees(); // add data to tableview
         automateSearchBar();
@@ -185,10 +184,6 @@ public class EmployeeController {
         tvEmployees.setItems(sortedList); // Set the sorted list to the TableView
     }
 
-    private void setUpTableView() {
-        TableColumn<Employee, Void> actionsColumn = createActionsColumn();
-        this.tvEmployees.getColumns().add(actionsColumn);
-    }
 
     private ObservableList<Employee> getEmployees() {
         return FXCollections.observableArrayList(
