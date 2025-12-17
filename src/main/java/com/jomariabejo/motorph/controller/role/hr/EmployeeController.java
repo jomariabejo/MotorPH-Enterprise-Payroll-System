@@ -3,6 +3,7 @@ package com.jomariabejo.motorph.controller.role.hr;
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.HumanResourceAdministratorNavigationController;
 import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +20,8 @@ import org.kordamp.ikonli.javafx.FontIcon;
 import org.kordamp.ikonli.material.Material;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * TODO:
@@ -40,6 +43,9 @@ public class EmployeeController {
 
     @FXML
     private Button btnAddNewEmployee;
+
+    @FXML
+    private Button btnInitializeLeaveBalances;
 
     @FXML
     private Pagination paginationEmployees;
@@ -76,7 +82,65 @@ public class EmployeeController {
         FontIcon fontIcon = new FontIcon(Feather.USER_PLUS);
         btnAddNewEmployee.setGraphic(fontIcon);
         btnAddNewEmployee.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
+    }
 
+    private void customizeInitializeLeaveBalancesButton() {
+        FontIcon fontIcon = new FontIcon(Feather.CALENDAR);
+        btnInitializeLeaveBalances.setGraphic(fontIcon);
+        btnInitializeLeaveBalances.getStyleClass().addAll(Styles.ACCENT, Styles.BUTTON_OUTLINED);
+    }
+
+    @FXML
+    void initializeLeaveBalancesClicked() {
+        // Show confirmation dialog
+        CustomAlert confirmationAlert = new CustomAlert(
+                Alert.AlertType.CONFIRMATION,
+                "Initialize Leave Balances",
+                "This will create leave balances for all employees who don't have them.\n\n" +
+                "Default allocations:\n" +
+                "- Sick Leave: 5 days\n" +
+                "- Vacation Leave: 10 days\n" +
+                "- Emergency Leave: 5 days\n\n" +
+                "Continue?"
+        );
+        
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                // Get all employees
+                List<Employee> employees = this.getHumanResourceAdministratorNavigationController()
+                        .getMainViewController()
+                        .getServiceFactory()
+                        .getEmployeeService()
+                        .getAllEmployees();
+                
+                // Initialize leave balances for all employees
+                this.getHumanResourceAdministratorNavigationController()
+                        .getMainViewController()
+                        .getServiceFactory()
+                        .getLeaveBalanceService()
+                        .initializeLeaveBalancesForAllEmployees(employees);
+                
+                // Show success message
+                CustomAlert successAlert = new CustomAlert(
+                        Alert.AlertType.INFORMATION,
+                        "Success",
+                        "Leave balances have been initialized for all employees."
+                );
+                successAlert.showAndWait();
+                
+            } catch (Exception e) {
+                // Show error message
+                CustomAlert errorAlert = new CustomAlert(
+                        Alert.AlertType.ERROR,
+                        "Error",
+                        "An error occurred while initializing leave balances:\n" + e.getMessage()
+                );
+                errorAlert.showAndWait();
+                e.printStackTrace();
+            }
+        }
     }
 
     private void populateEmployees() {
@@ -91,6 +155,7 @@ public class EmployeeController {
     public void setup() {
         setupTableView(); // create action columns
         customizeAddNewEmployeeButton(); // add icon to button
+        customizeInitializeLeaveBalancesButton(); // add icon to initialize button
         populateEmployees(); // add data to tableview
     }
 

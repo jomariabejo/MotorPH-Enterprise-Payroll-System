@@ -35,26 +35,49 @@ public class LeaveBalanceController {
         if (leaveBalanceOpt.isPresent()) {
             try {
                 List<LeaveBalance> leaveBalanceList = leaveBalanceOpt.get();
+                
+                // Check if list is empty
+                if (leaveBalanceList.isEmpty()) {
+                    System.out.println("No leave balance data available for employee.");
+                    pieChartLeaveBalance.setData(FXCollections.observableArrayList());
+                    pieChartLeaveBalance.setTitle("Remaining Leave Balance - No Data Available");
+                    return;
+                }
+                
                 ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
 
                 for (LeaveBalance leaveBalance : leaveBalanceList) {
-                    String leaveTypeName = leaveBalance.getLeaveTypeID().getLeaveTypeName();
-                    double balance = leaveBalance.getBalance();
-                    String formattedName = String.format("%s (%d)", leaveTypeName, (int) balance);
+                    try {
+                        String leaveTypeName = leaveBalance.getLeaveTypeID().getLeaveTypeName();
+                        double balance = leaveBalance.getBalance();
+                        String formattedName = String.format("%s (%d)", leaveTypeName, (int) balance);
 
-                    PieChart.Data data = new PieChart.Data(formattedName, balance);
-                    pieChartData.add(data);
+                        PieChart.Data data = new PieChart.Data(formattedName, balance);
+                        pieChartData.add(data);
+                    } catch (Exception e) {
+                        System.err.println("Error processing leave balance entry: " + e.getMessage());
+                        e.printStackTrace();
+                    }
                 }
 
-                pieChartLeaveBalance.setData(pieChartData);
-                pieChartLeaveBalance.setTitle("Remaining Leave Balance");
+                if (!pieChartData.isEmpty()) {
+                    pieChartLeaveBalance.setData(pieChartData);
+                    pieChartLeaveBalance.setTitle("Remaining Leave Balance");
+                } else {
+                    pieChartLeaveBalance.setData(FXCollections.observableArrayList());
+                    pieChartLeaveBalance.setTitle("Remaining Leave Balance - No Valid Data");
+                }
 
             } catch (Exception e) {
                 System.err.println("Error populating pie chart: " + e.getMessage());
                 e.printStackTrace(); // Consider logging this exception to a file or monitoring system
+                pieChartLeaveBalance.setData(FXCollections.observableArrayList());
+                pieChartLeaveBalance.setTitle("Remaining Leave Balance - Error Loading Data");
             }
         } else {
             System.out.println("No leave balance data available.");
+            pieChartLeaveBalance.setData(FXCollections.observableArrayList());
+            pieChartLeaveBalance.setTitle("Remaining Leave Balance - No Data Available");
         }
     }
 }

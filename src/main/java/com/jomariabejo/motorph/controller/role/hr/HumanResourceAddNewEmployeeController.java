@@ -98,6 +98,19 @@ public class HumanResourceAddNewEmployeeController {
                 .getServiceFactory()
                 .getEmployeeService()
                 .saveEmployee(employee);
+            
+            // Initialize leave balances for the new employee
+            // This automatically creates leave balances with default yearly allocations:
+            // - Sick Leave: 5 days
+            // - Vacation Leave: 10 days
+            // - Emergency Leave: 5 days
+            this.getEmployeeController()
+                .getHumanResourceAdministratorNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getLeaveBalanceService()
+                .initializeLeaveBalancesForNewEmployee(employee);
+            
             // hide window
             submitBtn.getScene().getWindow().hide();
             // add employee to the tableview
@@ -106,7 +119,7 @@ public class HumanResourceAddNewEmployeeController {
             CustomAlert customAlert = new CustomAlert(
                     Alert.AlertType.INFORMATION,
                     "Employee saved",
-                    "Employee saved successfully..."
+                    "Employee saved successfully. Leave balances have been initialized."
             );
             customAlert.showAndWait();
         }

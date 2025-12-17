@@ -24,11 +24,11 @@ public class LeaveBalanceRepository extends _AbstractHibernateRepository<LeaveBa
             query.setParameter("employeeId", employee.getEmployeeNumber());
             query.setParameter("leaveTypeName", leaveTypeName);
 
-            Integer leaveBalance = query.getSingleResult();
-            return Optional.ofNullable(leaveBalance);
-        } catch (NoResultException e) {
-            e.printStackTrace();
-            return Optional.empty();
+            List<Integer> results = query.getResultList();
+            if (results.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.ofNullable(results.get(0));
         } catch (Exception e) {
             e.printStackTrace(); // Consider using a logging framework
             return Optional.empty();
@@ -43,20 +43,30 @@ public class LeaveBalanceRepository extends _AbstractHibernateRepository<LeaveBa
         Session session = null;
         try {
             session = HibernateUtil.openSession();
-            Query<LeaveBalance> query = session.createNamedQuery("LeaveBalance.findEmployeeRemainingLeaveBalance", LeaveBalance.class);
+            // Use JOIN FETCH to eagerly load the leaveTypeID to avoid LazyInitializationException
+            Query<LeaveBalance> query = session.createQuery(
+                    "SELECT lb FROM LeaveBalance lb " +
+                    "JOIN FETCH lb.leaveTypeID " +
+                    "WHERE lb.employee.employeeNumber = :employeeId", 
+                    LeaveBalance.class);
 
             query.setParameter("employeeId", employee.getEmployeeNumber());
 
-            return Optional.ofNullable(query.getResultList());
+            List<LeaveBalance> resultList = query.getResultList();
+            if (resultList.isEmpty()) {
+                return Optional.empty();
+            }
+            return Optional.of(resultList);
         } catch (NoResultException e) {
             e.printStackTrace();
+            return Optional.empty();
         } catch (Exception e) {
             e.printStackTrace(); // Consider using a logging framework
+            return Optional.empty();
         } finally {
             if (session != null && session.isOpen()) {
                 session.close();
             }
         }
-        return Optional.empty();
     }
 }

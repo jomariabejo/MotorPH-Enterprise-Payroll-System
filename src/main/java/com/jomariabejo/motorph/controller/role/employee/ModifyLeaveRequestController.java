@@ -17,6 +17,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -227,15 +228,20 @@ public class ModifyLeaveRequestController {
     void cbLeaveTypeSelected() {
         String leaveTypeName = cbLeaveTypes.getSelectionModel().getSelectedItem().getLeaveTypeName();
         Employee employee = getLeaveHistoryController().getEmployeeRoleNavigationController().getMainViewController().getEmployee();
-        String leaveBalanceLeft = getLeaveHistoryController()
+        Optional<Integer> leaveBalanceOpt = getLeaveHistoryController()
                 .getEmployeeRoleNavigationController().getMainViewController()
                 .getServiceFactory()
                 .getLeaveBalanceService()
                 .fetchRemainingLeaveBalanceByLeaveTypeName(
                         employee,
                         leaveTypeName
-                ).get().toString();
-        lblLeaveDaysLeft.setText(leaveBalanceLeft);
+                );
+        
+        if (leaveBalanceOpt.isPresent()) {
+            lblLeaveDaysLeft.setText(leaveBalanceOpt.get().toString());
+        } else {
+            lblLeaveDaysLeft.setText("0");
+        }
     }
 
     private void makeInvisibleEndOfLeaveDate() {
@@ -279,7 +285,7 @@ public class ModifyLeaveRequestController {
     }
 
     private void disablePreviousDaysOfLeaveEndDatePicker() {
-        dpLeaveTo.setDayCellFactory(_ -> new DateCell() {
+        dpLeaveTo.setDayCellFactory(p -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);

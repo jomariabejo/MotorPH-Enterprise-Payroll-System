@@ -6,6 +6,7 @@ import com.jomariabejo.motorph.utility.CustomAlert;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import lombok.Getter;
 import lombok.Setter;
@@ -48,17 +49,23 @@ public class FileOvertimeRequestController {
 
     @FXML
     void submitBtnClicked(ActionEvent event) {
-        if (isDateAlreadyRequested().isEmpty())
-            if (isOvertimeRequestValid())
-                if (isHoursWorkedFormatValid())
-                    saveOvertimeRequest();
-                else
-                    displayHoursWorkedFormatInvalid();
-            else
-                displayInvalidOvertimeRequest();
-        else
+        if (isDateAlreadyRequested().isEmpty()) {
+            if (hasTimesheetForDate()) {
+                if (isOvertimeRequestValid()) {
+                    if (isHoursWorkedFormatValid()) {
+                        saveOvertimeRequest();
+                    } else {
+                        displayHoursWorkedFormatInvalid();
+                    }
+                } else {
+                    displayInvalidOvertimeRequest();
+                }
+            } else {
+                displayNoTimesheetForDate();
+            }
+        } else {
             displayDateAlreadyRequested();
-
+        }
     }
 
     private void showAlert(Alert.AlertType alertType, String title, String message) {
@@ -76,6 +83,13 @@ public class FileOvertimeRequestController {
 
     private void displayHoursWorkedFormatInvalid() {
         showAlert(Alert.AlertType.ERROR, "Invalid hours worked format", "Please check if the hours worked format is correct.");
+    }
+
+    private void displayNoTimesheetForDate() {
+        showAlert(Alert.AlertType.ERROR, 
+                "No Timesheet Found", 
+                "You must have a timesheet entry for " + dpDateOfRequestedOvertime.getValue() + 
+                " before filing an overtime request. Please submit your timesheet first.");
     }
 
 
@@ -105,6 +119,33 @@ public class FileOvertimeRequestController {
         return hoursText.matches(hoursPattern);
     }
 
+    /**
+     * Checks if the employee has a timesheet entry for the overtime date.
+     * Overtime requests can only be filed if a timesheet exists for that date.
+     * 
+     * @return true if timesheet exists for the overtime date, false otherwise
+     */
+    private boolean hasTimesheetForDate() {
+        if (dpDateOfRequestedOvertime.getValue() == null) {
+            return false;
+        }
+        
+        Optional<com.jomariabejo.motorph.model.Timesheet> timesheet = this.getOvertimeController()
+                .getEmployeeRoleNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getTimesheetService()
+                .getTimesheetByEmployeeAndDate(
+                        this.getOvertimeController()
+                                .getEmployeeRoleNavigationController()
+                                .getMainViewController()
+                                .getEmployee(),
+                        dpDateOfRequestedOvertime.getValue()
+                );
+        
+        return timesheet.isPresent();
+    }
+
 
     private void saveOvertimeRequest() {
         OvertimeRequest overtimeRequest = new OvertimeRequest();
@@ -119,16 +160,19 @@ public class FileOvertimeRequestController {
                 .getServiceFactory()
                 .getOvertimeRequestService()
                 .saveOvertimeRequest(overtimeRequest);
-        addOvertimeRequestToTableView(overtimeRequest);
+        
+        // Show success message
+        showAlert(Alert.AlertType.INFORMATION, "Success", "Overtime request has been submitted successfully.");
+        
+        // Refresh the table view
+        this.overtimeController.populateOvertimeTableView();
+        
         hideWindow();
     }
 
     private void hideWindow() {
-        tfHoursRequested.getScene().getWindow().hide();
-    }
-
-    private void addOvertimeRequestToTableView(OvertimeRequest overtimeRequest) {
-        this.overtimeController.getTvOvertime().getItems().add(overtimeRequest);
+        Stage stage = (Stage) tfHoursRequested.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

@@ -39,6 +39,10 @@ public class OvertimeController {
 
     private ObservableList<OvertimeRequest> overtimeRequests;
 
+    // Track open windows to prevent multiple instances
+    private Stage fileOvertimeRequestStage;
+    private Stage modifyOvertimeRequestStage;
+
     @FXML
     private TableView<OvertimeRequest> tvOvertime;
 
@@ -80,16 +84,40 @@ public class OvertimeController {
     }
 
     public void fileOvertimeRequestClicked() throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/file-overtime-request.fxml"));
-        AnchorPane formPane = loader.load();
-        Stage formStage = new Stage();
-        formStage.setScene(new Scene(formPane));
+        // Check if window is already open
+        if (fileOvertimeRequestStage != null && fileOvertimeRequestStage.isShowing()) {
+            // Bring existing window to front
+            fileOvertimeRequestStage.requestFocus();
+            return;
+        }
 
-        FileOvertimeRequestController fileOvertimeRequestController = loader.getController();
-        fileOvertimeRequestController.setOvertimeController(this);
-        fileOvertimeRequestController.disableFutureDates();
+        // Disable button to prevent multiple clicks
+        overtimeRequestBtn.setDisable(true);
 
-        formStage.showAndWait();
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/file-overtime-request.fxml"));
+            AnchorPane formPane = loader.load();
+            fileOvertimeRequestStage = new Stage();
+            fileOvertimeRequestStage.setTitle("File Overtime Request");
+            fileOvertimeRequestStage.setScene(new Scene(formPane));
+
+            FileOvertimeRequestController fileOvertimeRequestController = loader.getController();
+            fileOvertimeRequestController.setOvertimeController(this);
+            fileOvertimeRequestController.disableFutureDates();
+
+            // Re-enable button when window is closed
+            fileOvertimeRequestStage.setOnHidden(e -> {
+                overtimeRequestBtn.setDisable(false);
+                fileOvertimeRequestStage = null;
+            });
+
+            fileOvertimeRequestStage.showAndWait();
+        } catch (IOException e) {
+            // Re-enable button if error occurs
+            overtimeRequestBtn.setDisable(false);
+            fileOvertimeRequestStage = null;
+            throw e;
+        }
     }
 
     public void enhanceOvertimeBtn() {
@@ -183,21 +211,35 @@ public class OvertimeController {
                     OvertimeRequest selectedOvertimeRequest = getTableView().getItems().get(getIndex());
                     if (selectedOvertimeRequest != null) {
                         if (selectedOvertimeRequest.getStatus().equals("Requested")) {
+                            // Check if modify window is already open
+                            if (modifyOvertimeRequestStage != null && modifyOvertimeRequestStage.isShowing()) {
+                                // Bring existing window to front
+                                modifyOvertimeRequestStage.requestFocus();
+                                return;
+                            }
+
                             try {
                                 FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/employee/update-overtime-request.fxml"));
                                 Parent root = fxmlLoader.load();
 
-                                Stage stage = new Stage();
-                                stage.setTitle("Edit Overtime Request");
-                                stage.setScene(new Scene(root));
-                                stage.show();
+                                modifyOvertimeRequestStage = new Stage();
+                                modifyOvertimeRequestStage.setTitle("Edit Overtime Request");
+                                modifyOvertimeRequestStage.setScene(new Scene(root));
 
                                 ModifyOvertimeRequestController modifyOvertimeRequestController = fxmlLoader.getController();
                                 modifyOvertimeRequestController.setOvertimeController(OvertimeController.this);
                                 modifyOvertimeRequestController.setOvertimeRequest(selectedOvertimeRequest);
                                 modifyOvertimeRequestController.setupComponents();
                                 modifyOvertimeRequestController.setTableViewIndex(getIndex());
+
+                                // Clear reference when window is closed
+                                modifyOvertimeRequestStage.setOnHidden(e -> {
+                                    modifyOvertimeRequestStage = null;
+                                });
+
+                                modifyOvertimeRequestStage.showAndWait();
                             } catch (IOException ioException) {
+                                modifyOvertimeRequestStage = null;
                                 ioException.printStackTrace();
                             }
                         } else {

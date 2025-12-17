@@ -4,6 +4,7 @@ import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.repository.EmployeeRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public class EmployeeService {
 
@@ -31,5 +32,9 @@ public class EmployeeService {
 
     public void deleteEmployee(Employee employee) {
         employeeRepository.delete(employee);
+    }
+
+    public Optional<List<Employee>> getActiveEmployees() {
+        return employeeRepository.findActiveEmployees();
     }
 }

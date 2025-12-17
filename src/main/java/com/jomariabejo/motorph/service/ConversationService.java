@@ -1,6 +1,7 @@
 package com.jomariabejo.motorph.service;
 
 import com.jomariabejo.motorph.model.Conversation;
+import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.repository.ConversationRepository;
 
 import java.util.List;
@@ -31,5 +32,13 @@ public class ConversationService {
 
     public void deleteConversation(Conversation conversation) {
         conversationRepository.delete(conversation);
+    }
+
+    public List<Conversation> getConversationsForEmployee(Employee employee) {
+        return conversationRepository.findByEmployee(employee);
+    }
+
+    public long getUnreadMessageCount(Employee employee) {
+        return conversationRepository.countUnreadByEmployee(employee);
     }
 }

@@ -38,4 +38,14 @@ public class Announcement {
     @Column(name = "timestamp", nullable = false)
     private Instant timestamp;
 
+    @PrePersist
+    protected void onCreate() {
+        if (timestamp == null) {
+            timestamp = Instant.now();
+        }
+        if (announcementDate == null) {
+            announcementDate = LocalDate.now();
+        }
+    }
+
 }

@@ -23,6 +23,7 @@ import lombok.Setter;
 import java.time.*;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -142,9 +143,29 @@ public class FileLeaveRequestController {
     }
 
     private boolean hasRemainingLeaveBalance() {
-        int remainingLeaveDaysLeft = Integer.parseInt(lblLeaveDaysLeft.getText());
-        int leaveDuration = Integer.parseInt(lblLeaveDuration.getText());
-        return remainingLeaveDaysLeft >= leaveDuration;
+        try {
+            String leaveDaysLeftText = lblLeaveDaysLeft.getText();
+            String leaveDurationText = lblLeaveDuration.getText();
+            
+            // Check if the labels contain valid numeric values
+            if (leaveDaysLeftText == null || leaveDaysLeftText.trim().isEmpty() || 
+                leaveDurationText == null || leaveDurationText.trim().isEmpty()) {
+                return false;
+            }
+            
+            // Check if the text is still the default placeholder text
+            if (leaveDaysLeftText.equals("Remaining Leave Balance Of Selected Leave Type") ||
+                leaveDaysLeftText.equals("Label")) {
+                return false;
+            }
+            
+            int remainingLeaveDaysLeft = Integer.parseInt(leaveDaysLeftText);
+            int leaveDuration = Integer.parseInt(leaveDurationText);
+            return remainingLeaveDaysLeft >= leaveDuration;
+        } catch (NumberFormatException e) {
+            // If parsing fails, return false
+            return false;
+        }
     }
 
 
@@ -238,15 +259,27 @@ public class FileLeaveRequestController {
     void cbLeaveTypeSelected() {
         String leaveTypeName = cbLeaveTypes.getSelectionModel().getSelectedItem().getLeaveTypeName();
         Employee employee = getEmployeeRoleNavigationController().getMainViewController().getEmployee();
-        String leaveBalanceLeft = getEmployeeRoleNavigationController()
+        Optional<Integer> leaveBalanceOpt = getEmployeeRoleNavigationController()
                 .getMainViewController()
                 .getServiceFactory()
                 .getLeaveBalanceService()
                 .fetchRemainingLeaveBalanceByLeaveTypeName(
                         employee,
                         leaveTypeName
-                ).get().toString();
-        lblLeaveDaysLeft.setText(leaveBalanceLeft);
+                );
+        
+        if (leaveBalanceOpt.isPresent()) {
+            lblLeaveDaysLeft.setText(leaveBalanceOpt.get().toString());
+        } else {
+            // No leave balance found - set to 0 or show appropriate message
+            lblLeaveDaysLeft.setText("0");
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.WARNING,
+                    "No Leave Balance",
+                    "No leave balance found for " + leaveTypeName + ". Please contact HR to set up your leave balance."
+            );
+            alert.showAndWait();
+        }
     }
 
     private void makeInvisibleEndOfLeaveDate() {
@@ -291,7 +324,7 @@ public class FileLeaveRequestController {
     }
 
     private void disablePreviousDaysOfLeaveEndDatePicker() {
-        dpLeaveTo.setDayCellFactory(_ -> new DateCell() {
+        dpLeaveTo.setDayCellFactory(p -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);

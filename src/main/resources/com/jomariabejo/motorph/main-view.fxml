@@ -31,10 +31,10 @@
                       </Menu>
                       <Menu fx:id="menuRoles" mnemonicParsing="false" text="Switch Role">
                         <items>
-                          <MenuItem mnemonicParsing="false" onAction="#menuItemEmployeeOnAction" text="Employee" />
-                              <MenuItem mnemonicParsing="false" onAction="#menuItemHumanResourceOnAction" text="Human Resource" />
-                              <MenuItem mnemonicParsing="false" onAction="#menuItemAccountingOnAction" text="Accounting" />
-                              <MenuItem mnemonicParsing="false" onAction="#menuISystemAdminOnAction" text="System Admin" />
+                          <MenuItem fx:id="menuItemEmployee" mnemonicParsing="false" onAction="#menuItemEmployeeOnAction" text="Employee" />
+                              <MenuItem fx:id="menuItemHumanResource" mnemonicParsing="false" onAction="#menuItemHumanResourceOnAction" text="Human Resource" />
+                              <MenuItem fx:id="menuItemAccounting" mnemonicParsing="false" onAction="#menuItemAccountingOnAction" text="Accounting" />
+                              <MenuItem fx:id="menuItemSystemAdmin" mnemonicParsing="false" onAction="#menuISystemAdminOnAction" text="System Admin" />
                         </items>
                       </Menu>
                       <Menu mnemonicParsing="false" text="Help">
@@ -55,10 +55,8 @@
                      <right>
                         <HBox alignment="CENTER_RIGHT" prefHeight="75.0" prefWidth="502.0" spacing="12.0">
                            <children>
-                              <MenuButton mnemonicParsing="false">
+                              <MenuButton fx:id="btnNotifications" mnemonicParsing="false">
                                 <items>
-                                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                                  <MenuItem mnemonicParsing="false" text="Action 2" />
                                 </items>
                                  <graphic>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -68,10 +66,8 @@
                                     </ImageView>
                                  </graphic>
                               </MenuButton>
-                              <MenuButton layoutX="16.0" layoutY="32.0" mnemonicParsing="false">
+                              <MenuButton fx:id="btnMessages" layoutX="16.0" layoutY="32.0" mnemonicParsing="false">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" text="Action 1" />
-                                    <MenuItem mnemonicParsing="false" text="Action 2" />
                                  </items>
                                  <graphic>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
@@ -81,10 +77,8 @@
                                     </ImageView>
                                  </graphic>
                               </MenuButton>
-                              <MenuButton layoutX="205.0" layoutY="32.0" mnemonicParsing="false">
+                              <MenuButton fx:id="btnSettings" layoutX="205.0" layoutY="32.0" mnemonicParsing="false">
                                  <items>
-                                    <MenuItem mnemonicParsing="false" text="Action 1" />
-                                    <MenuItem mnemonicParsing="false" text="Action 2" />
                                  </items>
                                  <graphic>
                                     <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">

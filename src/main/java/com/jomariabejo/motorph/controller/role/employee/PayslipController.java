@@ -69,29 +69,36 @@ public class PayslipController {
         Employee employee = this.getEmployeeRoleNavigationController().getMainViewController().getEmployee();
         Integer year = this.cbYear.getSelectionModel().getSelectedItem();
 
-        payslips = FXCollections.observableList(
-                this.getEmployeeRoleNavigationController()
-                        .getMainViewController()
-                        .getServiceFactory()
-                        .getPayslipService()
-                        .getPayslipByEmployeeIdAndYear(
-                                employee, year
-                        ).get()
-        );
+        Optional<List<Payslip>> payslipOpt = this.getEmployeeRoleNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getPayslipService()
+                .getPayslipByEmployeeIdAndYear(employee, year);
+
+        if (payslipOpt.isPresent()) {
+            payslips = FXCollections.observableList(payslipOpt.get());
+        } else {
+            payslips = FXCollections.observableArrayList();
+        }
         tvPayslip.setItems(payslips);
     }
 
     public void populateYears() {
-        this.cbYear.setItems(FXCollections.observableArrayList(
-                this.getEmployeeRoleNavigationController()
-                        .getMainViewController()
-                        .getServiceFactory()
-                        .getPayslipService()
-                        .getEmployeeYearsOfPayslip(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee())
-                        .get()
-        ));
-        // select latest year fetched.
-        cbYear.getSelectionModel().selectFirst();
+        Optional<List<Integer>> yearsOpt = this.getEmployeeRoleNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getPayslipService()
+                .getEmployeeYearsOfPayslip(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee());
+
+        if (yearsOpt.isPresent()) {
+            this.cbYear.setItems(FXCollections.observableArrayList(yearsOpt.get()));
+            // select latest year fetched.
+            cbYear.getSelectionModel().selectFirst();
+        } else {
+            // If no years found, set current year as default
+            this.cbYear.setItems(FXCollections.observableArrayList(Year.now().getValue()));
+            cbYear.getSelectionModel().selectFirst();
+        }
     }
 
     private void updateTableView(int pageIndex, int itemsPerPage) {
@@ -128,7 +135,18 @@ public class PayslipController {
                     PayslipService payslipService = new PayslipService(new PayslipRepository());
 
 
-                    Optional<YearToDateFigures> yearToDateFigures = payslipService.getYearToDateFigures(payslip.getEmployeeID(), Year.now());
+                    Optional<YearToDateFigures> yearToDateFiguresOpt = payslipService.getYearToDateFigures(payslip.getEmployeeID(), Year.now());
+                    
+                    // Use default values if yearToDateFigures is not present
+                    YearToDateFigures yearToDateFigures = yearToDateFiguresOpt.orElse(new YearToDateFigures(
+                            java.math.BigDecimal.ZERO,
+                            java.math.BigDecimal.ZERO,
+                            java.math.BigDecimal.ZERO,
+                            java.math.BigDecimal.ZERO,
+                            java.math.BigDecimal.ZERO,
+                            java.math.BigDecimal.ZERO,
+                            java.math.BigDecimal.ZERO
+                    ));
 
                     SimpleDateFormat sdf = new SimpleDateFormat();
                     sdf.applyPattern("MMM dd");
@@ -145,6 +163,12 @@ public class PayslipController {
                     String payRun = sdf.format(payslip.getPayrollRunDate());
 
                     String dateHired = sdf.format(payslip.getEmployeeID().getDateHired());
+                    
+                    // Get email safely
+                    String employeeEmail = userService.fetchEmailByEmployeeId(payslip.getEmployeeID())
+                            .map(user -> user.getEmail())
+                            .orElse("N/A");
+                    
                     String strPayslipHTMLSourceCodeByXinTaroAndModifiedByJomariAbejo = "<!--Source code: https://codepen.io/xintaro/pen/bRVYjM -->\n" +
                             "<!DOCTYPE html>\n" +
                             "<html>\n" +
@@ -182,7 +206,7 @@ public class PayslipController {
                             "                    " + payslip.getEmployeeID().getFirstName() + " " + payslip.getEmployeeID().getLastName() + "\n" +
                             "                </div>\n" +
                             "                <div id=\"email\">\n" +
-                            userService.fetchEmailByEmployeeId(payslip.getEmployeeID()).get().getEmail() +
+                            employeeEmail +
                             "                </div>\n" +
                             "            </div>\n" +
                             "            <div class=\"details\">\n" +
@@ -219,27 +243,27 @@ public class PayslipController {
                             "    <div class=\"title\">Year To Date Figures</div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Gross Income</div>\n" +
-                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdGrossIncome())) + "</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.ytdGrossIncome())) + "</div>\n" +
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Deduction</div>\n" +
-                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTotalDeductions())) + "</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.ytdTotalDeductions())) + "</div>\n" +
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Taxable Income</div>\n" +
-                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTaxableIncome())) + "</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.ytdTaxableIncome())) + "</div>\n" +
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Withholding Tax</div>\n" +
-                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdWitholdingTax())) + "</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.ytdWitholdingTax())) + "</div>\n" +
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Benefits</div>\n" +
-                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdTotalBenefits())) + "</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.ytdTotalBenefits())) + "</div>\n" +
                             "                </div>\n" +
                             "                <div class=\"entry\">\n" +
                             "                    <div class=\"label\">Net Pay</div>\n" +
-                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.get().ytdNetPay())) + "</div>\n" +
+                            "                    <div class=\"value\">" + PesoUtility.formatToPeso(String.valueOf(yearToDateFigures.ytdNetPay())) + "</div>\n" +
                             "                </div>\n" +
                             "            </div>\n" +
                             "            </div>\n" +

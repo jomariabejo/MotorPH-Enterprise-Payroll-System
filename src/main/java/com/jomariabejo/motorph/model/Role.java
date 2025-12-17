@@ -22,4 +22,8 @@ public class Role {
     @Column(name = "Description")
     private String description;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ParentRoleID")
+    private Role parentRole;
+
 }

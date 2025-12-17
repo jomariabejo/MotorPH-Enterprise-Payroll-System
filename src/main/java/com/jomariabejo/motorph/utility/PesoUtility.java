@@ -7,7 +7,7 @@ public class PesoUtility {
     private static final String PESO_SIGN = "₱";
 
     /**
-     * Format a numeric string to Peso currency format with four decimal places.
+     * Format a numeric string to Peso currency format with two decimal places.
      *
      * @param amount The numeric string to format.
      * @return The formatted Peso currency string.
@@ -25,8 +25,8 @@ public class PesoUtility {
         try {
             double numericAmount = Double.parseDouble(cleanAmount);
 
-            // Format the number with four decimal places and thousands separators
-            DecimalFormat decimalFormat = new DecimalFormat("#,##0.0000");
+            // Format the number with two decimal places and thousands separators
+            DecimalFormat decimalFormat = new DecimalFormat("#,##0.00");
             String formattedAmount = decimalFormat.format(numericAmount);
 
             // Add the Peso sign

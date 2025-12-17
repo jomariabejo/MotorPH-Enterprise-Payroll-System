@@ -75,4 +75,32 @@ public class Launcher extends Application {
         // Show the primary stage with the main view
         primaryStage.show();
     }
+
+    public static void switchToLoginView() {
+        // Load the login view FXML file
+        FXMLLoader loader = new FXMLLoader(Launcher.class.getResource("/com/jomariabejo/motorph/login-view.fxml"));
+        Parent root;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        // Pass the primary stage to the controller
+        LoginViewController controller = loader.getController();
+        controller.setStage(primaryStage);
+
+        // Clear the input fields
+        controller.getInputUserIdentifier().clear();
+        controller.getInputPassword().clear();
+
+        // Create a new scene with the loaded FXML file
+        Scene scene = new Scene(root);
+
+        // Set the scene on the primary stage
+        primaryStage.setScene(scene);
+
+        // Show the primary stage with the login view
+        primaryStage.show();
+    }
 }

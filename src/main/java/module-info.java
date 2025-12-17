@@ -17,6 +17,7 @@ module com.jomariabejo.motorph {
     requires atlantafx.base;
     requires jdk.compiler;
     requires java.desktop;
+    requires java.prefs;
     requires org.kordamp.ikonli.material;
     requires org.kordamp.ikonli.fontawesome5;
     requires org.kordamp.ikonli.feather;

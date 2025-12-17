@@ -33,7 +33,7 @@
                   <Insets bottom="24.0" />
                </VBox.margin>
             </VBox>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#dashboard" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnDashboard" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#dashboard" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -56,7 +56,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="86.0" mnemonicParsing="false" onAction="#users" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnUsers" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="86.0" mnemonicParsing="false" onAction="#users" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -79,7 +79,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="421.0" mnemonicParsing="false" onAction="#logs" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnLogs" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="421.0" mnemonicParsing="false" onAction="#logs" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -102,7 +102,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#roles" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnRoles" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#roles" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -125,7 +125,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="545.0" mnemonicParsing="false" onAction="#permissions" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnPermissions" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="545.0" mnemonicParsing="false" onAction="#permissions" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -148,7 +148,30 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="522.0" mnemonicParsing="false" onAction="#rolePermission" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnAnnouncements" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#announcements" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0">
+                                 <image>
+                                    <Image url="@../assets/icons/announcement.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Announcements">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button fx:id="btnRolePermission" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="522.0" mnemonicParsing="false" onAction="#rolePermission" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
