@@ -36,3 +36,11 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+### Executables ###
+MotorPH-Payroll-System/
+MotorPH-Payroll-System.exe
+MotorPH-Payroll-System.dmg
+*.exe
+*.dmg
+*.app

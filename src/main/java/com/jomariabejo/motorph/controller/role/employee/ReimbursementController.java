@@ -103,15 +103,17 @@ public class ReimbursementController {
         Employee employee = this.getEmployeeRoleNavigationController().getMainViewController().getEmployee();
         Integer year = this.cbYear.getSelectionModel().getSelectedItem();
 
-        reimbursementRequests = FXCollections.observableList(
-                this.getEmployeeRoleNavigationController()
-                        .getMainViewController()
-                        .getServiceFactory()
-                        .getReimbursementRequestService()
-                        .fetchReimbursementByEmployeeIdAndYear(
-                                employee, year
-                        ).get()
-        );
+        Optional<List<ReimbursementRequest>> reimbursementOpt = this.getEmployeeRoleNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getReimbursementRequestService()
+                .fetchReimbursementByEmployeeIdAndYear(employee, year);
+
+        if (reimbursementOpt.isPresent()) {
+            reimbursementRequests = FXCollections.observableList(reimbursementOpt.get());
+        } else {
+            reimbursementRequests = FXCollections.observableArrayList();
+        }
         tvReimbursementRequest.setItems(reimbursementRequests);
 
         // display empty record if record doesn't exist.
@@ -128,11 +130,10 @@ public class ReimbursementController {
     private void populateYears() {
         Employee employee = this.getEmployeeRoleNavigationController().getMainViewController().getEmployee();
         Optional<List<Integer>> years = this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getReimbursementRequestService().fetchEmployeeYearsOfReimbursements(employee);
-        boolean notEmpty = !years.get().isEmpty();
-        if (years.isPresent() && notEmpty) {
+        
+        if (years.isPresent() && !years.get().isEmpty()) {
             cbYear.setItems(FXCollections.observableList(years.get()));
-        }
-        else {
+        } else {
             cbYear.getItems().add(Integer.valueOf(String.valueOf(Year.now()))); // ginbutangan ko osa na year bas cool
         }
         cbYear.getSelectionModel().selectFirst();

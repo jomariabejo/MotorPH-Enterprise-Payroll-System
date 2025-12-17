@@ -1,21 +1,138 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.AreaChart?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="897.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.accounting.AccountingDashboard">
    <children>
-      <VBox alignment="CENTER" layoutX="719.0" layoutY="316.0" prefHeight="897.0" prefWidth="1300.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="TOP_CENTER" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label text="Accounting Dashboard View">
-               <font>
-                  <Font size="96.0" />
-               </font>
-            </Label>
+            <!-- Header with Filters -->
+            <HBox alignment="CENTER_LEFT" prefHeight="60.0" prefWidth="1300.0" spacing="12.0">
+               <children>
+                  <Label text="Accounting Dashboard" style="-fx-font-size: 24px; -fx-font-weight: bold;" />
+                  <HBox alignment="CENTER_LEFT" spacing="12.0" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Period:" />
+                        <ComboBox fx:id="cbPeriodType" prefWidth="120.0" promptText="Period Type" />
+                        <ComboBox fx:id="cbMonth" prefWidth="120.0" promptText="Month" visible="false" />
+                        <ComboBox fx:id="cbYear" prefWidth="100.0" promptText="Year" />
+                     </children>
+                     <HBox.margin>
+                        <Insets left="50.0" />
+                     </HBox.margin>
+                  </HBox>
+               </children>
+            </HBox>
+            
+            <!-- KPI Cards -->
+            <HBox alignment="CENTER" prefHeight="120.0" prefWidth="1300.0" spacing="12.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #4CAF50; -fx-background-radius: 8; -fx-padding: 15;">
+                     <children>
+                        <Label fx:id="lblTotalPayrolls" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                        <Label text="Total Payrolls" style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #2196F3; -fx-background-radius: 8; -fx-padding: 15;">
+                     <children>
+                        <Label fx:id="lblTotalGross" text="₱0.00" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                        <Label text="Total Gross Income" style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #FF9800; -fx-background-radius: 8; -fx-padding: 15;">
+                     <children>
+                        <Label fx:id="lblTotalNet" text="₱0.00" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                        <Label text="Total Net Pay" style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #F44336; -fx-background-radius: 8; -fx-padding: 15;">
+                     <children>
+                        <Label fx:id="lblTotalDeductions" text="₱0.00" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                        <Label text="Total Deductions" style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #9C27B0; -fx-background-radius: 8; -fx-padding: 15;">
+                     <children>
+                        <Label fx:id="lblTotalBenefits" text="₱0.00" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                        <Label text="Total Benefits" style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" style="-fx-background-color: #00BCD4; -fx-background-radius: 8; -fx-padding: 15;">
+                     <children>
+                        <Label fx:id="lblPendingApprovals" text="0" style="-fx-font-size: 32px; -fx-font-weight: bold; -fx-text-fill: white;" />
+                        <Label text="Pending Approvals" style="-fx-font-size: 14px; -fx-text-fill: white;" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+            
+            <!-- Charts Grid -->
+            <GridPane prefHeight="700.0" prefWidth="1300.0" VBox.vgrow="ALWAYS">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="200.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <LineChart fx:id="lineChartMonthlyTrend" animated="true" title="Monthly Payroll Trend">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+                  <PieChart fx:id="pieChartPayrollStatus" title="Payroll Status Distribution" GridPane.columnIndex="1" />
+                  <BarChart fx:id="barChartGrossVsNet" animated="true" title="Gross vs Net Pay Comparison" GridPane.rowIndex="1">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+                  <PieChart fx:id="pieChartDeductions" title="Deductions Breakdown" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <AreaChart fx:id="areaChartMonthlyExpenses" animated="true" title="Monthly Payroll Expenses" GridPane.rowIndex="2">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </AreaChart>
+                  <BarChart fx:id="barChartBenefits" animated="true" title="Benefits Distribution" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </BarChart>
+               </children>
+            </GridPane>
          </children>
       </VBox>
    </children>
+   <padding>
+      <Insets bottom="24.0" left="24.0" right="24.0" top="24.0" />
+   </padding>
 </AnchorPane>

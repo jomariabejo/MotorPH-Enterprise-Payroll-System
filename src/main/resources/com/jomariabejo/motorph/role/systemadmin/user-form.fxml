@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.systemadministrator.UserFormController">
+   <children>
+      <ScrollPane fitToWidth="true" hbarPolicy="NEVER" pannable="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+            <VBox prefWidth="800.0" spacing="20.0">
+               <children>
+                  <Label text="User Information" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <GridPane hgap="10.0" vgap="15.0">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="150.0" prefWidth="150.0" />
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="200.0" prefWidth="200.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" />
+                        <RowConstraints minHeight="40.0" prefHeight="40.0" />
+                     </rowConstraints>
+                     <children>
+                        <Label text="Username:" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfUsername" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+
+                        <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfPassword" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+                        <Label text="Email:" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfEmail" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+
+                        <Label text="Full Name:" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="tfFullName" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+
+                        <Label text="Primary Role:" GridPane.columnIndex="0" GridPane.rowIndex="4">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbRole" GridPane.columnIndex="1" GridPane.rowIndex="4" prefWidth="260.0" />
+
+                        <Label text="Employee:" GridPane.columnIndex="0" GridPane.rowIndex="5">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbEmployee" GridPane.columnIndex="1" GridPane.rowIndex="5" prefWidth="260.0" />
+
+                        <Label text="Status:" GridPane.columnIndex="0" GridPane.rowIndex="6">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="cbStatus" GridPane.columnIndex="1" GridPane.rowIndex="6" prefWidth="260.0" />
+                     </children>
+                  </GridPane>
+
+                  <VBox spacing="8.0">
+                     <children>
+                        <Label text="Additional Roles (check to assign):">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label text="Tip: Roles here are additive. Permissions become the union across roles." style="-fx-text-fill: #666;" wrapText="true" />
+                        <ListView fx:id="lvAdditionalRoles" prefHeight="220.0" />
+                     </children>
+                  </VBox>
+                  <HBox alignment="CENTER_RIGHT" spacing="10.0">
+                     <children>
+                        <Button fx:id="btnCancel" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Cancel" />
+                        <Button fx:id="btnSubmit" mnemonicParsing="false" onAction="#submitBtnClicked" text="Submit" />
+                     </children>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </VBox>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

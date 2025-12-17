@@ -22,6 +22,11 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
+                  <Button fx:id="btnInitializeLeaveBalances" mnemonicParsing="false" onAction="#initializeLeaveBalancesClicked" prefHeight="50.0" prefWidth="350.0" text="Initialize Leave Balances">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Button>
                     </children>
                     <VBox.margin>
                         <Insets />

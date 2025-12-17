@@ -3,14 +3,11 @@ package com.jomariabejo.motorph.controller;
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.Launcher;
 import com.jomariabejo.motorph.model.User;
-import com.jomariabejo.motorph.model.UserLog;
-import com.jomariabejo.motorph.repository.UserLogRepository;
 import com.jomariabejo.motorph.repository.UserRepository;
-import com.jomariabejo.motorph.service.UserLogService;
 import com.jomariabejo.motorph.service.UserService;
 import com.jomariabejo.motorph.utility.CustomAlert;
-import com.jomariabejo.motorph.utility.DateTimeUtil;
-import com.jomariabejo.motorph.utility.NetworkUtils;
+import com.jomariabejo.motorph.utility.LoggingUtility;
+import com.jomariabejo.motorph.utility.SessionManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -48,6 +45,42 @@ public class LoginViewController {
     public void initialize() {
         // Initialize any necessary components or bindings
         loginBtn.getStyleClass().add(Styles.SUCCESS);
+        
+        // Check for saved session and auto-login
+        checkAndAutoLogin();
+    }
+    
+    /**
+     * Check for saved session and attempt auto-login
+     */
+    private void checkAndAutoLogin() {
+        if (SessionManager.hasSession()) {
+            String savedUsername = SessionManager.getSavedUsername();
+            String savedPassword = SessionManager.getSavedPassword();
+            
+            if (savedUsername != null && savedPassword != null) {
+                // Pre-fill the form
+                inputUserIdentifier.setText(savedUsername);
+                inputPassword.setText(savedPassword);
+                
+                // Attempt auto-login
+                Optional<User> userOptional = verifyUser(savedUsername, savedPassword);
+                
+                if (userOptional.isPresent()) {
+                    User user = userOptional.get();
+                    LoggingUtility.logLogin(user);
+                    Launcher.switchToMainView(user);
+                } else {
+                    // Clear invalid session
+                    SessionManager.clearSession();
+                }
+            }
+        }
+    }
+    
+    private Optional<User> verifyUser(String username, String password) {
+        UserService userService = new UserService(new UserRepository());
+        return userService.fetchUser(username, password);
     }
 
     public void loginClicked(ActionEvent actionEvent) {
@@ -55,8 +88,18 @@ public class LoginViewController {
         Optional<User> userOptional = verifyUser();
 
         if (userOptional.isPresent()) {
-            saveUserLog(userOptional.get());
-            Launcher.switchToMainView(userOptional.get());
+            User user = userOptional.get();
+            LoggingUtility.logLogin(user);
+            
+            // Save session for auto-login (always remember for now, can add checkbox later)
+            SessionManager.saveSession(
+                inputUserIdentifier.getText(),
+                inputPassword.getText(),
+                user.getId(),
+                true
+            );
+            
+            Launcher.switchToMainView(user);
         } else {
             displayInvalidCredentials();
         }
@@ -66,27 +109,15 @@ public class LoginViewController {
         CustomAlert customAlert = new CustomAlert(
                 Alert.AlertType.ERROR,
                 "Invalid username/password",
-                "The email or mobile number you entered isn’t connected to an account."
+                "The email or username you entered isn’t connected to an account."
         );
         customAlert.showAndWait();
     }
 
     private Optional<User> verifyUser() {
-        UserService userService = new UserService(new UserRepository());
         String username = inputUserIdentifier.getText();
         String password = inputPassword.getText();
-        return userService.fetchUser(username, password);
-    }
-
-    private void saveUserLog(User user) {
-        UserLogService userLogService = new UserLogService(new UserLogRepository());
-
-        UserLog userLog = new UserLog();
-        userLog.setUserID(user);
-        userLog.setAction("User logged in");
-        userLog.setIPAddress(NetworkUtils.getLocalIPAddress());
-
-        userLogService.saveUserLog(userLog);
+        return verifyUser(username, password);
     }
 
 }

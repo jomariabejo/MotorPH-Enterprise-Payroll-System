@@ -68,8 +68,17 @@ public class Payslip {
     @JoinColumn(name = "EmployeePosition", nullable = false)
     private Position employeePosition;
 
+    @Column(name = "EmployeeName", nullable = false, length = 100)
+    private String employeeName;
+
     @Column(name = "MonthlyRate", nullable = false, precision = 18, scale = 4)
     private BigDecimal monthlyRate;
+
+    @Column(name = "DailyRate", nullable = false, precision = 18, scale = 4)
+    private BigDecimal dailyRate;
+
+    @Column(name = "DaysWorked", nullable = false)
+    private Integer daysWorked;
 
     @Column(name = "HourlyRate", nullable = false, precision = 18, scale = 4)
     private BigDecimal hourlyRate;

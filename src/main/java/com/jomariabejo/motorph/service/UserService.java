@@ -3,6 +3,7 @@ package com.jomariabejo.motorph.service;
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.User;
 import com.jomariabejo.motorph.repository.UserRepository;
+import com.jomariabejo.motorph.repository.UserRoleRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,9 +11,16 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserRoleService userRoleService;
 
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
+        this.userRoleService = new UserRoleService(new UserRoleRepository());
+    }
+
+    public UserService(UserRepository userRepository, UserRoleService userRoleService) {
+        this.userRepository = userRepository;
+        this.userRoleService = userRoleService;
     }
 
     public User getUserById(Integer id) {
@@ -36,7 +44,14 @@ public class UserService {
     }
 
     public Optional<User> fetchUser(String username, String password) {
-        return userRepository.findUserByUsernameAndPassword(username,password);
+        Optional<User> userOpt = userRepository.findUserByUsernameAndPassword(username, password);
+        userOpt.ifPresent(u -> {
+            if (u.getId() != null && u.getRoleID() != null && u.getRoleID().getId() != null) {
+                // Ensure join table contains the primary/default role assignment
+                userRoleService.ensureUserHasRole(u.getId(), u.getRoleID().getId());
+            }
+        });
+        return userOpt;
     }
 
     public Optional<User> fetchEmailByEmployeeId(Employee employeeID) {

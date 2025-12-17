@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.employee.MessageController">
+   <children>
+      <VBox prefHeight="700.0" prefWidth="900.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="lblConversationWith" text="Conversation" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ScrollPane fx:id="scrollPaneMessages" fitToWidth="true" prefHeight="500.0" prefWidth="900.0">
+               <content>
+                  <VBox fx:id="vboxMessages" />
+               </content>
+            </ScrollPane>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <TextArea fx:id="taMessageContent" prefHeight="80.0" prefWidth="750.0" wrapText="true" />
+                  <Button fx:id="btnSendMessage" mnemonicParsing="false" onAction="#sendMessageClicked" prefHeight="80.0" prefWidth="100.0" text="Send" />
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </children>
+</AnchorPane>
+
+
+
+
+
+
+
+
+

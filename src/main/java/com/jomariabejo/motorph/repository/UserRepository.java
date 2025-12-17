@@ -7,6 +7,7 @@ import jakarta.persistence.NoResultException;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 
+import java.util.List;
 import java.util.Optional;
 
 public class UserRepository extends _AbstractHibernateRepository<User, Integer> {
@@ -14,11 +15,43 @@ public class UserRepository extends _AbstractHibernateRepository<User, Integer> 
         super(User.class);
     }
 
+    /**
+     * Override findAll() to eagerly load roleID and employee relationships
+     * to avoid LazyInitializationException when displaying users in the table.
+     */
+    @Override
+    public List<User> findAll() {
+        Session session = HibernateUtil.openSession();
+        try {
+            // Use JOIN FETCH to eagerly load roleID and employee
+            Query<User> query = session.createQuery(
+                    "SELECT DISTINCT u FROM User u " +
+                    "LEFT JOIN FETCH u.roleID " +
+                    "LEFT JOIN FETCH u.roles " +
+                    "LEFT JOIN FETCH u.employee",
+                    User.class
+            );
+            return query.getResultList();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
     public Optional<User> findUserByUsernameAndPassword(String username, String password) {
         Session session = null;
         try {
             session = HibernateUtil.openSession();
-            Query<User> query = session.createNamedQuery("findUser", User.class);
+            // Use JOIN FETCH to eagerly load roleID and employee to avoid LazyInitializationException
+            Query<User> query = session.createQuery(
+                    "SELECT u FROM User u " +
+                    "JOIN FETCH u.roleID " +
+                    "LEFT JOIN FETCH u.roles " +
+                    "JOIN FETCH u.employee " +
+                    "WHERE u.username = :username AND u.password = :password",
+                    User.class
+            );
             query.setParameter("username", username);
             query.setParameter("password", password);
 

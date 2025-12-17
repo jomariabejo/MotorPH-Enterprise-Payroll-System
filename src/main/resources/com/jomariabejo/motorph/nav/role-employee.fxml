@@ -16,6 +16,11 @@
    <children>
       <VBox alignment="CENTER" prefHeight="897.0" prefWidth="300.0" spacing="12.0">
          <children>
+            <Button fx:id="btnBackToPreviousRole" alignment="BASELINE_LEFT" contentDisplay="LEFT" managed="false" mnemonicParsing="false" onAction="#navigateBackToPreviousRole" prefHeight="40.0" prefWidth="250.0" style="-fx-background-color: #f0f0f0; -fx-background-radius: 5;" text="← Back to Dashboard" visible="false">
+               <VBox.margin>
+                  <Insets bottom="12.0" />
+               </VBox.margin>
+            </Button>
             <VBox alignment="CENTER">
                <children>
                   <Label fx:id="lblWelcome" styleClass="lato-regular" text="Welcome back!">
@@ -33,7 +38,7 @@
                   <Insets bottom="24.0" />
                </VBox.margin>
             </VBox>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#myProfileOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnMyProfile" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#myProfileOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -56,7 +61,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="86.0" mnemonicParsing="false" onAction="#fileLeaveRequestOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnFileLeaveRequest" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="86.0" mnemonicParsing="false" onAction="#fileLeaveRequestOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -79,7 +84,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#viewLeaveBalanceOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnViewLeaveBalance" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#viewLeaveBalanceOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -102,7 +107,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="522.0" mnemonicParsing="false" onAction="#viewLeaveHistoryOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnViewLeaveHistory" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="522.0" mnemonicParsing="false" onAction="#viewLeaveHistoryOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -125,7 +130,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="670.0" mnemonicParsing="false" onAction="#viewTimesheetOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnTimesheet" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="670.0" mnemonicParsing="false" onAction="#viewTimesheetOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -148,7 +153,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="697.0" mnemonicParsing="false" onAction="#overtimeOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnOvertime" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="697.0" mnemonicParsing="false" onAction="#overtimeOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -171,7 +176,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="456.0" mnemonicParsing="false" onAction="#payslipOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnPayslip" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="456.0" mnemonicParsing="false" onAction="#payslipOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -194,7 +199,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="731.0" mnemonicParsing="false" onAction="#reimbursementOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnReimbursement" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="731.0" mnemonicParsing="false" onAction="#reimbursementOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -217,7 +222,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="744.0" mnemonicParsing="false" onAction="#contactSupportOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnContactSupport" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="744.0" mnemonicParsing="false" onAction="#contactSupportOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -232,6 +237,52 @@
                            </children>
                         </StackPane>
                         <Label text="Contact support">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button fx:id="btnNotification" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#notificationOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.7">
+                                 <image>
+                                    <Image url="@../assets/icons/contact-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Notifications">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button fx:id="btnConversation" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#conversationOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.7">
+                                 <image>
+                                    <Image url="@../assets/icons/contact-icon.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Messages">
                            <font>
                               <Font size="18.0" />
                            </font>

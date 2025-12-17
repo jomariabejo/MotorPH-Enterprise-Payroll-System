@@ -2,10 +2,8 @@ package com.jomariabejo.motorph.controller.role.employee;
 
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
-import com.jomariabejo.motorph.model.LeaveRequest;
 import com.jomariabejo.motorph.model.Timesheet;
 import com.jomariabejo.motorph.utility.CustomAlert;
-import com.jomariabejo.motorph.utility.TimeUtils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +18,6 @@ import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.sql.Time;
 import java.time.*;
-import java.time.temporal.Temporal;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -28,6 +25,10 @@ import java.util.Optional;
 @Getter
 @Setter
 public class TimesheetController {
+
+    // Allowed time window constants
+    private static final LocalTime ALLOWED_START_TIME = LocalTime.of(8, 0); // 8:00 AM
+    private static final LocalTime ALLOWED_END_TIME = LocalTime.of(17, 0); // 5:00 PM
 
     private EmployeeRoleNavigationController employeeRoleNavigationController;
     private ObservableList<Timesheet> timesheetObservableList;
@@ -58,10 +59,15 @@ public class TimesheetController {
 
     @FXML
     void clockInClicked(ActionEvent event) {
-        if (YouHaveTimeInToday())
+        if (YouHaveTimeInToday()) {
             displayYourTimeInAlreadyExist();
-        else
-            saveYourTimeIn();
+        } else {
+            if (isTimeWithinAllowedWindow()) {
+                saveYourTimeIn();
+            } else {
+                displayTimeInOutsideAllowedWindow();
+            }
+        }
     }
 
     private void saveYourTimeIn() {
@@ -76,13 +82,83 @@ public class TimesheetController {
     }
 
     private void displayYourTimeInAlreadyExist() {
-        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Time out Already Exists", "You have already recorded time in for today.");
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Time In Already Exists", "You have already recorded time in for today.");
         customAlert.showAndWait();
     }
 
     private void displayTimeOutAlreadyExist() {
-        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Time in Already Exists", "You have already recorded time out for today.");
+        CustomAlert customAlert = new CustomAlert(Alert.AlertType.ERROR, "Time Out Already Exists", "You have already recorded time out for today.");
         customAlert.showAndWait();
+    }
+
+    /**
+     * Displays an alert when user tries to time in outside allowed hours (8:00 AM - 5:00 PM)
+     */
+    private void displayTimeInOutsideAllowedWindow() {
+        LocalTime currentTime = LocalTime.now();
+        int hour = currentTime.getHour();
+        int hour12;
+        if (hour == 0) {
+            hour12 = 12;
+        } else if (hour > 12) {
+            hour12 = hour - 12;
+        } else {
+            hour12 = hour;
+        }
+        String amPm = hour >= 12 ? "PM" : "AM";
+        String timeFormat = String.format("%02d:%02d %s", hour12, currentTime.getMinute(), amPm);
+        
+        String message = String.format(
+            "You cannot time in at %s.%n%nTime in is only allowed between 8:00 AM and 5:00 PM.",
+            timeFormat
+        );
+        
+        CustomAlert customAlert = new CustomAlert(
+            Alert.AlertType.WARNING, 
+            "Time In Not Allowed", 
+            message
+        );
+        customAlert.showAndWait();
+    }
+
+    /**
+     * Displays an alert when user tries to time out outside allowed hours (8:00 AM - 5:00 PM)
+     */
+    private void displayTimeOutOutsideAllowedWindow() {
+        LocalTime currentTime = LocalTime.now();
+        int hour = currentTime.getHour();
+        int hour12;
+        if (hour == 0) {
+            hour12 = 12;
+        } else if (hour > 12) {
+            hour12 = hour - 12;
+        } else {
+            hour12 = hour;
+        }
+        String amPm = hour >= 12 ? "PM" : "AM";
+        String timeFormat = String.format("%02d:%02d %s", hour12, currentTime.getMinute(), amPm);
+        
+        String message = String.format(
+            "You cannot time out at %s.%n%nTime out is only allowed between 8:00 AM and 5:00 PM.",
+            timeFormat
+        );
+        
+        CustomAlert customAlert = new CustomAlert(
+            Alert.AlertType.WARNING, 
+            "Time Out Not Allowed", 
+            message
+        );
+        customAlert.showAndWait();
+    }
+
+    /**
+     * Checks if the current time is within the allowed window (8:00 AM - 5:00 PM)
+     * @return true if current time is between 8:00 AM and 5:00 PM (inclusive), false otherwise
+     */
+    private boolean isTimeWithinAllowedWindow() {
+        LocalTime currentTime = LocalTime.now();
+        // Check if current time is between 8:00 AM (08:00) and 5:00 PM (17:00)
+        return !currentTime.isBefore(ALLOWED_START_TIME) && !currentTime.isAfter(ALLOWED_END_TIME);
     }
 
 
@@ -96,14 +172,17 @@ public class TimesheetController {
 
     @FXML
     void clockOutClicked(ActionEvent event) {
-
         if (AreYouSureYouWantToTimeOutToday()) {
             if (youHaveTimeOutToday()) {
                 displayTimeOutAlreadyExist();
-            } else
-                modifyYourTimeOut();
+            } else {
+                if (isTimeWithinAllowedWindow()) {
+                    modifyYourTimeOut();
+                } else {
+                    displayTimeOutOutsideAllowedWindow();
+                }
+            }
         }
-
     }
 
     private void modifyYourTimeOut() {
@@ -140,7 +219,7 @@ public class TimesheetController {
     private boolean AreYouSureYouWantToTimeOutToday() {
         CustomAlert customAlert = new CustomAlert(Alert.AlertType.CONFIRMATION, "Save Time Out Confirmation", "Are you sure you want to time out today?");
         Optional<ButtonType> userAction = customAlert.showAndWait();
-        return userAction.get().equals(ButtonType.OK);
+        return userAction.isPresent() && userAction.get().equals(ButtonType.OK);
     }
 
 
@@ -155,7 +234,7 @@ public class TimesheetController {
                                 .getEmployee(),
                         LocalDate.now()
                 );
-        return timesheet.get().getTimeOut() != null;
+        return timesheet.isPresent() && timesheet.get().getTimeOut() != null;
     }
 
     @FXML
@@ -195,7 +274,14 @@ public class TimesheetController {
     }
 
     public void populateYears() {
-        cbYear.setItems(FXCollections.observableList(this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().getYearsOfLeaveRequestOfEmployee(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee()).get()));
+        Optional<List<Integer>> yearsOpt = this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().getYearsOfLeaveRequestOfEmployee(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee());
+        
+        if (yearsOpt.isPresent()) {
+            cbYear.setItems(FXCollections.observableList(yearsOpt.get()));
+        } else {
+            // If no years found, set current year as default
+            cbYear.setItems(FXCollections.observableArrayList(LocalDate.now().getYear()));
+        }
         selectCurrentYear();
     }
 

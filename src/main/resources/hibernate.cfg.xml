@@ -15,7 +15,11 @@
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.enable_lazy_load_no_trans">true</property>
 
-        <!-- Automatically create/update the database schema -->
+        <!-- Schema management (dev-friendly):
+             'update' allows the app to start even if the DB schema is missing columns.
+             Note: this project’s entity mappings match the schema in `src/main/resources/data-old.sql`
+             (database name `payroll_system`). If you point to a different schema (e.g. `payroll_sys`
+             from `src/main/resources/data.sql`), schema updates/foreign keys will fail. -->
         <property name="hibernate.hbm2ddl.auto">update</property>
 
         <mapping class="com.jomariabejo.motorph.model.Announcement"/>
@@ -50,6 +54,7 @@
         <mapping class="com.jomariabejo.motorph.model.Timesheet"/>
         <mapping class="com.jomariabejo.motorph.model.TinCompliance"/>
         <mapping class="com.jomariabejo.motorph.model.User"/>
+        <mapping class="com.jomariabejo.motorph.model.UserRole"/>
         <mapping class="com.jomariabejo.motorph.model.UserLog"/>
     </session-factory>
 </hibernate-configuration>

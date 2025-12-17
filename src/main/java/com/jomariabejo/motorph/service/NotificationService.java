@@ -1,5 +1,6 @@
 package com.jomariabejo.motorph.service;
 
+import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Notification;
 import com.jomariabejo.motorph.repository.NotificationRepository;
 
@@ -31,5 +32,17 @@ public class NotificationService {
 
     public void deleteNotification(Notification notification) {
         notificationRepository.delete(notification);
+    }
+
+    public List<Notification> getNotificationsForEmployee(Employee employee) {
+        return notificationRepository.findByEmployee(employee);
+    }
+
+    public List<Notification> getUnreadNotificationsForEmployee(Employee employee) {
+        return notificationRepository.findUnreadByEmployee(employee);
+    }
+
+    public long getUnreadNotificationCount(Employee employee) {
+        return notificationRepository.countUnreadByEmployee(employee);
     }
 }

@@ -2,6 +2,7 @@ package com.jomariabejo.motorph.repository;
 
 import com.jomariabejo.motorph.HibernateUtil;
 import com.jomariabejo.motorph.model.Employee;
+import com.jomariabejo.motorph.model.Payroll;
 import com.jomariabejo.motorph.model.Payslip;
 import com.jomariabejo.motorph.model.YearToDateFigures;
 import jakarta.persistence.NoResultException;
@@ -75,6 +76,26 @@ public class PayslipRepository extends _AbstractHibernateRepository<Payslip, Int
 
         } catch (NoResultException e) {
             // Log or handle the exception if needed
+            return Optional.empty();
+        } finally {
+            if (session != null && session.isOpen()) {
+                session.close();
+            }
+        }
+    }
+
+    public Optional<List<Payslip>> findPayslipsByPayroll(Payroll payroll) {
+        Session session = null;
+        try {
+            session = HibernateUtil.openSession();
+            Query<Payslip> query = session.createQuery(
+                    "SELECT ps FROM Payslip ps WHERE ps.payrollID = :payroll ORDER BY ps.employeeID.employeeNumber",
+                    Payslip.class
+            );
+            query.setParameter("payroll", payroll);
+            List<Payslip> resultList = query.getResultList();
+            return resultList.isEmpty() ? Optional.empty() : Optional.of(resultList);
+        } catch (NoResultException e) {
             return Optional.empty();
         } finally {
             if (session != null && session.isOpen()) {

@@ -33,7 +33,7 @@
                   <Insets bottom="24.0" />
                </VBox.margin>
             </VBox>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#humanResourceDashboardOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnHumanResourceDashboard" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#humanResourceDashboardOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -56,7 +56,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button fx:id="fileLeaveRequestOnAction" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="86.0" mnemonicParsing="false" onAction="#employeesOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnEmployees" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="86.0" mnemonicParsing="false" onAction="#employeesOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -79,7 +79,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#timesheetsOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnTimesheets" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#timesheetsOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -102,7 +102,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="522.0" mnemonicParsing="false" onAction="#leaveRequestsOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnLeaveRequests" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="522.0" mnemonicParsing="false" onAction="#leaveRequestsOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -125,7 +125,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="308.0" mnemonicParsing="false" onAction="#overtimeRequestsOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnOvertimeRequests" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="308.0" mnemonicParsing="false" onAction="#overtimeRequestsOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -140,6 +140,29 @@
                            </children>
                         </StackPane>
                         <Label text="Overtime Requests">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
+               </graphic>
+            </Button>
+            <Button fx:id="btnAnnouncement" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#announcementOnAction" prefHeight="50.0" prefWidth="250.0">
+               <graphic>
+                  <HBox alignment="CENTER_LEFT" spacing="10">
+                     <children>
+                        <StackPane prefHeight="24.0" prefWidth="24.0">
+                           <children>
+                              <Circle fill="#ffffff" radius="18.0" />
+                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.7">
+                                 <image>
+                                    <Image url="@../assets/icons/overview.png" />
+                                 </image>
+                              </ImageView>
+                           </children>
+                        </StackPane>
+                        <Label text="Announcements">
                            <font>
                               <Font size="18.0" />
                            </font>

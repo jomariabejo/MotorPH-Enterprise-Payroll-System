@@ -1,9 +1,13 @@
 package com.jomariabejo.motorph.controller.nav;
 
+import com.jomariabejo.motorph.constants.PermissionConstants;
 import com.jomariabejo.motorph.controller.MainViewController;
 import com.jomariabejo.motorph.controller._ViewLoader;
 import com.jomariabejo.motorph.controller.role.accounting.*;
+import com.jomariabejo.motorph.utility.PermissionChecker;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,16 +21,81 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
     private MainViewController mainViewController;
 
+    @FXML
+    private Button btnDashboard;
+
+    @FXML
+    private Button btnPayroll;
+
+    @FXML
+    private Button btnPayrollTransaction;
+
+    @FXML
+    private Button btnOvertime;
+
+    @FXML
+    private Button btnPayslip;
+
+    @FXML
+    private Button btnPayslipHistory;
+
+    @FXML
+    private Button btnBonus;
+
+    @FXML
+    private Button btnTinCompliance;
+
+    @FXML
+    private Button btnPagibigRate;
+
+    @FXML
+    private Button btnPhilhealthRate;
+
+    @FXML
+    private Button btnSssRate;
+
+    @FXML
+    private Button btnPayrollChange;
+
+    @FXML
+    private Button btnReimbursementTransaction;
+
     public PayrollAdministratorNavigationController() {
     }
 
+    @FXML
+    public void initialize() {
+        // This method is called automatically after FXML injection
+        // Ensure all buttons are visible and managed by default
+        // Use Platform.runLater to ensure buttons are fully initialized
+        javafx.application.Platform.runLater(() -> {
+            setAllButtonsVisible(true);
+        });
+    }
+
+    public void setMainViewController(MainViewController mainViewController) {
+        this.mainViewController = mainViewController;
+        // Update button visibility after mainViewController is set and FXML is loaded
+        javafx.application.Platform.runLater(() -> {
+            if (this.mainViewController != null) {
+                updateButtonVisibility();
+            }
+        });
+    }
+
     public void dashboardOnActtion() {
+        if (mainViewController == null) {
+            return;
+        }
         mainViewController.rewriteLabel("/ Finance / Dashboard");
 
         loadView("/com/jomariabejo/motorph/role/accounting/accounting-dashboard.fxml", controller -> {
 
             if (controller instanceof AccountingDashboard accountingDashboard) {
                 accountingDashboard.setPayrollAdministratorNavigationController(this);
+                accountingDashboard.loadData();
+                accountingDashboard.populateKPICards();
+                accountingDashboard.populateCharts();
             }
         });
     }
@@ -38,17 +107,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
             if (controller instanceof PayrollController payrollController) {
                 payrollController.setPayrollAdministratorNavigationController(this);
-            }
-        });
-    }
-
-    public void payrollApprovalOnAction() {
-        mainViewController.rewriteLabel("/ Finance / Payroll Approval");
-
-        loadView("/com/jomariabejo/motorph/role/accounting/payroll-approval.fxml", controller -> {
-
-            if (controller instanceof PayrollApprovalController payrollApprovalController) {
-                payrollApprovalController.setPayrollAdministratorNavigationController(this);
+                payrollController.populatePayrolls();
             }
         });
     }
@@ -97,8 +156,88 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
         });
     }
 
+    public void bonusOnAction() {
+        mainViewController.rewriteLabel("/ Finance / Bonus");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/bonus.fxml", controller -> {
+            if (controller instanceof BonusController bonusController) {
+                bonusController.setPayrollAdministratorNavigationController(this);
+                bonusController.populateBonuses();
+            }
+        });
+    }
+
+    public void tinComplianceOnAction() {
+        mainViewController.rewriteLabel("/ Finance / TIN Compliance");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/tin-compliance.fxml", controller -> {
+            if (controller instanceof TinComplianceController tinComplianceController) {
+                tinComplianceController.setPayrollAdministratorNavigationController(this);
+                tinComplianceController.populateTinCompliance();
+            }
+        });
+    }
+
+    public void pagibigRateOnAction() {
+        mainViewController.rewriteLabel("/ Finance / Pagibig Contribution Rate");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/pagibig-rate.fxml", controller -> {
+            if (controller instanceof PagibigContributionRateController rateController) {
+                rateController.setPayrollAdministratorNavigationController(this);
+                rateController.populateRates();
+            }
+        });
+    }
+
+    public void philhealthRateOnAction() {
+        mainViewController.rewriteLabel("/ Finance / Philhealth Contribution Rate");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/philhealth-rate.fxml", controller -> {
+            if (controller instanceof PhilhealthContributionRateController rateController) {
+                rateController.setPayrollAdministratorNavigationController(this);
+                rateController.populateRates();
+            }
+        });
+    }
+
+    public void sssRateOnAction() {
+        mainViewController.rewriteLabel("/ Finance / SSS Contribution Rate");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/sss-rate.fxml", controller -> {
+            if (controller instanceof SssContributionRateController rateController) {
+                rateController.setPayrollAdministratorNavigationController(this);
+                rateController.populateRates();
+            }
+        });
+    }
+
+    public void payrollChangeOnAction() {
+        mainViewController.rewriteLabel("/ Finance / Payroll Changes");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/payroll-change.fxml", controller -> {
+            if (controller instanceof PayrollChangeController changeController) {
+                changeController.setPayrollAdministratorNavigationController(this);
+                changeController.populateChanges();
+            }
+        });
+    }
+
+    public void reimbursementTransactionOnAction() {
+        mainViewController.rewriteLabel("/ Finance / Reimbursement Transactions");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/reimbursement-transaction.fxml", controller -> {
+            if (controller instanceof ReimbursementTransactionController transactionController) {
+                transactionController.setPayrollAdministratorNavigationController(this);
+                transactionController.populateTransactions();
+            }
+        });
+    }
+
     @Override
     public <T> void loadView(String fxmlPath, Consumer<T> controllerInitializer) {
+        if (mainViewController == null || mainViewController.getMainBorderPane() == null) {
+            return;
+        }
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
 
@@ -111,6 +250,175 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             controllerInitializer.accept(controller);
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
+        }
+    }
+
+    /**
+     * Update button visibility based on user permissions.
+     * Hides buttons that the user doesn't have permission to access.
+     */
+    public void updateButtonVisibility() {
+        // Check if buttons are initialized
+        if (btnDashboard == null) {
+            // Buttons not yet initialized, try again later
+            javafx.application.Platform.runLater(this::updateButtonVisibility);
+            return;
+        }
+
+        if (mainViewController == null || mainViewController.getUser() == null || mainViewController.getServiceFactory() == null) {
+            // If user/serviceFactory not available, show all buttons by default (better UX)
+            setAllButtonsVisible(true);
+            return;
+        }
+
+        var user = mainViewController.getUser();
+        var serviceFactory = mainViewController.getServiceFactory();
+
+        // Check if user is Payroll Administrator - if so, show all buttons
+        boolean isPayrollAdmin = user.getRoleID() != null && 
+                                user.getRoleID().getRoleName() != null &&
+                                "Payroll Administrator".equalsIgnoreCase(user.getRoleID().getRoleName());
+        
+        // If Payroll admin, show all buttons
+        if (isPayrollAdmin) {
+            setAllButtonsVisible(true);
+            return;
+        }
+
+        // Otherwise, check individual permissions
+        // Always set managed first, then visible to ensure synchronization
+        if (btnDashboard != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_DASHBOARD_VIEW, serviceFactory);
+            btnDashboard.setManaged(visible);
+            btnDashboard.setVisible(visible);
+        }
+
+        if (btnPayroll != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_MANAGE, serviceFactory);
+            btnPayroll.setManaged(visible);
+            btnPayroll.setVisible(visible);
+        }
+
+        if (btnPayrollTransaction != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_TRANSACTIONS_VIEW, serviceFactory);
+            btnPayrollTransaction.setManaged(visible);
+            btnPayrollTransaction.setVisible(visible);
+        }
+
+        if (btnOvertime != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_OVERTIME_APPROVE, serviceFactory);
+            btnOvertime.setManaged(visible);
+            btnOvertime.setVisible(visible);
+        }
+
+        if (btnPayslip != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_PAYSLIP_VIEW, serviceFactory);
+            btnPayslip.setManaged(visible);
+            btnPayslip.setVisible(visible);
+        }
+
+        if (btnPayslipHistory != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_PAYSLIP_HISTORY_VIEW, serviceFactory);
+            btnPayslipHistory.setManaged(visible);
+            btnPayslipHistory.setVisible(visible);
+        }
+
+        if (btnBonus != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_BONUS_MANAGE, serviceFactory);
+            btnBonus.setManaged(visible);
+            btnBonus.setVisible(visible);
+        }
+
+        if (btnTinCompliance != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_TIN_COMPLIANCE_MANAGE, serviceFactory);
+            btnTinCompliance.setManaged(visible);
+            btnTinCompliance.setVisible(visible);
+        }
+
+        if (btnPagibigRate != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_PAGIBIG_RATES_MANAGE, serviceFactory);
+            btnPagibigRate.setManaged(visible);
+            btnPagibigRate.setVisible(visible);
+        }
+
+        if (btnPhilhealthRate != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_PHILHEALTH_RATES_MANAGE, serviceFactory);
+            btnPhilhealthRate.setManaged(visible);
+            btnPhilhealthRate.setVisible(visible);
+        }
+
+        if (btnSssRate != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_SSS_RATES_MANAGE, serviceFactory);
+            btnSssRate.setManaged(visible);
+            btnSssRate.setVisible(visible);
+        }
+
+        if (btnPayrollChange != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_CHANGES_MANAGE, serviceFactory);
+            btnPayrollChange.setManaged(visible);
+            btnPayrollChange.setVisible(visible);
+        }
+
+        if (btnReimbursementTransaction != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_REIMBURSEMENT_TRANSACTIONS_VIEW, serviceFactory);
+            btnReimbursementTransaction.setManaged(visible);
+            btnReimbursementTransaction.setVisible(visible);
+        }
+    }
+
+    private void setAllButtonsVisible(boolean visible) {
+        // Ensure visible and managed are always synchronized - set managed first
+        if (btnDashboard != null) {
+            btnDashboard.setManaged(visible);
+            btnDashboard.setVisible(visible);
+        }
+        if (btnPayroll != null) {
+            btnPayroll.setManaged(visible);
+            btnPayroll.setVisible(visible);
+        }
+        if (btnPayrollTransaction != null) {
+            btnPayrollTransaction.setManaged(visible);
+            btnPayrollTransaction.setVisible(visible);
+        }
+        if (btnOvertime != null) {
+            btnOvertime.setManaged(visible);
+            btnOvertime.setVisible(visible);
+        }
+        if (btnPayslip != null) {
+            btnPayslip.setManaged(visible);
+            btnPayslip.setVisible(visible);
+        }
+        if (btnPayslipHistory != null) {
+            btnPayslipHistory.setManaged(visible);
+            btnPayslipHistory.setVisible(visible);
+        }
+        if (btnBonus != null) {
+            btnBonus.setManaged(visible);
+            btnBonus.setVisible(visible);
+        }
+        if (btnTinCompliance != null) {
+            btnTinCompliance.setManaged(visible);
+            btnTinCompliance.setVisible(visible);
+        }
+        if (btnPagibigRate != null) {
+            btnPagibigRate.setManaged(visible);
+            btnPagibigRate.setVisible(visible);
+        }
+        if (btnPhilhealthRate != null) {
+            btnPhilhealthRate.setManaged(visible);
+            btnPhilhealthRate.setVisible(visible);
+        }
+        if (btnSssRate != null) {
+            btnSssRate.setManaged(visible);
+            btnSssRate.setVisible(visible);
+        }
+        if (btnPayrollChange != null) {
+            btnPayrollChange.setManaged(visible);
+            btnPayrollChange.setVisible(visible);
+        }
+        if (btnReimbursementTransaction != null) {
+            btnReimbursementTransaction.setManaged(visible);
+            btnReimbursementTransaction.setVisible(visible);
         }
     }
 }

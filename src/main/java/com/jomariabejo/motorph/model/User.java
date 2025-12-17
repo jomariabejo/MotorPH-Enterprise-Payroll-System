@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Getter
 @Setter
 @Entity
@@ -43,6 +46,19 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "RoleID", nullable = false)
     private Role roleID;
+
+    /**
+     * Multi-role support: additional roles assigned to the user.
+     * user.roleID remains the primary/default role for backwards compatibility.
+     */
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "user_role",
+            schema = "payroll_system",
+            joinColumns = @JoinColumn(name = "UserID", referencedColumnName = "UserID"),
+            inverseJoinColumns = @JoinColumn(name = "RoleID", referencedColumnName = "RoleID")
+    )
+    private Set<Role> roles = new HashSet<>();
 
     @ColumnDefault("'Active'")
     @Column(name = "Status", nullable = false)
