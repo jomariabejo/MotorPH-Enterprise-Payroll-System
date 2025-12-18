@@ -35,6 +35,9 @@ jobs:
         distribution: 'temurin'
         cache: maven
 
+    - name: Make Maven wrapper executable
+      run: chmod +x ./mvnw
+
     - name: Install MySQL client
       run: sudo apt-get update && sudo apt-get install -y default-mysql-client
 
@@ -48,15 +51,28 @@ jobs:
 
     - name: Create database schema
       run: |
-        mysql -h 127.0.0.1 -P 3306 -u root -padmin -e "CREATE DATABASE IF NOT EXISTS payroll_system;" || echo "Database creation skipped"
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin -e "DROP DATABASE IF EXISTS payroll_system;" || true
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin -e "CREATE DATABASE payroll_system;"
         if [ -f "src/main/resources/sql/dummy-data.sql" ]; then
-          mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system < src/main/resources/sql/dummy-data.sql || echo "Schema file execution skipped"
+          mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system < src/main/resources/sql/dummy-data.sql
+          echo "Database schema initialized successfully"
         else
-          echo "Schema file not found, continuing..."
+          echo "Schema file not found!"
+          exit 1
         fi
 
+    - name: Verify contribution rates
+      run: |
+        echo "Verifying Pag-IBIG rates..."
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system -e "SELECT COUNT(*) as pagibig_count FROM pagibig_contribution_rates;" || exit 1
+        echo "Verifying Philhealth rates..."
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system -e "SELECT COUNT(*) as philhealth_count FROM philhealth_contribution_rates;" || exit 1
+        echo "Verifying SSS rates..."
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system -e "SELECT COUNT(*) as sss_count FROM sss_contribution_rates;" || exit 1
+        echo "All contribution rates verified!"
+
     - name: Run Maven tests
-      run: mvn clean test
+      run: ./mvnw -B clean test
       env:
         MAVEN_OPTS: -Dmaven.test.failure.ignore=false
         DB_HOST: 127.0.0.1
