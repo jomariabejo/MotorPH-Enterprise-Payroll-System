@@ -29,6 +29,10 @@ Use the following credentials to log in to the app:
 |------|----------|----------|
 | Employee | `emp_demo` | `emp123` |
 | HR Administrator | `hr_demo` | `hr123` |
+<<<<<<< HEAD
+| HR Manager | `hrmanager_demo` | `hrmanager123` |
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 | Payroll Administrator | `payroll_demo` | `payroll123` |
 | System Administrator | `sysadmin_demo` | `sysadmin123` |
 

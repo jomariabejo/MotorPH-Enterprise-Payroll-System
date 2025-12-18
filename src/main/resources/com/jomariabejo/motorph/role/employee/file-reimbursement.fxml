@@ -2,102 +2,77 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="570.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.employee.FileReimbursementRequestController">
-    <children>
-        <VBox alignment="TOP_CENTER" layoutX="719.0" layoutY="316.0" prefHeight="553.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <Label text="Reimbursement Request">
-                    <font>
-                        <Font size="48.0" />
-                    </font>
-                </Label>
-                <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="488.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
-                    <children>
-                        <Label text="Reimbursement Date">
-                            <font>
-                                <Font name="System Bold" size="24.0" />
-                            </font>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.jomariabejo.motorph.controller.role.employee.FileReimbursementRequestController">
+   <children>
+      <VBox alignment="TOP_CENTER" spacing="20.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <Label text="File Reimbursement Request" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="28.0" />
+               </font>
+            </Label>
+            
+            <VBox spacing="15.0">
+               <children>
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Reimbursement Date *">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
                         </Label>
-                        <DatePicker fx:id="dpReimbursementDate" prefHeight="54.0" prefWidth="600.0" style="-fx-font-size: 24" />
-                    </children>
-                    <padding>
-                        <Insets right="320.0" />
-                    </padding>
-               <VBox.margin>
-                  <Insets top="48.0" />
-               </VBox.margin>
-                </HBox>
-            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="273.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
-               <children>
-                  <Label text="Amount">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfAmount" prefHeight="54.0" prefWidth="600.0">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </TextField>
+                        <DatePicker fx:id="dpReimbursementDate" prefWidth="400.0" promptText="Select date" />
+                        <Label text="Select the date when the expense was incurred" style="-fx-font-size: 11px; -fx-text-fill: gray;" />
+                     </children>
+                  </VBox>
+                  
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Amount *">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="10.0">
+                           <children>
+                              <TextField fx:id="tfAmount" prefWidth="350.0" promptText="0.00" />
+                              <Label text="PHP" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+                           </children>
+                        </HBox>
+                        <Label text="Enter the amount you wish to be reimbursed (numbers only)" style="-fx-font-size: 11px; -fx-text-fill: gray;" />
+                     </children>
+                  </VBox>
+                  
+                  <VBox spacing="5.0">
+                     <children>
+                        <Label text="Description *">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <TextArea fx:id="tfDescription" prefHeight="120.0" prefWidth="400.0" promptText="Please provide a detailed description of the expense (minimum 50 characters)..." wrapText="true" />
+                        <Label text="Minimum 50 characters required. Include details about the expense, purpose, and any supporting information." style="-fx-font-size: 11px; -fx-text-fill: gray;" />
+                     </children>
+                  </VBox>
                </children>
-               <padding>
-                  <Insets right="320.0" />
-               </padding>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" layoutX="10.0" layoutY="320.0" prefHeight="73.0" prefWidth="1300.0" spacing="24.0">
+            </VBox>
+            
+            <HBox alignment="CENTER_RIGHT" spacing="15.0">
                <children>
-                  <Label text="Description">
-                     <font>
-                        <Font name="System Bold" size="24.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="tfDescription" prefHeight="54.0" prefWidth="600.0">
-                     <font>
-                        <Font size="24.0" />
-                     </font></TextField>
+                  <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#cancelBtnClicked" prefHeight="40.0" prefWidth="120.0" text="Cancel" />
+                  <Button fx:id="submitBtn" mnemonicParsing="false" onAction="#submitBtnClicked" prefHeight="40.0" prefWidth="120.0" text="Submit" />
                </children>
-               <padding>
-                  <Insets right="320.0" />
-               </padding>
             </HBox>
-                <ButtonBar prefHeight="99.0" prefWidth="953.0">
-                    <buttons>
-<!--                        <Button mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel">-->
-<!--                            <font>-->
-<!--                                <Font size="24.0" />-->
-<!--                            </font>-->
-<!--                        </Button>-->
-                        <Button fx:id="cancelBtn" layoutX="1235.0" layoutY="18.0" mnemonicParsing="false" onAction="#cancelBtnClicked" text="Cancel">
-                            <font>
-                                <Font size="24.0" />
-                            </font>
-                        </Button>
-                  <Button fx:id="submitBtn" layoutX="1010.0" layoutY="10.0" mnemonicParsing="false" onAction="#submitBtnClicked" text="Submit">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Button>
-                    </buttons>
-                    <VBox.margin>
-                        <Insets left="96.0" right="96.0" />
-                    </VBox.margin>
-                    <padding>
-                        <Insets right="226.0" top="48.0" />
-                    </padding>
-                </ButtonBar>
-            </children>
-         <padding>
-            <Insets top="48.0" />
-         </padding>
-        </VBox>
-    </children>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>

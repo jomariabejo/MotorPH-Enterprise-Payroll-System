@@ -87,4 +87,8 @@ public class Employee {
     @Column(name = "HourlyRate", nullable = false, precision = 18, scale = 4)
     private BigDecimal hourlyRate;
 
+    @ColumnDefault("0")
+    @Column(name = "isDeleted", nullable = false)
+    private Boolean isDeleted;
+
 }

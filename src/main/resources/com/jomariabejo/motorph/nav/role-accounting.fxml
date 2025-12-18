@@ -79,29 +79,6 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button fx:id="btnPayrollTransaction" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="448.0" mnemonicParsing="false" onAction="#payrollTransactionOnAction" prefHeight="50.0" prefWidth="250.0">
-               <graphic>
-                  <HBox alignment="CENTER_LEFT" spacing="10">
-                     <children>
-                        <StackPane prefHeight="24.0" prefWidth="24.0">
-                           <children>
-                              <Circle fill="#ffffff" radius="18.0" />
-                              <ImageView fitHeight="32.0" fitWidth="32.0">
-                                 <image>
-                                    <Image url="@../assets/icons/payroll-transaction-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </StackPane>
-                        <Label text="Payroll Transaction">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </graphic>
-            </Button>
             <Button fx:id="btnOvertime" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="308.0" mnemonicParsing="false" onAction="#overtimeOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
@@ -148,29 +125,6 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button fx:id="btnPayslipHistory" alignment="BASELINE_LEFT" contentDisplay="LEFT" layoutX="35.0" layoutY="638.0" mnemonicParsing="false" onAction="#payslipHistoryOnAction" prefHeight="50.0" prefWidth="250.0">
-               <graphic>
-                  <HBox alignment="CENTER_LEFT" spacing="10">
-                     <children>
-                        <StackPane prefHeight="24.0" prefWidth="24.0">
-                           <children>
-                              <Circle fill="#ffffff" radius="18.0" />
-                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.7">
-                                 <image>
-                                    <Image url="@../assets/icons/payslip-history-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </StackPane>
-                        <Label text="Payslip History">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </graphic>
-            </Button>
             <Button fx:id="btnBonus" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#bonusOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
@@ -186,29 +140,6 @@
                            </children>
                         </StackPane>
                         <Label text="Bonus">
-                           <font>
-                              <Font size="18.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </HBox>
-               </graphic>
-            </Button>
-            <Button fx:id="btnTinCompliance" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#tinComplianceOnAction" prefHeight="50.0" prefWidth="250.0">
-               <graphic>
-                  <HBox alignment="CENTER_LEFT" spacing="10">
-                     <children>
-                        <StackPane prefHeight="24.0" prefWidth="24.0">
-                           <children>
-                              <Circle fill="#ffffff" radius="18.0" />
-                              <ImageView fitHeight="24.0" fitWidth="24.0" opacity="0.7">
-                                 <image>
-                                    <Image url="@../assets/icons/payslip-history-icon.png" />
-                                 </image>
-                              </ImageView>
-                           </children>
-                        </StackPane>
-                        <Label text="TIN Compliance">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -286,7 +217,7 @@
                   </HBox>
                </graphic>
             </Button>
-            <Button fx:id="btnPayrollChange" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#payrollChangeOnAction" prefHeight="50.0" prefWidth="250.0">
+            <Button fx:id="btnReimbursement" alignment="BASELINE_LEFT" contentDisplay="LEFT" mnemonicParsing="false" onAction="#reimbursementOnAction" prefHeight="50.0" prefWidth="250.0">
                <graphic>
                   <HBox alignment="CENTER_LEFT" spacing="10">
                      <children>
@@ -300,7 +231,7 @@
                               </ImageView>
                            </children>
                         </StackPane>
-                        <Label text="Payroll Changes">
+                        <Label text="Reimbursement">
                            <font>
                               <Font size="18.0" />
                            </font>

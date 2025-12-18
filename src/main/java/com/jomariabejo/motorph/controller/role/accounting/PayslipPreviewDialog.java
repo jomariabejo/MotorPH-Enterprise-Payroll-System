@@ -30,7 +30,29 @@ import java.util.concurrent.Executors;
 @Setter
 public class PayslipPreviewDialog {
 
-    private static final ExecutorService executorService = Executors.newCachedThreadPool();
+    // Use a fixed thread pool with limited threads to prevent resource exhaustion
+    // Shutdown hook will clean up when application exits
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(2, r -> {
+        Thread t = new Thread(r, "PayslipPDF-Generator-Preview");
+        t.setDaemon(true); // Daemon threads won't prevent JVM shutdown
+        return t;
+    });
+    
+    static {
+        // Register shutdown hook to properly close executor service
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            executorService.shutdown();
+            try {
+                if (!executorService.awaitTermination(5, java.util.concurrent.TimeUnit.SECONDS)) {
+                    executorService.shutdownNow();
+                }
+            } catch (InterruptedException e) {
+                executorService.shutdownNow();
+                Thread.currentThread().interrupt();
+            }
+        }));
+    }
+    
     private static final SimpleDateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("MMM dd, yyyy");
 
     private Payslip payslip;
@@ -528,6 +550,9 @@ public class PayslipPreviewDialog {
                             // Ignore deletion errors
                         }
                     }
+                    
+                    // Suggest garbage collection to free memory after PDF operations
+                    System.gc();
                 } catch (Exception e) {
                     e.printStackTrace();
                     // Ensure loading dialog is closed
@@ -549,8 +574,6 @@ public class PayslipPreviewDialog {
 
     @FXML
     void closeClicked() {
-        Stage stage = (Stage) btnClose.getScene().getWindow();
-        stage.close();
     }
 
     private String toPdfSafePeso(String pesoFormattedString) {

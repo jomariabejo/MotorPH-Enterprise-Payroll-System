@@ -4,6 +4,8 @@ import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Timesheet;
 import com.jomariabejo.motorph.utility.CustomAlert;
+import com.jomariabejo.motorph.utility.DateTimeUtil;
+import com.jomariabejo.motorph.utility.LoggingUtility;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -72,13 +74,21 @@ public class TimesheetController {
 
     private void saveYourTimeIn() {
         Timesheet timesheet = new Timesheet();
-        timesheet.setDate(LocalDate.now());
+        timesheet.setDate(DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalDate());
         timesheet.setEmployeeID(this.getEmployeeRoleNavigationController().getMainViewController().getEmployee());
-        timesheet.setTimeIn(Time.valueOf(LocalTime.now()));
+        timesheet.setTimeIn(Time.valueOf(DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalTime()));
         timesheet.setHoursWorked(0.00f);
         timesheet.setStatus("Not Submitted");
         this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().saveTimesheet(timesheet);
         tvTimesheets.getItems().add(timesheet);
+        
+        // Log clock in action
+        var user = this.getEmployeeRoleNavigationController().getMainViewController().getUser();
+        if (user != null) {
+            Integer employeeNumber = timesheet.getEmployeeID().getEmployeeNumber();
+            String timeIn = timesheet.getTimeIn().toLocalTime().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+            LoggingUtility.logClockIn(user, employeeNumber, timeIn);
+        }
     }
 
     private void displayYourTimeInAlreadyExist() {
@@ -95,7 +105,7 @@ public class TimesheetController {
      * Displays an alert when user tries to time in outside allowed hours (8:00 AM - 5:00 PM)
      */
     private void displayTimeInOutsideAllowedWindow() {
-        LocalTime currentTime = LocalTime.now();
+        LocalTime currentTime = DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalTime();
         int hour = currentTime.getHour();
         int hour12;
         if (hour == 0) {
@@ -125,7 +135,7 @@ public class TimesheetController {
      * Displays an alert when user tries to time out outside allowed hours (8:00 AM - 5:00 PM)
      */
     private void displayTimeOutOutsideAllowedWindow() {
-        LocalTime currentTime = LocalTime.now();
+        LocalTime currentTime = DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalTime();
         int hour = currentTime.getHour();
         int hour12;
         if (hour == 0) {
@@ -156,7 +166,7 @@ public class TimesheetController {
      * @return true if current time is between 8:00 AM and 5:00 PM (inclusive), false otherwise
      */
     private boolean isTimeWithinAllowedWindow() {
-        LocalTime currentTime = LocalTime.now();
+        LocalTime currentTime = DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalTime();
         // Check if current time is between 8:00 AM (08:00) and 5:00 PM (17:00)
         return !currentTime.isBefore(ALLOWED_START_TIME) && !currentTime.isAfter(ALLOWED_END_TIME);
     }
@@ -165,7 +175,7 @@ public class TimesheetController {
     private boolean YouHaveTimeInToday() {
         Optional<Timesheet> timesheet = this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().getTimesheetByEmployeeAndDate(
                 this.getEmployeeRoleNavigationController().getMainViewController().getEmployee(),
-                LocalDate.now()
+                DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalDate()
         );
         return timesheet.isPresent();
     }
@@ -188,17 +198,25 @@ public class TimesheetController {
     private void modifyYourTimeOut() {
         Optional<Timesheet> timesheet = this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().getTimesheetByEmployeeAndDate(
                 this.getEmployeeRoleNavigationController().getMainViewController().getEmployee(),
-                LocalDate.now()
+                DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalDate()
         );
         if (timesheet.isPresent()) {
             if (timesheet.get().getTimeOut() == null) {
-                timesheet.get().setTimeOut(Time.valueOf(LocalTime.now()));
+                timesheet.get().setTimeOut(Time.valueOf(DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalTime()));
                 timesheet.get().setHoursWorked((
                         calculateHoursWorked(
                                 timesheet.get()
                         )));
                 this.getEmployeeRoleNavigationController().getMainViewController().getServiceFactory().getTimesheetService().updateTimesheet(timesheet.get());
                 populateTableview();
+                
+                // Log clock out action
+                var user = this.getEmployeeRoleNavigationController().getMainViewController().getUser();
+                if (user != null) {
+                    Integer employeeNumber = timesheet.get().getEmployeeID().getEmployeeNumber();
+                    String timeOut = timesheet.get().getTimeOut().toLocalTime().format(java.time.format.DateTimeFormatter.ofPattern("HH:mm:ss"));
+                    LoggingUtility.logClockOut(user, employeeNumber, timeOut);
+                }
             }
         }
     }
@@ -232,7 +250,7 @@ public class TimesheetController {
                         this.getEmployeeRoleNavigationController()
                                 .getMainViewController()
                                 .getEmployee(),
-                        LocalDate.now()
+                        DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalDate()
                 );
         return timesheet.isPresent() && timesheet.get().getTimeOut() != null;
     }
@@ -269,7 +287,7 @@ public class TimesheetController {
     }
 
     private void selectCurrentMonth() {
-        LocalDate localDate = LocalDate.now();
+        LocalDate localDate = DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalDate();
         cbMonth.getSelectionModel().select(localDate.getMonth());
     }
 
@@ -280,13 +298,13 @@ public class TimesheetController {
             cbYear.setItems(FXCollections.observableList(yearsOpt.get()));
         } else {
             // If no years found, set current year as default
-            cbYear.setItems(FXCollections.observableArrayList(LocalDate.now().getYear()));
+            cbYear.setItems(FXCollections.observableArrayList(DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalDate().getYear()));
         }
         selectCurrentYear();
     }
 
     private void selectCurrentYear() {
-        LocalDate localDate = LocalDate.now();
+        LocalDate localDate = DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalDate();
         // Kung wala tayong current year, lalagyan natin ito at saka itutuk natin sa year na yan🔫
         if (!cbYear.getItems().contains(localDate.getYear())) {
             cbYear.getItems().add(0, localDate.getYear());

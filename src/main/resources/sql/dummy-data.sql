@@ -314,7 +314,12 @@ CREATE TABLE IF NOT EXISTS `pagibig_contribution_rates` (
   KEY `idx_pagibig_effective_date` (`EffectiveDate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Stores Pag-IBIG contribution rates, specifying salary brackets and corresponding employee and employer shares, effective from specific dates.';
 
--- Dumping data for table payroll_system.pagibig_contribution_rates: ~0 rows (approximately)
+-- Dumping data for table payroll_system.pagibig_contribution_rates: ~2 rows (approximately)
+INSERT INTO `pagibig_contribution_rates` (`SalaryBracketFrom`, `SalaryBracketTo`, `EmployeeShare`, `EmployerShare`, `EffectiveDate`) VALUES
+	-- Monthly Basic Salary: At least 1,000 to 1,500 - Employee's Contribution Rate: 1%, Employer's Contribution Rate: 2%, Total: 3%
+	(1000.0000, 1500.0000, 1.0000, 2.0000, '2024-01-01'),
+	-- Monthly Basic Salary: Over 1,500 - Employee's Contribution Rate: 2%, Employer's Contribution Rate: 2%, Total: 4%
+	(1500.0100, 999999999.0000, 2.0000, 2.0000, '2024-01-01');
 
 -- Dumping structure for table payroll_system.payroll
 CREATE TABLE IF NOT EXISTS `payroll` (
@@ -476,7 +481,15 @@ CREATE TABLE IF NOT EXISTS `philhealth_contribution_rates` (
   KEY `idx_philhealth_effective_date` (`EffectiveDate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Stores PhilHealth contribution rates, specifying salary brackets and corresponding employee and employer shares, effective from specific dates.';
 
--- Dumping data for table payroll_system.philhealth_contribution_rates: ~0 rows (approximately)
+-- Dumping data for table payroll_system.philhealth_contribution_rates: ~3 rows (approximately)
+INSERT INTO `philhealth_contribution_rates` (`SalaryBracketFrom`, `SalaryBracketTo`, `EmployeeShare`, `EmployerShare`, `EffectiveDate`) VALUES
+	-- Monthly Basic Salary: 10,000 - Premium Rate: 3% - Monthly Premium: 300 (Employee: 150, Employer: 150)
+	(0.0000, 10000.0000, 150.0000, 150.0000, '2024-01-01'),
+	-- Monthly Basic Salary: 10,000.01 to 59,999.99 - Premium Rate: 3% - Monthly Premium: 300 up to 1,800 (Employee: 1.5% = 150-900, Employer: 1.5% = 150-900)
+	-- Note: EmployeeShare and EmployerShare stored as 1.5 (percentage) for calculation: salary * 1.5% with min 150, max 900
+	(10000.0100, 59999.9900, 1.5000, 1.5000, '2024-01-01'),
+	-- Monthly Basic Salary: 60,000+ - Premium Rate: 3% - Monthly Premium: 1,800 (Employee: 900, Employer: 900)
+	(60000.0000, 999999999.0000, 900.0000, 900.0000, '2024-01-01');
 
 -- Dumping structure for table payroll_system.position
 CREATE TABLE IF NOT EXISTS `position` (
@@ -592,6 +605,21 @@ INSERT INTO `role_permission` (`RolePermissionID`, `RoleID`, `PermissionID`) VAL
 	(17, 9, 2),
 	(18, 9, 3);
 
+-- Dumping structure for table payroll_system.user_role
+CREATE TABLE IF NOT EXISTS `user_role` (
+  `UserRoleID` int NOT NULL AUTO_INCREMENT,
+  `UserID` int NOT NULL,
+  `RoleID` int NOT NULL,
+  PRIMARY KEY (`UserRoleID`),
+  UNIQUE KEY `idx_user_role` (`UserID`,`RoleID`),
+  KEY `FK_user_role_user` (`UserID`),
+  KEY `FK_user_role_role` (`RoleID`),
+  CONSTRAINT `FK_user_role_role` FOREIGN KEY (`RoleID`) REFERENCES `role` (`RoleID`) ON DELETE CASCADE,
+  CONSTRAINT `FK_user_role_user` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Maps users to multiple roles in the system.';
+
+-- Dumping data for table payroll_system.user_role: ~0 rows (approximately)
+
 -- Dumping structure for table payroll_system.sss_contribution_rates
 CREATE TABLE IF NOT EXISTS `sss_contribution_rates` (
   `ContributionRateID` int NOT NULL AUTO_INCREMENT COMMENT 'Unique identifier for each SSS contribution rate entry.',
@@ -666,7 +694,8 @@ INSERT INTO `user` (`UserID`, `Username`, `Password`, `Email`, `FullName`, `Role
 	(2, 'hr_demo', 'hr123', 'hr_demo@motorph.local', 'HR Demo', 5, 'Active', 6),
 	(3, 'payroll_demo', 'payroll123', 'payroll_demo@motorph.local', 'Payroll Demo', 7, 'Active', 3),
 	(4, 'sysadmin_demo', 'sysadmin123', 'sysadmin_demo@motorph.local', 'System Admin Demo', 9, 'Active', 5),
-	(5, 'sysadmin', 'admin123', 'sysadmin@motorph.local', 'System Administrator', 9, 'Active', 5);
+	(5, 'sysadmin', 'admin123', 'sysadmin@motorph.local', 'System Administrator', 9, 'Active', 5),
+	(6, 'hrmanager_demo', 'hrmanager123', 'hrmanager_demo@motorph.local', 'HR Manager Demo', 5, 'Active', 7);
 
 -- Dumping structure for table payroll_system.user_log
 CREATE TABLE IF NOT EXISTS `user_log` (
@@ -1145,7 +1174,7 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vw_yearly_payroll_summary_
 
 -- ---------------------------------------------
 -- Multi-role seed (optional)
--- NOTE: Requires user_role table (apply docs/sql/schema-patch-payroll_system.sql)
+-- NOTE: user_role table is now included in this schema file
 -- ---------------------------------------------
 -- Example: give sysadmin (UserID=5 in data-old.sql) the Employee role too (RoleID=6 in data-old.sql)
 -- INSERT IGNORE INTO role_permission (RoleID, PermissionID) values (...); -- permissions are managed via Sync in-app

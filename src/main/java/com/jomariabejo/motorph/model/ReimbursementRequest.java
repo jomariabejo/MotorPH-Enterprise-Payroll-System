@@ -57,8 +57,13 @@ public class ReimbursementRequest {
     @Column(name = "ProcessedDate")
     private Date processedDate;
 
-    // Custom getter for employee number
+    // Custom getter for employee number (returns Integer)
     public Integer getEmployeeNumber() {
         return employeeNumber != null ? employeeNumber.getEmployeeNumber() : null;
+    }
+    
+    // Getter for Employee object (since getEmployeeNumber() returns Integer)
+    public Employee getEmployee() {
+        return employeeNumber;
     }
 }

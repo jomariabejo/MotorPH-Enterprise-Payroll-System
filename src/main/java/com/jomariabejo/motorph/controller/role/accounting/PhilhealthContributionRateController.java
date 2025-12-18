@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,6 +62,7 @@ public class PhilhealthContributionRateController {
             Stage formStage = new Stage();
             formStage.setTitle(rate == null ? "Add New Philhealth Contribution Rate" : "Edit Philhealth Contribution Rate");
             formStage.setScene(new Scene(formPane));
+            formStage.initModality(Modality.APPLICATION_MODAL);
 
             PhilhealthContributionRateFormController formController = loader.getController();
             formController.setRateController(this);
@@ -68,8 +70,16 @@ public class PhilhealthContributionRateController {
             formController.setup();
 
             formStage.showAndWait();
+            // Refresh the table after the form is closed
+            populateRates();
         } catch (IOException e) {
             e.printStackTrace();
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Failed to open form: " + e.getMessage()
+            );
+            alert.showAndWait();
         }
     }
 
@@ -128,23 +138,23 @@ public class PhilhealthContributionRateController {
         TableColumn<PhilhealthContributionRate, Void> actionsColumn = new TableColumn<>("Actions");
         actionsColumn.setCellFactory(param -> new TableCell<>() {
             private final Button editButton = new Button(null, new FontIcon(Feather.EDIT));
-            private final Button deleteButton = new Button(null, new FontIcon(Feather.TRASH));
+            private final Button deleteButton = new Button(null, new FontIcon(Feather.TRASH_2));
 
             {
-                editButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
+                editButton.getStyleClass().addAll(Styles.ACCENT, Styles.BUTTON_OUTLINED);
                 deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
 
                 editButton.setOnAction(event -> {
-                    PhilhealthContributionRate selected = getTableView().getItems().get(getIndex());
-                    if (selected != null) {
-                        openRateForm(selected);
+                    PhilhealthContributionRate rate = getTableView().getItems().get(getIndex());
+                    if (rate != null) {
+                        openRateForm(rate);
                     }
                 });
 
                 deleteButton.setOnAction(event -> {
-                    PhilhealthContributionRate selected = getTableView().getItems().get(getIndex());
-                    if (selected != null) {
-                        deleteRate(selected);
+                    PhilhealthContributionRate rate = getTableView().getItems().get(getIndex());
+                    if (rate != null) {
+                        deleteRate(rate);
                     }
                 });
             }
@@ -153,13 +163,17 @@ public class PhilhealthContributionRateController {
 
             {
                 actionsBox.setAlignment(Pos.CENTER);
-                actionsBox.setSpacing(10);
+                actionsBox.setSpacing(5);
             }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : actionsBox);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(actionsBox);
+                }
             }
         });
         return actionsColumn;
@@ -194,17 +208,43 @@ public class PhilhealthContributionRateController {
     }
 
     public void populateRates() {
-        allRates = payrollAdministratorNavigationController.getMainViewController()
-                .getServiceFactory().getPhilhealthContributionRateService().getAllRates();
+        if (payrollAdministratorNavigationController == null || 
+            payrollAdministratorNavigationController.getMainViewController() == null ||
+            payrollAdministratorNavigationController.getMainViewController().getServiceFactory() == null) {
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Unable to load Philhealth rates. Navigation controller not properly initialized."
+            );
+            alert.showAndWait();
+            return;
+        }
 
-        int itemsPerPage = 25;
-        int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));
-        paginationRates.setPageCount(pageCount);
+        try {
+            allRates = payrollAdministratorNavigationController.getMainViewController()
+                    .getServiceFactory().getPhilhealthContributionRateService().getAllRates();
 
-        paginationRates.setPageFactory(pageIndex -> {
-            updateTableView(pageIndex, itemsPerPage);
-            return new StackPane();
-        });
+            int itemsPerPage = 25;
+            int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));
+            paginationRates.setPageCount(pageCount);
+
+            paginationRates.setPageFactory(pageIndex -> {
+                updateTableView(pageIndex, itemsPerPage);
+                return new StackPane();
+            });
+            
+            // Trigger initial page load
+            paginationRates.setCurrentPageIndex(0);
+            updateTableView(0, itemsPerPage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Failed to load Philhealth rates: " + (e.getMessage() != null ? e.getMessage() : "Unknown error")
+            );
+            alert.showAndWait();
+        }
     }
 
     private void updateTableView(int pageIndex, int itemsPerPage) {

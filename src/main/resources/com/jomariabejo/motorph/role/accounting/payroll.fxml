@@ -15,7 +15,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="12.0">
                <children>
                   <Button fx:id="btnAddPayroll" mnemonicParsing="false" onAction="#addPayrollClicked" prefHeight="50.0" prefWidth="305.0" text="Add New Payroll" />
-                  <Button fx:id="btnGenerateTestTimesheets" mnemonicParsing="false" onAction="#generateTestTimesheetsClicked" prefHeight="50.0" prefWidth="305.0" text="Generate Dec 2025 Timesheets" />
+                  <Button fx:id="btnGenerateTestTimesheets" mnemonicParsing="false" onAction="#generateTestTimesheetsClicked" prefHeight="50.0" prefWidth="305.0" text="Generate Timesheets" />
                </children>
             </HBox>
             <TableView fx:id="tvPayrolls" prefHeight="650.0">

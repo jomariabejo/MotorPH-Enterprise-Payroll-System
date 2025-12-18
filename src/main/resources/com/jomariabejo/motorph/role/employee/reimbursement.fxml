@@ -31,48 +31,7 @@
                     </VBox.margin>
                 </HBox>
                 <TableView fx:id="tvReimbursementRequest" prefHeight="650.0">
-                    <columns>
-                        <TableColumn prefWidth="150.0" text="Reimbursement Id">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="reimbursementRequestId" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="150.0" text="Employee Number">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="employeeNumber" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="150.0" text="Request Date">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="requestDate" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="150.0" text="Amount">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="amount" />
-                            </cellValueFactory>
-                        </TableColumn>
-                        <TableColumn prefWidth="150.0" text="Description">
-                            <cellValueFactory>
-                                <PropertyValueFactory property="description" />
-                            </cellValueFactory>
-                        </TableColumn>
-                  <TableColumn prefWidth="150.0" text="Status">
-                     <cellValueFactory>
-                        <PropertyValueFactory property="status" />
-                     </cellValueFactory>
-                  </TableColumn>
-                  <TableColumn prefWidth="150.0" text="Processed By">
-                     <cellValueFactory>
-                        <PropertyValueFactory property="processedBy" />
-                     </cellValueFactory>
-                  </TableColumn>
-                  <TableColumn prefWidth="150.0" text="Process Date">
-                     <cellValueFactory>
-                        <PropertyValueFactory property="processedDate" />
-                     </cellValueFactory>
-                  </TableColumn>
-                    </columns>
+                    <!-- Columns will be created programmatically in the controller -->
                     <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                     </columnResizePolicy>

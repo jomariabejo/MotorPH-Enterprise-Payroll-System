@@ -43,4 +43,10 @@ MotorPH-Payroll-System.exe
 MotorPH-Payroll-System.dmg
 *.exe
 *.dmg
+<<<<<<< HEAD
 *.app
+
+/others
+=======
+*.app
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f

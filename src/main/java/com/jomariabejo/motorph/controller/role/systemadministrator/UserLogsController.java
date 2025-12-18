@@ -4,6 +4,7 @@ import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.SystemAdministratorNavigationController;
 import com.jomariabejo.motorph.constants.PermissionConstants;
 import com.jomariabejo.motorph.model.UserLog;
+import com.jomariabejo.motorph.service.UserLogPdfService;
 import com.jomariabejo.motorph.utility.CustomAlert;
 import com.opencsv.CSVWriter;
 import javafx.animation.KeyFrame;
@@ -15,10 +16,16 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
@@ -138,17 +145,182 @@ public class UserLogsController {
         });
         dateTimeColumn.setPrefWidth(200);
 
-        tvUserLogs.getColumns().addAll(idColumn, userColumn, actionColumn, ipColumn, dateTimeColumn);
+        // Actions Column
+        TableColumn<UserLog, Void> actionsColumn = createActionsColumn();
+        actionsColumn.setPrefWidth(100);
+
+        tvUserLogs.getColumns().addAll(idColumn, userColumn, actionColumn, ipColumn, dateTimeColumn, actionsColumn);
         tvUserLogs.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
+    private TableColumn<UserLog, Void> createActionsColumn() {
+        TableColumn<UserLog, Void> actionsColumn = new TableColumn<>("Actions");
+        actionsColumn.setPrefWidth(100);
+        actionsColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button viewBtn = createViewButton();
+
+            private Button createViewButton() {
+                Button btn = new Button(null, new FontIcon(Feather.EYE));
+                btn.getStyleClass().addAll(Styles.ACCENT, Styles.BUTTON_OUTLINED);
+                btn.setTooltip(new Tooltip("View Log Details"));
+                return btn;
+            }
+
+            private final HBox actionsBox = new HBox(viewBtn);
+
+            {
+                actionsBox.setAlignment(Pos.CENTER);
+                actionsBox.setSpacing(10);
+
+                viewBtn.setOnAction(event -> {
+                    UserLog selectedLog = getTableView().getItems().get(getIndex());
+                    if (selectedLog != null) {
+                        viewLogDetails(selectedLog);
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+                setGraphic(actionsBox);
+            }
+        });
+        return actionsColumn;
+    }
+
+    private void viewLogDetails(UserLog log) {
+        // Create a dialog to show log details
+        Stage dialog = new Stage();
+        dialog.initModality(Modality.APPLICATION_MODAL);
+        dialog.setTitle("Log Details - Log ID: " + log.getId());
+        dialog.setResizable(false);
+
+        VBox vbox = new VBox(15);
+        vbox.setPadding(new Insets(20));
+        vbox.setPrefWidth(500);
+
+        // Style constants
+        final String BOLD_STYLE = "-fx-font-weight: bold; -fx-font-size: 14px;";
+        final String NORMAL_STYLE = "-fx-font-size: 14px;";
+
+        // Log ID
+        Label idLabel = new Label("Log ID:");
+        idLabel.setStyle(BOLD_STYLE);
+        Label idValue = new Label(String.valueOf(log.getId()));
+        idValue.setStyle(NORMAL_STYLE);
+
+        // User
+        Label userLabel = new Label("User:");
+        userLabel.setStyle(BOLD_STYLE);
+        String userInfo = log.getUserID() != null 
+                ? log.getUserID().getFullName() + " (" + log.getUserID().getUsername() + ")"
+                : "N/A";
+        Label userValue = new Label(userInfo);
+        userValue.setStyle(NORMAL_STYLE);
+        userValue.setWrapText(true);
+
+        // Action
+        Label actionLabel = new Label("Action:");
+        actionLabel.setStyle(BOLD_STYLE);
+        Label actionValue = new Label(log.getAction() != null ? log.getAction() : "N/A");
+        actionValue.setStyle(NORMAL_STYLE);
+        actionValue.setWrapText(true);
+
+        // IP Address
+        Label ipLabel = new Label("IP Address:");
+        ipLabel.setStyle(BOLD_STYLE);
+        Label ipValue = new Label(log.getIPAddress() != null ? log.getIPAddress() : "N/A");
+        ipValue.setStyle(NORMAL_STYLE);
+
+        // Date/Time
+        Label dateTimeLabel = new Label("Date/Time:");
+        dateTimeLabel.setStyle(BOLD_STYLE);
+        String dateTime = log.getLogDateTime() != null 
+                ? log.getLogDateTime().format(DATE_TIME_FORMATTER)
+                : "N/A";
+        Label dateTimeValue = new Label(dateTime);
+        dateTimeValue.setStyle(NORMAL_STYLE);
+
+        // Download PDF button
+        Button downloadPdfBtn = new Button("Download as PDF", new FontIcon(Feather.DOWNLOAD));
+        downloadPdfBtn.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
+        downloadPdfBtn.setOnAction(e -> downloadLogAsPdf(log, dialog));
+
+        // Close button
+        Button closeBtn = new Button("Close");
+        closeBtn.getStyleClass().addAll(Styles.BUTTON_OUTLINED);
+        closeBtn.setOnAction(e -> dialog.close());
+
+        HBox buttonBox = new HBox(10, downloadPdfBtn, closeBtn);
+        buttonBox.setAlignment(Pos.CENTER_RIGHT);
+
+        vbox.getChildren().addAll(
+                createDetailRow(idLabel, idValue),
+                createDetailRow(userLabel, userValue),
+                createDetailRow(actionLabel, actionValue),
+                createDetailRow(ipLabel, ipValue),
+                createDetailRow(dateTimeLabel, dateTimeValue),
+                buttonBox
+        );
+
+        javafx.scene.Scene scene = new javafx.scene.Scene(vbox);
+        dialog.setScene(scene);
+        dialog.showAndWait();
+    }
+
+    private HBox createDetailRow(Label label, Label value) {
+        HBox row = new HBox(10);
+        row.setAlignment(Pos.CENTER_LEFT);
+        label.setMinWidth(100);
+        value.setMinWidth(350);
+        row.getChildren().addAll(label, value);
+        return row;
+    }
+
+    private void downloadLogAsPdf(UserLog log, Stage parentStage) {
+        try {
+            UserLogPdfService pdfService = new UserLogPdfService();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Save Log as PDF");
+            fileChooser.setInitialFileName("Log_" + log.getId() + "_" + 
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".pdf");
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
+
+            File file = fileChooser.showSaveDialog(parentStage);
+            if (file != null) {
+                pdfService.generateLogPdf(log, file);
+                
+                CustomAlert successAlert = new CustomAlert(
+                        Alert.AlertType.INFORMATION,
+                        "PDF Generated",
+                        "Log PDF has been saved successfully to:\n" + file.getAbsolutePath()
+                );
+                successAlert.showAndWait();
+            }
+        } catch (Exception e) {
+            CustomAlert errorAlert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "PDF Generation Failed",
+                    "Failed to generate PDF: " + e.getMessage()
+            );
+            errorAlert.showAndWait();
+            e.printStackTrace();
+        }
+    }
+
     private void setupFilters() {
-        // Initialize filter combobox with common actions
+        // Initialize filter combobox with common actions including clock in/out
         cbFilterAction.getItems().addAll("All", "User logged in", "User logged out", 
                 "User created", "User updated", "User deleted",
                 "Role created", "Role updated", "Role deleted",
                 "Permission created", "Permission updated", "Permission deleted",
-                "Permission assigned", "Permission removed");
+                "Permission assigned", "Permission removed",
+                "Employee clocked in", "Employee clocked out");
         cbFilterAction.getSelectionModel().selectFirst();
         
         // Initialize export time period filter

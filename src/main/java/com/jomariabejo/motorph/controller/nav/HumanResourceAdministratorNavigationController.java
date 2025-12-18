@@ -96,6 +96,7 @@ public class HumanResourceAdministratorNavigationController implements _ViewLoad
 
             if (controller instanceof TimesheetController timesheetController) {
                 timesheetController.setHumanResourceAdministratorNavigationController(this);
+                timesheetController.setup();
             }
         });
     }

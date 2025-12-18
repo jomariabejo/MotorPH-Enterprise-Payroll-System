@@ -6,8 +6,6 @@ import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Role;
 import com.jomariabejo.motorph.model.User;
 import com.jomariabejo.motorph.constants.PermissionConstants;
-import com.jomariabejo.motorph.utility.CustomAlert;
-import com.jomariabejo.motorph.utility.LoggingUtility;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,6 +20,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
+import com.jomariabejo.motorph.utility.CustomAlert;
+import com.jomariabejo.motorph.utility.LoggingUtility;
 
 import java.io.IOException;
 import java.util.List;
@@ -140,7 +140,6 @@ public class UserController {
 
             {
                 editButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
-                deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
 
                 editButton.setOnAction(event -> {
                     User selectedUser = getTableView().getItems().get(getIndex());

@@ -1,0 +1,91 @@
+name: Maven Tests
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: admin
+          MYSQL_DATABASE: payroll_system
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+
+    - name: Make Maven wrapper executable
+      run: chmod +x ./mvnw
+
+    - name: Install MySQL client
+      run: sudo apt-get update && sudo apt-get install -y default-mysql-client
+
+    - name: Wait for MySQL to be ready
+      run: |
+        while ! mysqladmin ping -h"127.0.0.1" -P3306 -uroot -padmin --silent; do
+          echo "Waiting for MySQL..."
+          sleep 2
+        done
+        echo "MySQL is ready!"
+
+    - name: Create database schema
+      run: |
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin -e "DROP DATABASE IF EXISTS payroll_system;" || true
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin -e "CREATE DATABASE payroll_system;"
+        if [ -f "src/main/resources/sql/dummy-data.sql" ]; then
+          mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system < src/main/resources/sql/dummy-data.sql
+          echo "Database schema initialized successfully"
+        else
+          echo "Schema file not found!"
+          exit 1
+        fi
+
+    - name: Verify contribution rates
+      run: |
+        echo "Verifying Pag-IBIG rates..."
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system -e "SELECT COUNT(*) as pagibig_count FROM pagibig_contribution_rates;" || exit 1
+        echo "Verifying Philhealth rates..."
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system -e "SELECT COUNT(*) as philhealth_count FROM philhealth_contribution_rates;" || exit 1
+        echo "Verifying SSS rates..."
+        mysql -h 127.0.0.1 -P 3306 -u root -padmin payroll_system -e "SELECT COUNT(*) as sss_count FROM sss_contribution_rates;" || exit 1
+        echo "All contribution rates verified!"
+
+    - name: Run Maven tests
+      run: ./mvnw -B clean test
+      env:
+        MAVEN_OPTS: -Dmaven.test.failure.ignore=false
+        DB_HOST: 127.0.0.1
+        DB_PORT: 3306
+        DB_NAME: payroll_system
+        DB_USER: root
+        DB_PASSWORD: admin
+
+    - name: Upload test results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: target/surefire-reports/
+        retention-days: 30
+

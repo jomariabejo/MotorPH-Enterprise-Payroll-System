@@ -194,17 +194,39 @@ public class SssContributionRateController {
     }
 
     public void populateRates() {
-        allRates = payrollAdministratorNavigationController.getMainViewController()
-                .getServiceFactory().getSssContributionRateService().getAllSssContributionRates();
+        if (payrollAdministratorNavigationController == null || 
+            payrollAdministratorNavigationController.getMainViewController() == null ||
+            payrollAdministratorNavigationController.getMainViewController().getServiceFactory() == null) {
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Unable to load SSS rates. Navigation controller not properly initialized."
+            );
+            alert.showAndWait();
+            return;
+        }
 
-        int itemsPerPage = 25;
-        int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));
-        paginationRates.setPageCount(pageCount);
+        try {
+            allRates = payrollAdministratorNavigationController.getMainViewController()
+                    .getServiceFactory().getSssContributionRateService().getAllSssContributionRates();
 
-        paginationRates.setPageFactory(pageIndex -> {
-            updateTableView(pageIndex, itemsPerPage);
-            return new StackPane();
-        });
+            int itemsPerPage = 25;
+            int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));
+            paginationRates.setPageCount(pageCount);
+
+            paginationRates.setPageFactory(pageIndex -> {
+                updateTableView(pageIndex, itemsPerPage);
+                return new StackPane();
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Failed to load SSS rates: " + (e.getMessage() != null ? e.getMessage() : "Unknown error")
+            );
+            alert.showAndWait();
+        }
     }
 
     private void updateTableView(int pageIndex, int itemsPerPage) {

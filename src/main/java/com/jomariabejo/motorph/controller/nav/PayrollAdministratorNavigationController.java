@@ -37,13 +37,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
     private Button btnPayslip;
 
     @FXML
-    private Button btnPayslipHistory;
-
-    @FXML
     private Button btnBonus;
-
-    @FXML
-    private Button btnTinCompliance;
 
     @FXML
     private Button btnPagibigRate;
@@ -55,7 +49,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
     private Button btnSssRate;
 
     @FXML
-    private Button btnPayrollChange;
+    private Button btnReimbursement;
 
     @FXML
     private Button btnReimbursementTransaction;
@@ -112,6 +106,9 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
         });
     }
 
+    // Payroll Approval functionality has been integrated into the Payroll view
+    // Removed separate navigation button as it was redundant
+
     public void payrollTransactionOnAction() {
         mainViewController.rewriteLabel("/ Finance / Payroll Transaction");
 
@@ -130,6 +127,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
             if (controller instanceof OvertimeApprovalController overtimeApprovalController) {
                 overtimeApprovalController.setPayrollAdministratorNavigationController(this);
+                overtimeApprovalController.populateOvertimeRequests();
             }
         });
     }
@@ -141,20 +139,12 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
 
             if (controller instanceof PayslipController payslipController) {
                 payslipController.setPayrollAdministratorNavigationController(this);
+                payslipController.populatePayslips();
             }
         });
     }
 
-    public void payslipHistoryOnAction() {
-        mainViewController.rewriteLabel("/ Finance / Payslip History");
-
-        loadView("/com/jomariabejo/motorph/role/accounting/payslip-history.fxml", controller -> {
-
-            if (controller instanceof PayslipHistoryController payslipHistoryController) {
-                payslipHistoryController.setPayrollAdministratorNavigationController(this);
-            }
-        });
-    }
+    // Payslip History button removed - functionality can be accessed from Payslip view if needed
 
     public void bonusOnAction() {
         mainViewController.rewriteLabel("/ Finance / Bonus");
@@ -167,16 +157,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
         });
     }
 
-    public void tinComplianceOnAction() {
-        mainViewController.rewriteLabel("/ Finance / TIN Compliance");
-
-        loadView("/com/jomariabejo/motorph/role/accounting/tin-compliance.fxml", controller -> {
-            if (controller instanceof TinComplianceController tinComplianceController) {
-                tinComplianceController.setPayrollAdministratorNavigationController(this);
-                tinComplianceController.populateTinCompliance();
-            }
-        });
-    }
+    // TIN Compliance button removed
 
     public void pagibigRateOnAction() {
         mainViewController.rewriteLabel("/ Finance / Pagibig Contribution Rate");
@@ -211,13 +192,15 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
         });
     }
 
-    public void payrollChangeOnAction() {
-        mainViewController.rewriteLabel("/ Finance / Payroll Changes");
+    // Payroll Changes button removed
 
-        loadView("/com/jomariabejo/motorph/role/accounting/payroll-change.fxml", controller -> {
-            if (controller instanceof PayrollChangeController changeController) {
-                changeController.setPayrollAdministratorNavigationController(this);
-                changeController.populateChanges();
+    public void reimbursementOnAction() {
+        mainViewController.rewriteLabel("/ Finance / Reimbursement");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/reimbursement.fxml", controller -> {
+            if (controller instanceof ReimbursementController reimbursementController) {
+                reimbursementController.setPayrollAdministratorNavigationController(this);
+                reimbursementController.populateRequests();
             }
         });
     }
@@ -229,6 +212,28 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             if (controller instanceof ReimbursementTransactionController transactionController) {
                 transactionController.setPayrollAdministratorNavigationController(this);
                 transactionController.populateTransactions();
+            }
+        });
+    }
+
+    public void tinComplianceOnAction() {
+        mainViewController.rewriteLabel("/ Finance / TIN Compliance");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/tin-compliance.fxml", controller -> {
+            if (controller instanceof TinComplianceController tinComplianceController) {
+                tinComplianceController.setPayrollAdministratorNavigationController(this);
+                tinComplianceController.populateTinCompliance();
+            }
+        });
+    }
+
+    public void payrollChangeOnAction() {
+        mainViewController.rewriteLabel("/ Finance / Payroll Changes");
+
+        loadView("/com/jomariabejo/motorph/role/accounting/payroll-change.fxml", controller -> {
+            if (controller instanceof PayrollChangeController changeController) {
+                changeController.setPayrollAdministratorNavigationController(this);
+                changeController.populateChanges();
             }
         });
     }
@@ -299,6 +304,8 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnPayroll.setVisible(visible);
         }
 
+        // Payroll Approval button removed - functionality integrated into Payroll view
+
         if (btnPayrollTransaction != null) {
             boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_TRANSACTIONS_VIEW, serviceFactory);
             btnPayrollTransaction.setManaged(visible);
@@ -317,11 +324,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnPayslip.setVisible(visible);
         }
 
-        if (btnPayslipHistory != null) {
-            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_PAYSLIP_HISTORY_VIEW, serviceFactory);
-            btnPayslipHistory.setManaged(visible);
-            btnPayslipHistory.setVisible(visible);
-        }
+        // Payslip History button removed
 
         if (btnBonus != null) {
             boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_BONUS_MANAGE, serviceFactory);
@@ -329,11 +332,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnBonus.setVisible(visible);
         }
 
-        if (btnTinCompliance != null) {
-            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_TIN_COMPLIANCE_MANAGE, serviceFactory);
-            btnTinCompliance.setManaged(visible);
-            btnTinCompliance.setVisible(visible);
-        }
+        // TIN Compliance button removed
 
         if (btnPagibigRate != null) {
             boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_PAGIBIG_RATES_MANAGE, serviceFactory);
@@ -353,10 +352,12 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnSssRate.setVisible(visible);
         }
 
-        if (btnPayrollChange != null) {
-            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_CHANGES_MANAGE, serviceFactory);
-            btnPayrollChange.setManaged(visible);
-            btnPayrollChange.setVisible(visible);
+        // Payroll Changes button removed
+
+        if (btnReimbursement != null) {
+            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_REIMBURSEMENT_MANAGE, serviceFactory);
+            btnReimbursement.setManaged(visible);
+            btnReimbursement.setVisible(visible);
         }
 
         if (btnReimbursementTransaction != null) {
@@ -376,6 +377,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnPayroll.setManaged(visible);
             btnPayroll.setVisible(visible);
         }
+        // Payroll Approval button removed - functionality integrated into Payroll view
         if (btnPayrollTransaction != null) {
             btnPayrollTransaction.setManaged(visible);
             btnPayrollTransaction.setVisible(visible);
@@ -388,18 +390,12 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnPayslip.setManaged(visible);
             btnPayslip.setVisible(visible);
         }
-        if (btnPayslipHistory != null) {
-            btnPayslipHistory.setManaged(visible);
-            btnPayslipHistory.setVisible(visible);
-        }
+        // Payslip History button removed
         if (btnBonus != null) {
             btnBonus.setManaged(visible);
             btnBonus.setVisible(visible);
         }
-        if (btnTinCompliance != null) {
-            btnTinCompliance.setManaged(visible);
-            btnTinCompliance.setVisible(visible);
-        }
+        // TIN Compliance button removed
         if (btnPagibigRate != null) {
             btnPagibigRate.setManaged(visible);
             btnPagibigRate.setVisible(visible);
@@ -412,9 +408,10 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnSssRate.setManaged(visible);
             btnSssRate.setVisible(visible);
         }
-        if (btnPayrollChange != null) {
-            btnPayrollChange.setManaged(visible);
-            btnPayrollChange.setVisible(visible);
+        // Payroll Changes button removed
+        if (btnReimbursement != null) {
+            btnReimbursement.setManaged(visible);
+            btnReimbursement.setVisible(visible);
         }
         if (btnReimbursementTransaction != null) {
             btnReimbursementTransaction.setManaged(visible);
