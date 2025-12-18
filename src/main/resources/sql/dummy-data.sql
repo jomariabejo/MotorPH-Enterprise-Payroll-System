@@ -605,6 +605,21 @@ INSERT INTO `role_permission` (`RolePermissionID`, `RoleID`, `PermissionID`) VAL
 	(17, 9, 2),
 	(18, 9, 3);
 
+-- Dumping structure for table payroll_system.user_role
+CREATE TABLE IF NOT EXISTS `user_role` (
+  `UserRoleID` int NOT NULL AUTO_INCREMENT,
+  `UserID` int NOT NULL,
+  `RoleID` int NOT NULL,
+  PRIMARY KEY (`UserRoleID`),
+  UNIQUE KEY `idx_user_role` (`UserID`,`RoleID`),
+  KEY `FK_user_role_user` (`UserID`),
+  KEY `FK_user_role_role` (`RoleID`),
+  CONSTRAINT `FK_user_role_role` FOREIGN KEY (`RoleID`) REFERENCES `role` (`RoleID`) ON DELETE CASCADE,
+  CONSTRAINT `FK_user_role_user` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='Maps users to multiple roles in the system.';
+
+-- Dumping data for table payroll_system.user_role: ~0 rows (approximately)
+
 -- Dumping structure for table payroll_system.sss_contribution_rates
 CREATE TABLE IF NOT EXISTS `sss_contribution_rates` (
   `ContributionRateID` int NOT NULL AUTO_INCREMENT COMMENT 'Unique identifier for each SSS contribution rate entry.',
@@ -1159,7 +1174,7 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `vw_yearly_payroll_summary_
 
 -- ---------------------------------------------
 -- Multi-role seed (optional)
--- NOTE: Requires user_role table (apply docs/sql/schema-patch-payroll_system.sql)
+-- NOTE: user_role table is now included in this schema file
 -- ---------------------------------------------
 -- Example: give sysadmin (UserID=5 in data-old.sql) the Employee role too (RoleID=6 in data-old.sql)
 -- INSERT IGNORE INTO role_permission (RoleID, PermissionID) values (...); -- permissions are managed via Sync in-app
