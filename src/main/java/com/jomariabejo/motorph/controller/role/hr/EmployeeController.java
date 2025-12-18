@@ -24,10 +24,6 @@ import org.kordamp.ikonli.material.Material;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-<<<<<<< HEAD
-import java.util.stream.Collectors;
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
 /**
  * TODO:
@@ -119,33 +115,6 @@ public class EmployeeController {
     @FXML
     void initializeLeaveBalancesClicked() {
         // Show confirmation dialog
-<<<<<<< HEAD
-        String confirmMessage = """
-            This will create leave balances for all employees who don't have them.
-            
-            Default allocations:
-            - Sick Leave: 5 days
-            - Vacation Leave: 10 days
-            - Emergency Leave: 5 days
-            
-            Continue?
-            """;
-        
-        CustomAlert confirmationAlert = new CustomAlert(
-                Alert.AlertType.CONFIRMATION,
-                "Initialize Leave Balances",
-                confirmMessage
-=======
-        CustomAlert confirmationAlert = new CustomAlert(
-                Alert.AlertType.CONFIRMATION,
-                "Initialize Leave Balances",
-                "This will create leave balances for all employees who don't have them.\n\n" +
-                "Default allocations:\n" +
-                "- Sick Leave: 5 days\n" +
-                "- Vacation Leave: 10 days\n" +
-                "- Emergency Leave: 5 days\n\n" +
-                "Continue?"
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         );
         
         Optional<ButtonType> result = confirmationAlert.showAndWait();
@@ -178,25 +147,12 @@ public class EmployeeController {
                 // Show error message
                 CustomAlert errorAlert = new CustomAlert(
                         Alert.AlertType.ERROR,
-<<<<<<< HEAD
-                        ERROR_TITLE,
-=======
-                        "Error",
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                         "An error occurred while initializing leave balances:\n" + e.getMessage()
                 );
                 errorAlert.showAndWait();
                 e.printStackTrace();
             }
         }
-<<<<<<< HEAD
-    }
-
-    @FXML
-    void statusFilterChanged() {
-        populateEmployees();
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     }
 
     private void populateEmployees() {
@@ -270,12 +226,6 @@ public class EmployeeController {
         setupTableView(); // create action columns
         customizeAddNewEmployeeButton(); // add icon to button
         customizeInitializeLeaveBalancesButton(); // add icon to initialize button
-<<<<<<< HEAD
-        setupStatusFilter(); // setup status filter dropdown
-        populateEmployees(); // add data to tableview with pagination
-=======
-        populateEmployees(); // add data to tableview
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     }
 
     private TableColumn<Employee, Void> createActionsColumn() {

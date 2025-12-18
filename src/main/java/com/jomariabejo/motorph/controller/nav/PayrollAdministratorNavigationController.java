@@ -37,21 +37,9 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
     private Button btnPayslip;
 
     @FXML
-<<<<<<< HEAD
     private Button btnBonus;
 
     @FXML
-=======
-    private Button btnPayslipHistory;
-
-    @FXML
-    private Button btnBonus;
-
-    @FXML
-    private Button btnTinCompliance;
-
-    @FXML
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     private Button btnPagibigRate;
 
     @FXML
@@ -61,11 +49,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
     private Button btnSssRate;
 
     @FXML
-<<<<<<< HEAD
     private Button btnReimbursement;
-=======
-    private Button btnPayrollChange;
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
     @FXML
     private Button btnReimbursementTransaction;
@@ -121,12 +105,9 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             }
         });
     }
-<<<<<<< HEAD
 
     // Payroll Approval functionality has been integrated into the Payroll view
     // Removed separate navigation button as it was redundant
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
     public void payrollTransactionOnAction() {
         mainViewController.rewriteLabel("/ Finance / Payroll Transaction");
@@ -378,11 +359,8 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnPayroll.setVisible(visible);
         }
 
-<<<<<<< HEAD
         // Payroll Approval button removed - functionality integrated into Payroll view
 
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         if (btnPayrollTransaction != null) {
             boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_TRANSACTIONS_VIEW, serviceFactory);
             btnPayrollTransaction.setManaged(visible);
@@ -401,15 +379,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnPayslip.setVisible(visible);
         }
 
-<<<<<<< HEAD
         // Payslip History button removed
-=======
-        if (btnPayslipHistory != null) {
-            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_PAYSLIP_HISTORY_VIEW, serviceFactory);
-            btnPayslipHistory.setManaged(visible);
-            btnPayslipHistory.setVisible(visible);
-        }
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
         if (btnBonus != null) {
             boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_BONUS_MANAGE, serviceFactory);
@@ -417,15 +387,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnBonus.setVisible(visible);
         }
 
-<<<<<<< HEAD
         // TIN Compliance button removed
-=======
-        if (btnTinCompliance != null) {
-            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_TIN_COMPLIANCE_MANAGE, serviceFactory);
-            btnTinCompliance.setManaged(visible);
-            btnTinCompliance.setVisible(visible);
-        }
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
         if (btnPagibigRate != null) {
             boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_PAGIBIG_RATES_MANAGE, serviceFactory);
@@ -445,19 +407,12 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnSssRate.setVisible(visible);
         }
 
-<<<<<<< HEAD
         // Payroll Changes button removed
 
         if (btnReimbursement != null) {
             boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_REIMBURSEMENT_MANAGE, serviceFactory);
             btnReimbursement.setManaged(visible);
             btnReimbursement.setVisible(visible);
-=======
-        if (btnPayrollChange != null) {
-            boolean visible = PermissionChecker.hasPermission(user, PermissionConstants.PAYROLL_CHANGES_MANAGE, serviceFactory);
-            btnPayrollChange.setManaged(visible);
-            btnPayrollChange.setVisible(visible);
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         }
 
         if (btnReimbursementTransaction != null) {
@@ -477,10 +432,7 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnPayroll.setManaged(visible);
             btnPayroll.setVisible(visible);
         }
-<<<<<<< HEAD
         // Payroll Approval button removed - functionality integrated into Payroll view
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         if (btnPayrollTransaction != null) {
             btnPayrollTransaction.setManaged(visible);
             btnPayrollTransaction.setVisible(visible);
@@ -493,26 +445,12 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnPayslip.setManaged(visible);
             btnPayslip.setVisible(visible);
         }
-<<<<<<< HEAD
         // Payslip History button removed
-=======
-        if (btnPayslipHistory != null) {
-            btnPayslipHistory.setManaged(visible);
-            btnPayslipHistory.setVisible(visible);
-        }
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         if (btnBonus != null) {
             btnBonus.setManaged(visible);
             btnBonus.setVisible(visible);
         }
-<<<<<<< HEAD
         // TIN Compliance button removed
-=======
-        if (btnTinCompliance != null) {
-            btnTinCompliance.setManaged(visible);
-            btnTinCompliance.setVisible(visible);
-        }
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         if (btnPagibigRate != null) {
             btnPagibigRate.setManaged(visible);
             btnPagibigRate.setVisible(visible);
@@ -525,16 +463,10 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             btnSssRate.setManaged(visible);
             btnSssRate.setVisible(visible);
         }
-<<<<<<< HEAD
         // Payroll Changes button removed
         if (btnReimbursement != null) {
             btnReimbursement.setManaged(visible);
             btnReimbursement.setVisible(visible);
-=======
-        if (btnPayrollChange != null) {
-            btnPayrollChange.setManaged(visible);
-            btnPayrollChange.setVisible(visible);
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         }
         if (btnReimbursementTransaction != null) {
             btnReimbursementTransaction.setManaged(visible);

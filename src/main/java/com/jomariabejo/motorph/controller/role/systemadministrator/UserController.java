@@ -6,15 +6,6 @@ import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Role;
 import com.jomariabejo.motorph.model.User;
 import com.jomariabejo.motorph.constants.PermissionConstants;
-<<<<<<< HEAD
-import com.jomariabejo.motorph.service.UserCredentialsPdfService;
-import com.jomariabejo.motorph.utility.CustomAlert;
-import com.jomariabejo.motorph.utility.LoggingUtility;
-import javafx.stage.FileChooser;
-=======
-import com.jomariabejo.motorph.utility.CustomAlert;
-import com.jomariabejo.motorph.utility.LoggingUtility;
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -30,15 +21,6 @@ import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
-<<<<<<< HEAD
-import java.io.File;
-import java.io.IOException;
-import java.security.SecureRandom;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-=======
-import java.io.IOException;
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import java.util.List;
 import java.util.Optional;
 
@@ -151,24 +133,10 @@ public class UserController {
         TableColumn<User, Void> actionsColumn = new TableColumn<>("Actions");
         actionsColumn.setCellFactory(param -> new TableCell<>() {
             private final Button editButton = new Button(null, new FontIcon(Feather.EDIT));
-<<<<<<< HEAD
-            private final Button resetPasswordButton = new Button(null, new FontIcon(Feather.KEY));
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
             private final Button deleteButton = new Button(null, new FontIcon(Feather.TRASH));
 
             {
                 editButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
-<<<<<<< HEAD
-                resetPasswordButton.getStyleClass().addAll(Styles.ACCENT, Styles.BUTTON_OUTLINED);
-                deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
-                
-                editButton.setTooltip(new Tooltip("Edit User"));
-                resetPasswordButton.setTooltip(new Tooltip("Reset Password"));
-                deleteButton.setTooltip(new Tooltip("Delete User"));
-=======
-                deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
                 editButton.setOnAction(event -> {
                     User selectedUser = getTableView().getItems().get(getIndex());
@@ -181,20 +149,6 @@ public class UserController {
                     }
                 });
 
-<<<<<<< HEAD
-                resetPasswordButton.setOnAction(event -> {
-                    User selectedUser = getTableView().getItems().get(getIndex());
-                    if (selectedUser != null) {
-                        if (systemAdministratorNavigationController == null ||
-                                !systemAdministratorNavigationController.requirePermission(PermissionConstants.SYSTEM_ADMIN_USERS_EDIT, "reset password")) {
-                            return;
-                        }
-                        resetUserPassword(selectedUser);
-                    }
-                });
-
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                 deleteButton.setOnAction(event -> {
                     User selectedUser = getTableView().getItems().get(getIndex());
                     if (selectedUser != null) {
@@ -207,11 +161,6 @@ public class UserController {
                 });
             }
 
-<<<<<<< HEAD
-            private final HBox actionsBox = new HBox(editButton, resetPasswordButton, deleteButton);
-=======
-            private final HBox actionsBox = new HBox(editButton, deleteButton);
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
             {
                 actionsBox.setAlignment(Pos.CENTER);
@@ -232,10 +181,6 @@ public class UserController {
                         systemAdministratorNavigationController.hasPermission(PermissionConstants.SYSTEM_ADMIN_USERS_DELETE);
 
                 editButton.setDisable(!canEdit);
-<<<<<<< HEAD
-                resetPasswordButton.setDisable(!canEdit);
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                 deleteButton.setDisable(!canDelete);
                 setGraphic(actionsBox);
             }
@@ -243,118 +188,6 @@ public class UserController {
         return actionsColumn;
     }
 
-<<<<<<< HEAD
-    private void resetUserPassword(User user) {
-        CustomAlert confirmAlert = new CustomAlert(
-                Alert.AlertType.CONFIRMATION,
-                "Reset Password",
-                "Are you sure you want to reset the password for user: " + user.getUsername() + "?\n\n" +
-                "A temporary password will be generated and you can download it as PDF to send to the user."
-        );
-        Optional<ButtonType> result = confirmAlert.showAndWait();
-
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            // Generate temporary password
-            String temporaryPassword = generateTemporaryPassword();
-            
-            // Update user password
-            user.setPassword(temporaryPassword);
-            systemAdministratorNavigationController.getMainViewController()
-                    .getServiceFactory().getUserService().updateUser(user);
-
-            // Log password reset
-            User currentUser = systemAdministratorNavigationController.getMainViewController().getUser();
-            if (currentUser != null) {
-                LoggingUtility.logAction(currentUser, "Password reset", 
-                        "Password reset for user: " + user.getUsername() + " (ID: " + user.getId() + ")");
-            }
-
-            // Show success message and offer PDF download
-            CustomAlert successAlert = new CustomAlert(
-                    Alert.AlertType.INFORMATION,
-                    "Password Reset Successful",
-                    "Password has been reset for user: " + user.getUsername() + "\n\n" +
-                    "Temporary Password: " + temporaryPassword + "\n\n" +
-                    "Would you like to download the credentials as PDF?"
-            );
-            
-            Optional<ButtonType> downloadResult = successAlert.showAndWait();
-            
-            // Offer to download PDF
-            if (downloadResult.isPresent()) {
-                downloadCredentialsPdf(user, temporaryPassword);
-            }
-            
-            populateUsers();
-        }
-    }
-
-    private String generateTemporaryPassword() {
-        // Generate a secure random password: 12 characters with uppercase, lowercase, numbers
-        String uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        String lowercase = "abcdefghijklmnopqrstuvwxyz";
-        String numbers = "0123456789";
-        String allChars = uppercase + lowercase + numbers;
-        
-        SecureRandom random = new SecureRandom();
-        StringBuilder password = new StringBuilder(12);
-        
-        // Ensure at least one character from each category
-        password.append(uppercase.charAt(random.nextInt(uppercase.length())));
-        password.append(lowercase.charAt(random.nextInt(lowercase.length())));
-        password.append(numbers.charAt(random.nextInt(numbers.length())));
-        
-        // Fill the rest randomly
-        for (int i = 3; i < 12; i++) {
-            password.append(allChars.charAt(random.nextInt(allChars.length())));
-        }
-        
-        // Shuffle the password to randomize position of required characters
-        char[] passwordArray = password.toString().toCharArray();
-        for (int i = passwordArray.length - 1; i > 0; i--) {
-            int j = random.nextInt(i + 1);
-            char temp = passwordArray[i];
-            passwordArray[i] = passwordArray[j];
-            passwordArray[j] = temp;
-        }
-        
-        return new String(passwordArray);
-    }
-
-    private void downloadCredentialsPdf(User user, String temporaryPassword) {
-        try {
-            UserCredentialsPdfService pdfService = new UserCredentialsPdfService();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Save Credentials as PDF");
-            fileChooser.setInitialFileName("Credentials_" + user.getUsername() + "_" + 
-                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss")) + ".pdf");
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF Files", "*.pdf"));
-
-            File file = fileChooser.showSaveDialog(tvUsers.getScene().getWindow());
-            if (file != null) {
-                pdfService.generateCredentialsPdf(user, temporaryPassword, file);
-                
-                CustomAlert successAlert = new CustomAlert(
-                        Alert.AlertType.INFORMATION,
-                        "PDF Generated",
-                        "Credentials PDF has been saved successfully to:\n" + file.getAbsolutePath() + "\n\n" +
-                        "You can now send this PDF to the user."
-                );
-                successAlert.showAndWait();
-            }
-        } catch (Exception e) {
-            CustomAlert errorAlert = new CustomAlert(
-                    Alert.AlertType.ERROR,
-                    "PDF Generation Failed",
-                    "Failed to generate credentials PDF: " + e.getMessage()
-            );
-            errorAlert.showAndWait();
-            e.printStackTrace();
-        }
-    }
-
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     private void deleteUser(User user) {
         CustomAlert confirmAlert = new CustomAlert(
                 Alert.AlertType.CONFIRMATION,

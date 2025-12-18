@@ -58,10 +58,6 @@ public class PermissionConstants {
     public static final String PAYROLL_PHILHEALTH_RATES_MANAGE = "payroll.philhealth.rates.manage";
     public static final String PAYROLL_SSS_RATES_MANAGE = "payroll.sss.rates.manage";
     public static final String PAYROLL_CHANGES_MANAGE = "payroll.changes.manage";
-<<<<<<< HEAD
-    public static final String PAYROLL_REIMBURSEMENT_MANAGE = "payroll.reimbursement.manage";
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     public static final String PAYROLL_REIMBURSEMENT_TRANSACTIONS_VIEW = "payroll.reimbursement.transactions.view";
     public static final String PAYROLL_REIMBURSEMENT_TRANSACTIONS_MANAGE = "payroll.reimbursement.transactions.manage";
     
@@ -122,24 +118,6 @@ public class PermissionConstants {
         NAVIGATION_PERMISSION_MAP.put("payrollTransactionOnAction", PAYROLL_TRANSACTIONS_VIEW);
         NAVIGATION_PERMISSION_MAP.put("overtimeOnAction", PAYROLL_OVERTIME_APPROVE);
         NAVIGATION_PERMISSION_MAP.put("payslipOnAction", PAYROLL_PAYSLIP_VIEW);
-<<<<<<< HEAD
-        // Payslip History button removed
-        NAVIGATION_PERMISSION_MAP.put("bonusOnAction", PAYROLL_BONUS_MANAGE);
-        // TIN Compliance button removed
-        NAVIGATION_PERMISSION_MAP.put("pagibigRateOnAction", PAYROLL_PAGIBIG_RATES_MANAGE);
-        NAVIGATION_PERMISSION_MAP.put("philhealthRateOnAction", PAYROLL_PHILHEALTH_RATES_MANAGE);
-        NAVIGATION_PERMISSION_MAP.put("sssRateOnAction", PAYROLL_SSS_RATES_MANAGE);
-        // Payroll Changes button removed
-        NAVIGATION_PERMISSION_MAP.put("reimbursementOnAction", PAYROLL_REIMBURSEMENT_MANAGE);
-=======
-        NAVIGATION_PERMISSION_MAP.put("payslipHistoryOnAction", PAYROLL_PAYSLIP_HISTORY_VIEW);
-        NAVIGATION_PERMISSION_MAP.put("bonusOnAction", PAYROLL_BONUS_MANAGE);
-        NAVIGATION_PERMISSION_MAP.put("tinComplianceOnAction", PAYROLL_TIN_COMPLIANCE_MANAGE);
-        NAVIGATION_PERMISSION_MAP.put("pagibigRateOnAction", PAYROLL_PAGIBIG_RATES_MANAGE);
-        NAVIGATION_PERMISSION_MAP.put("philhealthRateOnAction", PAYROLL_PHILHEALTH_RATES_MANAGE);
-        NAVIGATION_PERMISSION_MAP.put("sssRateOnAction", PAYROLL_SSS_RATES_MANAGE);
-        NAVIGATION_PERMISSION_MAP.put("payrollChangeOnAction", PAYROLL_CHANGES_MANAGE);
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         NAVIGATION_PERMISSION_MAP.put("reimbursementTransactionOnAction", PAYROLL_REIMBURSEMENT_TRANSACTIONS_VIEW);
         
         // System Admin Navigation

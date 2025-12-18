@@ -145,7 +145,6 @@ public class UserLogsController {
         });
         dateTimeColumn.setPrefWidth(200);
 
-<<<<<<< HEAD
         // Actions Column
         TableColumn<UserLog, Void> actionsColumn = createActionsColumn();
         actionsColumn.setPrefWidth(100);
@@ -316,24 +315,12 @@ public class UserLogsController {
 
     private void setupFilters() {
         // Initialize filter combobox with common actions including clock in/out
-=======
-        tvUserLogs.getColumns().addAll(idColumn, userColumn, actionColumn, ipColumn, dateTimeColumn);
-        tvUserLogs.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-    }
-
-    private void setupFilters() {
-        // Initialize filter combobox with common actions
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         cbFilterAction.getItems().addAll("All", "User logged in", "User logged out", 
                 "User created", "User updated", "User deleted",
                 "Role created", "Role updated", "Role deleted",
                 "Permission created", "Permission updated", "Permission deleted",
-<<<<<<< HEAD
                 "Permission assigned", "Permission removed",
                 "Employee clocked in", "Employee clocked out");
-=======
-                "Permission assigned", "Permission removed");
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         cbFilterAction.getSelectionModel().selectFirst();
         
         // Initialize export time period filter

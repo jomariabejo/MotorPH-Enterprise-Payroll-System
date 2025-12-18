@@ -11,10 +11,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-<<<<<<< HEAD
-import javafx.stage.Modality;
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -216,22 +212,6 @@ public class PayrollEmployeeListViewDialog {
             AnchorPane dialogPane = loader.load();
             Stage dialogStage = new Stage();
             
-<<<<<<< HEAD
-            // Set parent stage and modality to prevent interaction with parent window
-            // Get parent stage from btnClose's scene if available
-            if (btnClose != null && btnClose.getScene() != null) {
-                Stage parentStage = (Stage) btnClose.getScene().getWindow();
-                if (parentStage != null) {
-                    dialogStage.initOwner(parentStage);
-                }
-            }
-            dialogStage.initModality(Modality.APPLICATION_MODAL);
-            
-            // Add close request handler to properly handle X button clicks
-            dialogStage.setOnCloseRequest(event -> dialogStage.close());
-            
-=======
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
             String employeeName = payslip.getEmployeeID().getFirstName() + " " + payslip.getEmployeeID().getLastName();
             dialogStage.setTitle("Payslip Preview - " + employeeName);
             dialogStage.setScene(new Scene(dialogPane));
