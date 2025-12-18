@@ -17,8 +17,11 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
@@ -32,7 +35,14 @@ public class PayrollApprovalController {
     @FXML
     private Pagination paginationApprovals;
 
+    @FXML
+    private TextField tfSearch;
+
+    @FXML
+    private ComboBox<String> cbStatusFilter;
+
     private List<PayrollApproval> allApprovals;
+    private List<PayrollApproval> filteredApprovals;
 
     public PayrollApprovalController() {
     }
@@ -40,6 +50,21 @@ public class PayrollApprovalController {
     @FXML
     void initialize() {
         setupTableView();
+        setupFilters();
+    }
+
+    private void setupFilters() {
+        // Setup status filter
+        if (cbStatusFilter != null) {
+            cbStatusFilter.getItems().addAll("All", "Pending", "Approved", "Rejected");
+            cbStatusFilter.getSelectionModel().selectFirst();
+            cbStatusFilter.setOnAction(e -> filterApprovals());
+        }
+
+        // Setup search field
+        if (tfSearch != null) {
+            tfSearch.textProperty().addListener((observable, oldValue, newValue) -> filterApprovals());
+        }
     }
 
     private void setupTableView() {
@@ -69,10 +94,15 @@ public class PayrollApprovalController {
         statusColumn.setPrefWidth(120);
 
         TableColumn<PayrollApproval, String> approvalDateColumn = new TableColumn<>("Approval Date");
-        approvalDateColumn.setCellValueFactory(cellData -> 
-                new javafx.beans.property.SimpleStringProperty(
-                        cellData.getValue().getApprovalDate() != null 
-                                ? cellData.getValue().getApprovalDate().toString() : ""));
+        approvalDateColumn.setCellValueFactory(cellData -> {
+            Instant approvalDate = cellData.getValue().getApprovalDate();
+            if (approvalDate != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy HH:mm")
+                        .withZone(ZoneId.systemDefault());
+                return new javafx.beans.property.SimpleStringProperty(formatter.format(approvalDate));
+            }
+            return new javafx.beans.property.SimpleStringProperty("");
+        });
         approvalDateColumn.setPrefWidth(200);
 
         TableColumn<PayrollApproval, Void> actionsColumn = createActionsColumn();
@@ -214,16 +244,27 @@ public class PayrollApprovalController {
 
     private void viewApprovalDetails(PayrollApproval approval) {
         StringBuilder details = new StringBuilder();
-        details.append("Approval ID: ").append(approval.getId()).append("\n");
+        details.append("Approval ID: ").append(approval.getId()).append("\n\n");
+        
         Payroll payroll = approval.getPayrollID();
         if (payroll != null) {
-            details.append("Payroll ID: ").append(payroll.getId()).append("\n");
-            details.append("Payroll Period: ").append(payroll.getPeriodStartDate())
+            details.append("Payroll Information:\n");
+            details.append("  Payroll ID: ").append(payroll.getId()).append("\n");
+            details.append("  Payroll Run Date: ").append(payroll.getPayrollRunDate()).append("\n");
+            details.append("  Period: ").append(payroll.getPeriodStartDate())
                     .append(" to ").append(payroll.getPeriodEndDate()).append("\n");
+            details.append("  Payroll Status: ").append(payroll.getStatus()).append("\n\n");
         }
-        details.append("Approver ID: ").append(approval.getApproverID()).append("\n");
-        details.append("Status: ").append(approval.getStatus()).append("\n");
-        details.append("Approval Date: ").append(approval.getApprovalDate());
+        
+        details.append("Approval Information:\n");
+        details.append("  Approver ID: ").append(approval.getApproverID()).append("\n");
+        details.append("  Status: ").append(approval.getStatus()).append("\n");
+        
+        if (approval.getApprovalDate() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy 'at' HH:mm:ss")
+                    .withZone(ZoneId.systemDefault());
+            details.append("  Approval Date: ").append(formatter.format(approval.getApprovalDate()));
+        }
 
         CustomAlert alert = new CustomAlert(
                 Alert.AlertType.INFORMATION,
@@ -241,8 +282,62 @@ public class PayrollApprovalController {
         allApprovals = payrollAdministratorNavigationController.getMainViewController()
                 .getServiceFactory().getPayrollApprovalService().getAllPayrollApprovals();
 
+        filterApprovals();
+    }
+
+    private void filterApprovals() {
+        if (allApprovals == null) {
+            return;
+        }
+
+        String searchText = tfSearch != null ? tfSearch.getText().toLowerCase() : "";
+        String statusFilter = cbStatusFilter != null && cbStatusFilter.getSelectionModel().getSelectedItem() != null
+                ? cbStatusFilter.getSelectionModel().getSelectedItem() : "All";
+
+        filteredApprovals = allApprovals.stream()
+                .filter(approval -> {
+                    // Status filter
+                    if (!"All".equals(statusFilter) && !statusFilter.equalsIgnoreCase(approval.getStatus())) {
+                        return false;
+                    }
+
+                    // Search filter
+                    if (!searchText.isEmpty()) {
+                        boolean matches = false;
+                        
+                        // Search by approval ID
+                        if (String.valueOf(approval.getId()).contains(searchText)) {
+                            matches = true;
+                        }
+                        
+                        // Search by payroll ID
+                        if (approval.getPayrollID() != null) {
+                            if (String.valueOf(approval.getPayrollID().getId()).contains(searchText)) {
+                                matches = true;
+                            }
+                        }
+                        
+                        // Search by approver ID
+                        if (String.valueOf(approval.getApproverID()).contains(searchText)) {
+                            matches = true;
+                        }
+                        
+                        // Search by status
+                        if (approval.getStatus() != null && approval.getStatus().toLowerCase().contains(searchText)) {
+                            matches = true;
+                        }
+                        
+                        if (!matches) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                })
+                .collect(Collectors.toList());
+
         int itemsPerPage = 25;
-        int pageCount = Math.max(1, (int) Math.ceil((double) allApprovals.size() / itemsPerPage));
+        int pageCount = Math.max(1, (int) Math.ceil((double) filteredApprovals.size() / itemsPerPage));
         paginationApprovals.setPageCount(pageCount);
 
         paginationApprovals.setPageFactory(pageIndex -> {
@@ -252,9 +347,14 @@ public class PayrollApprovalController {
     }
 
     private void updateTableView(int pageIndex, int itemsPerPage) {
+        if (filteredApprovals == null) {
+            tvPayrollApprovals.setItems(FXCollections.observableArrayList());
+            return;
+        }
+
         int fromIndex = pageIndex * itemsPerPage;
-        int toIndex = Math.min(fromIndex + itemsPerPage, allApprovals.size());
-        List<PayrollApproval> pageData = allApprovals.subList(fromIndex, toIndex);
+        int toIndex = Math.min(fromIndex + itemsPerPage, filteredApprovals.size());
+        List<PayrollApproval> pageData = filteredApprovals.subList(fromIndex, toIndex);
         tvPayrollApprovals.setItems(FXCollections.observableList(pageData));
     }
 }

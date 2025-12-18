@@ -201,5 +201,29 @@ public class LoggingUtility {
         String details = "Created: " + createdCount + ", Existing: " + existingCount;
         logAction(syncer, "Permissions synchronized", details);
     }
+
+    /**
+     * Log employee clock in action.
+     * 
+     * @param user The user (employee) who clocked in
+     * @param employeeNumber The employee number
+     * @param timeIn The time when they clocked in
+     */
+    public static void logClockIn(User user, Integer employeeNumber, String timeIn) {
+        String details = "Employee #" + employeeNumber + " clocked in at " + timeIn;
+        logAction(user, "Employee clocked in", details);
+    }
+
+    /**
+     * Log employee clock out action.
+     * 
+     * @param user The user (employee) who clocked out
+     * @param employeeNumber The employee number
+     * @param timeOut The time when they clocked out
+     */
+    public static void logClockOut(User user, Integer employeeNumber, String timeOut) {
+        String details = "Employee #" + employeeNumber + " clocked out at " + timeOut;
+        logAction(user, "Employee clocked out", details);
+    }
 }
 

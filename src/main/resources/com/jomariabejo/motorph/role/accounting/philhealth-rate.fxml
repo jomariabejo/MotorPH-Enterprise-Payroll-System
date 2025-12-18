@@ -15,6 +15,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="12.0">
                <children>
                   <Button fx:id="btnAddRate" mnemonicParsing="false" onAction="#addRateClicked" prefHeight="50.0" prefWidth="305.0" text="Add New Philhealth Rate" />
+                  <Button fx:id="btnPopulateRates" mnemonicParsing="false" onAction="#populateRatesClicked" prefHeight="50.0" prefWidth="305.0" text="Populate Philhealth Rates" />
                </children>
             </HBox>
             <TableView fx:id="tvRates" prefHeight="650.0">
@@ -30,12 +31,3 @@
       <Insets bottom="48.0" left="48.0" right="48.0" top="48.0" />
    </padding>
 </AnchorPane>
-
-
-
-
-
-
-
-
-

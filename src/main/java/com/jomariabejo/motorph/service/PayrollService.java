@@ -70,7 +70,8 @@ public class PayrollService {
         }
     }
 
-    private Payslip createPayslipForEmployee(Employee employee, Payroll payroll, LocalDate periodStart, 
+    // Package-private for testing
+    Payslip createPayslipForEmployee(Employee employee, Payroll payroll, LocalDate periodStart, 
                                              LocalDate periodEnd, YearMonth periodYearMonth, ServiceFactory serviceFactory) {
         Payslip payslip = new Payslip();
         
@@ -135,20 +136,34 @@ public class PayrollService {
         payslip.setClothingAllowance(clothingAllowance);
         payslip.setTotalBenefits(totalBenefits);
 
-        // Calculate taxable income (gross income + benefits)
-        BigDecimal taxableIncome = grossIncome.add(totalBenefits);
-        payslip.setTaxableIncome(taxableIncome);
+        // Calculate base taxable income (gross income + benefits)
+        // This is used for calculating SSS, Philhealth, and Pagibig deductions
+        BigDecimal baseTaxableIncome = grossIncome.add(totalBenefits);
         payslip.setTaxableBenefits(totalBenefits);
 
-        // Calculate deductions
-        BigDecimal sssDeduction = calculateSSSDeduction(taxableIncome, serviceFactory);
-        BigDecimal philhealthDeduction = calculatePhilhealthDeduction(taxableIncome, serviceFactory);
-        BigDecimal pagibigDeduction = calculatePagibigDeduction(taxableIncome, serviceFactory);
-        BigDecimal withholdingTax = calculateWithholdingTax(taxableIncome);
+        // Calculate mandatory deductions from base taxable income
+        BigDecimal sssDeduction = calculateSSSDeduction(baseTaxableIncome, serviceFactory);
+        BigDecimal philhealthDeduction = calculatePhilhealthDeduction(baseTaxableIncome, serviceFactory);
+        BigDecimal pagibigDeduction = calculatePagibigDeduction(baseTaxableIncome, serviceFactory);
         
         payslip.setSss(sssDeduction);
         payslip.setPhilhealth(philhealthDeduction);
         payslip.setPagIbig(pagibigDeduction);
+
+        // Calculate adjusted taxable income for withholding tax
+        // Taxable Income = Base Taxable Income - Mandatory Deductions (SSS, Philhealth, Pagibig)
+        // This follows real-world Philippine tax computation where withholding tax is calculated
+        // AFTER applying mandatory deductions
+        BigDecimal adjustedTaxableIncome = baseTaxableIncome
+                .subtract(sssDeduction)
+                .subtract(philhealthDeduction)
+                .subtract(pagibigDeduction);
+
+        // Store the adjusted taxable income (for withholding tax calculation)
+        payslip.setTaxableIncome(adjustedTaxableIncome);
+
+        // Calculate withholding tax from adjusted taxable income
+        BigDecimal withholdingTax = calculateWithholdingTax(adjustedTaxableIncome);
         payslip.setWithholdingTax(withholdingTax);
 
         // Calculate total deductions
@@ -331,14 +346,23 @@ public class PayrollService {
             return taxableIncome.multiply(BigDecimal.valueOf(0.015)).setScale(4, RoundingMode.HALF_UP);
         }
         
-        // Find the appropriate rate bracket
-        PhilhealthContributionRate applicableRate = rates.stream()
-                .filter(rate -> taxableIncome.compareTo(rate.getSalaryBracketFrom()) >= 0 &&
-                               taxableIncome.compareTo(rate.getSalaryBracketTo()) <= 0)
-                .findFirst()
-                .orElse(rates.get(rates.size() - 1)); // Use highest bracket if exceeds
+        // Philhealth calculation rules:
+        // - 0 to 10,000: Fixed 300 (employee 150)
+        // - 10,000.01 to 59,999.99: 3% of salary (employee 1.5%)
+        // - 60,000+: Fixed 1,800 (employee 900)
         
-        return applicableRate.getEmployeeShare().setScale(4, RoundingMode.HALF_UP);
+        BigDecimal tenThousand = BigDecimal.valueOf(10000);
+        
+        if (taxableIncome.compareTo(tenThousand) <= 0) {
+            // Fixed 300, employee share 150
+            return BigDecimal.valueOf(150).setScale(4, RoundingMode.HALF_UP);
+        } else if (taxableIncome.compareTo(BigDecimal.valueOf(59999.99)) <= 0) {
+            // 3% of salary, employee share 1.5%
+            return taxableIncome.multiply(BigDecimal.valueOf(0.015)).setScale(4, RoundingMode.HALF_UP);
+        } else {
+            // Fixed 1,800, employee share 900
+            return BigDecimal.valueOf(900).setScale(4, RoundingMode.HALF_UP);
+        }
     }
 
     private BigDecimal calculatePagibigDeduction(BigDecimal taxableIncome, ServiceFactory serviceFactory) {
@@ -350,17 +374,27 @@ public class PayrollService {
             return taxableIncome.multiply(BigDecimal.valueOf(0.01)).setScale(4, RoundingMode.HALF_UP);
         }
         
-        // Find the appropriate rate bracket
-        PagibigContributionRate applicableRate = rates.stream()
-                .filter(rate -> taxableIncome.compareTo(rate.getSalaryBracketFrom()) >= 0 &&
-                               taxableIncome.compareTo(rate.getSalaryBracketTo()) <= 0)
-                .findFirst()
-                .orElse(rates.get(rates.size() - 1)); // Use highest bracket if exceeds
+        // Pagibig calculation rules:
+        // - 1,000 to 1,500: Employee 1%, Employer 2%
+        // - Over 1,500: Employee 2%, Employer 2%
         
-        return applicableRate.getEmployeeShare().setScale(4, RoundingMode.HALF_UP);
+        BigDecimal oneThousand = BigDecimal.valueOf(1000);
+        BigDecimal fifteenHundred = BigDecimal.valueOf(1500);
+        
+        if (taxableIncome.compareTo(oneThousand) < 0) {
+            // Below minimum, use minimum calculation
+            return oneThousand.multiply(BigDecimal.valueOf(0.01)).setScale(4, RoundingMode.HALF_UP);
+        } else if (taxableIncome.compareTo(fifteenHundred) <= 0) {
+            // 1,000 to 1,500: Employee 1%
+            return taxableIncome.multiply(BigDecimal.valueOf(0.01)).setScale(4, RoundingMode.HALF_UP);
+        } else {
+            // Over 1,500: Employee 2%
+            return taxableIncome.multiply(BigDecimal.valueOf(0.02)).setScale(4, RoundingMode.HALF_UP);
+        }
     }
 
-    private BigDecimal calculateWithholdingTax(BigDecimal taxableIncome) {
+    // Package-private for testing
+    BigDecimal calculateWithholdingTax(BigDecimal taxableIncome) {
         // Simplified BIR withholding tax calculation (2023 rates)
         // This is a basic implementation - should be enhanced with proper tax brackets
         
@@ -376,7 +410,7 @@ public class PayrollService {
                             .multiply(BigDecimal.valueOf(0.25)))
                     .setScale(4, RoundingMode.HALF_UP);
         } else if (taxableIncome.compareTo(BigDecimal.valueOf(166667)) <= 0) {
-            return BigDecimal.valueOf(10833.33)
+            return BigDecimal.valueOf(10833)
                     .add(taxableIncome.subtract(BigDecimal.valueOf(66667))
                             .multiply(BigDecimal.valueOf(0.30)))
                     .setScale(4, RoundingMode.HALF_UP);

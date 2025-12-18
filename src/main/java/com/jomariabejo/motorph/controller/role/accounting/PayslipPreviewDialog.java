@@ -549,8 +549,12 @@ public class PayslipPreviewDialog {
 
     @FXML
     void closeClicked() {
-        Stage stage = (Stage) btnClose.getScene().getWindow();
-        stage.close();
+        if (btnClose != null && btnClose.getScene() != null) {
+            Stage stage = (Stage) btnClose.getScene().getWindow();
+            if (stage != null) {
+                stage.close();
+            }
+        }
     }
 
     private String toPdfSafePeso(String pesoFormattedString) {

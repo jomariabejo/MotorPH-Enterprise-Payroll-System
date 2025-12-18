@@ -10,7 +10,15 @@
    <children>
       <VBox alignment="BOTTOM_CENTER" prefHeight="897.0" prefWidth="1300.0" spacing="12.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <TableView fx:id="tvPayrollApprovals" prefHeight="750.0">
+            <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0" spacing="12.0">
+               <children>
+                  <Label text="Search:" />
+                  <TextField fx:id="tfSearch" prefWidth="300.0" promptText="Search by ID, status..." />
+                  <Label text="Status:" />
+                  <ComboBox fx:id="cbStatusFilter" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <TableView fx:id="tvPayrollApprovals" prefHeight="700.0">
                <columnResizePolicy>
                   <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                </columnResizePolicy>

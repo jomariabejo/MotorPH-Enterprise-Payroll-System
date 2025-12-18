@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -211,6 +212,19 @@ public class PayrollEmployeeListViewDialog {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/jomariabejo/motorph/role/accounting/payslip-preview-dialog.fxml"));
             AnchorPane dialogPane = loader.load();
             Stage dialogStage = new Stage();
+            
+            // Set parent stage and modality to prevent interaction with parent window
+            // Get parent stage from btnClose's scene if available
+            if (btnClose != null && btnClose.getScene() != null) {
+                Stage parentStage = (Stage) btnClose.getScene().getWindow();
+                if (parentStage != null) {
+                    dialogStage.initOwner(parentStage);
+                }
+            }
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            
+            // Add close request handler to properly handle X button clicks
+            dialogStage.setOnCloseRequest(event -> dialogStage.close());
             
             String employeeName = payslip.getEmployeeID().getFirstName() + " " + payslip.getEmployeeID().getLastName();
             dialogStage.setTitle("Payslip Preview - " + employeeName);

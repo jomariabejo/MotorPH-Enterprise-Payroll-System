@@ -50,4 +50,12 @@ public class TimesheetService {
     public Optional<List<Timesheet>> getTimesheetsByEmployeeAndDate(Employee employee, Year year, Month month) {
         return timesheetRepository.fetchEmployeeTimesheetsByYearAndMonth(employee, year, month);
     }
+
+    public List<Integer> getAllYearsFromTimesheets() {
+        return timesheetRepository.fetchAllYearsFromTimesheets();
+    }
+
+    public List<Timesheet> getTimesheetsWithFilters(Employee employee, Year year, Month month, LocalDate specificDate, String status) {
+        return timesheetRepository.fetchTimesheetsWithFilters(employee, year, month, specificDate, status);
+    }
 }
