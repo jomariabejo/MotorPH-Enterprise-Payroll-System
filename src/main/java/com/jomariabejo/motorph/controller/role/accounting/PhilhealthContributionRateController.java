@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,6 +62,7 @@ public class PhilhealthContributionRateController {
             Stage formStage = new Stage();
             formStage.setTitle(rate == null ? "Add New Philhealth Contribution Rate" : "Edit Philhealth Contribution Rate");
             formStage.setScene(new Scene(formPane));
+            formStage.initModality(Modality.APPLICATION_MODAL);
 
             PhilhealthContributionRateFormController formController = loader.getController();
             formController.setRateController(this);
@@ -68,8 +70,16 @@ public class PhilhealthContributionRateController {
             formController.setup();
 
             formStage.showAndWait();
+            // Refresh the table after the form is closed
+            populateRates();
         } catch (IOException e) {
             e.printStackTrace();
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Failed to open form: " + e.getMessage()
+            );
+            alert.showAndWait();
         }
     }
 
@@ -120,10 +130,55 @@ public class PhilhealthContributionRateController {
         TableColumn<PhilhealthContributionRate, Void> actionsColumn = createActionsColumn();
         actionsColumn.setPrefWidth(200);
 
+        tvRates.getColumns().addAll(idColumn, salaryFromColumn, salaryToColumn, employeeShareColumn, employerShareColumn, effectiveDateColumn, actionsColumn);
+        tvRates.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     private TableColumn<PhilhealthContributionRate, Void> createActionsColumn() {
         TableColumn<PhilhealthContributionRate, Void> actionsColumn = new TableColumn<>("Actions");
+        actionsColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button editButton = new Button(null, new FontIcon(Feather.EDIT));
+            private final Button deleteButton = new Button(null, new FontIcon(Feather.TRASH_2));
+
+            {
+                editButton.getStyleClass().addAll(Styles.ACCENT, Styles.BUTTON_OUTLINED);
+                deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
+
+                editButton.setOnAction(event -> {
+                    PhilhealthContributionRate rate = getTableView().getItems().get(getIndex());
+                    if (rate != null) {
+                        openRateForm(rate);
+                    }
+                });
+
+                deleteButton.setOnAction(event -> {
+                    PhilhealthContributionRate rate = getTableView().getItems().get(getIndex());
+                    if (rate != null) {
+                        deleteRate(rate);
+                    }
+                });
+            }
+
+            private final HBox actionsBox = new HBox(editButton, deleteButton);
+
+            {
+                actionsBox.setAlignment(Pos.CENTER);
+                actionsBox.setSpacing(5);
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    setGraphic(actionsBox);
+                }
+            }
+        });
+        return actionsColumn;
+    }
+
     private void deleteRate(PhilhealthContributionRate rate) {
         CustomAlert confirmAlert = new CustomAlert(
                 Alert.AlertType.CONFIRMATION,
@@ -152,15 +207,44 @@ public class PhilhealthContributionRateController {
         btnAddRate.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
     }
 
+    public void populateRates() {
+        if (payrollAdministratorNavigationController == null || 
+            payrollAdministratorNavigationController.getMainViewController() == null ||
+            payrollAdministratorNavigationController.getMainViewController().getServiceFactory() == null) {
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Unable to load Philhealth rates. Navigation controller not properly initialized."
+            );
+            alert.showAndWait();
+            return;
+        }
 
-        int itemsPerPage = 25;
-        int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));
-        paginationRates.setPageCount(pageCount);
+        try {
+            allRates = payrollAdministratorNavigationController.getMainViewController()
+                    .getServiceFactory().getPhilhealthContributionRateService().getAllRates();
 
-        paginationRates.setPageFactory(pageIndex -> {
-            updateTableView(pageIndex, itemsPerPage);
-            return new StackPane();
-        });
+            int itemsPerPage = 25;
+            int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));
+            paginationRates.setPageCount(pageCount);
+
+            paginationRates.setPageFactory(pageIndex -> {
+                updateTableView(pageIndex, itemsPerPage);
+                return new StackPane();
+            });
+            
+            // Trigger initial page load
+            paginationRates.setCurrentPageIndex(0);
+            updateTableView(0, itemsPerPage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Failed to load Philhealth rates: " + (e.getMessage() != null ? e.getMessage() : "Unknown error")
+            );
+            alert.showAndWait();
+        }
     }
 
     private void updateTableView(int pageIndex, int itemsPerPage) {

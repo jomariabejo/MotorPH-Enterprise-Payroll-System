@@ -4,6 +4,10 @@ import atlantafx.base.theme.PrimerDark;
 import com.jomariabejo.motorph.controller.LoginViewController;
 import com.jomariabejo.motorph.controller.MainViewController;
 import com.jomariabejo.motorph.model.User;
+import com.jomariabejo.motorph.repository.PagibigContributionRateRepository;
+import com.jomariabejo.motorph.repository.PhilhealthContributionRateRepository;
+import com.jomariabejo.motorph.service.PagibigContributionRateService;
+import com.jomariabejo.motorph.service.PhilhealthContributionRateService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,6 +30,9 @@ public class Launcher extends Application {
 
         // Initialize Hibernate
         HibernateUtil.getSessionFactory();
+
+        // Initialize default contribution rates if they don't exist
+        initializeDefaultContributionRates();
 
         // Set the default stylesheet for the application
         Application.setUserAgentStylesheet(new PrimerDark().getUserAgentStylesheet());
@@ -74,6 +81,26 @@ public class Launcher extends Application {
 
         // Show the primary stage with the main view
         primaryStage.show();
+    }
+
+    /**
+     * Initialize default contribution rates (Pagibig and Philhealth) if they don't exist in the database.
+     * This ensures the application has the necessary rate data for payroll calculations.
+     */
+    private static void initializeDefaultContributionRates() {
+        try {
+            // Initialize Pagibig rates
+            PagibigContributionRateService pagibigService = new PagibigContributionRateService(new PagibigContributionRateRepository());
+            pagibigService.populateStandardRates();
+            
+            // Initialize Philhealth rates
+            PhilhealthContributionRateService philhealthService = new PhilhealthContributionRateService(new PhilhealthContributionRateRepository());
+            philhealthService.populateStandardRates();
+        } catch (Exception e) {
+            // Log error but don't prevent application startup
+            System.err.println("Warning: Failed to initialize default contribution rates: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public static void switchToLoginView() {

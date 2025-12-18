@@ -216,17 +216,6 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
         });
     }
 
-    public void bonusOnAction() {
-        mainViewController.rewriteLabel("/ Finance / Bonus");
-
-        loadView("/com/jomariabejo/motorph/role/accounting/bonus.fxml", controller -> {
-            if (controller instanceof BonusController bonusController) {
-                bonusController.setPayrollAdministratorNavigationController(this);
-                bonusController.populateBonuses();
-            }
-        });
-    }
-
     public void tinComplianceOnAction() {
         mainViewController.rewriteLabel("/ Finance / TIN Compliance");
 
@@ -238,39 +227,6 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
         });
     }
 
-    public void pagibigRateOnAction() {
-        mainViewController.rewriteLabel("/ Finance / Pagibig Contribution Rate");
-
-        loadView("/com/jomariabejo/motorph/role/accounting/pagibig-rate.fxml", controller -> {
-            if (controller instanceof PagibigContributionRateController rateController) {
-                rateController.setPayrollAdministratorNavigationController(this);
-                rateController.populateRates();
-            }
-        });
-    }
-
-    public void philhealthRateOnAction() {
-        mainViewController.rewriteLabel("/ Finance / Philhealth Contribution Rate");
-
-        loadView("/com/jomariabejo/motorph/role/accounting/philhealth-rate.fxml", controller -> {
-            if (controller instanceof PhilhealthContributionRateController rateController) {
-                rateController.setPayrollAdministratorNavigationController(this);
-                rateController.populateRates();
-            }
-        });
-    }
-
-    public void sssRateOnAction() {
-        mainViewController.rewriteLabel("/ Finance / SSS Contribution Rate");
-
-        loadView("/com/jomariabejo/motorph/role/accounting/sss-rate.fxml", controller -> {
-            if (controller instanceof SssContributionRateController rateController) {
-                rateController.setPayrollAdministratorNavigationController(this);
-                rateController.populateRates();
-            }
-        });
-    }
-
     public void payrollChangeOnAction() {
         mainViewController.rewriteLabel("/ Finance / Payroll Changes");
 
@@ -278,17 +234,6 @@ public class PayrollAdministratorNavigationController implements _ViewLoader {
             if (controller instanceof PayrollChangeController changeController) {
                 changeController.setPayrollAdministratorNavigationController(this);
                 changeController.populateChanges();
-            }
-        });
-    }
-
-    public void reimbursementTransactionOnAction() {
-        mainViewController.rewriteLabel("/ Finance / Reimbursement Transactions");
-
-        loadView("/com/jomariabejo/motorph/role/accounting/reimbursement-transaction.fxml", controller -> {
-            if (controller instanceof ReimbursementTransactionController transactionController) {
-                transactionController.setPayrollAdministratorNavigationController(this);
-                transactionController.populateTransactions();
             }
         });
     }

@@ -19,6 +19,7 @@ public class EmployeeRepository extends _AbstractHibernateRepository<Employee, I
         try {
             session = HibernateUtil.openSession();
             Query<Employee> query = session.createQuery(
+                    "SELECT e FROM Employee e WHERE e.status != 'INACTIVE' OR e.status IS NULL",
                     Employee.class
             );
             List<Employee> resultList = query.getResultList();

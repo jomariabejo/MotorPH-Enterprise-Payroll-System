@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
@@ -61,6 +62,7 @@ public class PagibigContributionRateController {
             Stage formStage = new Stage();
             formStage.setTitle(rate == null ? "Add New Pagibig Contribution Rate" : "Edit Pagibig Contribution Rate");
             formStage.setScene(new Scene(formPane));
+            formStage.initModality(Modality.APPLICATION_MODAL);
 
             PagibigContributionRateFormController formController = loader.getController();
             formController.setRateController(this);
@@ -68,8 +70,16 @@ public class PagibigContributionRateController {
             formController.setup();
 
             formStage.showAndWait();
+            // Refresh the table after the form is closed
+            populateRates();
         } catch (IOException e) {
             e.printStackTrace();
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Failed to open form: " + e.getMessage()
+            );
+            alert.showAndWait();
         }
     }
 
@@ -120,6 +130,8 @@ public class PagibigContributionRateController {
         TableColumn<PagibigContributionRate, Void> actionsColumn = createActionsColumn();
         actionsColumn.setPrefWidth(200);
 
+        tvRates.getColumns().addAll(idColumn, salaryFromColumn, salaryToColumn, employeeShareColumn, employerShareColumn, effectiveDateColumn, actionsColumn);
+        tvRates.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     private TableColumn<PagibigContributionRate, Void> createActionsColumn() {
@@ -195,18 +207,44 @@ public class PagibigContributionRateController {
         btnAddRate.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
     }
 
-    private void populateRates() {
-        allRates = payrollAdministratorNavigationController.getMainViewController()
-                .getServiceFactory().getPagibigContributionRateService().getAllPagibigContributionRates();
+    public void populateRates() {
+        if (payrollAdministratorNavigationController == null || 
+            payrollAdministratorNavigationController.getMainViewController() == null ||
+            payrollAdministratorNavigationController.getMainViewController().getServiceFactory() == null) {
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Unable to load Pagibig rates. Navigation controller not properly initialized."
+            );
+            alert.showAndWait();
+            return;
+        }
 
-        int itemsPerPage = 25;
-        int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));
-        paginationRates.setPageCount(pageCount);
+        try {
+            allRates = payrollAdministratorNavigationController.getMainViewController()
+                    .getServiceFactory().getPagibigContributionRateService().getAllPagibigContributionRates();
 
-        paginationRates.setPageFactory(pageIndex -> {
-            updateTableView(pageIndex, itemsPerPage);
-            return new StackPane();
-        });
+            int itemsPerPage = 25;
+            int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));
+            paginationRates.setPageCount(pageCount);
+
+            paginationRates.setPageFactory(pageIndex -> {
+                updateTableView(pageIndex, itemsPerPage);
+                return new StackPane();
+            });
+            
+            // Trigger initial page load
+            paginationRates.setCurrentPageIndex(0);
+            updateTableView(0, itemsPerPage);
+        } catch (Exception e) {
+            e.printStackTrace();
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Failed to load Pagibig rates: " + (e.getMessage() != null ? e.getMessage() : "Unknown error")
+            );
+            alert.showAndWait();
+        }
     }
 
     private void updateTableView(int pageIndex, int itemsPerPage) {

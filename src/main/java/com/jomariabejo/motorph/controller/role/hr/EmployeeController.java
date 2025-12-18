@@ -24,6 +24,7 @@ import org.kordamp.ikonli.material.Material;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * TODO:
@@ -115,6 +116,12 @@ public class EmployeeController {
     @FXML
     void initializeLeaveBalancesClicked() {
         // Show confirmation dialog
+        CustomAlert confirmationAlert = new CustomAlert(
+                Alert.AlertType.CONFIRMATION,
+                "Initialize Leave Balances",
+                "This will initialize leave balances for all employees.\n" +
+                        "Existing balances will be updated.\n\n" +
+                        "Continue?"
         );
         
         Optional<ButtonType> result = confirmationAlert.showAndWait();
@@ -147,6 +154,7 @@ public class EmployeeController {
                 // Show error message
                 CustomAlert errorAlert = new CustomAlert(
                         Alert.AlertType.ERROR,
+                        "Error",
                         "An error occurred while initializing leave balances:\n" + e.getMessage()
                 );
                 errorAlert.showAndWait();

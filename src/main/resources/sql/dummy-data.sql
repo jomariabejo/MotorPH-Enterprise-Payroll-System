@@ -314,7 +314,12 @@ CREATE TABLE IF NOT EXISTS `pagibig_contribution_rates` (
   KEY `idx_pagibig_effective_date` (`EffectiveDate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Stores Pag-IBIG contribution rates, specifying salary brackets and corresponding employee and employer shares, effective from specific dates.';
 
--- Dumping data for table payroll_system.pagibig_contribution_rates: ~0 rows (approximately)
+-- Dumping data for table payroll_system.pagibig_contribution_rates: ~2 rows (approximately)
+INSERT INTO `pagibig_contribution_rates` (`SalaryBracketFrom`, `SalaryBracketTo`, `EmployeeShare`, `EmployerShare`, `EffectiveDate`) VALUES
+	-- Monthly Basic Salary: At least 1,000 to 1,500 - Employee's Contribution Rate: 1%, Employer's Contribution Rate: 2%, Total: 3%
+	(1000.0000, 1500.0000, 1.0000, 2.0000, '2024-01-01'),
+	-- Monthly Basic Salary: Over 1,500 - Employee's Contribution Rate: 2%, Employer's Contribution Rate: 2%, Total: 4%
+	(1500.0100, 999999999.0000, 2.0000, 2.0000, '2024-01-01');
 
 -- Dumping structure for table payroll_system.payroll
 CREATE TABLE IF NOT EXISTS `payroll` (
@@ -476,7 +481,15 @@ CREATE TABLE IF NOT EXISTS `philhealth_contribution_rates` (
   KEY `idx_philhealth_effective_date` (`EffectiveDate`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='Stores PhilHealth contribution rates, specifying salary brackets and corresponding employee and employer shares, effective from specific dates.';
 
--- Dumping data for table payroll_system.philhealth_contribution_rates: ~0 rows (approximately)
+-- Dumping data for table payroll_system.philhealth_contribution_rates: ~3 rows (approximately)
+INSERT INTO `philhealth_contribution_rates` (`SalaryBracketFrom`, `SalaryBracketTo`, `EmployeeShare`, `EmployerShare`, `EffectiveDate`) VALUES
+	-- Monthly Basic Salary: 10,000 - Premium Rate: 3% - Monthly Premium: 300 (Employee: 150, Employer: 150)
+	(0.0000, 10000.0000, 150.0000, 150.0000, '2024-01-01'),
+	-- Monthly Basic Salary: 10,000.01 to 59,999.99 - Premium Rate: 3% - Monthly Premium: 300 up to 1,800 (Employee: 1.5% = 150-900, Employer: 1.5% = 150-900)
+	-- Note: EmployeeShare and EmployerShare stored as 1.5 (percentage) for calculation: salary * 1.5% with min 150, max 900
+	(10000.0100, 59999.9900, 1.5000, 1.5000, '2024-01-01'),
+	-- Monthly Basic Salary: 60,000+ - Premium Rate: 3% - Monthly Premium: 1,800 (Employee: 900, Employer: 900)
+	(60000.0000, 999999999.0000, 900.0000, 900.0000, '2024-01-01');
 
 -- Dumping structure for table payroll_system.position
 CREATE TABLE IF NOT EXISTS `position` (

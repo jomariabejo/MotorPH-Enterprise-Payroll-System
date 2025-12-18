@@ -20,7 +20,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
+import com.jomariabejo.motorph.utility.CustomAlert;
+import com.jomariabejo.motorph.utility.LoggingUtility;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -161,6 +164,7 @@ public class UserController {
                 });
             }
 
+            private final HBox actionsBox = new HBox(editButton, deleteButton);
 
             {
                 actionsBox.setAlignment(Pos.CENTER);

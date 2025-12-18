@@ -186,17 +186,39 @@ public class BonusController {
     }
 
     public void populateBonuses() {
-        allBonuses = payrollAdministratorNavigationController.getMainViewController()
-                .getServiceFactory().getBonusService().getAllBonuses();
+        if (payrollAdministratorNavigationController == null || 
+            payrollAdministratorNavigationController.getMainViewController() == null ||
+            payrollAdministratorNavigationController.getMainViewController().getServiceFactory() == null) {
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Unable to load bonuses. Navigation controller not properly initialized."
+            );
+            alert.showAndWait();
+            return;
+        }
 
-        int itemsPerPage = 25;
-        int pageCount = Math.max(1, (int) Math.ceil((double) allBonuses.size() / itemsPerPage));
-        paginationBonuses.setPageCount(pageCount);
+        try {
+            allBonuses = payrollAdministratorNavigationController.getMainViewController()
+                    .getServiceFactory().getBonusService().getAllBonuses();
 
-        paginationBonuses.setPageFactory(pageIndex -> {
-            updateTableView(pageIndex, itemsPerPage);
-            return new StackPane();
-        });
+            int itemsPerPage = 25;
+            int pageCount = Math.max(1, (int) Math.ceil((double) allBonuses.size() / itemsPerPage));
+            paginationBonuses.setPageCount(pageCount);
+
+            paginationBonuses.setPageFactory(pageIndex -> {
+                updateTableView(pageIndex, itemsPerPage);
+                return new StackPane();
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+            CustomAlert alert = new CustomAlert(
+                    Alert.AlertType.ERROR,
+                    "Error",
+                    "Failed to load bonuses: " + (e.getMessage() != null ? e.getMessage() : "Unknown error")
+            );
+            alert.showAndWait();
+        }
     }
 
     private void updateTableView(int pageIndex, int itemsPerPage) {
