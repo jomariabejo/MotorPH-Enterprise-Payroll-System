@@ -4,8 +4,11 @@ import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.EmployeeRoleNavigationController;
 import com.jomariabejo.motorph.model.Timesheet;
 import com.jomariabejo.motorph.utility.CustomAlert;
+<<<<<<< HEAD
 import com.jomariabejo.motorph.utility.DateTimeUtil;
 import com.jomariabejo.motorph.utility.LoggingUtility;
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -105,7 +108,11 @@ public class TimesheetController {
      * Displays an alert when user tries to time in outside allowed hours (8:00 AM - 5:00 PM)
      */
     private void displayTimeInOutsideAllowedWindow() {
+<<<<<<< HEAD
         LocalTime currentTime = DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalTime();
+=======
+        LocalTime currentTime = LocalTime.now();
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         int hour = currentTime.getHour();
         int hour12;
         if (hour == 0) {
@@ -135,7 +142,11 @@ public class TimesheetController {
      * Displays an alert when user tries to time out outside allowed hours (8:00 AM - 5:00 PM)
      */
     private void displayTimeOutOutsideAllowedWindow() {
+<<<<<<< HEAD
         LocalTime currentTime = DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalTime();
+=======
+        LocalTime currentTime = LocalTime.now();
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         int hour = currentTime.getHour();
         int hour12;
         if (hour == 0) {
@@ -166,7 +177,11 @@ public class TimesheetController {
      * @return true if current time is between 8:00 AM and 5:00 PM (inclusive), false otherwise
      */
     private boolean isTimeWithinAllowedWindow() {
+<<<<<<< HEAD
         LocalTime currentTime = DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalTime();
+=======
+        LocalTime currentTime = LocalTime.now();
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         // Check if current time is between 8:00 AM (08:00) and 5:00 PM (17:00)
         return !currentTime.isBefore(ALLOWED_START_TIME) && !currentTime.isAfter(ALLOWED_END_TIME);
     }
@@ -298,7 +313,11 @@ public class TimesheetController {
             cbYear.setItems(FXCollections.observableList(yearsOpt.get()));
         } else {
             // If no years found, set current year as default
+<<<<<<< HEAD
             cbYear.setItems(FXCollections.observableArrayList(DateTimeUtil.getCurrentDateTimeInPhilippines().toLocalDate().getYear()));
+=======
+            cbYear.setItems(FXCollections.observableArrayList(LocalDate.now().getYear()));
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         }
         selectCurrentYear();
     }

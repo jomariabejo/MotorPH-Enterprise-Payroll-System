@@ -4,7 +4,10 @@ import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.SystemAdministratorNavigationController;
 import com.jomariabejo.motorph.constants.PermissionConstants;
 import com.jomariabejo.motorph.model.UserLog;
+<<<<<<< HEAD
 import com.jomariabejo.motorph.service.UserLogPdfService;
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import com.jomariabejo.motorph.utility.CustomAlert;
 import com.opencsv.CSVWriter;
 import javafx.animation.KeyFrame;
@@ -16,6 +19,7 @@ import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+<<<<<<< HEAD
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -26,6 +30,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+=======
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.StackPane;
+import javafx.stage.FileChooser;
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
@@ -145,6 +155,7 @@ public class UserLogsController {
         });
         dateTimeColumn.setPrefWidth(200);
 
+<<<<<<< HEAD
         // Actions Column
         TableColumn<UserLog, Void> actionsColumn = createActionsColumn();
         actionsColumn.setPrefWidth(100);
@@ -315,12 +326,24 @@ public class UserLogsController {
 
     private void setupFilters() {
         // Initialize filter combobox with common actions including clock in/out
+=======
+        tvUserLogs.getColumns().addAll(idColumn, userColumn, actionColumn, ipColumn, dateTimeColumn);
+        tvUserLogs.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+
+    private void setupFilters() {
+        // Initialize filter combobox with common actions
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         cbFilterAction.getItems().addAll("All", "User logged in", "User logged out", 
                 "User created", "User updated", "User deleted",
                 "Role created", "Role updated", "Role deleted",
                 "Permission created", "Permission updated", "Permission deleted",
+<<<<<<< HEAD
                 "Permission assigned", "Permission removed",
                 "Employee clocked in", "Employee clocked out");
+=======
+                "Permission assigned", "Permission removed");
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         cbFilterAction.getSelectionModel().selectFirst();
         
         // Initialize export time period filter

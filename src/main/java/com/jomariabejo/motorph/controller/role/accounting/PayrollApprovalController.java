@@ -17,11 +17,16 @@ import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.time.Instant;
+<<<<<<< HEAD
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+=======
+import java.util.List;
+import java.util.Optional;
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
 @Getter
 @Setter
@@ -35,6 +40,7 @@ public class PayrollApprovalController {
     @FXML
     private Pagination paginationApprovals;
 
+<<<<<<< HEAD
     @FXML
     private TextField tfSearch;
 
@@ -43,6 +49,9 @@ public class PayrollApprovalController {
 
     private List<PayrollApproval> allApprovals;
     private List<PayrollApproval> filteredApprovals;
+=======
+    private List<PayrollApproval> allApprovals;
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
     public PayrollApprovalController() {
     }
@@ -50,6 +59,7 @@ public class PayrollApprovalController {
     @FXML
     void initialize() {
         setupTableView();
+<<<<<<< HEAD
         setupFilters();
     }
 
@@ -65,6 +75,8 @@ public class PayrollApprovalController {
         if (tfSearch != null) {
             tfSearch.textProperty().addListener((observable, oldValue, newValue) -> filterApprovals());
         }
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     }
 
     private void setupTableView() {
@@ -94,6 +106,7 @@ public class PayrollApprovalController {
         statusColumn.setPrefWidth(120);
 
         TableColumn<PayrollApproval, String> approvalDateColumn = new TableColumn<>("Approval Date");
+<<<<<<< HEAD
         approvalDateColumn.setCellValueFactory(cellData -> {
             Instant approvalDate = cellData.getValue().getApprovalDate();
             if (approvalDate != null) {
@@ -103,6 +116,12 @@ public class PayrollApprovalController {
             }
             return new javafx.beans.property.SimpleStringProperty("");
         });
+=======
+        approvalDateColumn.setCellValueFactory(cellData -> 
+                new javafx.beans.property.SimpleStringProperty(
+                        cellData.getValue().getApprovalDate() != null 
+                                ? cellData.getValue().getApprovalDate().toString() : ""));
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         approvalDateColumn.setPrefWidth(200);
 
         TableColumn<PayrollApproval, Void> actionsColumn = createActionsColumn();
@@ -244,6 +263,7 @@ public class PayrollApprovalController {
 
     private void viewApprovalDetails(PayrollApproval approval) {
         StringBuilder details = new StringBuilder();
+<<<<<<< HEAD
         details.append("Approval ID: ").append(approval.getId()).append("\n\n");
         
         Payroll payroll = approval.getPayrollID();
@@ -265,6 +285,18 @@ public class PayrollApprovalController {
                     .withZone(ZoneId.systemDefault());
             details.append("  Approval Date: ").append(formatter.format(approval.getApprovalDate()));
         }
+=======
+        details.append("Approval ID: ").append(approval.getId()).append("\n");
+        Payroll payroll = approval.getPayrollID();
+        if (payroll != null) {
+            details.append("Payroll ID: ").append(payroll.getId()).append("\n");
+            details.append("Payroll Period: ").append(payroll.getPeriodStartDate())
+                    .append(" to ").append(payroll.getPeriodEndDate()).append("\n");
+        }
+        details.append("Approver ID: ").append(approval.getApproverID()).append("\n");
+        details.append("Status: ").append(approval.getStatus()).append("\n");
+        details.append("Approval Date: ").append(approval.getApprovalDate());
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
         CustomAlert alert = new CustomAlert(
                 Alert.AlertType.INFORMATION,
@@ -282,6 +314,7 @@ public class PayrollApprovalController {
         allApprovals = payrollAdministratorNavigationController.getMainViewController()
                 .getServiceFactory().getPayrollApprovalService().getAllPayrollApprovals();
 
+<<<<<<< HEAD
         filterApprovals();
     }
 
@@ -338,6 +371,10 @@ public class PayrollApprovalController {
 
         int itemsPerPage = 25;
         int pageCount = Math.max(1, (int) Math.ceil((double) filteredApprovals.size() / itemsPerPage));
+=======
+        int itemsPerPage = 25;
+        int pageCount = Math.max(1, (int) Math.ceil((double) allApprovals.size() / itemsPerPage));
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         paginationApprovals.setPageCount(pageCount);
 
         paginationApprovals.setPageFactory(pageIndex -> {
@@ -347,6 +384,7 @@ public class PayrollApprovalController {
     }
 
     private void updateTableView(int pageIndex, int itemsPerPage) {
+<<<<<<< HEAD
         if (filteredApprovals == null) {
             tvPayrollApprovals.setItems(FXCollections.observableArrayList());
             return;
@@ -355,6 +393,11 @@ public class PayrollApprovalController {
         int fromIndex = pageIndex * itemsPerPage;
         int toIndex = Math.min(fromIndex + itemsPerPage, filteredApprovals.size());
         List<PayrollApproval> pageData = filteredApprovals.subList(fromIndex, toIndex);
+=======
+        int fromIndex = pageIndex * itemsPerPage;
+        int toIndex = Math.min(fromIndex + itemsPerPage, allApprovals.size());
+        List<PayrollApproval> pageData = allApprovals.subList(fromIndex, toIndex);
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         tvPayrollApprovals.setItems(FXCollections.observableList(pageData));
     }
 }

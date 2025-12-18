@@ -33,9 +33,12 @@ public class SssContributionRateController {
     private Button btnAddRate;
 
     @FXML
+<<<<<<< HEAD
     private Button btnPopulateRates;
 
     @FXML
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     private Pagination paginationRates;
 
     @FXML
@@ -50,7 +53,10 @@ public class SssContributionRateController {
     void initialize() {
         setupTableView();
         customizeAddButton();
+<<<<<<< HEAD
         customizePopulateButton();
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     }
 
     @FXML
@@ -197,6 +203,7 @@ public class SssContributionRateController {
         btnAddRate.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
     }
 
+<<<<<<< HEAD
     private void customizePopulateButton() {
         FontIcon fontIcon = new FontIcon(Feather.DATABASE);
         btnPopulateRates.setGraphic(fontIcon);
@@ -354,6 +361,11 @@ public class SssContributionRateController {
         }
 
         allRates = existingRates;
+=======
+    public void populateRates() {
+        allRates = payrollAdministratorNavigationController.getMainViewController()
+                .getServiceFactory().getSssContributionRateService().getAllSssContributionRates();
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
         int itemsPerPage = 25;
         int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));

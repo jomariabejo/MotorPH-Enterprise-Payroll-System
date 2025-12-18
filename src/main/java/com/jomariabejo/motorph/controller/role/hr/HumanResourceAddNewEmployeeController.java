@@ -101,6 +101,7 @@ public class HumanResourceAddNewEmployeeController {
                 // The new/updated employee
                 Employee employee = mapFieldsToEmployee();
 
+<<<<<<< HEAD
                 if (editingEmployee != null) {
                     // Update existing employee
                     employee.setEmployeeNumber(editingEmployee.getEmployeeNumber());
@@ -168,6 +169,39 @@ public class HumanResourceAddNewEmployeeController {
                 errorAlert.showAndWait();
                 e.printStackTrace();
             }
+=======
+            // save employee to db
+            this.getEmployeeController()
+                .getHumanResourceAdministratorNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getEmployeeService()
+                .saveEmployee(employee);
+            
+            // Initialize leave balances for the new employee
+            // This automatically creates leave balances with default yearly allocations:
+            // - Sick Leave: 5 days
+            // - Vacation Leave: 10 days
+            // - Emergency Leave: 5 days
+            this.getEmployeeController()
+                .getHumanResourceAdministratorNavigationController()
+                .getMainViewController()
+                .getServiceFactory()
+                .getLeaveBalanceService()
+                .initializeLeaveBalancesForNewEmployee(employee);
+            
+            // hide window
+            submitBtn.getScene().getWindow().hide();
+            // add employee to the tableview
+            this.getEmployeeController().getTvEmployees().getItems().add(employee);
+            // display employee added successfully
+            CustomAlert customAlert = new CustomAlert(
+                    Alert.AlertType.INFORMATION,
+                    "Employee saved",
+                    "Employee saved successfully. Leave balances have been initialized."
+            );
+            customAlert.showAndWait();
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
         }
     }
 

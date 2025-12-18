@@ -29,12 +29,15 @@
                         <Font size="24.0" />
                      </font>
                   </Button>
+<<<<<<< HEAD
                   <Label text="Status Filter:" prefHeight="50.0">
                      <font>
                         <Font size="24.0" />
                      </font>
                   </Label>
                   <ComboBox fx:id="cbStatusFilter" onAction="#statusFilterChanged" prefHeight="50.0" prefWidth="200.0" promptText="All Employees" stylesheets="@../../css/combo-box.css" />
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                     </children>
                     <VBox.margin>
                         <Insets />

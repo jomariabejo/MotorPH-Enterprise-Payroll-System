@@ -13,7 +13,11 @@
 - [Key Features](#key-features)
 - [Technical Architecture](#technical-architecture)
 - [Quick Start](#quick-start)
+<<<<<<< HEAD
 - [Project Structure (Developers)](#project-structure-ai--developers)
+=======
+- [Project Structure (AI / Developers)](#project-structure-ai--developers)
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 - [Capabilities Showcase](#capabilities-showcase)
 - [Impact Metrics](#impact-metrics)
 - [Technical Highlights](#technical-highlights)

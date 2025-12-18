@@ -19,7 +19,11 @@ public class EmployeeRepository extends _AbstractHibernateRepository<Employee, I
         try {
             session = HibernateUtil.openSession();
             Query<Employee> query = session.createQuery(
+<<<<<<< HEAD
                     "SELECT e FROM Employee e WHERE (e.isDeleted = false OR e.isDeleted IS NULL) AND e.status IN ('Regular', 'Probationary') ORDER BY e.employeeNumber",
+=======
+                    "SELECT e FROM Employee e WHERE e.status IN ('Regular', 'Contractual', 'Probationary') ORDER BY e.employeeNumber",
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                     Employee.class
             );
             List<Employee> resultList = query.getResultList();

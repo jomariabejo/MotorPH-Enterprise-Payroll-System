@@ -15,8 +15,12 @@
             <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="12.0">
                <children>
                   <Button fx:id="btnAddPayroll" mnemonicParsing="false" onAction="#addPayrollClicked" prefHeight="50.0" prefWidth="305.0" text="Add New Payroll" />
+<<<<<<< HEAD
                   <Button fx:id="btnGenerateTestTimesheets" mnemonicParsing="false" onAction="#generateTestTimesheetsClicked" prefHeight="50.0" prefWidth="305.0" text="Generate Timesheets" />
                   <Button fx:id="btnMarkAllEmployeesActive" mnemonicParsing="false" onAction="#markAllEmployeesActiveClicked" prefHeight="50.0" prefWidth="305.0" text="Mark All Employees Active" />
+=======
+                  <Button fx:id="btnGenerateTestTimesheets" mnemonicParsing="false" onAction="#generateTestTimesheetsClicked" prefHeight="50.0" prefWidth="305.0" text="Generate Dec 2025 Timesheets" />
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                </children>
             </HBox>
             <TableView fx:id="tvPayrolls" prefHeight="650.0">

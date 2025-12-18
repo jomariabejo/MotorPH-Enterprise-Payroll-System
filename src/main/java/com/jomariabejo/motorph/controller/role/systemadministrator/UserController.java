@@ -6,10 +6,15 @@ import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Role;
 import com.jomariabejo.motorph.model.User;
 import com.jomariabejo.motorph.constants.PermissionConstants;
+<<<<<<< HEAD
 import com.jomariabejo.motorph.service.UserCredentialsPdfService;
 import com.jomariabejo.motorph.utility.CustomAlert;
 import com.jomariabejo.motorph.utility.LoggingUtility;
 import javafx.stage.FileChooser;
+=======
+import com.jomariabejo.motorph.utility.CustomAlert;
+import com.jomariabejo.motorph.utility.LoggingUtility;
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,11 +30,15 @@ import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
+<<<<<<< HEAD
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+=======
+import java.io.IOException;
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import java.util.List;
 import java.util.Optional;
 
@@ -142,17 +151,24 @@ public class UserController {
         TableColumn<User, Void> actionsColumn = new TableColumn<>("Actions");
         actionsColumn.setCellFactory(param -> new TableCell<>() {
             private final Button editButton = new Button(null, new FontIcon(Feather.EDIT));
+<<<<<<< HEAD
             private final Button resetPasswordButton = new Button(null, new FontIcon(Feather.KEY));
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
             private final Button deleteButton = new Button(null, new FontIcon(Feather.TRASH));
 
             {
                 editButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
+<<<<<<< HEAD
                 resetPasswordButton.getStyleClass().addAll(Styles.ACCENT, Styles.BUTTON_OUTLINED);
                 deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
                 
                 editButton.setTooltip(new Tooltip("Edit User"));
                 resetPasswordButton.setTooltip(new Tooltip("Reset Password"));
                 deleteButton.setTooltip(new Tooltip("Delete User"));
+=======
+                deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
                 editButton.setOnAction(event -> {
                     User selectedUser = getTableView().getItems().get(getIndex());
@@ -165,6 +181,7 @@ public class UserController {
                     }
                 });
 
+<<<<<<< HEAD
                 resetPasswordButton.setOnAction(event -> {
                     User selectedUser = getTableView().getItems().get(getIndex());
                     if (selectedUser != null) {
@@ -176,6 +193,8 @@ public class UserController {
                     }
                 });
 
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                 deleteButton.setOnAction(event -> {
                     User selectedUser = getTableView().getItems().get(getIndex());
                     if (selectedUser != null) {
@@ -188,7 +207,11 @@ public class UserController {
                 });
             }
 
+<<<<<<< HEAD
             private final HBox actionsBox = new HBox(editButton, resetPasswordButton, deleteButton);
+=======
+            private final HBox actionsBox = new HBox(editButton, deleteButton);
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
             {
                 actionsBox.setAlignment(Pos.CENTER);
@@ -209,7 +232,10 @@ public class UserController {
                         systemAdministratorNavigationController.hasPermission(PermissionConstants.SYSTEM_ADMIN_USERS_DELETE);
 
                 editButton.setDisable(!canEdit);
+<<<<<<< HEAD
                 resetPasswordButton.setDisable(!canEdit);
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                 deleteButton.setDisable(!canDelete);
                 setGraphic(actionsBox);
             }
@@ -217,6 +243,7 @@ public class UserController {
         return actionsColumn;
     }
 
+<<<<<<< HEAD
     private void resetUserPassword(User user) {
         CustomAlert confirmAlert = new CustomAlert(
                 Alert.AlertType.CONFIRMATION,
@@ -326,6 +353,8 @@ public class UserController {
         }
     }
 
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     private void deleteUser(User user) {
         CustomAlert confirmAlert = new CustomAlert(
                 Alert.AlertType.CONFIRMATION,

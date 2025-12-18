@@ -2,9 +2,13 @@ package com.jomariabejo.motorph.controller.role.accounting;
 
 import atlantafx.base.theme.Styles;
 import com.jomariabejo.motorph.controller.nav.PayrollAdministratorNavigationController;
+<<<<<<< HEAD
 import com.jomariabejo.motorph.model.Employee;
 import com.jomariabejo.motorph.model.Payroll;
 import com.jomariabejo.motorph.model.PayrollApproval;
+=======
+import com.jomariabejo.motorph.model.Payroll;
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import com.jomariabejo.motorph.utility.CustomAlert;
 import com.jomariabejo.motorph.utility.TimesheetDataGenerator;
 import javafx.collections.FXCollections;
@@ -13,20 +17,29 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+<<<<<<< HEAD
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.Dialog;
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+<<<<<<< HEAD
 import javafx.util.Pair;
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import lombok.Getter;
 import lombok.Setter;
 import org.kordamp.ikonli.feather.Feather;
 import org.kordamp.ikonli.javafx.FontIcon;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.time.Instant;
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 import java.util.List;
 import java.util.Optional;
 
@@ -43,9 +56,12 @@ public class PayrollController {
     private Button btnGenerateTestTimesheets;
 
     @FXML
+<<<<<<< HEAD
     private Button btnMarkAllEmployeesActive;
 
     @FXML
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     private Pagination paginationPayrolls;
 
     @FXML
@@ -61,7 +77,10 @@ public class PayrollController {
         setupTableView();
         customizeAddPayrollButton();
         customizeGenerateTestTimesheetsButton();
+<<<<<<< HEAD
         customizeMarkAllEmployeesActiveButton();
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     }
 
     @FXML
@@ -130,7 +149,11 @@ public class PayrollController {
         createdByColumn.setPrefWidth(150);
 
         TableColumn<Payroll, Void> actionsColumn = createActionsColumn();
+<<<<<<< HEAD
         actionsColumn.setPrefWidth(250);
+=======
+        actionsColumn.setPrefWidth(200);
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
         tvPayrolls.getColumns().addAll(idColumn, runDateColumn, periodStartColumn, periodEndColumn, statusColumn, createdByColumn, actionsColumn);
         tvPayrolls.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -142,15 +165,21 @@ public class PayrollController {
             private final Button editButton = new Button(null, new FontIcon(Feather.EDIT));
             private final Button deleteButton = new Button(null, new FontIcon(Feather.TRASH));
             private final Button viewButton = new Button(null, new FontIcon(Feather.EYE));
+<<<<<<< HEAD
             private final Button approveButton = new Button(null, new FontIcon(Feather.CHECK));
             private final Button rejectButton = new Button(null, new FontIcon(Feather.X));
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
             {
                 editButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
                 deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
                 viewButton.getStyleClass().addAll(Styles.ACCENT, Styles.BUTTON_OUTLINED);
+<<<<<<< HEAD
                 approveButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
                 rejectButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
                 editButton.setOnAction(event -> {
                     Payroll selected = getTableView().getItems().get(getIndex());
@@ -172,6 +201,7 @@ public class PayrollController {
                         viewPayrollDetails(selected);
                     }
                 });
+<<<<<<< HEAD
 
                 approveButton.setOnAction(event -> {
                     Payroll selected = getTableView().getItems().get(getIndex());
@@ -189,6 +219,11 @@ public class PayrollController {
             }
 
             private final HBox actionsBox = new HBox();
+=======
+            }
+
+            private final HBox actionsBox = new HBox(viewButton, editButton, deleteButton);
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
             {
                 actionsBox.setAlignment(Pos.CENTER);
@@ -198,6 +233,7 @@ public class PayrollController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+<<<<<<< HEAD
                 if (empty) {
                     setGraphic(null);
                 } else {
@@ -223,6 +259,9 @@ public class PayrollController {
                     
                     setGraphic(actionsBox);
                 }
+=======
+                setGraphic(empty ? null : actionsBox);
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
             }
         });
         return actionsColumn;
@@ -285,6 +324,7 @@ public class PayrollController {
         btnGenerateTestTimesheets.getStyleClass().addAll(Styles.ACCENT, Styles.BUTTON_OUTLINED);
     }
 
+<<<<<<< HEAD
     private void customizeMarkAllEmployeesActiveButton() {
         FontIcon fontIcon = new FontIcon(Feather.USER_CHECK);
         btnMarkAllEmployeesActive.setGraphic(fontIcon);
@@ -505,6 +545,20 @@ public class PayrollController {
                 "1. Set isDeleted = false for all employees (marking them as active)\n" +
                 "2. Set status to 'Regular' or 'Probationary' (if not already set)\n\n" +
                 "This will allow timesheet generation to work for all employees.\n\n" +
+=======
+    @FXML
+    void generateTestTimesheetsClicked() {
+        CustomAlert confirmAlert = new CustomAlert(
+                Alert.AlertType.CONFIRMATION,
+                "Generate Test Timesheets",
+                "This will generate timesheet entries for all active employees for December 2025.\n\n" +
+                "Details:\n" +
+                "- Weekdays only (Monday-Friday)\n" +
+                "- Time In: 8:00 AM\n" +
+                "- Time Out: 5:00 PM\n" +
+                "- Status: Approved\n\n" +
+                "Existing timesheets for the same dates will be skipped.\n\n" +
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                 "Continue?"
         );
         Optional<ButtonType> result = confirmAlert.showAndWait();
@@ -515,6 +569,7 @@ public class PayrollController {
                         .getMainViewController()
                         .getServiceFactory();
 
+<<<<<<< HEAD
                 List<Employee> allEmployees = serviceFactory.getEmployeeService().getAllEmployees();
                 int updatedCount = 0;
                 int statusUpdatedCount = 0;
@@ -544,10 +599,14 @@ public class PayrollController {
                         updatedCount++;
                     }
                 }
+=======
+                int count = TimesheetDataGenerator.generateDecember2025Timesheets(serviceFactory);
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
                 CustomAlert successAlert = new CustomAlert(
                         Alert.AlertType.INFORMATION,
                         "Success",
+<<<<<<< HEAD
                         String.format("Successfully updated %d employee(s).\n\n" +
                                 "Total employees: %d\n" +
                                 "Marked as active (isDeleted=false): %d\n" +
@@ -555,14 +614,21 @@ public class PayrollController {
                                 "Already active: %d", 
                                 updatedCount, allEmployees.size(), updatedCount, 
                                 statusUpdatedCount, allEmployees.size() - updatedCount)
+=======
+                        String.format("Successfully generated %d timesheet entries for December 2025.", count)
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                 );
                 successAlert.showAndWait();
             } catch (Exception e) {
                 CustomAlert errorAlert = new CustomAlert(
                         Alert.AlertType.ERROR,
                         "Error",
+<<<<<<< HEAD
                         "Failed to mark employees as active: " + e.getMessage() + 
                         "\n\nPlease check the console for more details."
+=======
+                        "Failed to generate timesheets: " + e.getMessage()
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
                 );
                 errorAlert.showAndWait();
                 e.printStackTrace();

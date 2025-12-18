@@ -33,9 +33,12 @@ public class PagibigContributionRateController {
     private Button btnAddRate;
 
     @FXML
+<<<<<<< HEAD
     private Button btnPopulateRates;
 
     @FXML
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     private Pagination paginationRates;
 
     @FXML
@@ -44,14 +47,20 @@ public class PagibigContributionRateController {
     private List<PagibigContributionRate> allRates;
 
     public PagibigContributionRateController() {
+<<<<<<< HEAD
         // Default constructor required by JavaFX
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     }
 
     @FXML
     void initialize() {
         setupTableView();
         customizeAddButton();
+<<<<<<< HEAD
         customizePopulateButton();
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     }
 
     @FXML
@@ -125,6 +134,7 @@ public class PagibigContributionRateController {
         TableColumn<PagibigContributionRate, Void> actionsColumn = createActionsColumn();
         actionsColumn.setPrefWidth(200);
 
+<<<<<<< HEAD
         @SuppressWarnings("unchecked")
         TableColumn<PagibigContributionRate, ?>[] columns = new TableColumn[]{
                 idColumn, salaryFromColumn, salaryToColumn, employeeShareColumn, employerShareColumn, effectiveDateColumn, actionsColumn
@@ -134,10 +144,15 @@ public class PagibigContributionRateController {
         @SuppressWarnings("deprecation")
         var resizePolicy = TableView.CONSTRAINED_RESIZE_POLICY;
         tvRates.setColumnResizePolicy(resizePolicy);
+=======
+        tvRates.getColumns().addAll(idColumn, salaryFromColumn, salaryToColumn, employeeShareColumn, employerShareColumn, effectiveDateColumn, actionsColumn);
+        tvRates.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     }
 
     private TableColumn<PagibigContributionRate, Void> createActionsColumn() {
         TableColumn<PagibigContributionRate, Void> actionsColumn = new TableColumn<>("Actions");
+<<<<<<< HEAD
         actionsColumn.setCellFactory(param -> new ActionsTableCell());
         return actionsColumn;
     }
@@ -175,6 +190,47 @@ public class PagibigContributionRateController {
         }
     }
 
+=======
+        actionsColumn.setCellFactory(param -> new TableCell<>() {
+            private final Button editButton = new Button(null, new FontIcon(Feather.EDIT));
+            private final Button deleteButton = new Button(null, new FontIcon(Feather.TRASH));
+
+            {
+                editButton.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
+                deleteButton.getStyleClass().addAll(Styles.DANGER, Styles.BUTTON_OUTLINED);
+
+                editButton.setOnAction(event -> {
+                    PagibigContributionRate selected = getTableView().getItems().get(getIndex());
+                    if (selected != null) {
+                        openRateForm(selected);
+                    }
+                });
+
+                deleteButton.setOnAction(event -> {
+                    PagibigContributionRate selected = getTableView().getItems().get(getIndex());
+                    if (selected != null) {
+                        deleteRate(selected);
+                    }
+                });
+            }
+
+            private final HBox actionsBox = new HBox(editButton, deleteButton);
+
+            {
+                actionsBox.setAlignment(Pos.CENTER);
+                actionsBox.setSpacing(10);
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : actionsBox);
+            }
+        });
+        return actionsColumn;
+    }
+
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
     private void deleteRate(PagibigContributionRate rate) {
         CustomAlert confirmAlert = new CustomAlert(
                 Alert.AlertType.CONFIRMATION,
@@ -203,6 +259,7 @@ public class PagibigContributionRateController {
         btnAddRate.getStyleClass().addAll(Styles.SUCCESS, Styles.BUTTON_OUTLINED);
     }
 
+<<<<<<< HEAD
     private void customizePopulateButton() {
         FontIcon fontIcon = new FontIcon(Feather.DATABASE);
         btnPopulateRates.setGraphic(fontIcon);
@@ -315,6 +372,11 @@ public class PagibigContributionRateController {
         }
 
         allRates = existingRates;
+=======
+    public void populateRates() {
+        allRates = payrollAdministratorNavigationController.getMainViewController()
+                .getServiceFactory().getPagibigContributionRateService().getAllPagibigContributionRates();
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
         int itemsPerPage = 25;
         int pageCount = Math.max(1, (int) Math.ceil((double) allRates.size() / itemsPerPage));

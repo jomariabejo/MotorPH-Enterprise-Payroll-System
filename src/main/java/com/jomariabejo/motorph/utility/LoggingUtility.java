@@ -201,6 +201,7 @@ public class LoggingUtility {
         String details = "Created: " + createdCount + ", Existing: " + existingCount;
         logAction(syncer, "Permissions synchronized", details);
     }
+<<<<<<< HEAD
 
     /**
      * Log employee clock in action.
@@ -225,5 +226,7 @@ public class LoggingUtility {
         String details = "Employee #" + employeeNumber + " clocked out at " + timeOut;
         logAction(user, "Employee clocked out", details);
     }
+=======
+>>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 }
 
