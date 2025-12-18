@@ -679,12 +679,8 @@ INSERT INTO `user` (`UserID`, `Username`, `Password`, `Email`, `FullName`, `Role
 	(2, 'hr_demo', 'hr123', 'hr_demo@motorph.local', 'HR Demo', 5, 'Active', 6),
 	(3, 'payroll_demo', 'payroll123', 'payroll_demo@motorph.local', 'Payroll Demo', 7, 'Active', 3),
 	(4, 'sysadmin_demo', 'sysadmin123', 'sysadmin_demo@motorph.local', 'System Admin Demo', 9, 'Active', 5),
-<<<<<<< HEAD
 	(5, 'sysadmin', 'admin123', 'sysadmin@motorph.local', 'System Administrator', 9, 'Active', 5),
 	(6, 'hrmanager_demo', 'hrmanager123', 'hrmanager_demo@motorph.local', 'HR Manager Demo', 5, 'Active', 7);
-=======
-	(5, 'sysadmin', 'admin123', 'sysadmin@motorph.local', 'System Administrator', 9, 'Active', 5);
->>>>>>> b44be3fc1877fa0790d469aafceed9f64b2cd89f
 
 -- Dumping structure for table payroll_system.user_log
 CREATE TABLE IF NOT EXISTS `user_log` (
